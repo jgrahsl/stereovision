@@ -54,18 +54,6 @@ Generic (
 		LED_O : out STD_LOGIC_VECTOR(7 downto 0);
 		CLK_I : in  STD_LOGIC;
 		RESET_I : in  STD_LOGIC;
-----------------------------------------------------------------------------------
--- Camera Board signals
-----------------------------------------------------------------------------------
-		CAMA_SDA : inout  STD_LOGIC;
-		CAMA_SCL : inout  STD_LOGIC;
-		CAMA_D_I : in  STD_LOGIC_VECTOR (7 downto 0);
-		CAMA_PCLK_I : inout  STD_LOGIC;
-		CAMA_MCLK_O : out STD_LOGIC;		
-		CAMA_LV_I : in STD_LOGIC;
-		CAMA_FV_I : in STD_LOGIC;
-		CAMA_RST_O : out STD_LOGIC; --Reset active LOW
-		CAMA_PWDN_O : out STD_LOGIC; --Power-down active HIGH
 
 		CAMX_VDDEN_O : out STD_LOGIC; -- common power supply enable (can do power cycle)
 		
@@ -109,19 +97,18 @@ signal MSel : std_logic_vector(1 downto 0);
 signal VtcHs, VtcVs, VtcVde, VtcRst : std_logic;
 signal VtcHCnt, VtcVCnt : NATURAL;
 
-signal CamClk, CamClk_180, CamAPClk, CamBPClk, CamADV, CamBDV, CamAVddEn, CamBVddEn : std_logic;
-signal CamAD, CamBD : std_logic_vector(15 downto 0);
-signal dummy_t, int_CAMA_PCLK_I, int_CAMB_PCLK_I : std_logic;
+signal CamClk, CamClk_180, CamBPClk, CamBDV, CamBVddEn : std_logic;
+signal CamBD : std_logic_vector(15 downto 0);
+signal dummy_t, int_CAMB_PCLK_I : std_logic;
 
 attribute S: string;
-attribute S of CAMA_PCLK_I: signal is "TRUE";
 attribute S of CAMB_PCLK_I: signal is "TRUE";
 attribute S of dummy_t: signal is "TRUE";
 
 signal ddr2clk_2x, ddr2clk_2x_180, mcb_drp_clk, pll_ce_0, pll_ce_90, pll_lock, async_rst : std_logic;
 signal FbRdy, FbRdEn, FbRdRst, FbRdClk : std_logic;
 signal FbRdData : std_logic_vector(16-1 downto 0);
-signal FbWrARst, FbWrBRst, int_FVA, int_FVB : std_logic;
+signal FbWrBRst,  int_FVB : std_logic;
 
 begin
 
@@ -189,11 +176,6 @@ LED_O <= VtcHs & VtcHs & VtcVde & async_rst & "0000";
 		CLKC => FbRdClk,
 		RD_MODE => MSel,
 		
-		ENA => CamADV,
-		RSTA_I => FbWrARst,
-		DIA => CamAD,
-		CLKA => CamAPClk,
-		
 		ENB => CamBDV,
 		RSTB_I	=> FbWrBRst,
 		DIB => CamBD,
@@ -229,19 +211,12 @@ LED_O <= VtcHs & VtcHs & VtcVde & async_rst & "0000";
 FbRdEn <= VtcVde;
 FbRdRst <= async_rst;
 FbRdClk <= PClk;
---Register FV signal to meet timing for FbWrXRst
-	Inst_InputSync_FVA: entity digilent.InputSync PORT MAP(
-		D_I => CAMA_FV_I,
-		D_O => int_FVA,
-		CLK_I => CamAPClk
-	);
 	Inst_InputSync_FVB: entity digilent.InputSync PORT MAP(
 		D_I => CAMB_FV_I,
 		D_O => int_FVB,
 		CLK_I => CamBPClk
 	);
 
-FbWrARst <= async_rst or not int_FVA;
 FbWrBRst <= async_rst or not int_FVB;
 
 ----------------------------------------------------------------------------------
@@ -269,28 +244,6 @@ FbWrBRst <= async_rst or not int_FVB;
 	);
 
 ----------------------------------------------------------------------------------
--- Camera A Controller
-----------------------------------------------------------------------------------
-	Inst_camctlA: entity work.camctl
-	PORT MAP (
-		D_O => CamAD,
-		PCLK_O => CamAPClk,
-		DV_O => CamADV,
-		RST_I => async_rst,
-		CLK => CamClk,
-		CLK_180 => CamClk_180,
-		SDA => CAMA_SDA,
-		SCL => CAMA_SCL,
-		D_I => CAMA_D_I,
-		PCLK_I => int_CAMA_PCLK_I,
-		MCLK_O => CAMA_MCLK_O,
-		LV_I => CAMA_LV_I,
-		FV_I => CAMA_FV_I,
-		RST_O => CAMA_RST_O,
-		PWDN_O => CAMA_PWDN_O,
-		VDDEN_O => CamAVddEn
-	);
-----------------------------------------------------------------------------------
 -- Camera B Controller
 ----------------------------------------------------------------------------------
 	Inst_camctlB: entity work.camctl
@@ -312,22 +265,11 @@ FbWrBRst <= async_rst or not int_FVB;
 		PWDN_O => CAMB_PWDN_O,
 		VDDEN_O => CamBVddEn
 	);
-	CAMX_VDDEN_O <= CamAVddEn and CamBVddEn;
+	CAMX_VDDEN_O <= CamBVddEn;
 	
 ----------------------------------------------------------------------------------
 -- Workaround for IN_TERM bug AR# 	40818
 ----------------------------------------------------------------------------------
-   Inst_IOBUF_CAMA_PCLK : IOBUF
-   generic map (
-      DRIVE => 12,
-      IOSTANDARD => "DEFAULT",
-      SLEW => "SLOW")
-   port map (
-      O => int_CAMA_PCLK_I,     -- Buffer output
-      IO => CAMA_PCLK_I,   -- Buffer inout port (connect directly to top-level port)
-      I => '0',     -- Buffer input
-      T => dummy_t      -- 3-state enable input, high=input, low=output 
-   );
    Inst_IOBUF_CAMB_PCLK : IOBUF
    generic map (
       DRIVE => 12,

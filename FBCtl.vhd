@@ -79,13 +79,6 @@ entity FBCtl is
     RSTB_I           : in    std_logic;  --asynchronous port reset
     DIB              : in    std_logic_vector (COLORDEPTH - 1 downto 0);  --data output
     CLKB             : in    std_logic;  --port clock
-------------------------------------------------------------------------------------
--- Title : Port A - write only
-------------------------------------------------------------------------------------
-    ENA              : in    std_logic;  --port enable
-    RSTA_I           : in    std_logic;  --asynchronous port reset
-    DIA              : in    std_logic_vector (COLORDEPTH - 1 downto 0);  --data output
-    CLKA             : in    std_logic;  --port clock          
 ----------------------------------------------------------------------------------
 -- High-speed PLL clock interface/reset
 ----------------------------------------------------------------------------------  
@@ -491,23 +484,6 @@ architecture Behavioral of FBCtl is
   signal   p3_rd_error         : std_logic;
 
 
-  signal p1_cmd_clk       : std_logic;
-  signal p1_cmd_en        : std_logic;
-  signal p1_cmd_instr     : std_logic_vector(2 downto 0);
-  signal p1_cmd_bl        : std_logic_vector(5 downto 0);
-  signal p1_cmd_byte_addr : std_logic_vector(29 downto 0);
-  signal p1_cmd_empty     : std_logic;
-  signal p1_cmd_full      : std_logic;
-  signal p1_wr_clk        : std_logic;
-  signal p1_wr_en         : std_logic;
-  signal p1_wr_data       : std_logic_vector(C3_P1_DATA_PORT_SIZE - 1 downto 0);
-  signal p1_wr_mask       : std_logic_vector(C3_P1_MASK_SIZE - 1 downto 0);
-  signal p1_wr_full       : std_logic;
-  signal p1_wr_empty      : std_logic;
-  signal p1_wr_count      : std_logic_vector(6 downto 0);
-  signal p1_wr_underrun   : std_logic;
-  signal p1_wr_error      : std_logic;
-
   signal p2_cmd_clk       : std_logic;
   signal p2_cmd_en        : std_logic;
   signal p2_cmd_instr     : std_logic_vector(2 downto 0);
@@ -555,17 +531,41 @@ architecture Behavioral of FBCtl is
   signal p0_rd_overflow : std_logic;
   signal p0_rd_error    : std_logic;
 
+  signal p1_cmd_clk       : std_logic;
+  signal p1_cmd_en        : std_logic;
+  signal p1_cmd_instr     : std_logic_vector(2 downto 0);
+  signal p1_cmd_bl        : std_logic_vector(5 downto 0);
+  signal p1_cmd_byte_addr : std_logic_vector(29 downto 0);
+  signal p1_cmd_empty     : std_logic;
+  signal p1_cmd_full      : std_logic;
+  signal p1_rd_clk      : std_logic;
+  signal p1_rd_en       : std_logic;
+  signal p1_rd_data     : std_logic_vector(C3_P1_DATA_PORT_SIZE - 1 downto 0);
+  signal p1_rd_full     : std_logic;
+  signal p1_rd_empty    : std_logic;
+  signal p1_rd_count    : std_logic_vector(6 downto 0);
+  signal p1_rd_overflow : std_logic;
+  signal p1_rd_error    : std_logic;
+  signal p1_wr_clk        : std_logic;
+  signal p1_wr_en         : std_logic;
+  signal p1_wr_data       : std_logic_vector(C3_P1_DATA_PORT_SIZE - 1 downto 0);
+  signal p1_wr_mask       : std_logic_vector(C3_P1_MASK_SIZE - 1 downto 0);
+  signal p1_wr_full       : std_logic;
+  signal p1_wr_empty      : std_logic;
+  signal p1_wr_count      : std_logic_vector(6 downto 0);
+  signal p1_wr_underrun   : std_logic;
+  signal p1_wr_error      : std_logic;
 
-  signal pa_wr_cnt, pb_wr_cnt                                   : natural                        := 0;
-  signal pa_wr_addr, pb_wr_addr                                 : natural range 0 to VMEM_SIZE-1 := 0;
-  signal pa_wr_data_sel, pa_int_rst, pb_wr_data_sel, pb_int_rst : std_logic;
+  signal pb_wr_cnt                                   : natural                        := 0;
+  signal pb_wr_addr                                 : natural range 0 to VMEM_SIZE-1 := 0;
+  signal pb_wr_data_sel, pb_int_rst : std_logic;
 
-  signal pc_rd_addr1, pc_rd_addr2, pc_rd_addr3 : natural   := 0;
+  signal pc_rd_addr1, pc_rd_addr2 : natural   := 0;
   signal fVMemSource                           : std_logic := '0';
   signal rd_data_sel                           : std_logic;
   signal int_rd_mode                           : std_logic_vector(1 downto 0);
 
-  signal RstB, RstA, RstC, SRstC, SRstB, SRstA, SCalibDoneA, SCalibDoneB : std_logic;
+  signal RstB, RstC, SRstC, SRstB, SCalibDoneB : std_logic;
 
 
   signal my_addr    : natural := 0;
@@ -728,14 +728,14 @@ begin
       p1_wr_count      => p1_wr_count,
       p1_wr_underrun   => p1_wr_underrun,
       p1_wr_error      => p1_wr_error,
-      p1_rd_clk        => '0',          --p1_rd_clk,
-      p1_rd_en         => '0',          --p1_rd_en,
-      p1_rd_data       => open,         --p1_rd_data,
-      p1_rd_full       => open,         --p1_rd_full,
-      p1_rd_empty      => open,         --p1_rd_empty,
-      p1_rd_count      => open,         --p1_rd_count,
-      p1_rd_overflow   => open,         --p1_rd_overflow,
-      p1_rd_error      => open,         --p1_rd_error,
+      p1_rd_clk        => p1_rd_clk,
+      p1_rd_en         => p1_rd_en,
+      p1_rd_data       => p1_rd_data,
+      p1_rd_full       => p1_rd_full,
+      p1_rd_empty      => p1_rd_empty,
+      p1_rd_count      => p1_rd_count,
+      p1_rd_overflow   => p1_rd_overflow,
+      p1_rd_error      => p1_rd_error,
 
       p2_cmd_clk       => p2_cmd_clk,
       p2_cmd_en        => p2_cmd_en,
@@ -889,154 +889,6 @@ begin
   end process;
 
 -----------------------------------------------------------------------------
--- PORT A Write-only (for Camera A)
------------------------------------------------------------------------------
-  Inst_LocalRstA1 : entity digilent.LocalRst port map(
-    RST_I  => RstA,
-    CLK_I  => CLKA,
-    SRST_O => SRstA
-    );
-  RstA <= RSTA_I or not calib_done;
-  
-  Inst_LocalRstA2 : entity digilent.LocalRst port map(
-    RST_I  => calib_done,
-    CLK_I  => CLKA,
-    SRST_O => SCalibDoneA
-    );
------------------------------------------------------------------------------
--- Upper/lower 16-bit selection mux
------------------------------------------------------------------------------
-  WROUTSEL_PROC_A : process (CLKA)
-  begin
-    if Rising_Edge(CLKA) then
-      if (SRstA = '1') then
-        pa_wr_data_sel <= '0';
-      elsif (ENA = '1') then
-        pa_wr_data_sel <= not pa_wr_data_sel;
-      end if;
-
-      if (ENA = '1') then
-        if (pa_wr_data_sel = '0') then
-          p1_wr_data(15 downto 0) <= DIA;
-        end if;
-      end if;
-    end if;
-  end process;
-
------------------------------------------------------------------------------
--- Port A reset
------------------------------------------------------------------------------
-  PORTARST_PROC_A : process(CLKA)
-  begin
-    if Rising_Edge(CLKA) then
-      if (SRstA = '1') then
-        pa_int_rst <= '1';
-      elsif (p1_wr_empty = '1') then  -- port has been reset when no more data is waiting to be written
-        pa_int_rst <= '0';
-      end if;
-    end if;
-  end process;
-
-  p1_cmd_bl <= conv_std_logic_vector(pa_wr_cnt-1, 6) when pa_int_rst = '1' else
-               conv_std_logic_vector(WR_BATCH-1, 6);  -- We write 32 dwords (32-bit) at a time
-  p1_wr_data(31 downto 16) <= DIA;
-  --p1_wr_data <= p1_cmd_byte_addr(11 downto 7) & p1_cmd_byte_addr(11 downto 7) & '0' & p1_cmd_byte_addr(11 downto 7) & p1_cmd_byte_addr(11 downto 7) & p1_cmd_byte_addr(11 downto 7) & '0' & p1_cmd_byte_addr(11 downto 7);
-  p1_wr_en                 <= pa_wr_data_sel and ENA;
-  p1_wr_clk                <= CLKA;
-  p1_wr_mask               <= "0000";
-
------------------------------------------------------------------------------
--- Write Counter; use this instead of the FIFO's
------------------------------------------------------------------------------
-  WRCNT_PROC_A : process(CLKA)
-  begin
-    if Rising_Edge(CLKA) then
-      if (stateWrA = stWrCmd) then
-        if (p1_wr_en = '1' and pa_int_rst = '0') then
-          pa_wr_cnt <= 1;
-        else
-          pa_wr_cnt <= 0;
-        end if;
-      elsif (p1_wr_en = '1' and pa_int_rst = '0') then
-        pa_wr_cnt <= pa_wr_cnt + 1;
-      end if;
-    end if;
-  end process;
-
------------------------------------------------------------------------------
--- Write Addressing
------------------------------------------------------------------------------ 
-  WRADDRCNT_PROC_A : process (CLKA)
-  begin
-    if Rising_Edge(CLKA) then
-      if (pa_int_rst = '1' and p1_wr_empty = '1') then
-        pa_wr_addr <= 0;
-      elsif (stateWrA = stWrCmd) then
-        if (pa_wr_addr = 640*480*2/(WR_BATCH*4)-1) then
-          pa_wr_addr <= 0;
-        else
-          pa_wr_addr <= pa_wr_addr + 1;
-        end if;
-      end if;
-    end if;
-  end process;
-
-  p1_cmd_byte_addr <= conv_std_logic_vector(pa_wr_addr * (WR_BATCH*4), 30);
-
------------------------------------------------------------------------------
--- Write FSM
--- CLKA clock domain; issues a write 32 words command, when we have
--- 32 words to the FIFO; it also issues a write command for less than 32
--- words upon port reset.
------------------------------------------------------------------------------
-  WRSYNC_PROC_A : process (CLKA)
-  begin
-    if Rising_Edge(CLKA) then
-      if (SCalibDoneA = '0' or p1_wr_empty = '1') then
-        stateWrA <= stWrIdle;
-      else
-        stateWrA <= nstateWrA;
-      end if;
-    end if;
-  end process;
-
-  p1_cmd_instr <= MCB_CMD_WR;           -- Port 1 write-only
-  p1_cmd_clk   <= CLKA;
-
-  WROUTPUT_DECODE_A : process (stateWrA)
-  begin
-    p1_cmd_en <= '0';
-    if stateWrA = stWrCmd then
-      p1_cmd_en <= '1';
-    end if;
-    
-  end process;
-
-  WRNEXT_STATE_DECODE_A : process (stateWrA, p1_wr_count, p1_wr_error, pa_int_rst, p1_wr_empty, pa_wr_cnt)
-  begin
-    nstateWrA <= stateWrA;              --default is to stay in current state
-    case (stateWrA) is
-      when stWrIdle =>
-        if (pa_wr_cnt >= WR_BATCH or pa_int_rst = '1') then
-          nstateWrA <= stWrCmd;
-        end if;
-      when stWrCmd =>
-        nstateWrA <= stWrCmdWait;
-      when stWrCmdWait =>
-        if (p1_wr_error = '1') then
-          nstateWrA <= stWrErr;         --the write FIFO got empty
-        elsif ((pa_int_rst = '0' and p1_wr_count < WR_BATCH) or
-               (pa_int_rst = '1' and p1_wr_empty = '1')) then  -- data got transferred from the FIFO
-          nstateWrA <= stWrIdle;
-        end if;
-      when stWrErr =>
-        null;
-      when others =>
-        nstateWrA <= stWrIdle;
-    end case;
-  end process;
-
------------------------------------------------------------------------------
 -- PORT B Write-only (for Camera B)
 -----------------------------------------------------------------------------
   Inst_LocalRstB1 : entity digilent.LocalRst port map(
@@ -1130,7 +982,7 @@ begin
   end process;
 
   --Port B writes to next VMEM_SIZE location
-  p2_cmd_byte_addr <= conv_std_logic_vector(VMEM_SIZE + pb_wr_addr * (WR_BATCH*4), 30);
+  p2_cmd_byte_addr <= conv_std_logic_vector(pb_wr_addr * (WR_BATCH*4), 30);
 
 -----------------------------------------------------------------------------
 -- Write FSM
@@ -1261,5 +1113,8 @@ begin
   p0_wr_mask <= (others => '0');
 
   
+
+
+
 end Behavioral;
 
