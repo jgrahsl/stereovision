@@ -608,92 +608,106 @@ architecture Behavioral of FBCtl is
   signal nparam3   : unsigned(7 downto 0);
   signal param3    : unsigned(7 downto 0);
 
-  type alg_state_t is (alg_reset, alg_finish_low,alg_finish_high, alg_low, alg_high, alg_low_1, alg_high_1);
+  type alg_state_t is (alg_reset, 
+
+                       alg_low,
+                       alg_low_1,
+                       alg_low_2,
+                       alg_low_3,
+                       alg_low_4,
+                       alg_finish_low,
+
+                       alg_high,
+                       alg_high_1,
+                       alg_high_2,
+                       alg_high_3,
+                       alg_high_4,
+                       alg_finish_high );
 
   signal alg_state  : alg_state_t;
   signal alg_nstate : alg_state_t;
   
 begin
 ----------------------------------------------------------------------------------
--- MCB Instantiation
+-- mcb instantiation
 ----------------------------------------------------------------------------------
   mcb_ddr2 : memc3_wrapper
     generic map (
-      C_MEMCLK_PERIOD           => C3_MEMCLK_PERIOD,
-      C_CALIB_SOFT_IP           => C3_CALIB_SOFT_IP,
-      C_SIMULATION              => C3_SIMULATION,
-      C_P0_MASK_SIZE            => C3_P0_MASK_SIZE,
-      C_P0_DATA_PORT_SIZE       => C3_P0_DATA_PORT_SIZE,
-      C_P1_MASK_SIZE            => C3_P1_MASK_SIZE,
-      C_P1_DATA_PORT_SIZE       => C3_P1_DATA_PORT_SIZE,
-      C_ARB_NUM_TIME_SLOTS      => C3_ARB_NUM_TIME_SLOTS,
-      C_ARB_TIME_SLOT_0         => C3_ARB_TIME_SLOT_0,
-      C_ARB_TIME_SLOT_1         => C3_ARB_TIME_SLOT_1,
-      C_ARB_TIME_SLOT_2         => C3_ARB_TIME_SLOT_2,
-      C_ARB_TIME_SLOT_3         => C3_ARB_TIME_SLOT_3,
-      C_ARB_TIME_SLOT_4         => C3_ARB_TIME_SLOT_4,
-      C_ARB_TIME_SLOT_5         => C3_ARB_TIME_SLOT_5,
-      C_ARB_TIME_SLOT_6         => C3_ARB_TIME_SLOT_6,
-      C_ARB_TIME_SLOT_7         => C3_ARB_TIME_SLOT_7,
-      C_ARB_TIME_SLOT_8         => C3_ARB_TIME_SLOT_8,
-      C_ARB_TIME_SLOT_9         => C3_ARB_TIME_SLOT_9,
-      C_ARB_TIME_SLOT_10        => C3_ARB_TIME_SLOT_10,
-      C_ARB_TIME_SLOT_11        => C3_ARB_TIME_SLOT_11,
-      C_MEM_TRAS                => C3_MEM_TRAS,
-      C_MEM_TRCD                => C3_MEM_TRCD,
-      C_MEM_TREFI               => C3_MEM_TREFI,
-      C_MEM_TRFC                => C3_MEM_TRFC,
-      C_MEM_TRP                 => C3_MEM_TRP,
-      C_MEM_TWR                 => C3_MEM_TWR,
-      C_MEM_TRTP                => C3_MEM_TRTP,
-      C_MEM_TWTR                => C3_MEM_TWTR,
-      C_MEM_ADDR_ORDER          => C3_MEM_ADDR_ORDER,
-      C_NUM_DQ_PINS             => C3_NUM_DQ_PINS,
-      C_MEM_TYPE                => C3_MEM_TYPE,
-      C_MEM_DENSITY             => C3_MEM_DENSITY,
-      C_MEM_BURST_LEN           => C3_MEM_BURST_LEN,
-      C_MEM_CAS_LATENCY         => C3_MEM_CAS_LATENCY,
-      C_MEM_ADDR_WIDTH          => C3_MEM_ADDR_WIDTH,
-      C_MEM_BANKADDR_WIDTH      => C3_MEM_BANKADDR_WIDTH,
-      C_MEM_NUM_COL_BITS        => C3_MEM_NUM_COL_BITS,
-      C_MEM_DDR1_2_ODS          => C3_MEM_DDR1_2_ODS,
-      C_MEM_DDR2_RTT            => C3_MEM_DDR2_RTT,
-      C_MEM_DDR2_DIFF_DQS_EN    => C3_MEM_DDR2_DIFF_DQS_EN,
-      C_MEM_DDR2_3_PA_SR        => C3_MEM_DDR2_3_PA_SR,
-      C_MEM_DDR2_3_HIGH_TEMP_SR => C3_MEM_DDR2_3_HIGH_TEMP_SR,
-      C_MEM_DDR3_CAS_LATENCY    => C3_MEM_DDR3_CAS_LATENCY,
-      C_MEM_DDR3_ODS            => C3_MEM_DDR3_ODS,
-      C_MEM_DDR3_RTT            => C3_MEM_DDR3_RTT,
-      C_MEM_DDR3_CAS_WR_LATENCY => C3_MEM_DDR3_CAS_WR_LATENCY,
-      C_MEM_DDR3_AUTO_SR        => C3_MEM_DDR3_AUTO_SR,
-      C_MEM_DDR3_DYN_WRT_ODT    => C3_MEM_DDR3_DYN_WRT_ODT,
-      C_MEM_MOBILE_PA_SR        => C3_MEM_MOBILE_PA_SR,
-      C_MEM_MDDR_ODS            => C3_MEM_MDDR_ODS,
-      C_MC_CALIB_BYPASS         => C3_MC_CALIB_BYPASS,
-      C_MC_CALIBRATION_MODE     => C3_MC_CALIBRATION_MODE,
-      C_MC_CALIBRATION_DELAY    => C3_MC_CALIBRATION_DELAY,
-      C_SKIP_IN_TERM_CAL        => C3_SKIP_IN_TERM_CAL,
-      C_SKIP_DYNAMIC_CAL        => C3_SKIP_DYNAMIC_CAL,
-      C_LDQSP_TAP_DELAY_VAL     => C3_LDQSP_TAP_DELAY_VAL,
-      C_LDQSN_TAP_DELAY_VAL     => C3_LDQSN_TAP_DELAY_VAL,
-      C_UDQSP_TAP_DELAY_VAL     => C3_UDQSP_TAP_DELAY_VAL,
-      C_UDQSN_TAP_DELAY_VAL     => C3_UDQSN_TAP_DELAY_VAL,
-      C_DQ0_TAP_DELAY_VAL       => C3_DQ0_TAP_DELAY_VAL,
-      C_DQ1_TAP_DELAY_VAL       => C3_DQ1_TAP_DELAY_VAL,
-      C_DQ2_TAP_DELAY_VAL       => C3_DQ2_TAP_DELAY_VAL,
-      C_DQ3_TAP_DELAY_VAL       => C3_DQ3_TAP_DELAY_VAL,
-      C_DQ4_TAP_DELAY_VAL       => C3_DQ4_TAP_DELAY_VAL,
-      C_DQ5_TAP_DELAY_VAL       => C3_DQ5_TAP_DELAY_VAL,
-      C_DQ6_TAP_DELAY_VAL       => C3_DQ6_TAP_DELAY_VAL,
-      C_DQ7_TAP_DELAY_VAL       => C3_DQ7_TAP_DELAY_VAL,
-      C_DQ8_TAP_DELAY_VAL       => C3_DQ8_TAP_DELAY_VAL,
-      C_DQ9_TAP_DELAY_VAL       => C3_DQ9_TAP_DELAY_VAL,
-      C_DQ10_TAP_DELAY_VAL      => C3_DQ10_TAP_DELAY_VAL,
-      C_DQ11_TAP_DELAY_VAL      => C3_DQ11_TAP_DELAY_VAL,
-      C_DQ12_TAP_DELAY_VAL      => C3_DQ12_TAP_DELAY_VAL,
-      C_DQ13_TAP_DELAY_VAL      => C3_DQ13_TAP_DELAY_VAL,
-      C_DQ14_TAP_DELAY_VAL      => C3_DQ14_TAP_DELAY_VAL,
-      C_DQ15_TAP_DELAY_VAL      => C3_DQ15_TAP_DELAY_VAL
+      c_memclk_period           => c3_memclk_period,
+      c_calib_soft_ip           => c3_calib_soft_ip,
+      c_simulation              => c3_simulation,
+      c_p0_mask_size            => c3_p0_mask_size,
+      c_p0_data_port_size       => c3_p0_data_port_size,
+      c_p1_mask_size            => c3_p1_mask_size,
+      c_p1_data_port_size       => c3_p1_data_port_size,
+      c_arb_num_time_slots      => c3_arb_num_time_slots,
+      c_arb_time_slot_0         => c3_arb_time_slot_0,
+      c_arb_time_slot_1         => c3_arb_time_slot_1,
+      c_arb_time_slot_2         => c3_arb_time_slot_2,
+      c_arb_time_slot_3         => c3_arb_time_slot_3,
+      c_arb_time_slot_4         => c3_arb_time_slot_4,
+      c_arb_time_slot_5         => c3_arb_time_slot_5,
+      c_arb_time_slot_6         => c3_arb_time_slot_6,
+      c_arb_time_slot_7         => c3_arb_time_slot_7,
+      c_arb_time_slot_8         => c3_arb_time_slot_8,
+      c_arb_time_slot_9         => c3_arb_time_slot_9,
+      c_arb_time_slot_10        => c3_arb_time_slot_10,
+      c_arb_time_slot_11        => c3_arb_time_slot_11,
+      c_mem_tras                => c3_mem_tras,
+      c_mem_trcd                => c3_mem_trcd,
+      c_mem_trefi               => c3_mem_trefi,
+      c_mem_trfc                => c3_mem_trfc,
+      c_mem_trp                 => c3_mem_trp,
+      c_mem_twr                 => c3_mem_twr,
+      c_mem_trtp                => c3_mem_trtp,
+      c_mem_twtr                => c3_mem_twtr,
+      c_mem_addr_order          => c3_mem_addr_order,
+      c_num_dq_pins             => c3_num_dq_pins,
+      c_mem_type                => c3_mem_type,
+      c_mem_density             => c3_mem_density,
+      c_mem_burst_len           => c3_mem_burst_len,
+      c_mem_cas_latency         => c3_mem_cas_latency,
+      c_mem_addr_width          => c3_mem_addr_width,
+      c_mem_bankaddr_width      => c3_mem_bankaddr_width,
+      c_mem_num_col_bits        => c3_mem_num_col_bits,
+      c_mem_ddr1_2_ods          => c3_mem_ddr1_2_ods,
+      c_mem_ddr2_rtt            => c3_mem_ddr2_rtt,
+      c_mem_ddr2_diff_dqs_en    => c3_mem_ddr2_diff_dqs_en,
+      c_mem_ddr2_3_pa_sr        => c3_mem_ddr2_3_pa_sr,
+      c_mem_ddr2_3_high_temp_sr => c3_mem_ddr2_3_high_temp_sr,
+      c_mem_ddr3_cas_latency    => c3_mem_ddr3_cas_latency,
+      c_mem_ddr3_ods            => c3_mem_ddr3_ods,
+      c_mem_ddr3_rtt            => c3_mem_ddr3_rtt,
+      c_mem_ddr3_cas_wr_latency => c3_mem_ddr3_cas_wr_latency,
+      c_mem_ddr3_auto_sr        => c3_mem_ddr3_auto_sr,
+      c_mem_ddr3_dyn_wrt_odt    => c3_mem_ddr3_dyn_wrt_odt,
+      c_mem_mobile_pa_sr        => c3_mem_mobile_pa_sr,
+      c_mem_mddr_ods            => c3_mem_mddr_ods,
+      c_mc_calib_bypass         => c3_mc_calib_bypass,
+      c_mc_calibration_mode     => c3_mc_calibration_mode,
+      c_mc_calibration_delay    => c3_mc_calibration_delay,
+      c_skip_in_term_cal        => c3_skip_in_term_cal,
+      c_skip_dynamic_cal        => c3_skip_dynamic_cal,
+      c_ldqsp_tap_delay_val     => c3_ldqsp_tap_delay_val,
+      c_ldqsn_tap_delay_val     => c3_ldqsn_tap_delay_val,
+      c_udqsp_tap_delay_val     => c3_udqsp_tap_delay_val,
+      c_udqsn_tap_delay_val     => c3_udqsn_tap_delay_val,
+      c_dq0_tap_delay_val       => c3_dq0_tap_delay_val,
+      c_dq1_tap_delay_val       => c3_dq1_tap_delay_val,
+      c_dq2_tap_delay_val       => c3_dq2_tap_delay_val,
+      c_dq3_tap_delay_val       => c3_dq3_tap_delay_val,
+      c_dq4_tap_delay_val       => c3_dq4_tap_delay_val,
+      c_dq5_tap_delay_val       => c3_dq5_tap_delay_val,
+      c_dq6_tap_delay_val       => c3_dq6_tap_delay_val,
+      c_dq7_tap_delay_val       => c3_dq7_tap_delay_val,
+      c_dq8_tap_delay_val       => c3_dq8_tap_delay_val,
+      c_dq9_tap_delay_val       => c3_dq9_tap_delay_val,
+      c_dq10_tap_delay_val      => c3_dq10_tap_delay_val,
+      c_dq11_tap_delay_val      => c3_dq11_tap_delay_val,
+      c_dq12_tap_delay_val      => c3_dq12_tap_delay_val,
+      c_dq13_tap_delay_val      => c3_dq13_tap_delay_val,
+      c_dq14_tap_delay_val      => c3_dq14_tap_delay_val,
+      c_dq15_tap_delay_val      => c3_dq15_tap_delay_val
       )
     port map
     (
@@ -814,57 +828,57 @@ begin
       );
 
 -----------------------------------------------------------------------------
--- PORT C Read-only (for DVI)
+-- port c read-only (for dvi)
 -----------------------------------------------------------------------------
-  Inst_LocalRstC : entity digilent.LocalRst port map(
-    RST_I  => RstC,
-    CLK_I  => CLKC,
-    SRST_O => SRstC
+  inst_localrstc : entity digilent.localrst port map(
+    rst_i  => rstc,
+    clk_i  => clkc,
+    srst_o => srstc
     );
-  RstC <= RSTC_I or not calib_done;
+  rstc <= rstc_i or not calib_done;
 -----------------------------------------------------------------------------
--- Upper/lower 16-bit selection mux
+-- upper/lower 16-bit selection mux
 -----------------------------------------------------------------------------
-  RDOUTSEL_PROC : process (CLKC)
+  rdoutsel_proc : process (clkc)
   begin
-    if Rising_Edge(CLKC) then
-      if (SRstC = '1') then
+    if rising_edge(clkc) then
+      if (srstc = '1') then
         rd_data_sel <= '0';
-      elsif (ENC = '1') then
+      elsif (enc = '1') then
         rd_data_sel <= not rd_data_sel;
       end if;
     end if;
   end process;
-  DOC <= p3_rd_data(31 downto 16) when rd_data_sel = '1' else
+  doc <= p3_rd_data(31 downto 16) when rd_data_sel = '1' else
          p3_rd_data(15 downto 0);
-  p3_rd_en  <= rd_data_sel and ENC;
-  p3_rd_clk <= CLKC;
+  p3_rd_en  <= rd_data_sel and enc;
+  p3_rd_clk <= clkc;
 
 -----------------------------------------------------------------------------
--- Frame Buffer RDY signal
+-- frame buffer rdy signal
 -----------------------------------------------------------------------------
-  RDY_PROC : process (CLKC)
+  rdy_proc : process (clkc)
   begin
-    if Rising_Edge(CLKC) then
-      if (SRstC = '1') then
-        RDY_O <= '0';
+    if rising_edge(clkc) then
+      if (srstc = '1') then
+        rdy_o <= '0';
       elsif (p3_rd_empty = '0') then
-        RDY_O <= '1';
+        rdy_o <= '1';
       end if;
     end if;
   end process;
 -----------------------------------------------------------------------------
--- Read Addressing
+-- read addressing
 ----------------------------------------------------------------------------- 
-  RDADDRCNT_PROC : process (CLKC)
-    variable hCnt : natural;
+  rdaddrcnt_proc : process (clkc)
+    variable hcnt : natural;
   begin
-    if Rising_Edge(CLKC) then
-      if (SRstC = '1') then
-        hCnt        := 0;
+    if rising_edge(clkc) then
+      if (srstc = '1') then
+        hcnt        := 0;
         pc_rd_addr1 <= 0;
-      elsif (stateRd = stRdCmd) then
-        if (pc_rd_addr1 = 640*2*480/(RD_BATCH*4)-1) then
+      elsif (staterd = strdcmd) then
+        if (pc_rd_addr1 = 640*2*480/(rd_batch*4)-1) then
           pc_rd_addr1 <= 0;
         else
           pc_rd_addr1 <= pc_rd_addr1 + 1;
@@ -873,102 +887,102 @@ begin
     end if;
   end process;
 
-  p3_cmd_byte_addr <= conv_std_logic_vector(pc_rd_addr1 * (RD_BATCH*4)+(2**20), 30);
+  p3_cmd_byte_addr <= conv_std_logic_vector(pc_rd_addr1 * (rd_batch*4)+(2**20), 30);
 
 -----------------------------------------------------------------------------
--- Read FSM
--- CLKC clock domain; issues a read 32 words command, when the data count in
--- the Read FIFO is below 16;
+-- read fsm
+-- clkc clock domain; issues a read 32 words command, when the data count in
+-- the read fifo is below 16;
 -----------------------------------------------------------------------------
-  SYNC_PROC : process (CLKC)
+  sync_proc : process (clkc)
   begin
-    if Rising_Edge(CLKC) then
-      if (SRstC = '1') then
-        stateRd <= stRdIdle;
+    if rising_edge(clkc) then
+      if (srstc = '1') then
+        staterd <= strdidle;
       else
-        stateRd <= nstateRd;
+        staterd <= nstaterd;
       end if;
     end if;
   end process;
 
-  p3_cmd_instr <= MCB_CMD_RD;           -- Port 3 read-only
-  p3_cmd_bl    <= conv_std_logic_vector(RD_BATCH-1, 6);  -- We read 32 dwords (32-bit) at a time
-  p3_cmd_clk   <= CLKC;
+  p3_cmd_instr <= mcb_cmd_rd;           -- port 3 read-only
+  p3_cmd_bl    <= conv_std_logic_vector(rd_batch-1, 6);  -- we read 32 dwords (32-bit) at a time
+  p3_cmd_clk   <= clkc;
 
-  OUTPUT_DECODE : process (stateRd)
+  output_decode : process (staterd)
   begin
     p3_cmd_en <= '0';
-    if stateRd = stRdCmd then
+    if staterd = strdcmd then
       p3_cmd_en <= '1';
     end if;
     
   end process;
 
-  NEXT_STATE_DECODE : process (stateRd, p3_rd_count, p3_rd_error)
+  next_state_decode : process (staterd, p3_rd_count, p3_rd_error)
   begin
-    nstateRd <= stateRd;                --default is to stay in current state
-    case (stateRd) is
-      when stRdIdle =>
+    nstaterd <= staterd;                --default is to stay in current state
+    case (staterd) is
+      when strdidle =>
         if (p3_rd_count < 16) then
-          nstateRd <= stRdCmd;
+          nstaterd <= strdcmd;
         end if;
-      when stRdCmd =>
-        nstateRd <= stRdCmdWait;
-      when stRdCmdWait =>
+      when strdcmd =>
+        nstaterd <= strdcmdwait;
+      when strdcmdwait =>
         if (p3_rd_error = '1') then
-          nstateRd <= stRdErr;          --the read FIFO got empty
-        elsif not (p3_rd_count < 16) then  -- data is present in the FIFO
-          nstateRd <= stRdIdle;
+          nstaterd <= strderr;          --the read fifo got empty
+        elsif not (p3_rd_count < 16) then  -- data is present in the fifo
+          nstaterd <= strdidle;
         end if;
-      when stRdErr =>
+      when strderr =>
         null;
       when others =>
-        nstateRd <= stRdIdle;
+        nstaterd <= strdidle;
     end case;
   end process;
 
 -----------------------------------------------------------------------------
--- PORT B Write-only (for Camera B)
+-- port b write-only (for camera b)
 -----------------------------------------------------------------------------
-  Inst_LocalRstB1 : entity digilent.LocalRst port map(
-    RST_I  => RstB,
-    CLK_I  => CLKB,
-    SRST_O => SRstB
+  inst_localrstb1 : entity digilent.localrst port map(
+    rst_i  => rstb,
+    clk_i  => clkb,
+    srst_o => srstb
     );
-  RstB <= RSTB_I or not calib_done;
+  rstb <= rstb_i or not calib_done;
   
-  Inst_LocalRstB2 : entity digilent.LocalRst port map(
-    RST_I  => calib_done,
-    CLK_I  => CLKB,
-    SRST_O => SCalibDoneB
+  inst_localrstb2 : entity digilent.localrst port map(
+    rst_i  => calib_done,
+    clk_i  => clkb,
+    srst_o => scalibdoneb
     );
 -----------------------------------------------------------------------------
--- Upper/lower 16-bit selection mux
+-- upper/lower 16-bit selection mux
 -----------------------------------------------------------------------------
-  WROUTSEL_PROC_B : process (CLKB)
+  wroutsel_proc_b : process (clkb)
   begin
-    if Rising_Edge(CLKB) then
-      if (SRstB = '1') then
+    if rising_edge(clkb) then
+      if (srstb = '1') then
         pb_wr_data_sel <= '0';
-      elsif (ENB = '1') then
+      elsif (enb = '1') then
         pb_wr_data_sel <= not pb_wr_data_sel;
       end if;
 
-      if (ENB = '1') then
+      if (enb = '1') then
         if (pb_wr_data_sel = '0') then
-          p2_wr_data(15 downto 0) <= DIB;
+          p2_wr_data(15 downto 0) <= dib;
         end if;
       end if;
     end if;
   end process;
 
 -----------------------------------------------------------------------------
--- Port A reset
+-- port a reset
 -----------------------------------------------------------------------------
-  PORTARST_PROC_B : process(CLKB)
+  portarst_proc_b : process(clkb)
   begin
-    if Rising_Edge(CLKB) then
-      if (SRstB = '1') then
+    if rising_edge(clkb) then
+      if (srstb = '1') then
         pb_int_rst <= '1';
       elsif (p2_wr_empty = '1') then  -- port has been reset when no more data is waiting to be written
         pb_int_rst <= '0';
@@ -977,20 +991,20 @@ begin
   end process;
 
   p2_cmd_bl <= conv_std_logic_vector(pb_wr_cnt-1, 6) when pb_int_rst = '1' else
-               conv_std_logic_vector(WR_BATCH-1, 6);  -- We write 32 dwords (32-bit) at a time
-  p2_wr_data(31 downto 16) <= DIB;
+               conv_std_logic_vector(wr_batch-1, 6);  -- we write 32 dwords (32-bit) at a time
+  p2_wr_data(31 downto 16) <= dib;
   --p1_wr_data <= p1_cmd_byte_addr(11 downto 7) & p1_cmd_byte_addr(11 downto 7) & '0' & p1_cmd_byte_addr(11 downto 7) & p1_cmd_byte_addr(11 downto 7) & p1_cmd_byte_addr(11 downto 7) & '0' & p1_cmd_byte_addr(11 downto 7);
-  p2_wr_en                 <= pb_wr_data_sel and ENB;
-  p2_wr_clk                <= CLKB;
+  p2_wr_en                 <= pb_wr_data_sel and enb;
+  p2_wr_clk                <= clkb;
   p2_wr_mask               <= "0000";
 
 -----------------------------------------------------------------------------
--- Write Counter; use this instead of the FIFO's
+-- write counter; use this instead of the fifo's
 -----------------------------------------------------------------------------
-  WRCNT_PROC_B : process(CLKB)
+  wrcnt_proc_b : process(clkb)
   begin
-    if Rising_Edge(CLKB) then
-      if (stateWrB = stWrCmd) then
+    if rising_edge(clkb) then
+      if (statewrb = stwrcmd) then
         if (p2_wr_en = '1' and pb_int_rst = '0') then
           pb_wr_cnt <= 1;
         else
@@ -1003,15 +1017,15 @@ begin
   end process;
 
 -----------------------------------------------------------------------------
--- Write Addressing
+-- write addressing
 ----------------------------------------------------------------------------- 
-  WRADDRCNT_PROC_B : process (CLKB)
+  wraddrcnt_proc_b : process (clkb)
   begin
-    if Rising_Edge(CLKB) then
+    if rising_edge(clkb) then
       if (pb_int_rst = '1' and p2_wr_empty = '1') then
         pb_wr_addr <= 0;
-      elsif (stateWrB = stWrCmd) then
-        if (pb_wr_addr = 640*480*2/(WR_BATCH*4)-1) then
+      elsif (statewrb = stwrcmd) then
+        if (pb_wr_addr = 640*480*2/(wr_batch*4)-1) then
           pb_wr_addr <= 0;
         else
           pb_wr_addr <= pb_wr_addr + 1;
@@ -1020,65 +1034,65 @@ begin
     end if;
   end process;
 
-  --Port B writes to next VMEM_SIZE location
-  p2_cmd_byte_addr <= conv_std_logic_vector(pb_wr_addr * (WR_BATCH*4), 30);
+  --port b writes to next vmem_size location
+  p2_cmd_byte_addr <= conv_std_logic_vector(pb_wr_addr * (wr_batch*4), 30);
 
 -----------------------------------------------------------------------------
--- Write FSM
--- CLKB clock domain; issues a write 32 words command, when we have
--- 32 words to the FIFO; it also issues a write command for less than 32
+-- write fsm
+-- clkb clock domain; issues a write 32 words command, when we have
+-- 32 words to the fifo; it also issues a write command for less than 32
 -- words upon port reset.
 -----------------------------------------------------------------------------
-  WRSYNC_PROC_B : process (CLKB)
+  wrsync_proc_b : process (clkb)
   begin
-    if Rising_Edge(CLKB) then
-      if (SCalibDoneB = '0' or p2_wr_empty = '1') then
-        stateWrB <= stWrIdle;
+    if rising_edge(clkb) then
+      if (scalibdoneb = '0' or p2_wr_empty = '1') then
+        statewrb <= stwridle;
       else
-        stateWrB <= nstateWrB;
+        statewrb <= nstatewrb;
       end if;
     end if;
   end process;
 
-  p2_cmd_instr <= MCB_CMD_WR;           -- Port 1 write-only
-  p2_cmd_clk   <= CLKB;
+  p2_cmd_instr <= mcb_cmd_wr;           -- port 1 write-only
+  p2_cmd_clk   <= clkb;
 
-  WROUTPUT_DECODE_B : process (stateWrB)
+  wroutput_decode_b : process (statewrb)
   begin
     p2_cmd_en <= '0';
-    if stateWrB = stWrCmd then
+    if statewrb = stwrcmd then
       p2_cmd_en <= '1';
     end if;
     
   end process;
 
-  WRNEXT_STATE_DECODE_B : process (stateWrB, p2_wr_count, p2_wr_error, pb_int_rst, p2_wr_empty, pb_wr_cnt)
+  wrnext_state_decode_b : process (statewrb, p2_wr_count, p2_wr_error, pb_int_rst, p2_wr_empty, pb_wr_cnt)
   begin
-    nstateWrB <= stateWrB;              --default is to stay in current state
-    case (stateWrB) is
-      when stWrIdle =>
-        if (pb_wr_cnt >= WR_BATCH or pb_int_rst = '1') then
-          nstateWrB <= stWrCmd;
+    nstatewrb <= statewrb;              --default is to stay in current state
+    case (statewrb) is
+      when stwridle =>
+        if (pb_wr_cnt >= wr_batch or pb_int_rst = '1') then
+          nstatewrb <= stwrcmd;
         end if;
-      when stWrCmd =>
-        nstateWrB <= stWrCmdWait;
-      when stWrCmdWait =>
+      when stwrcmd =>
+        nstatewrb <= stwrcmdwait;
+      when stwrcmdwait =>
         if (p2_wr_error = '1') then
-          nstateWrB <= stWrErr;         --the write FIFO got empty
-        elsif ((pb_int_rst = '0' and p2_wr_count < WR_BATCH) or
-               (pb_int_rst = '1' and p2_wr_empty = '1')) then  -- data got transferred from the FIFO
-          nstateWrB <= stWrIdle;
+          nstatewrb <= stwrerr;         --the write fifo got empty
+        elsif ((pb_int_rst = '0' and p2_wr_count < wr_batch) or
+               (pb_int_rst = '1' and p2_wr_empty = '1')) then  -- data got transferred from the fifo
+          nstatewrb <= stwridle;
         end if;
-      when stWrErr =>
+      when stwrerr =>
         null;
       when others =>
-        nstateWrB <= stWrIdle;
+        nstatewrb <= stwridle;
     end case;
   end process;
 
 
 -------------------------------------------------------------------------------
--- JAG
+-- jag
 -------------------------------------------------------------------------------
 
 
@@ -1287,25 +1301,64 @@ begin
           p0_rd_en   <= '1';
           p1_rd_en   <= '1';
         end if;
-        
+-------------------------------------------------------------------------------
+-- (1)
+-------------------------------------------------------------------------------        
       when alg_high_1 =>
         
-        if param1 > pixelh then
-          nparam1 <= param1 - 1;
-        elsif param1 < pixelh then
+        if param1 < pixelh then
           nparam1 <= param1 + 1;
+        elsif param1 > pixelh then
+          nparam1 <= param1 - 1;
         end if;
-        
-        npixelh <= param1;
-        
-        alg_nstate <= alg_finish_high;
 
+        alg_nstate <= alg_high_2;
+-------------------------------------------------------------------------------
+-- (2)
+-------------------------------------------------------------------------------
+      when alg_high_2 =>
+
+        if param1 < pixelh then
+          nparam2 <= pixelh - param1;
+        elsif param1 > pixelh then
+          nparam2 <= param1 - pixelh;
+        end if;
+
+        alg_nstate <= alg_high_3;
+-------------------------------------------------------------------------------
+-- (3)
+-------------------------------------------------------------------------------
+      when alg_high_3 =>
+
+        if param3 < (param2&"0") then
+          nparam3 <= param3 + 1;
+        elsif param3 > (param2&"0") then
+          nparam3 <= param3 - 1;
+        end if;
+
+        alg_nstate <= alg_high_4;
+-------------------------------------------------------------------------------
+-- (4)
+-------------------------------------------------------------------------------
+      when alg_high_4 =>
+
+        if param2 < param3 then
+          npixelh <= (others => '0');
+        else
+          npixelh <= (others => '1');
+        end if;
+
+        alg_nstate <= alg_finish_high;
+-------------------------------------------------------------------------------
+-- Finish High
+-------------------------------------------------------------------------------       
       when alg_finish_high =>
         p1_wr_en   <= '1';
         alg_nstate <= alg_low;
 -------------------------------------------------------------------------------
 -- Low
 -------------------------------------------------------------------------------        
+
       when alg_low =>
 
         if p1_rd_empty = '0' then
@@ -1316,22 +1369,61 @@ begin
         end if;
 
         if p1_rd_empty = '0' then
-          p1_rd_en   <= '1';
           alg_nstate <= alg_low_1;
+          p1_rd_en   <= '1';
         end if;
-        
+-------------------------------------------------------------------------------
+-- (1)
+-------------------------------------------------------------------------------        
       when alg_low_1 =>
-
-        if param1 > pixell then
-          nparam1 <= param1 - 1;
-        elsif param1 < pixell then
+        
+        if param1 < pixell then
           nparam1 <= param1 + 1;
+        elsif param1 > pixell then
+          nparam1 <= param1 - 1;
         end if;
 
-        npixell <= param1;
-        
-        alg_nstate <= alg_finish_low;
+        alg_nstate <= alg_low_2;
 
+-------------------------------------------------------------------------------
+-- (2)
+-------------------------------------------------------------------------------
+      when alg_low_2 =>
+
+        if param1 < pixell then
+          nparam2 <= pixell - param1;
+        elsif param1 > pixell then
+          nparam2 <= param1 - pixell;
+        end if;
+
+        alg_nstate <= alg_low_3;
+-------------------------------------------------------------------------------
+-- (3)
+-------------------------------------------------------------------------------
+      when alg_low_3 =>
+
+        if param3 < (param2&"0") then
+          nparam3 <= param3 + 1;
+        elsif param3 > (param2&"0") then
+          nparam3 <= param3 - 1;
+        end if;
+
+        alg_nstate <= alg_low_4;
+-------------------------------------------------------------------------------
+-- (4)
+-------------------------------------------------------------------------------
+      when alg_low_4 =>
+
+        if param2 < param3 then
+          npixell <= (others => '0');
+        else
+          npixell <= (others => '1');
+        end if;
+
+        alg_nstate <= alg_finish_low;
+-------------------------------------------------------------------------------
+-- Finish Low
+-------------------------------------------------------------------------------
       when alg_finish_low =>
         p1_wr_en   <= '1';
         p0_wr_en   <= '1';
