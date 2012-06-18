@@ -608,7 +608,7 @@ architecture Behavioral of FBCtl is
   signal nparam3   : unsigned(7 downto 0);
   signal param3    : unsigned(7 downto 0);
 
-  type alg_state_t is (alg_reset, alg_finish, alg_low, alg_high, alg_low_1, alg_high_1);
+  type alg_state_t is (alg_reset, alg_finish_low,alg_finish_high, alg_low, alg_high, alg_low_1, alg_high_1);
 
   signal alg_state  : alg_state_t;
   signal alg_nstate : alg_state_t;
@@ -1157,7 +1157,7 @@ begin
         
       when my_read_p0 =>
 
-        if p0_rd_empty = '1' and p0_wr_empty = '1' and p0_cmd_empty = '1' then
+        if p0_rd_empty = '1' and p0_wr_empty = '1' and p1_wr_empty = '1' and p0_cmd_empty = '1' then
           p0_cmd_en        <= '1';
           p0_cmd_instr     <= MCB_CMD_RD;
           p0_cmd_byte_addr <= conv_std_logic_vector(my_p0_rd_addr, 30);
@@ -1176,7 +1176,7 @@ begin
         
       when my_write_p0 =>
 
-        if p0_wr_count = P0_BATCH then
+        if p0_wr_count = P0_BATCH and p0_cmd_empty = '1' then
           p0_cmd_en        <= '1';
           p0_cmd_instr     <= MCB_CMD_WR;
           p0_cmd_byte_addr <= conv_std_logic_vector(my_p0_wr_addr, 30);
@@ -1185,7 +1185,7 @@ begin
 
       when my_write_p1 =>
 
-        if p1_wr_count = P1_BATCH then
+        if p1_wr_count = P1_BATCH and p1_cmd_empty = '1' then
           p1_cmd_en        <= '1';
           p1_cmd_instr     <= MCB_CMD_WR;
           p1_cmd_byte_addr <= conv_std_logic_vector(my_p1_addr, 30);
@@ -1223,16 +1223,16 @@ begin
   end process;
 
 
-  p0_wr_data(15 downto 11) <= std_logic_vector(in_pixell(7 downto 3));
-  p0_wr_data(10 downto 5)  <= std_logic_vector(in_pixell(7 downto 2));
-  p0_wr_data(4 downto 0)   <= std_logic_vector(in_pixell(7 downto 3));
+  p0_wr_data(15 downto 11) <= std_logic_vector(npixell(7 downto 3));
+  p0_wr_data(10 downto 5)  <= std_logic_vector(npixell(7 downto 2));
+  p0_wr_data(4 downto 0)   <= std_logic_vector(npixell(7 downto 3));
 
-  p0_wr_data(15+16 downto 11+16) <= std_logic_vector(in_pixelh(7 downto 3));
-  p0_wr_data(10+16 downto 5+16)  <= std_logic_vector(in_pixelh(7 downto 2));
-  p0_wr_data(4+16 downto 0+16)   <= std_logic_vector(in_pixelh(7 downto 3));
+  p0_wr_data(15+16 downto 11+16) <= std_logic_vector(npixelh(7 downto 3));
+  p0_wr_data(10+16 downto 5+16)  <= std_logic_vector(npixelh(7 downto 2));
+  p0_wr_data(4+16 downto 0+16)   <= std_logic_vector(npixelh(7 downto 3));
 
 --  p0_wr_data <= p0_rd_data;
-  
+
   in_param1 <= unsigned(p1_rd_data(7 downto 0));
   in_param2 <= unsigned(p1_rd_data(15 downto 8));
   in_param3 <= unsigned(p1_rd_data(23 downto 16));
@@ -1290,17 +1290,19 @@ begin
         
       when alg_high_1 =>
         
-        if param1 < pixelh and param1 > 0 then
+        if param1 > pixelh then
           nparam1 <= param1 - 1;
-        elsif param1 > pixelh and param1 < 255 then
+        elsif param1 < pixelh then
           nparam1 <= param1 + 1;
         end if;
+        
+        npixelh <= param1;
+        
+        alg_nstate <= alg_finish_high;
 
---        npixelh <= param1;
-
+      when alg_finish_high =>
         p1_wr_en   <= '1';
         alg_nstate <= alg_low;
-
 -------------------------------------------------------------------------------
 -- Low
 -------------------------------------------------------------------------------        
@@ -1319,21 +1321,19 @@ begin
         end if;
         
       when alg_low_1 =>
-        
-        if param1 < pixell and param1 > 0 then
+
+        if param1 > pixell then
           nparam1 <= param1 - 1;
-        elsif param1 > pixell and param1 < 255 then
+        elsif param1 < pixell then
           nparam1 <= param1 + 1;
         end if;
 
---        npixell <= param1;
+        npixell <= param1;
+        
+        alg_nstate <= alg_finish_low;
 
+      when alg_finish_low =>
         p1_wr_en   <= '1';
-        alg_nstate <= alg_finish;
-
-
-      when alg_finish =>
-
         p0_wr_en   <= '1';
         alg_nstate <= alg_high;
         
