@@ -608,7 +608,7 @@ architecture Behavioral of FBCtl is
   signal nparam3   : unsigned(7 downto 0);
   signal param3    : unsigned(7 downto 0);
 
-  type alg_state_t is (alg_reset, 
+  type alg_state_t is (alg_reset,
 
                        alg_low,
                        alg_low_1,
@@ -622,7 +622,7 @@ architecture Behavioral of FBCtl is
                        alg_high_2,
                        alg_high_3,
                        alg_high_4,
-                       alg_finish_high );
+                       alg_finish_high);
 
   signal alg_state  : alg_state_t;
   signal alg_nstate : alg_state_t;
