@@ -581,8 +581,38 @@ architecture Behavioral of FBCtl is
   type     my_state_t is (my_idle, my_read_p0, my_read_p1, my_write_p0, my_write_p1, my_inc, my_wait, my_trans, my_trans_2, my_trans_3, my_trans_4, my_wait_l, my_wait_h, my_read_p0_wait, my_reset, my_reset_2, my_idle_2, my_idle_3);
   signal   my_state   : my_state_t;
   signal   my_nstate  : my_state_t;
-  signal   go         : std_logic;  signal   next_go         : std_logic;
-  constant P0_BATCH   : natural := 32;
+  signal   go         : std_logic; signal next_go : std_logic;
+  constant P0_BATCH   : natural := 16;
+  constant P1_BATCH   : natural := 32;
+
+  signal pixell    : unsigned(7 downto 0);
+  signal pixelh    : unsigned(7 downto 0);
+  signal in_pixell : unsigned(7 downto 0);
+  signal in_pixelh : unsigned(7 downto 0);
+  signal npixell   : unsigned(7 downto 0);
+  signal npixelh   : unsigned(7 downto 0);
+
+  signal in_param4 : unsigned(7 downto 0);
+  signal nparam4   : unsigned(7 downto 0);
+  signal param4    : unsigned(7 downto 0);
+
+  signal in_param1 : unsigned(7 downto 0);
+  signal nparam1   : unsigned(7 downto 0);
+  signal param1    : unsigned(7 downto 0);
+
+  signal in_param2 : unsigned(7 downto 0);
+  signal nparam2   : unsigned(7 downto 0);
+  signal param2    : unsigned(7 downto 0);
+
+  signal in_param3 : unsigned(7 downto 0);
+  signal nparam3   : unsigned(7 downto 0);
+  signal param3    : unsigned(7 downto 0);
+
+  type alg_state_t is (alg_reset, alg_finish, alg_low, alg_high, alg_low_1, alg_high_1);
+
+  signal alg_state  : alg_state_t;
+  signal alg_nstate : alg_state_t;
+  
 begin
 ----------------------------------------------------------------------------------
 -- MCB Instantiation
@@ -1059,34 +1089,46 @@ begin
         my_state      <= my_reset;
         my_p0_rd_addr <= 0;
         my_p0_wr_addr <= 2**20;
-        my_p1_addr    <= 0;
+        my_p1_addr    <= 2**21;
         go            <= '0';
         LED_O         <= (others => '0');
-      else
 
+        alg_state <= alg_reset;
+      else
+-------------------------------------------------------------------------------
+-- Memory 
+-------------------------------------------------------------------------------
         if my_state = my_inc then
 
           if (my_p0_rd_addr = 640*2*480-P0_BATCH*4) then
             my_p0_rd_addr <= 0;
             my_p0_wr_addr <= 2**20;
-            my_p1_addr    <= 0;
+            my_p1_addr    <= 2**21;
           else
             my_p0_rd_addr <= my_p0_rd_addr + P0_BATCH*4;
             my_p0_wr_addr <= my_p0_wr_addr + P0_BATCH*4;
-            my_p1_addr    <= my_p1_addr + P0_BATCH*4;
+            my_p1_addr    <= my_p1_addr + P1_BATCH*4;
           end if;
 
         end if;
         go       <= next_go;
         my_state <= my_nstate;
+
+-------------------------------------------------------------------------------
+-- Algo
+-------------------------------------------------------------------------------
+        pixell <= npixell;
+        pixelh <= npixelh;
+
+        param1    <= nparam1;
+        param2    <= nparam2;
+        param3    <= nparam3;
+        param4    <= nparam4;
+        alg_state <= alg_nstate;
         
       end if;
     end if;
   end process;
-
-
-
-
 
 
   process (my_state)
@@ -1094,15 +1136,13 @@ begin
     my_nstate <= my_state;
 
     p0_cmd_en <= '0';
-
     p1_cmd_en <= '0';
-    p1_rd_en  <= '0';
-    p1_wr_en  <= '0';
 
     p0_cmd_byte_addr <= (others => '0');
     p1_cmd_byte_addr <= conv_std_logic_vector(my_p1_addr, 30);
 
     p0_cmd_instr <= (others => '0');
+    p1_cmd_instr <= (others => '0');
 
     debug_wr   <= '0';
     debug_data <= (others => '0');
@@ -1118,23 +1158,40 @@ begin
       when my_read_p0 =>
 
         if p0_rd_empty = '1' and p0_wr_empty = '1' and p0_cmd_empty = '1' then
-          next_go          <= '1';
           p0_cmd_en        <= '1';
           p0_cmd_instr     <= MCB_CMD_RD;
           p0_cmd_byte_addr <= conv_std_logic_vector(my_p0_rd_addr, 30);
-          my_nstate        <= my_write_p0;
+          my_nstate        <= my_read_p1;
         end if;
 
+      when my_read_p1 =>
+
+        if p1_rd_empty = '1' and p1_wr_empty = '1' and p1_cmd_empty = '1' then
+          next_go          <= '1';
+          p1_cmd_en        <= '1';
+          p1_cmd_instr     <= MCB_CMD_RD;
+          p1_cmd_byte_addr <= conv_std_logic_vector(my_p1_addr, 30);
+          my_nstate        <= my_write_p0;
+        end if;
+        
       when my_write_p0 =>
 
         if p0_wr_count = P0_BATCH then
           p0_cmd_en        <= '1';
           p0_cmd_instr     <= MCB_CMD_WR;
           p0_cmd_byte_addr <= conv_std_logic_vector(my_p0_wr_addr, 30);
-          my_nstate        <= my_inc;
-          debug_data       <= X"87"; debug_wr <= '1';
+          my_nstate        <= my_write_p1;
         end if;
 
+      when my_write_p1 =>
+
+        if p1_wr_count = P1_BATCH then
+          p1_cmd_en        <= '1';
+          p1_cmd_instr     <= MCB_CMD_WR;
+          p1_cmd_byte_addr <= conv_std_logic_vector(my_p1_addr, 30);
+          my_nstate        <= my_inc;
+        end if;
+        
       when my_inc =>
         my_nstate <= my_read_p0;
         
@@ -1142,13 +1199,147 @@ begin
     end case;
   end process;
 
---  p0_wr_data <= Unsigned(p0_rd_data(15 downto 11) & "0" + p0_rd_data(10 downto 5) + p0_rd_data(4 downto 0) & "0";
-  p0_wr_data <= p0_rd_data;
-
-  p0_rd_en <= '1' when p0_rd_empty = '0' and p0_wr_full = '0' else '0'; -- and go = '1' else '0';
-  p0_wr_en <= '1' when p0_rd_empty = '0' and p0_wr_full = '0' else '0'; -- and go = '1' else '0';
 
 
+
+  process (p0_rd_data)
+    variable brightness : std_logic_vector(15 downto 0);
+  begin  -- process
+    brightness := conv_std_logic_vector(unsigned("000" & p0_rd_data(15 downto 11) & "0") + unsigned("000" & p0_rd_data(10 downto 5)) + unsigned("000" & p0_rd_data(4 downto 0) & "0"), 16);
+
+
+    in_pixell <= unsigned(brightness(7 downto 0));
+    
+  end process;
+
+  process (p0_rd_Data)
+    variable brightness : std_logic_vector(15 downto 0);
+  begin  -- process
+    brightness := conv_std_logic_vector(unsigned("000" & p0_rd_data(15+16 downto 11+16) & "0") + unsigned("000" & p0_rd_data(10+16 downto 5+16)) + unsigned("000" & p0_rd_data(4+16 downto 0+16) & "0"), 16);
+
+
+    in_pixelh <= unsigned(brightness(7 downto 0));
+    
+  end process;
+
+
+  p0_wr_data(15 downto 11) <= std_logic_vector(in_pixell(7 downto 3));
+  p0_wr_data(10 downto 5)  <= std_logic_vector(in_pixell(7 downto 2));
+  p0_wr_data(4 downto 0)   <= std_logic_vector(in_pixell(7 downto 3));
+
+  p0_wr_data(15+16 downto 11+16) <= std_logic_vector(in_pixelh(7 downto 3));
+  p0_wr_data(10+16 downto 5+16)  <= std_logic_vector(in_pixelh(7 downto 2));
+  p0_wr_data(4+16 downto 0+16)   <= std_logic_vector(in_pixelh(7 downto 3));
+
+--  p0_wr_data <= p0_rd_data;
+  
+  in_param1 <= unsigned(p1_rd_data(7 downto 0));
+  in_param2 <= unsigned(p1_rd_data(15 downto 8));
+  in_param3 <= unsigned(p1_rd_data(23 downto 16));
+  in_param4 <= unsigned(p1_rd_data(31 downto 24));
+
+  p1_wr_data(7 downto 0)   <= std_logic_vector(nparam1);
+  p1_wr_data(15 downto 8)  <= std_logic_vector(nparam2);
+  p1_wr_data(23 downto 16) <= std_logic_vector(nparam3);
+  p1_wr_data(31 downto 24) <= std_logic_vector(nparam4);
+
+  process(alg_state)
+  begin  -- process
+
+    p0_rd_en <= '0';
+    p0_wr_en <= '0';
+    p1_rd_en <= '0';
+    p1_wr_en <= '0';
+
+    nparam1 <= param1;
+    nparam2 <= param2;
+    nparam3 <= param3;
+    nparam4 <= param4;
+
+    npixell <= pixell;
+    npixelh <= pixelh;
+
+    alg_nstate <= alg_state;
+
+    case alg_state is
+      when alg_reset =>
+        alg_nstate <= alg_high;
+
+-------------------------------------------------------------------------------
+-- High
+-------------------------------------------------------------------------------
+      when alg_high =>
+
+        if p0_rd_empty = '0' then
+          npixell <= in_pixell;
+          npixelh <= in_pixelh;
+        end if;
+
+        if p1_rd_empty = '0' then
+          nparam1 <= in_param1;
+          nparam2 <= in_param2;
+          nparam3 <= in_param3;
+          nparam4 <= in_param4;
+        end if;
+
+        if p0_rd_empty = '0' and p1_rd_empty = '0' then
+          alg_nstate <= alg_high_1;
+          p0_rd_en   <= '1';
+          p1_rd_en   <= '1';
+        end if;
+        
+      when alg_high_1 =>
+        
+        if param1 < pixelh and param1 > 0 then
+          nparam1 <= param1 - 1;
+        elsif param1 > pixelh and param1 < 255 then
+          nparam1 <= param1 + 1;
+        end if;
+
+--        npixelh <= param1;
+
+        p1_wr_en   <= '1';
+        alg_nstate <= alg_low;
+
+-------------------------------------------------------------------------------
+-- Low
+-------------------------------------------------------------------------------        
+      when alg_low =>
+
+        if p1_rd_empty = '0' then
+          nparam1 <= in_param1;
+          nparam2 <= in_param2;
+          nparam3 <= in_param3;
+          nparam4 <= in_param4;
+        end if;
+
+        if p1_rd_empty = '0' then
+          p1_rd_en   <= '1';
+          alg_nstate <= alg_low_1;
+        end if;
+        
+      when alg_low_1 =>
+        
+        if param1 < pixell and param1 > 0 then
+          nparam1 <= param1 - 1;
+        elsif param1 > pixell and param1 < 255 then
+          nparam1 <= param1 + 1;
+        end if;
+
+--        npixell <= param1;
+
+        p1_wr_en   <= '1';
+        alg_nstate <= alg_finish;
+
+
+      when alg_finish =>
+
+        p0_wr_en   <= '1';
+        alg_nstate <= alg_high;
+        
+      when others => null;
+    end case;
+  end process;
 
   p0_cmd_clk <= clkc;
   p0_cmd_bl  <= conv_std_logic_vector(P0_BATCH-1, 6);
@@ -1156,7 +1347,7 @@ begin
   p0_wr_clk  <= clkc;
 
   p1_cmd_clk <= clkc;
-  p1_cmd_bl  <= conv_std_logic_vector(P0_BATCH, 6);
+  p1_cmd_bl  <= conv_std_logic_vector(P1_BATCH-1, 6);
   p1_rd_clk  <= clkc;
   p1_wr_clk  <= clkc;
 
