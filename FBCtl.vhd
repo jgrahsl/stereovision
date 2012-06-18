@@ -1,4 +1,4 @@
-----------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
 -- Company: Digilent Ro
 -- Engineer: Elod Gyorgy
 -- 
@@ -61,25 +61,30 @@ entity FBCtl is
 ------------------------------------------------------------------------------------
 -- Frame Buffer
 ------------------------------------------------------------------------------------
-    RDY_O            : out   std_logic;
+    RDY_O   : out std_logic;
 ------------------------------------------------------------------------------------
 -- Title : Port C - read only
 -- Description: Supports straightforward read functionality for whole frames on a
 -- constant basis. Connect to Display Controller
 ------------------------------------------------------------------------------------
-    ENC              : in    std_logic;  --port enable
-    RSTC_I           : in    std_logic;  --asynchronous port reset
-    DOC              : out   std_logic_vector (COLORDEPTH - 1 downto 0);  --data output
-    CLKC             : in    std_logic;  --port clock
-    RD_MODE          : in    std_logic_vector(1 downto 0);
+    ENC     : in  std_logic;            --port enable
+    RSTC_I  : in  std_logic;            --asynchronous port reset
+    DOC     : out std_logic_vector (COLORDEPTH - 1 downto 0);  --data output
+    CLKC    : in  std_logic;            --port clock
+    RD_MODE : in  std_logic_vector(1 downto 0);
 ------------------------------------------------------------------------------------
 -- Title : Port B - write only
 ------------------------------------------------------------------------------------
-    ENB              : in    std_logic;  --port enable
-    RSTB_I           : in    std_logic;  --asynchronous port reset
-    DIB              : in    std_logic_vector (COLORDEPTH - 1 downto 0);  --data output
-    CLKB             : in    std_logic;  --port clock
-----------------------------------------------------------------------------------
+    ENB     : in  std_logic;            --port enable
+    RSTB_I  : in  std_logic;            --asynchronous port reset
+    DIB     : in  std_logic_vector (COLORDEPTH - 1 downto 0);  --data output
+    CLKB    : in  std_logic;            --port clock
+
+    LED_O : out std_logic_vector(7 downto 0);
+
+    debug_wr         : out   std_logic;
+    debug_data       : out   std_logic_vector(7 downto 0);
+---------------------------------------------------------------------------------      
 -- High-speed PLL clock interface/reset
 ----------------------------------------------------------------------------------  
     ddr2clk_2x       : in    std_logic;
@@ -538,14 +543,14 @@ architecture Behavioral of FBCtl is
   signal p1_cmd_byte_addr : std_logic_vector(29 downto 0);
   signal p1_cmd_empty     : std_logic;
   signal p1_cmd_full      : std_logic;
-  signal p1_rd_clk      : std_logic;
-  signal p1_rd_en       : std_logic;
-  signal p1_rd_data     : std_logic_vector(C3_P1_DATA_PORT_SIZE - 1 downto 0);
-  signal p1_rd_full     : std_logic;
-  signal p1_rd_empty    : std_logic;
-  signal p1_rd_count    : std_logic_vector(6 downto 0);
-  signal p1_rd_overflow : std_logic;
-  signal p1_rd_error    : std_logic;
+  signal p1_rd_clk        : std_logic;
+  signal p1_rd_en         : std_logic;
+  signal p1_rd_data       : std_logic_vector(C3_P1_DATA_PORT_SIZE - 1 downto 0);
+  signal p1_rd_full       : std_logic;
+  signal p1_rd_empty      : std_logic;
+  signal p1_rd_count      : std_logic_vector(6 downto 0);
+  signal p1_rd_overflow   : std_logic;
+  signal p1_rd_error      : std_logic;
   signal p1_wr_clk        : std_logic;
   signal p1_wr_en         : std_logic;
   signal p1_wr_data       : std_logic_vector(C3_P1_DATA_PORT_SIZE - 1 downto 0);
@@ -556,24 +561,28 @@ architecture Behavioral of FBCtl is
   signal p1_wr_underrun   : std_logic;
   signal p1_wr_error      : std_logic;
 
-  signal pb_wr_cnt                                   : natural                        := 0;
-  signal pb_wr_addr                                 : natural range 0 to VMEM_SIZE-1 := 0;
+  signal pb_wr_cnt                  : natural                        := 0;
+  signal pb_wr_addr                 : natural range 0 to VMEM_SIZE-1 := 0;
   signal pb_wr_data_sel, pb_int_rst : std_logic;
 
   signal pc_rd_addr1, pc_rd_addr2 : natural   := 0;
-  signal fVMemSource                           : std_logic := '0';
-  signal rd_data_sel                           : std_logic;
-  signal int_rd_mode                           : std_logic_vector(1 downto 0);
+  signal fVMemSource              : std_logic := '0';
+  signal rd_data_sel              : std_logic;
+  signal int_rd_mode              : std_logic_vector(1 downto 0);
 
   signal RstB, RstC, SRstC, SRstB, SCalibDoneB : std_logic;
 
 
-  signal my_addr    : natural := 0;
+  signal my_p0_rd_addr : natural range 0 to 2**22-1 := 0;
+  signal my_p0_wr_addr : natural range 0 to 2**22-1 := 0;
+  signal my_p1_addr    : natural range 0 to 2**22-1 := 0;
+
   signal fill_count : natural range 0 to 32;
-  type   my_state_t is (my_idle, my_fill, my_write, my_write_inc);
+  type   my_state_t is (my_idle, my_read_p0, my_read_p1, my_write_p0, my_write_p1, my_inc, my_wait, my_trans, my_trans_2, my_trans_3, my_trans_4,my_wait_l, my_wait_h, my_read_p0_wait, my_reset, my_reset_2, my_idle_2, my_idle_3);
   signal my_state   : my_state_t;
   signal my_nstate  : my_state_t;
-  
+
+  constant ACC : std_logic := '1';
 begin
 ----------------------------------------------------------------------------------
 -- MCB Instantiation
@@ -797,7 +806,7 @@ begin
     end if;
   end process;
   DOC <= p3_rd_data(31 downto 16) when rd_data_sel = '1' else
-            p3_rd_data(15 downto 0);
+         p3_rd_data(15 downto 0);
   p3_rd_en  <= rd_data_sel and ENC;
   p3_rd_clk <= CLKC;
 
@@ -834,7 +843,7 @@ begin
     end if;
   end process;
 
-  p3_cmd_byte_addr <= conv_std_logic_vector(pc_rd_addr1 * (RD_BATCH*4), 30);
+  p3_cmd_byte_addr <= conv_std_logic_vector(pc_rd_addr1 * (RD_BATCH*4)+(2**20), 30);
 
 -----------------------------------------------------------------------------
 -- Read FSM
@@ -1038,34 +1047,108 @@ begin
   end process;
 
 
+-------------------------------------------------------------------------------
+-- JAG
+-------------------------------------------------------------------------------
+
 
   process (clkc)
   begin  -- process
     if clkc'event and clkc = '1' then   -- rising clock edge
-      if RSTC_I = '1' then              -- synchronous reset (active high)
-        my_state <= my_idle;
-        my_addr  <= 0;
+      if SRSTC = '1' then               -- synchronous reset (active high)
+        my_state      <= my_reset;
+        my_p0_rd_addr <= 0;
+        my_p0_wr_addr <= 2**20;
+        my_p1_addr    <= 0;
+
+        LED_O <= (others => '0');
       else
 
-        if my_state = my_idle then
-          fill_count <= 31;
-        end if;
-        if my_state = my_fill then
-          if fill_count > 0 then
-            fill_count <= fill_count - 1;
-          end if;
-        end if;
-        if my_state = my_write_inc then
-          if (my_addr < 128) then
-            my_addr <= my_addr + 32;
+        if my_state = my_inc then
+
+          if (my_p0_rd_addr = 640*2*480-32*4) then
+            my_p0_rd_addr <= 0;
+            my_p0_wr_addr <= 2**20;
+            my_p1_addr    <= 0;
           else
-            my_addr <= 0;
-          end if;          
+            my_p0_rd_addr <= my_p0_rd_addr + 32*4;
+            my_p0_wr_addr <= my_p0_wr_addr + 32*4;
+            my_p1_addr    <= my_p1_addr + 32*4;
+          end if;
+
         end if;
+
+
+        if my_state = my_idle then
+          LED_O(0) <= '1';
+        elsif ACC = '1' then
+          LED_O(0) <= '0';
+        end if;
+
+        if my_state = my_read_p0 then
+          LED_O(1) <= '1';
+        elsif ACC = '1' then
+          LED_O(1) <= '0';
+        end if;
+
+        if my_state = my_write_p0 then
+          LED_O(2) <= '1';
+        elsif ACC = '1' then
+          LED_O(2) <= '0';
+        end if;
+
+        if my_state = my_inc then
+          LED_O(3) <= '1';
+        elsif ACC = '1' then
+          LED_O(3) <= '0';
+        end if;
+
+        if p0_rd_empty = '1' then
+          LED_O(4) <= '1';
+        elsif ACC = '1' then
+          LED_O(4) <= '0';
+        end if;
+
+        if p0_wr_empty = '1' then
+          LED_O(5) <= '1';
+        elsif ACC = '1' then
+          LED_O(5) <= '0';
+        end if;
+
+        if p0_wr_error = '1' then
+          LED_O(6) <= '1';
+        elsif ACC = '1' then
+          LED_O(6) <= '0';
+        end if;
+
+        if p0_rd_error = '1' then
+          LED_O(7) <= '1';
+        elsif ACC = '1' then
+          LED_O(7) <= '0';
+        end if;
+        --LED_O(7) <= p0_rd_empty;   
+
+        --  LED_O(6 downto 0) <= p0_wr_count(6 downto 0);
+
+        LED_O <= (others => '1');
+
+        if my_state = my_read_p0_wait then
+          LED_O(6 downto 0) <= p0_rd_count;
+          LED_O(7)          <= '1';
+        end if;
+
+        if my_state = my_read_p0 then
+
+        end if;
+
+
         my_state <= my_nstate;
+        
       end if;
     end if;
   end process;
+
+
 
   process (my_state)
   begin  -- process
@@ -1075,46 +1158,138 @@ begin
     p0_rd_en  <= '0';
     p0_wr_en  <= '0';
 
+    p1_cmd_en <= '0';
+    p1_rd_en  <= '0';
+    p1_wr_en  <= '0';
+
+    p0_cmd_byte_addr <= (others => '0');
+    p1_cmd_byte_addr <= conv_std_logic_vector(my_p1_addr, 30);
+
+    p0_cmd_instr <= (others => '0');
+
+    debug_wr   <= '0';
+    debug_data <= (others => '0');
+
     case my_state is
+
+      when my_reset =>
+        my_nstate <= my_reset_2;
+
+      when my_reset_2 =>
+        my_nstate  <= my_idle;
+        debug_data <= X"80"; debug_wr <= '1';
+        
       when my_idle =>
+
+        if p0_rd_empty = '1' then
+          my_nstate  <= my_idle_2;
+          debug_data <= X"81"; debug_wr <= '1';
+        end if;
+
+      when my_idle_2 =>
+        
         if p0_wr_empty = '1' then
-          my_nstate <= my_fill;
+          my_nstate  <= my_idle_3;
+          debug_data <= X"82"; debug_wr <= '1';
         end if;
 
-      when my_fill =>
-        p0_wr_en <= '1';
+      when my_idle_3 =>
+        
+        my_nstate  <= my_read_p0;
+        debug_data <= X"83"; debug_wr <= '1';
+        
+        
+      when my_read_p0 =>
 
-        if fill_count = 0 then
-          my_nstate <= my_write;
+        if p0_rd_empty = '1' and p0_cmd_empty = '1' then
+          p0_cmd_en        <= '1';
+          p0_cmd_instr     <= MCB_CMD_RD;
+          p0_cmd_byte_addr <= conv_std_logic_vector(my_p0_rd_addr, 30);
+          my_nstate        <= my_read_p0_wait;
+          debug_data       <= X"84"; debug_wr <= '1';
         end if;
 
-      when my_write =>
-        p0_cmd_en <= '1';
+      when my_read_p0_wait =>
+        debug_data <= "0" & p0_rd_count; debug_wr <= '1';
+        if p0_rd_count = 32 then
+          my_nstate  <= my_trans;
+          debug_data <= X"85"; debug_wr <= '1';
+        end if;
 
-        my_nstate <= my_write_inc;
+      when my_trans =>
+        debug_data <= "0" & p0_wr_count; debug_wr <= '1';
+        if p0_rd_empty = '0' and p0_wr_full = '0' then
+          p0_rd_en <= '1';
+          p0_wr_en <= '1';
+        end if;
+
+        if p0_wr_count = 32 then
+          my_nstate  <= my_trans_2;
+          debug_data <= X"86"; debug_wr <= '1';
+        end if;
 
 
-      when my_write_inc =>
-        my_nstate <= my_idle;
+      when my_trans_2 =>
+
+        debug_data <= p0_rd_empty & p0_rd_count; debug_wr <= '1';
+
+        my_nstate <= my_trans_3;
+
+      when my_trans_3 =>
+
+        if p0_wr_count = 32 and p0_rd_empty = '1' then
+          debug_data <= X"FF"; debug_wr <= '1';
+          my_nstate <= my_write_p0;
+        else
+          debug_data <= X"AA"; debug_wr <= '1';                  
+        end if;
+
+      when my_write_p0 =>
+        
+        if p0_wr_count = 32 and p0_cmd_empty = '1' then
+          p0_cmd_en        <= '1';
+          p0_cmd_instr     <= MCB_CMD_WR;
+          p0_cmd_byte_addr <= conv_std_logic_vector(my_p0_wr_addr, 30);
+          my_nstate        <= my_inc;
+          debug_data       <= X"87"; debug_wr <= '1';
+        end if;
+
+      when my_inc =>
+
+        my_nstate  <= my_wait_l;
+        debug_data <= X"88"; debug_wr <= '1';
+
+      when my_wait_l =>
+        debug_data <= "0" & p0_rd_count; debug_wr <= '1';
+        my_nstate  <= my_wait_h;
+
+      when my_wait_h =>
+
+        my_nstate <= my_read_p0;
         
       when others => null;
     end case;
+
+    
   end process;
 
-  p0_cmd_byte_addr <= conv_std_logic_vector(my_addr, 30);
-  p0_cmd_instr     <= MCB_CMD_WR;
-  p0_cmd_bl        <= conv_std_logic_vector(32, 6);
-  p0_cmd_clk       <= clkc;
+  p0_wr_data <= p0_rd_data;
 
-  p0_rd_clk <= clkc;
-  p0_wr_clk <= clkc;
 
-  p0_wr_data <= (others => '0');
+
+  p0_cmd_clk <= clkc;
+  p0_cmd_bl  <= conv_std_logic_vector(31, 6);
+  p0_rd_clk  <= clkc;
+  p0_wr_clk  <= clkc;
+
+  p1_cmd_clk <= clkc;
+  p1_cmd_bl  <= conv_std_logic_vector(31, 6);
+  p1_rd_clk  <= clkc;
+  p1_wr_clk  <= clkc;
+
+
   p0_wr_mask <= (others => '0');
-
-  
-
-
+  p1_wr_mask <= (others => '0');
 
 end Behavioral;
 

@@ -1,3 +1,5 @@
+Net rxd LOC=A16  |  IOSTANDARD=LVCMOS33;
+Net txd LOC=B16  |  IOSTANDARD=LVCMOS33;
 
 NET "CLK_I" LOC = L15;
 NET "RESET_I" LOC = T15;
@@ -173,3 +175,4 @@ NET  "mcb3_rzq"                                  LOC = "L6" ;
 #MCB bank but must be left as a no-connect (NC) pin.#
 ##################################################################################
 NET  "mcb3_zio"                                  LOC = "C2" ;
+
