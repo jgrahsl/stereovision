@@ -1305,11 +1305,12 @@ begin
 -- (1)
 -------------------------------------------------------------------------------        
       when alg_high_1 =>
-        
-        if param1 < pixelh then
-          nparam1 <= param1 + 1;
-        elsif param1 > pixelh then
-          nparam1 <= param1 - 1;
+        if param4(0) = '0' then
+          if param1 < pixelh then
+            nparam1 <= param1 + 1;
+          elsif param1 > pixelh then
+            nparam1 <= param1 - 1;
+          end if;
         end if;
 
         alg_nstate <= alg_high_2;
@@ -1344,8 +1345,10 @@ begin
 
         if param2 < param3 then
           npixelh <= (others => '0');
+          nparam4 <= (others => '0');
         else
           npixelh <= (others => '1');
+          nparam4 <= (others => '1');
         end if;
 
         alg_nstate <= alg_finish_high;
@@ -1376,13 +1379,13 @@ begin
 -- (1)
 -------------------------------------------------------------------------------        
       when alg_low_1 =>
-        
-        if param1 < pixell then
-          nparam1 <= param1 + 1;
-        elsif param1 > pixell then
-          nparam1 <= param1 - 1;
+        if param4(0) = '0' then
+          if param1 < pixell then
+            nparam1 <= param1 + 1;
+          elsif param1 > pixell then
+            nparam1 <= param1 - 1;
+          end if;
         end if;
-
         alg_nstate <= alg_low_2;
 
 -------------------------------------------------------------------------------
@@ -1416,8 +1419,10 @@ begin
 
         if param2 < param3 then
           npixell <= (others => '0');
+          nparam4 <= (others => '0');
         else
           npixell <= (others => '1');
+          nparam4 <= (others => '1');
         end if;
 
         alg_nstate <= alg_finish_low;
