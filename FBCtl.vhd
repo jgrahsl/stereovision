@@ -419,45 +419,13 @@ architecture Behavioral of FBCtl is
       selfrefresh_mode  : out std_logic
       );
   end component memc3_wrapper;
-------------------------------------------------------------------------------------
--- Debug components
-------------------------------------------------------------------------------------
-  component icon
-    port (
-      CONTROL0 : inout std_logic_vector(35 downto 0);
-      CONTROL1 : inout std_logic_vector(35 downto 0)
-      );
-  end component;
 
-  component ila
-    port (
-      CLK     : in    std_logic;
-      DATA    : in    std_logic_vector(255 downto 0);
-      TRIG0   : in    std_logic_vector(1 downto 0);
-      CONTROL : inout std_logic_vector(35 downto 0)
-      );
-  end component;
 
-  component vio
-    port (
-      CONTROL   : inout std_logic_vector(35 downto 0);
-      ASYNC_OUT : out   std_logic_vector(6 downto 0)
-      );
-  end component;
-
-  attribute syn_black_box         : boolean;
-  attribute syn_noprune           : boolean;
-  attribute syn_black_box of icon : component is true;
-  attribute syn_noprune of icon   : component is true;
-  attribute syn_black_box of ila  : component is true;
-  attribute syn_noprune of ila    : component is true;
-  attribute syn_black_box of vio  : component is true;
-  attribute syn_noprune of vio    : component is true;
 ----------------------------------------------------------------------------------
 -- MCB Commands
 ---------------------------------------------------------------------------------- 
-  constant MCB_CMD_RD             : std_logic_vector(2 downto 0) := "001";
-  constant MCB_CMD_WR             : std_logic_vector(2 downto 0) := "000";
+  constant MCB_CMD_RD : std_logic_vector(2 downto 0) := "001";
+  constant MCB_CMD_WR : std_logic_vector(2 downto 0) := "000";
 
   constant RD_BATCH            : natural := 16;
   constant WR_BATCH            : natural := 32;
@@ -836,58 +804,6 @@ begin
     srst_o => srstc
     );
   rstc <= rstc_i or not calib_done;
------------------------------------------------------------------------------
--- upper/lower 16-bit selection mux
------------------------------------------------------------------------------
-  rdoutsel_proc : process (clkc)
-  begin
-    if rising_edge(clkc) then
-      if (srstc = '1') then
-        rd_data_sel <= '0';
-      elsif (enc = '1') then
-        rd_data_sel <= not rd_data_sel;
-      end if;
-    end if;
-  end process;
-  doc <= p3_rd_data(31 downto 16) when rd_data_sel = '1' else
-         p3_rd_data(15 downto 0);
-  p3_rd_en  <= rd_data_sel and enc;
-  p3_rd_clk <= clkc;
-
------------------------------------------------------------------------------
--- frame buffer rdy signal
------------------------------------------------------------------------------
-  rdy_proc : process (clkc)
-  begin
-    if rising_edge(clkc) then
-      if (srstc = '1') then
-        rdy_o <= '0';
-      elsif (p3_rd_empty = '0') then
-        rdy_o <= '1';
-      end if;
-    end if;
-  end process;
------------------------------------------------------------------------------
--- read addressing
------------------------------------------------------------------------------ 
-  rdaddrcnt_proc : process (clkc)
-    variable hcnt : natural;
-  begin
-    if rising_edge(clkc) then
-      if (srstc = '1') then
-        hcnt        := 0;
-        pc_rd_addr1 <= 0;
-      elsif (staterd = strdcmd) then
-        if (pc_rd_addr1 = 640*2*480/(rd_batch*4)-1) then
-          pc_rd_addr1 <= 0;
-        else
-          pc_rd_addr1 <= pc_rd_addr1 + 1;
-        end if;
-      end if;
-    end if;
-  end process;
-
-  p3_cmd_byte_addr <= conv_std_logic_vector(pc_rd_addr1 * (rd_batch*4)+(2**20), 30);
 
 -----------------------------------------------------------------------------
 -- read fsm
@@ -898,39 +814,60 @@ begin
   begin
     if rising_edge(clkc) then
       if (srstc = '1') then
-        staterd <= strdidle;
+        staterd     <= strdidle;
+        rd_data_sel <= '0';
+        pc_rd_addr1 <= 0;
+        rdy_o       <= '0';
       else
+        
         staterd <= nstaterd;
+
+        if (enc = '1') then
+          rd_data_sel <= not rd_data_sel;
+        end if;
+        if (staterd = strdcmd) then
+          if (pc_rd_addr1 = 640*2*480/(rd_batch*4)-1) then
+            pc_rd_addr1 <= 0;
+          else
+            pc_rd_addr1 <= pc_rd_addr1 + 1;
+          end if;
+        end if;
+        if (p3_rd_empty = '0') then
+          rdy_o <= '1';
+        end if;
       end if;
+      
     end if;
   end process;
-
-  p3_cmd_instr <= mcb_cmd_rd;           -- port 3 read-only
-  p3_cmd_bl    <= conv_std_logic_vector(rd_batch-1, 6);  -- we read 32 dwords (32-bit) at a time
-  p3_cmd_clk   <= clkc;
-
-  output_decode : process (staterd)
-  begin
-    p3_cmd_en <= '0';
-    if staterd = strdcmd then
-      p3_cmd_en <= '1';
-    end if;
-    
-  end process;
+  doc <= p3_rd_data(31 downto 16) when rd_data_sel = '1' else
+                      p3_rd_data(15 downto 0);
 
   next_state_decode : process (staterd, p3_rd_count, p3_rd_error)
   begin
     nstaterd <= staterd;                --default is to stay in current state
+
+    p3_cmd_instr <= mcb_cmd_rd;         -- port 3 read-only
+    p3_cmd_bl    <= conv_std_logic_vector(rd_batch-1, 6);  -- we read 32 dwords (32-bit) at a time
+    p3_cmd_clk   <= clkc;
+
+    p3_cmd_en        <= '0';
+    p3_cmd_byte_addr <= conv_std_logic_vector(pc_rd_addr1 * (rd_batch*4)+(2**20), 30);
+
+    p3_rd_en  <= rd_data_sel and enc;
+    p3_rd_clk <= clkc;
+
+
     case (staterd) is
       when strdidle =>
         if (p3_rd_count < 16) then
           nstaterd <= strdcmd;
         end if;
       when strdcmd =>
-        nstaterd <= strdcmdwait;
+        p3_cmd_en <= '1';
+        nstaterd  <= strdcmdwait;
       when strdcmdwait =>
         if (p3_rd_error = '1') then
-          nstaterd <= strderr;          --the read fifo got empty
+          nstaterd <= strderr;             --the read fifo got empty
         elsif not (p3_rd_count < 16) then  -- data is present in the fifo
           nstaterd <= strdidle;
         end if;

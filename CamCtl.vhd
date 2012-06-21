@@ -108,7 +108,7 @@ attribute BUFFER_TYPE of PCLK_I: signal is "BUFG";
 		natural(ceil(real(CMD_DELAY*1000*CLOCKFREQ)));
 	
 	--modify this to reflect the number of configuration words
-	constant INIT_VECTORS : natural := 26;
+	constant INIT_VECTORS : natural := 36;
 	constant DATA_WIDTH : integer := 33;
 	constant ADDR_WIDTH : natural := natural(ceil(log(real(INIT_VECTORS), 2.0)));
 	
@@ -127,8 +127,21 @@ attribute BUFFER_TYPE of PCLK_I: signal is "BUFG";
 		
 		IWR & x"338C2795", -- Output format; Context A shadow
 		IWR & x"33900030",
+
+		IWR & x"338C2799", -- Special
+		IWR & x"33900000",
+                                          
 		IWR & x"338C2719", -- Read mode; Context A
 		IWR & x"3390046C",
+
+                                          
+		IWR & x"338CA102", -- Driver enable
+		IWR & x"33900000", -- = 0
+
+		IWR & x"338CA129", -- 
+		IWR & x"33900000", -- = 0
+                                          
+                                          
 		IWR & x"338C2703", -- Output width; Context A
 		IWR & x"33900280", -- 640
 		IWR & x"338C2705", -- Output height; Context A
@@ -142,10 +155,11 @@ attribute BUFFER_TYPE of PCLK_I: signal is "BUFG";
 		IWR & x"338C2757", -- Crop Y1; Context A
 		IWR & x"33900258", -- 600
 
---		IWR & x"338CA103", -- Refresh Sequencer
---		IWR & x"33900005", -- = 5
---		IWR & x"338CA103", -- Refresh Sequencer Mode
---		IWR & x"33900006", -- = 6
+                                          
+		IWR & x"338CA103", -- Refresh Sequencer
+		IWR & x"33900005", -- = 5
+		IWR & x"338CA103", -- Refresh Sequencer Mode
+		IWR & x"33900006", -- = 6
 
 		IWR & x"32020008", -- Kick-start MCU
 		IWR & x"301A02CC" -- reset/output control; parallel enable, drive pins, start streaming 		
