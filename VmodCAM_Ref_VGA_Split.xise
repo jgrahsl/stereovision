@@ -120,6 +120,13 @@
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="86"/>
       <association xil_pn:name="Implementation" xil_pn:seqID="86"/>
     </file>
+    <file xil_pn:name="comm_fpga_fx2.vhdl" xil_pn:type="FILE_VHDL">
+      <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="93"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="93"/>
+    </file>
+    <file xil_pn:name="fpgalink.ucf" xil_pn:type="FILE_UCF">
+      <association xil_pn:name="Implementation" xil_pn:seqID="94"/>
+    </file>
     <file xil_pn:name="ipcore_dir/dcm_fixed.xise" xil_pn:type="FILE_COREGENISE">
       <association xil_pn:name="Implementation" xil_pn:seqID="0"/>
     </file>
