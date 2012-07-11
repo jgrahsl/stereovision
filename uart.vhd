@@ -71,7 +71,7 @@ architecture rtl of uart is
   signal rx_clk_ena : std_logic;
 
 
-  constant clk16_cnt : integer := (24000000/19200+8)/16-1;
+  constant clk16_cnt : integer := (40000000/19200+8)/16-1;
   
 
 begin

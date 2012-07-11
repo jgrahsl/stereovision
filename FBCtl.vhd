@@ -896,9 +896,21 @@ begin
 -----------------------------------------------------------------------------
 -- upper/lower 16-bit selection mux
 -----------------------------------------------------------------------------
-  wroutsel_proc_b : process (clkb)
+  portarst_proc_b : process(clkb)
   begin
     if rising_edge(clkb) then
+-------------------------------------------------------------------------------
+-- PB_INT_RST
+-------------------------------------------------------------------------------
+      if (srstb = '1') then
+        pb_int_rst <= '1';
+      elsif (p2_wr_empty = '1') then  -- port has been reset when no more data is waiting to be written
+        pb_int_rst <= '0';
+      end if;
+
+-------------------------------------------------------------------------------
+-- SELECTOR
+-------------------------------------------------------------------------------
       if (srstb = '1') then
         pb_wr_data_sel <= '0';
       elsif (enb = '1') then
@@ -910,55 +922,9 @@ begin
           p2_wr_data(15 downto 0) <= dib;
         end if;
       end if;
-    end if;
-  end process;
-
------------------------------------------------------------------------------
--- port a reset
------------------------------------------------------------------------------
-  portarst_proc_b : process(clkb)
-  begin
-    if rising_edge(clkb) then
-      if (srstb = '1') then
-        pb_int_rst <= '1';
-      elsif (p2_wr_empty = '1') then  -- port has been reset when no more data is waiting to be written
-        pb_int_rst <= '0';
-      end if;
-    end if;
-  end process;
-
-  p2_cmd_bl <= conv_std_logic_vector(pb_wr_cnt-1, 6) when pb_int_rst = '1' else
-               conv_std_logic_vector(wr_batch-1, 6);  -- we write 32 dwords (32-bit) at a time
-  p2_wr_data(31 downto 16) <= dib;
-  --p1_wr_data <= p1_cmd_byte_addr(11 downto 7) & p1_cmd_byte_addr(11 downto 7) & '0' & p1_cmd_byte_addr(11 downto 7) & p1_cmd_byte_addr(11 downto 7) & p1_cmd_byte_addr(11 downto 7) & '0' & p1_cmd_byte_addr(11 downto 7);
-  p2_wr_en                 <= pb_wr_data_sel and enb;
-  p2_wr_clk                <= clkb;
-  p2_wr_mask               <= "0000";
-
------------------------------------------------------------------------------
--- write counter; use this instead of the fifo's
------------------------------------------------------------------------------
-  wrcnt_proc_b : process(clkb)
-  begin
-    if rising_edge(clkb) then
-      if (statewrb = stwrcmd) then
-        if (p2_wr_en = '1' and pb_int_rst = '0') then
-          pb_wr_cnt <= 1;
-        else
-          pb_wr_cnt <= 0;
-        end if;
-      elsif (p2_wr_en = '1' and pb_int_rst = '0') then
-        pb_wr_cnt <= pb_wr_cnt + 1;
-      end if;
-    end if;
-  end process;
-
------------------------------------------------------------------------------
--- write addressing
------------------------------------------------------------------------------ 
-  wraddrcnt_proc_b : process (clkb)
-  begin
-    if rising_edge(clkb) then
+-------------------------------------------------------------------------------
+-- ADR COUNT
+-------------------------------------------------------------------------------      
       if (pb_int_rst = '1' and p2_wr_empty = '1') then
         pb_wr_addr <= 0;
       elsif (statewrb = stwrcmd) then
@@ -968,50 +934,52 @@ begin
           pb_wr_addr <= pb_wr_addr + 1;
         end if;
       end if;
-    end if;
-  end process;
-
-  --port b writes to next vmem_size location
-  p2_cmd_byte_addr <= conv_std_logic_vector(pb_wr_addr * (wr_batch*4), 30);
-
------------------------------------------------------------------------------
--- write fsm
--- clkb clock domain; issues a write 32 words command, when we have
--- 32 words to the fifo; it also issues a write command for less than 32
--- words upon port reset.
------------------------------------------------------------------------------
-  wrsync_proc_b : process (clkb)
-  begin
-    if rising_edge(clkb) then
+-------------------------------------------------------------------------------
+-- STATE
+-------------------------------------------------------------------------------
       if (scalibdoneb = '0' or p2_wr_empty = '1') then
         statewrb <= stwridle;
       else
         statewrb <= nstatewrb;
       end if;
+-------------------------------------------------------------------------------
+-- WR COUNT
+-------------------------------------------------------------------------------
+      if (statewrb = stwrcmd) then
+        if (p2_wr_en = '1' and pb_int_rst = '0') then
+          pb_wr_cnt <= 1;
+        else
+          pb_wr_cnt <= 0;
+        end if;
+      elsif (p2_wr_en = '1' and pb_int_rst = '0') then
+        pb_wr_cnt <= pb_wr_cnt + 1;
+      end if;
+      
     end if;
   end process;
 
-  p2_cmd_instr <= mcb_cmd_wr;           -- port 1 write-only
+  p2_wr_clk                <= clkb;
+  p2_wr_en                 <= pb_wr_data_sel and enb;  
+  p2_wr_data(31 downto 16) <= dib;
+  p2_wr_mask               <= "0000";
+
   p2_cmd_clk   <= clkb;
-
-  wroutput_decode_b : process (statewrb)
-  begin
-    p2_cmd_en <= '0';
-    if statewrb = stwrcmd then
-      p2_cmd_en <= '1';
-    end if;
-    
-  end process;
+  p2_cmd_instr <= mcb_cmd_wr;           -- port 1 write-only
+  p2_cmd_byte_addr <= conv_std_logic_vector(pb_wr_addr * (wr_batch*4), 30);  
+  p2_cmd_bl <= conv_std_logic_vector(pb_wr_cnt-1, 6) when pb_int_rst = '1' else
+               conv_std_logic_vector(wr_batch-1, 6);
 
   wrnext_state_decode_b : process (statewrb, p2_wr_count, p2_wr_error, pb_int_rst, p2_wr_empty, pb_wr_cnt)
   begin
     nstatewrb <= statewrb;              --default is to stay in current state
+    p2_cmd_en <= '0';
     case (statewrb) is
       when stwridle =>
         if (pb_wr_cnt >= wr_batch or pb_int_rst = '1') then
           nstatewrb <= stwrcmd;
         end if;
       when stwrcmd =>
+        p2_cmd_en <= '1';
         nstatewrb <= stwrcmdwait;
       when stwrcmdwait =>
         if (p2_wr_error = '1') then
@@ -1033,9 +1001,9 @@ begin
 -------------------------------------------------------------------------------
 
 
-  process (clkc)
+  process (clkb)
   begin  -- process
-    if clkc'event and clkc = '1' then   -- rising clock edge
+    if clkb'event and clkb = '1' then   -- rising clock edge
       if SRSTC = '1' then               -- synchronous reset (active high)
         my_state      <= my_reset;
         my_p0_rd_addr <= 0;
@@ -1109,6 +1077,7 @@ begin
       when my_read_p0 =>
 
         if p0_rd_empty = '1' and p0_wr_empty = '1' and p1_wr_empty = '1' and p0_cmd_empty = '1' then
+          debug_wr   <= '1';debug_data <= X"0F";
           p0_cmd_en        <= '1';
           p0_cmd_instr     <= MCB_CMD_RD;
           p0_cmd_byte_addr <= conv_std_logic_vector(my_p0_rd_addr, 30);
@@ -1288,6 +1257,7 @@ begin
           nparam4 <= (others => '1');
         end if;
 
+--        npixelh <= param1;        
         alg_nstate <= alg_finish_high;
 -------------------------------------------------------------------------------
 -- Finish High
@@ -1362,6 +1332,7 @@ begin
           nparam4 <= (others => '1');
         end if;
 
+--        npixell <= param1;
         alg_nstate <= alg_finish_low;
 -------------------------------------------------------------------------------
 -- Finish Low
@@ -1375,15 +1346,15 @@ begin
     end case;
   end process;
 
-  p0_cmd_clk <= clkc;
+  p0_cmd_clk <= clkb;
   p0_cmd_bl  <= conv_std_logic_vector(P0_BATCH-1, 6);
-  p0_rd_clk  <= clkc;
-  p0_wr_clk  <= clkc;
+  p0_rd_clk  <= clkb;
+  p0_wr_clk  <= clkb;
 
-  p1_cmd_clk <= clkc;
+  p1_cmd_clk <= clkb;
   p1_cmd_bl  <= conv_std_logic_vector(P1_BATCH-1, 6);
-  p1_rd_clk  <= clkc;
-  p1_wr_clk  <= clkc;
+  p1_rd_clk  <= clkb;
+  p1_wr_clk  <= clkb;
 
 
   p0_wr_mask <= (others => '0');

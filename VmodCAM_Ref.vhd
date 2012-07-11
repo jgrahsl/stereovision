@@ -303,7 +303,7 @@ begin
 
   my_uart : entity work.uart
     port map (
-      clk     => CamClk,                -- [in]
+      clk     => CamBPClk,                -- [in]
       reset   => async_rst,             -- [in]
       wr_data => wr_data,               -- [in]
       rd      => rd,                    -- [in]
