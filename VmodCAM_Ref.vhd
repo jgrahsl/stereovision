@@ -91,6 +91,23 @@ entity VmodCAM_Ref is
     mcb3_dram_dqs_n  : inout std_logic;
     mcb3_dram_ck     : out   std_logic;
     mcb3_dram_ck_n   : out   std_logic
+
+-------------------------------------------------------------------------------
+-- FPGA Link
+-------------------------------------------------------------------------------
+    	--	fx2Clk_in      : in    std_logic;                     -- 48MHz clock from FX2
+		--fx2FifoSel_out : out   std_logic;                     -- select FIFO: '0' for EP6OUT, '1' for EP8IN
+		--fx2Data_io     : inout std_logic_vector(7 downto 0);  -- 8-bit data to/from FX2
+
+		---- When EP6OUT selected:
+		--fx2Read_out    : out   std_logic;                     -- asserted (active-low) when reading from FX2
+		--fx2GotData_in  : in    std_logic;                     -- asserted (active-high) when FX2 has data for us
+
+		---- When EP8IN selected:
+		--fx2Write_out   : out   std_logic;                     -- asserted (active-low) when writing to FX2
+		--fx2GotRoom_in  : in    std_logic;                     -- asserted (active-high) when FX2 has room for more data from us
+		--fx2PktEnd_out  : out   std_logic                     -- asserted (active-low) when a host read needs to be committed early
+
     );
 end VmodCAM_Ref;
 
@@ -119,9 +136,39 @@ architecture Behavioral of VmodCAM_Ref is
   signal wr      : std_logic;
   signal wr_data      : std_logic_vector(7 downto 0);
   signal rd_data      : std_logic_vector(7 downto 0);  
-   signal LED_O_T         :    std_logic_vector(7 downto 0);  
+  signal LED_O_T         :    std_logic_vector(7 downto 0);  
+
+
+
+  
+  signal chanAddr_out   : std_logic_vector(6 downto 0);
+  signal h2fData_out    : std_logic_vector(7 downto 0);
+  signal h2fValid_out   : std_logic;
+  signal f2hReady_out   : std_logic;
+
+  signal h2fReady_in    : std_logic;
+  signal f2hData_in     : std_logic_vector(7 downto 0);
+  signal f2hValid_in    : std_logic;  
+
+
 begin
 
+LED_O <= (others => '0');
+  --f2hvalid_in <= '1';
+  --f2hdata_in <= X"AA";
+  --h2fReady_in <= '1';
+  
+  --process
+  --begin  -- process
+  --  if fx2clk_in'event and fx2clk_in = '1' then  -- rising clock edge
+  --    if h2fValid_out = '1' then
+  --      LED_O <= h2fData_out;
+  --    end if;
+  --  end if;
+  --end process;
+
+
+  
 --LED_O <= VtcHs & VtcHs & VtcVde & async_rst & "0000";
 ----------------------------------------------------------------------------------
 -- System Control Unit
@@ -191,8 +238,6 @@ begin
       DIB    => CamBD,
       CLKB   => CamBPClk,
 
-
-      LED_O            => LED_O,
 
       debug_wr => wr,
       debug_data => wr_data,
@@ -267,7 +312,7 @@ begin
       D_O     => CamBD,
       PCLK_O  => CamBPClk,
       DV_O    => CamBDV,
-      RST_I   => async_rst,
+      RST_I   => VtcRst,
       CLK     => CamClk,
       CLK_180 => CamClk_180,
       SDA     => CAMB_SDA,
@@ -312,6 +357,25 @@ begin
       txd     => txd,                   -- [out]
       rxd     => rxd);                  -- [in]
 
+
+  --comm_fpga_fx2_1: comm_fpga_fx2
+  --  port map (
+  --    fx2Clk_in      => fx2Clk_in,
+  --    fx2FifoSel_out => fx2FifoSel_out,
+  --    fx2Data_io     => fx2Data_io,
+  --    fx2Read_out    => fx2Read_out,
+  --    fx2GotData_in  => fx2GotData_in,
+  --    fx2Write_out   => fx2Write_out,
+  --    fx2GotRoom_in  => fx2GotRoom_in,
+  --    fx2PktEnd_out  => fx2PktEnd_out,
+  --    chanAddr_out   => chanAddr_out,
+  --    h2fData_out    => h2fData_out,
+  --    h2fValid_out   => h2fValid_out,
+  --    h2fReady_in    => h2fReady_in,
+  --    f2hData_in     => f2hData_in,
+  --    f2hValid_in    => f2hValid_in,
+  --    f2hReady_out   => f2hReady_out);
+  
 
 end Behavioral;
 

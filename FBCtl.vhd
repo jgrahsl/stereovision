@@ -80,8 +80,6 @@ entity FBCtl is
     DIB     : in  std_logic_vector (COLORDEPTH - 1 downto 0);  --data output
     CLKB    : in  std_logic;            --port clock
 
-    LED_O : out std_logic_vector(7 downto 0);
-
     debug_wr         : out   std_logic;
     debug_data       : out   std_logic_vector(7 downto 0);
 ---------------------------------------------------------------------------------      
@@ -1010,7 +1008,6 @@ begin
         my_p0_wr_addr <= 2**20;
         my_p1_addr    <= 2**21;
         go            <= '0';
-        LED_O         <= (others => '0');
 
         alg_state <= alg_reset;
       else
