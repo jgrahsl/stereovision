@@ -21,7 +21,7 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.all;
-
+use ieee.numeric_std.all;
 library digilent;
 use digilent.Video.all;
 -- Uncomment the following library declaration if using
@@ -90,23 +90,25 @@ entity VmodCAM_Ref is
     mcb3_dram_dqs    : inout std_logic;
     mcb3_dram_dqs_n  : inout std_logic;
     mcb3_dram_ck     : out   std_logic;
-    mcb3_dram_ck_n   : out   std_logic
+    mcb3_dram_ck_n   : out   std_logic;
 
 -------------------------------------------------------------------------------
 -- FPGA Link
 -------------------------------------------------------------------------------
-    	--	fx2Clk_in      : in    std_logic;                     -- 48MHz clock from FX2
-		--fx2FifoSel_out : out   std_logic;                     -- select FIFO: '0' for EP6OUT, '1' for EP8IN
-		--fx2Data_io     : inout std_logic_vector(7 downto 0);  -- 8-bit data to/from FX2
+    -- FX2 interface -----------------------------------------------------------------------------
+    fx2Clk_in   : in    std_logic;      -- 48MHz clock from FX2
+    fx2Addr_out : out   std_logic_vector(1 downto 0);  -- select FIFO: "10" for EP6OUT, "11" for EP8IN
+    fx2Data_io  : inout std_logic_vector(7 downto 0);  -- 8-bit data to/from FX2
 
-		---- When EP6OUT selected:
-		--fx2Read_out    : out   std_logic;                     -- asserted (active-low) when reading from FX2
-		--fx2GotData_in  : in    std_logic;                     -- asserted (active-high) when FX2 has data for us
+    -- When EP6OUT selected:
+    fx2Read_out   : out std_logic;  -- asserted (active-low) when reading from FX2
+    fx2OE_out     : out std_logic;  -- asserted (active-low) to tell FX2 to drive bus
+    fx2GotData_in : in  std_logic;  -- asserted (active-high) when FX2 has data for us
 
-		---- When EP8IN selected:
-		--fx2Write_out   : out   std_logic;                     -- asserted (active-low) when writing to FX2
-		--fx2GotRoom_in  : in    std_logic;                     -- asserted (active-high) when FX2 has room for more data from us
-		--fx2PktEnd_out  : out   std_logic                     -- asserted (active-low) when a host read needs to be committed early
+    -- When EP8IN selected:
+    fx2Write_out  : out std_logic;  -- asserted (active-low) when writing to FX2
+    fx2GotRoom_in : in  std_logic;  -- asserted (active-high) when FX2 has room for more data from us
+    fx2PktEnd_out : out std_logic  -- asserted (active-low) when a host read needs to be committed early
 
     );
 end VmodCAM_Ref;
@@ -134,41 +136,31 @@ architecture Behavioral of VmodCAM_Ref is
   signal counter : natural range 0 to 2**23-1;
   signal rd      : std_logic;
   signal wr      : std_logic;
-  signal wr_data      : std_logic_vector(7 downto 0);
-  signal rd_data      : std_logic_vector(7 downto 0);  
-  signal LED_O_T         :    std_logic_vector(7 downto 0);  
+  signal wr_data : std_logic_vector(7 downto 0);
+  signal rd_data : std_logic_vector(7 downto 0);
+ signal LED_O_T : std_logic_vector(7 downto 0);
 
-
-
-  
-  signal chanAddr_out   : std_logic_vector(6 downto 0);
-  signal h2fData_out    : std_logic_vector(7 downto 0);
-  signal h2fValid_out   : std_logic;
-  signal f2hReady_out   : std_logic;
-
-  signal h2fReady_in    : std_logic;
-  signal f2hData_in     : std_logic_vector(7 downto 0);
-  signal f2hValid_in    : std_logic;  
-
-
+-------------------------------------------------------------------------------
+-- FPGA Link
+-------------------------------------------------------------------------------
+	signal chanAddr  : std_logic_vector(6 downto 0);  -- the selected channel (0-127)
+	signal h2fData   : std_logic_vector(7 downto 0);  -- data lines used when the host writes to a channel
+	signal h2fValid  : std_logic;                     -- '1' means "on the next clock rising edge, please accept the data on h2fData"
+	signal h2fReady  : std_logic;                     -- channel logic can drive this low to say "I'm not ready for more data yet"
+	signal f2hData   : std_logic_vector(7 downto 0);  -- data lines used when the host reads from a channel
+	signal f2hValid  : std_logic;                     -- channel logic can drive this low to say "I don't have data ready for you"
+	signal f2hReady  : std_logic;                     -- '1' means "on the next clock rising edge, put your next byte of data on f2hData"
+	signal fx2Read                 : std_logic;  
+	-- ----------------------------------------------------------------------------------------------
+	-- Registers implementing the channels
+	signal reg0, reg0_next         : std_logic_vector(7 downto 0)  := x"00";
+	signal reg1, reg1_next         : std_logic_vector(7 downto 0)  := x"00";
+	signal reg2, reg2_next         : std_logic_vector(7 downto 0)  := x"00";
+	signal reg3, reg3_next         : std_logic_vector(7 downto 0)  := x"00";
 begin
 
-LED_O <= (others => '0');
-  --f2hvalid_in <= '1';
-  --f2hdata_in <= X"AA";
-  --h2fReady_in <= '1';
-  
-  --process
-  --begin  -- process
-  --  if fx2clk_in'event and fx2clk_in = '1' then  -- rising clock edge
-  --    if h2fValid_out = '1' then
-  --      LED_O <= h2fData_out;
-  --    end if;
-  --  end if;
-  --end process;
 
 
-  
 --LED_O <= VtcHs & VtcHs & VtcVde & async_rst & "0000";
 ----------------------------------------------------------------------------------
 -- System Control Unit
@@ -216,7 +208,7 @@ LED_O <= (others => '0');
     HCNT_O => VtcHCnt,
     VCNT_O => VtcVCnt
     );
-  VtcRst <= async_rst or not FbRdy;
+  VtcRst <= reg0(0);--async_rst or not FbRdy;
 ----------------------------------------------------------------------------------
 -- Frame Buffer
 ----------------------------------------------------------------------------------
@@ -228,7 +220,7 @@ LED_O <= (others => '0');
     port map(
       RDY_O   => FbRdy,
       ENC     => FbRdEn,
-      RSTC_I  => FbRdRst,
+      RSTC_I  => reg0(1),--FbRdRst,
       DOC     => FbRdData,
       CLKC    => FbRdClk,
       RD_MODE => MSel,
@@ -239,7 +231,7 @@ LED_O <= (others => '0');
       CLKB   => CamBPClk,
 
 
-      debug_wr => wr,
+      debug_wr   => wr,
       debug_data => wr_data,
 
       ddr2clk_2x       => DDR2Clk_2x,
@@ -312,7 +304,7 @@ LED_O <= (others => '0');
       D_O     => CamBD,
       PCLK_O  => CamBPClk,
       DV_O    => CamBDV,
-      RST_I   => VtcRst,
+      RST_I   => reg0(0),
       CLK     => CamClk,
       CLK_180 => CamClk_180,
       SDA     => CAMB_SDA,
@@ -348,7 +340,7 @@ LED_O <= (others => '0');
 
   my_uart : entity work.uart
     port map (
-      clk     => CamBPClk,                -- [in]
+      clk     => CamBPClk,              -- [in]
       reset   => async_rst,             -- [in]
       wr_data => wr_data,               -- [in]
       rd      => rd,                    -- [in]
@@ -357,25 +349,63 @@ LED_O <= (others => '0');
       txd     => txd,                   -- [out]
       rxd     => rxd);                  -- [in]
 
+-------------------------------------------------------------------------------
+-- FPGA Link
+-------------------------------------------------------------------------------
+	-- Infer registers
+	process(fx2Clk_in)
+	begin
+		if ( rising_edge(fx2Clk_in) ) then
+			reg0 <= reg0_next;
+			reg1 <= reg1_next;
+			reg2 <= reg2_next;
+			reg3 <= reg3_next;
+		end if;
+	end process;
 
-  --comm_fpga_fx2_1: comm_fpga_fx2
-  --  port map (
-  --    fx2Clk_in      => fx2Clk_in,
-  --    fx2FifoSel_out => fx2FifoSel_out,
-  --    fx2Data_io     => fx2Data_io,
-  --    fx2Read_out    => fx2Read_out,
-  --    fx2GotData_in  => fx2GotData_in,
-  --    fx2Write_out   => fx2Write_out,
-  --    fx2GotRoom_in  => fx2GotRoom_in,
-  --    fx2PktEnd_out  => fx2PktEnd_out,
-  --    chanAddr_out   => chanAddr_out,
-  --    h2fData_out    => h2fData_out,
-  --    h2fValid_out   => h2fValid_out,
-  --    h2fReady_in    => h2fReady_in,
-  --    f2hData_in     => f2hData_in,
-  --    f2hValid_in    => f2hValid_in,
-  --    f2hReady_out   => f2hReady_out);
+	reg0_next <= h2fData when chanAddr = "0000000" and h2fValid = '1' else reg0;
+	reg1_next <= h2fData when chanAddr = "0000001" and h2fValid = '1' else reg1;
+	reg2_next <= h2fData when chanAddr = "0000010" and h2fValid = '1' else reg2;
+	reg3_next <= h2fData when chanAddr = "0000011" and h2fValid = '1' else reg3;
+	
+	with chanAddr select f2hData <=
+ 		reg0  when "0000000",
+		reg1  when "0000001",
+		reg2  when "0000010",
+		reg3  when "0000011",
+		x"00" when others;
+
+ 
+
+  f2hvalid <= '1';
+  h2fReady <= '1';
+
+  led_o <= "0000000" & int_FVB;
   
+  fx2Read_out    <= fx2Read;
+  fx2OE_out      <= fx2Read;
+  fx2Addr_out(1) <= '1';                -- Use EP6OUT/EP8IN, not EP2OUT/EP4IN.  
+  comm_fpga_fx2 : entity work.comm_fpga_fx2
+    port map(
+      -- FX2 interface
+      fx2Clk_in      => fx2Clk_in,
+      fx2FifoSel_out => fx2Addr_out(0),
+      fx2Data_io     => fx2Data_io,
+      fx2Read_out    => fx2Read,
+      fx2GotData_in  => fx2GotData_in,
+      fx2Write_out   => fx2Write_out,
+      fx2GotRoom_in  => fx2GotRoom_in,
+      fx2PktEnd_out  => fx2PktEnd_out,
+
+      -- Channel read/write interface
+      chanAddr_out => chanAddr,
+      h2fData_out  => h2fData,
+      h2fValid_out => h2fValid,
+      h2fReady_in  => h2fReady,
+      f2hData_in   => f2hData,
+      f2hValid_in  => f2hValid,
+      f2hReady_out => f2hReady
+      );
 
 end Behavioral;
 
