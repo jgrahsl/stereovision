@@ -33,6 +33,10 @@ use digilent.Video.all;
 library UNISIM;
 use UNISIM.VComponents.all;
 
+library work;
+use work.cam_pkg.all;
+
+
 entity VmodCAM_Ref is
   generic (
     C3_NUM_DQ_PINS        : integer := 16;
@@ -159,6 +163,11 @@ architecture Behavioral of VmodCAM_Ref is
   signal reg3, reg3_next : std_logic_vector(7 downto 0) := x"00";
 
 
+
+  signal fbctl_debug_int : fbctl_debug_t;
+  signal fbctl_debug_0 : fbctl_debug_t;
+  signal fbctl_debug_1 : fbctl_debug_t;
+  signal fbctl_debug_2 : fbctl_debug_t;  
 begin
 
 
@@ -260,7 +269,9 @@ begin
       mcb3_dram_dqs    => mcb3_dram_dqs,
       mcb3_dram_dqs_n  => mcb3_dram_dqs_n,
       mcb3_dram_ck     => mcb3_dram_ck,
-      mcb3_dram_ck_n   => mcb3_dram_ck_n
+      mcb3_dram_ck_n   => mcb3_dram_ck_n,
+
+      fbctl_debug =>  fbctl_debug_int
       );
 
   FbRdEn  <= VtcVde;
@@ -370,11 +381,28 @@ begin
   reg2_next <= h2fData when chanAddr = "0000010" and h2fValid = '1' else reg2;
   reg3_next <= h2fData when chanAddr = "0000011" and h2fValid = '1' else reg3;
 
+
+  process (fx2clk_in)
+  begin  -- process
+    if fx2clk_in'event and fx2clk_in = '1' then     -- rising clock edge
+      fbctl_debug_2 <= fbctl_debug_1;
+      fbctl_debug_1 <= fbctl_debug_0;
+      fbctl_debug_0 <= fbctl_debug_int;      
+
+    end if;
+  end process;
+
+  
   with chanAddr select f2hData <=
     reg0                    when "0000000",
-    FbRdRst&FbRdEn&"001111" when "0000001",
-    reg2                    when "0000010",
-    reg3                    when "0000011",
+    fbctl_debug_2.vin.valid&fbctl_debug_2.vin.init&"000000"                    when "0000010",
+    fbctl_debug_2.vout.valid&fbctl_debug_2.vout.init&"000000"   when "0000011",
+    fbctl_debug_2.img   when "0000100",
+    std_logic_vector(to_Unsigned(fbctl_debug_2.count,8))  when "0000101",
+    std_logic_vector(to_Unsigned(fbctl_debug_2.count2,8))  when "0000110",
+    fbctl_debug_2.wr_cnt_0  when "0000111",
+    fbctl_debug_2.wr_cnt_1  when "0001000",    
+    fbctl_debug_2.state  when "0001001",        
     x"00"                   when others;
 
   
