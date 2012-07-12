@@ -157,6 +157,8 @@ architecture Behavioral of VmodCAM_Ref is
 	signal reg1, reg1_next         : std_logic_vector(7 downto 0)  := x"00";
 	signal reg2, reg2_next         : std_logic_vector(7 downto 0)  := x"00";
 	signal reg3, reg3_next         : std_logic_vector(7 downto 0)  := x"00";
+
+
 begin
 
 
@@ -173,7 +175,7 @@ begin
   Inst_SysCon : entity work.SysCon port map(
     CLK_I          => CLK_I,
     CLK_O          => open,
-    RSTN_I         => RESET_I,
+    RSTN_I         => reg0(0),
     SW_I           => SW_I,
     SW_O           => open,
     RSEL_O         => open,  --resolution selector synchronized with PClk
@@ -208,7 +210,7 @@ begin
     HCNT_O => VtcHCnt,
     VCNT_O => VtcVCnt
     );
-  VtcRst <= reg0(0);--async_rst or not FbRdy;
+  VtcRst <= async_rst or not FbRdy;
 ----------------------------------------------------------------------------------
 -- Frame Buffer
 ----------------------------------------------------------------------------------
@@ -220,7 +222,7 @@ begin
     port map(
       RDY_O   => FbRdy,
       ENC     => FbRdEn,
-      RSTC_I  => reg0(1),--FbRdRst,
+      RSTC_I  => FbRdRst,
       DOC     => FbRdData,
       CLKC    => FbRdClk,
       RD_MODE => MSel,
@@ -304,7 +306,7 @@ begin
       D_O     => CamBD,
       PCLK_O  => CamBPClk,
       DV_O    => CamBDV,
-      RST_I   => reg0(0),
+      RST_I   => async_rst,
       CLK     => CamClk,
       CLK_180 => CamClk_180,
       SDA     => CAMB_SDA,
@@ -370,7 +372,7 @@ begin
 	
 	with chanAddr select f2hData <=
  		reg0  when "0000000",
-		reg1  when "0000001",
+		FbRdRst&FbRdEn&"001111"  when "0000001",
 		reg2  when "0000010",
 		reg3  when "0000011",
 		x"00" when others;
