@@ -35,11 +35,9 @@ entity SysCon is
     Port ( CLK_I : in  STD_LOGIC;
 			  CLK_O : out STD_LOGIC;
            RSTN_I : in  STD_LOGIC;
-			  SW_I : in STD_LOGIC_VECTOR(7 downto 0);
 			  CAMCLK_O : out STD_LOGIC;
 			  CAMCLK_180_O : out STD_LOGIC;
 			  RSEL_O : out RESOLUTION; --resolution selector
-			  MSEL_O : out STD_LOGIC_VECTOR(1 downto 0); --mode selector
            PCLK_O : out  STD_LOGIC;		--pixel clock
 			  PCLK_X2_O : out  STD_LOGIC;	--pixel clock x2
 			  PCLK_X10_O : out  STD_LOGIC;	--serialization/deserialization clock
@@ -51,9 +49,7 @@ entity SysCon is
 			  PLL_CE_0_O : out STD_LOGIC;
 			  PLL_CE_90_O : out STD_LOGIC;
 			  PLL_LOCK : out STD_LOGIC;
-			  ASYNC_RST : out STD_LOGIC;
-			  
-			  SW_O : out STD_LOGIC_VECTOR(7 downto 0));
+			  ASYNC_RST : out STD_LOGIC);
 end SysCon;
 
 architecture Behavioral of SysCon is
@@ -215,13 +211,6 @@ end generate;
 ----------------------------------------------------------------------------------
 -- Synchronize async switch inputs with System Control Clock
 ----------------------------------------------------------------------------------	
-SYNC_SW: entity digilent.InputSyncV	port map (
-	D_I =>	SW_I,
-	D_O =>	int_sw,
-	CLK_I => SysConCLK
-);
-
-SW_O <= int_sw;
 
 Inst_dcm_fixed : dcm_fixed
   port map
@@ -303,11 +292,6 @@ begin
 	end if;
 end process;
 
-MODE_SYNC: entity digilent.InputSyncV PORT MAP (
-	D_I => SW_I(7 downto 6),
-	D_O => MSEL_O,
-	CLK_I => pllout_x1
-);
 
 SYNC_PROC: process (SysConCLK)
    begin

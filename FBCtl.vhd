@@ -74,7 +74,7 @@ entity FBCtl is
     RSTC_I  : in  std_logic;            --asynchronous port reset
     DOC     : out std_logic_vector (COLORDEPTH - 1 downto 0);  --data output
     CLKC    : in  std_logic;            --port clock
-    RD_MODE : in  std_logic_vector(1 downto 0);
+    RD_MODE : in  std_logic_vector(7 downto 0);
 ------------------------------------------------------------------------------------
 -- Title : Port B - write only
 ------------------------------------------------------------------------------------
@@ -606,12 +606,25 @@ architecture Behavioral of FBCtl is
   signal sink_is_high : std_logic;
 
 
-  signal vin       : stream_t;
-  signal vout      : stream_t;
 
+
+
+
+  signal vin       : stream_t;  
   signal vin_data_565  : std_logic_vector(15 downto 0);
-  signal skin_vin_data_888  : std_logic_vector(23 downto 0);  
+  signal vin_data_888  : std_logic_vector(23 downto 0);  
+
+  signal skin_vout  : stream_t;
   signal skin_vout_data_1 : std_logic_vector(0 downto 0);
+
+  signal morph_vout  : stream_t;  
+  signal morph_vout_data_1 : std_logic_vector(0 downto 0);  
+
+  signal morph2_vout  : stream_t;  
+  signal morph2_vout_data_1 : std_logic_vector(0 downto 0);  
+  
+  signal vout      : stream_t;
+  signal vout_data_1 : std_logic_vector(0 downto 0);  
   signal vout_data_565 : std_logic_vector(15 downto 0);
 
   signal avail     : std_logic;
@@ -1152,7 +1165,7 @@ begin
   process (p0_rd_data)
     variable brightness : std_logic_vector(15 downto 0);
   begin  -- process
-    brightness := conv_std_logic_vector(unsigned("000" & p0_rd_data(15 downto 11) & "0") + unsigned("000" & p0_rd_data(10 downto 5)) + unsigned("000" & p0_rd_data(4 downto 0) & "0"), 16);
+--    brightness := conv_std_logic_vector(unsigned("000" & p0_rd_data(15 downto 11) & "0") + unsigned("000" & p0_rd_data(10 downto 5)) + unsigned("000" & p0_rd_data(4 downto 0) & "0"), 16);
 
 
     in_pixell <= unsigned(brightness(7 downto 0));
@@ -1162,7 +1175,7 @@ begin
   process (p0_rd_Data)
     variable brightness : std_logic_vector(15 downto 0);
   begin  -- process
-    brightness := conv_std_logic_vector(unsigned("000" & p0_rd_data(15+16 downto 11+16) & "0") + unsigned("000" & p0_rd_data(10+16 downto 5+16)) + unsigned("000" & p0_rd_data(4+16 downto 0+16) & "0"), 16);
+    --brightness := conv_std_logic_vector(unsigned("000" & p0_rd_data(15+16 downto 11+16) & "0") + unsigned("000" & p0_rd_data(10+16 downto 5+16)) + unsigned("000" & p0_rd_data(4+16 downto 0+16) & "0"), 16);
 
 
     in_pixelh <= unsigned(brightness(7 downto 0));
@@ -1205,7 +1218,7 @@ begin
   vin_data_565 <= p0_rd_data(15 downto 0) when feed_is_high = '0' else
                   p0_rd_data(31 downto 16);
 
-  skin_vin_data_888 <= vin_data_565(15 downto 11) & "000" &
+  vin_data_888 <= vin_data_565(15 downto 11) & "000" &
                    vin_data_565(10 downto 5) & "00" &
                    vin_data_565(4 downto 0) & "000";
   
@@ -1227,7 +1240,7 @@ begin
   end process feed;
 
 
-  p0_wr_data(15 downto 0) <= vout_data_565;
+  p0_wr_data(31 downto 16) <= vout_data_565;
   p1_wr_en                <= vout.valid;
   p0_wr_en                <= vout.valid and not sink_is_high;
 
@@ -1239,7 +1252,7 @@ begin
       else
         if vout.valid = '1' then
           if sink_is_high = '1' then
-            p0_wr_data(31 downto 16) <= vout_data_565;
+            p0_wr_data(15 downto 0) <= vout_data_565;
           end if;
           sink_is_high <= not sink_is_high;
         end if;
@@ -1256,11 +1269,14 @@ begin
       clk       => clkalg,                 -- [in]
       rst       => rstalg,                 -- [in]
       vin       => vin,                 -- [in]
-      vin_data  => skin_vin_data_888,       -- [in]
-      vout      => vout,           -- [out]
+      vin_data  => vin_data_888,       -- [in]
+      vout      => skin_vout,           -- [out]
       vout_data => skin_vout_data_1);     -- [out]
 
-  vout_data_565 <= (others => '1') when skin_vout_data_1(0) = '1' else
+
+  vout_data_1 <= morph2_vout_data_1;
+  vout <= morph2_vout;
+  vout_data_565 <= (others => '1') when vout_data_1(0) = '1' else
                    (others => '0');
   
   --my_nullfilter : entity work.nullfilter
@@ -1273,8 +1289,35 @@ begin
   --    vout_data => vout_data);          -- [out]
 
 
+  my_morph : entity work.morph
+  generic map (
+    KERNEL =>  5,
+    THRESH =>  25,
+    WIDTH  => 640,    
+    HEIGHT => 480)
+    port map (
+      clk       => clkalg,                -- [in]
+      reset     => rstalg,               -- [in]
+      vin       => skin_vout,           -- [in]
+      vin_data  => skin_vout_data_1,           -- [in]
+      vout      => morph_vout,          -- [out]
+      vout_data => morph_vout_data_1);         -- [out]
 
-
+  my_morph2 : entity work.morph
+  generic map (
+    KERNEL =>  5,
+    THRESH =>  1,
+    WIDTH  => 640,    
+    HEIGHT => 480)
+    port map (
+      clk       => clkalg,                -- [in]
+      reset     => rstalg,               -- [in]
+      vin       => morph_vout,           -- [in]
+      vin_data  => morph_vout_data_1,           -- [in]
+      vout      => morph2_vout,          -- [out]
+      vout_data => morph2_vout_data_1);         -- [out]
+  
+  
 
 
 

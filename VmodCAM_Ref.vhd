@@ -185,10 +185,7 @@ begin
     CLK_I          => CLK_I,
     CLK_O          => open,
     RSTN_I         => reg0(0),
-    SW_I           => SW_I,
-    SW_O           => open,
     RSEL_O         => open,  --resolution selector synchronized with PClk
-    MSEL_O         => MSel,             --mode selector synchornized with PClk
     CAMCLK_O       => CamClk,
     CAMCLK_180_O   => CamClk_180,
     PCLK_O         => PClk,
@@ -234,7 +231,7 @@ begin
       RSTC_I  => FbRdRst,
       DOC     => FbRdData,
       CLKC    => FbRdClk,
-      RD_MODE => MSel,
+      RD_MODE => SW_I,
 
       ENCAM  => CamBDV,
       RSTCAM => FbWrBRst,
