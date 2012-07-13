@@ -1167,208 +1167,39 @@ begin
   end process;
 
 
-  p0_wr_data(15 downto 11) <= std_logic_vector(npixell(7 downto 3));
-  p0_wr_data(10 downto 5)  <= std_logic_vector(npixell(7 downto 2));
-  p0_wr_data(4 downto 0)   <= std_logic_vector(npixell(7 downto 3));
+  p0_wr_data <= p0_rd_data;
+  p1_wr_data <= p1_rd_data;
 
-  p0_wr_data(15+16 downto 11+16) <= std_logic_vector(npixelh(7 downto 3));
-  p0_wr_data(10+16 downto 5+16)  <= std_logic_vector(npixelh(7 downto 2));
-  p0_wr_data(4+16 downto 0+16)   <= std_logic_vector(npixelh(7 downto 3));
+  --p0_wr_data(15 downto 11) <= std_logic_vector(npixell(7 downto 3));
+  --p0_wr_data(10 downto 5)  <= std_logic_vector(npixell(7 downto 2));
+  --p0_wr_data(4 downto 0)   <= std_logic_vector(npixell(7 downto 3));
 
---  p0_wr_data <= p0_rd_data;
+  --p0_wr_data(15+16 downto 11+16) <= std_logic_vector(npixelh(7 downto 3));
+  --p0_wr_data(10+16 downto 5+16)  <= std_logic_vector(npixelh(7 downto 2));
+  --p0_wr_data(4+16 downto 0+16)   <= std_logic_vector(npixelh(7 downto 3));
+  
+  --in_param1 <= unsigned(p1_rd_data(7 downto 0));
+  --in_param2 <= unsigned(p1_rd_data(15 downto 8));
+  --in_param3 <= unsigned(p1_rd_data(23 downto 16));
+  --in_param4 <= unsigned(p1_rd_data(31 downto 24));
 
-  in_param1 <= unsigned(p1_rd_data(7 downto 0));
-  in_param2 <= unsigned(p1_rd_data(15 downto 8));
-  in_param3 <= unsigned(p1_rd_data(23 downto 16));
-  in_param4 <= unsigned(p1_rd_data(31 downto 24));
+  --p1_wr_data(7 downto 0)   <= std_logic_vector(nparam1);
+  --p1_wr_data(15 downto 8)  <= std_logic_vector(nparam2);
+  --p1_wr_data(23 downto 16) <= std_logic_vector(nparam3);
+  --p1_wr_data(31 downto 24) <= std_logic_vector(nparam4);
 
-  p1_wr_data(7 downto 0)   <= std_logic_vector(nparam1);
-  p1_wr_data(15 downto 8)  <= std_logic_vector(nparam2);
-  p1_wr_data(23 downto 16) <= std_logic_vector(nparam3);
-  p1_wr_data(31 downto 24) <= std_logic_vector(nparam4);
 
-  process(alg_state)
-  begin  -- process
+  p0_rd_en <= '1' when p0_rd_empty = '0' else
+              '0';
+  p0_wr_en <= '1' when p0_rd_empty = '0' else
+              '0';
+  p1_rd_en <= '1' when p1_rd_empty = '0' else
+              '0';
+  p1_wr_en <= '1' when p1_rd_empty = '0' else
+              '0';
 
-    p0_rd_en <= '0';
-    p0_wr_en <= '0';
-    p1_rd_en <= '0';
-    p1_wr_en <= '0';
 
-    nparam1 <= param1;
-    nparam2 <= param2;
-    nparam3 <= param3;
-    nparam4 <= param4;
 
-    npixell <= pixell;
-    npixelh <= pixelh;
-
-    alg_nstate <= alg_state;
-
-    case alg_state is
-      when alg_reset =>
-        alg_nstate <= alg_high;
-
--------------------------------------------------------------------------------
--- High
--------------------------------------------------------------------------------
-      when alg_high =>
-
-        if p0_rd_empty = '0' then
-          npixell <= in_pixell;
-          npixelh <= in_pixelh;
-        end if;
-
-        if p1_rd_empty = '0' then
-          nparam1 <= in_param1;
-          nparam2 <= in_param2;
-          nparam3 <= in_param3;
-          nparam4 <= in_param4;
-        end if;
-
-        if p0_rd_empty = '0' and p1_rd_empty = '0' then
-          alg_nstate <= alg_high_1;
-          p0_rd_en   <= '1';
-          p1_rd_en   <= '1';
-        end if;
----------------------------------------------------------------------------------
----- (1)
----------------------------------------------------------------------------------        
-      when alg_high_1 =>
-        if param4(0) = '0' then
-          if param1 < pixelh then
-            nparam1 <= param1 + 1;
-          elsif param1 > pixelh then
-            nparam1 <= param1 - 1;
-          end if;
-        end if;
-
-        alg_nstate <= alg_high_2;
----------------------------------------------------------------------------------
----- (2)
----------------------------------------------------------------------------------
-      when alg_high_2 =>
-
-        if param1 < pixelh then
-          nparam2 <= pixelh - param1;
-        elsif param1 > pixelh then
-          nparam2 <= param1 - pixelh;
-        end if;
-
-        alg_nstate <= alg_high_3;
----------------------------------------------------------------------------------
----- (3)
----------------------------------------------------------------------------------
-      when alg_high_3 =>
-
-        if param3 < (param2&"0") then
-          nparam3 <= param3 + 1;
-        elsif param3 > (param2&"0") then
-          nparam3 <= param3 - 1;
-        end if;
-
-        alg_nstate <= alg_high_4;
----------------------------------------------------------------------------------
----- (4)
----------------------------------------------------------------------------------
-      when alg_high_4 =>
-
-        if param2 < param3 then
-          npixelh <= (others => '0');
-          nparam4 <= (others => '0');
-        else
-          npixelh <= (others => '1');
-          nparam4 <= (others => '1');
-        end if;
-
---        npixelh <= param1;        
-        alg_nstate <= alg_finish_high;
----------------------------------------------------------------------------------
----- Finish High
----------------------------------------------------------------------------------       
-      when alg_finish_high =>
-        p1_wr_en   <= '1';
-        alg_nstate <= alg_low;
----------------------------------------------------------------------------------
----- Low
----------------------------------------------------------------------------------        
-
-      when alg_low =>
-
-        if p1_rd_empty = '0' then
-          nparam1 <= in_param1;
-          nparam2 <= in_param2;
-          nparam3 <= in_param3;
-          nparam4 <= in_param4;
-        end if;
-
-        if p1_rd_empty = '0' then
-          alg_nstate <= alg_low_1;
-          p1_rd_en   <= '1';
-        end if;
----------------------------------------------------------------------------------
----- (1)
----------------------------------------------------------------------------------        
-      when alg_low_1 =>
-        if param4(0) = '0' then
-          if param1 < pixell then
-            nparam1 <= param1 + 1;
-          elsif param1 > pixell then
-            nparam1 <= param1 - 1;
-          end if;
-        end if;
-        alg_nstate <= alg_low_2;
-
----------------------------------------------------------------------------------
----- (2)
----------------------------------------------------------------------------------
-      when alg_low_2 =>
-
-        if param1 < pixell then
-          nparam2 <= pixell - param1;
-        elsif param1 > pixell then
-          nparam2 <= param1 - pixell;
-        end if;
-
-        alg_nstate <= alg_low_3;
----------------------------------------------------------------------------------
----- (3)
----------------------------------------------------------------------------------
-      when alg_low_3 =>
-
-        if param3 < (param2&"0") then
-          nparam3 <= param3 + 1;
-        elsif param3 > (param2&"0") then
-          nparam3 <= param3 - 1;
-        end if;
-
-        alg_nstate <= alg_low_4;
----------------------------------------------------------------------------------
----- (4)
----------------------------------------------------------------------------------
-      when alg_low_4 =>
-
-        if param2 < param3 then
-          npixell <= (others => '0');
-          nparam4 <= (others => '0');
-        else
-          npixell <= (others => '1');
-          nparam4 <= (others => '1');
-        end if;
-
---        npixell <= param1;
-        alg_nstate <= alg_finish_low;
----------------------------------------------------------------------------------
----- Finish Low
----------------------------------------------------------------------------------
-      when alg_finish_low =>
-        p1_wr_en   <= '1';
-        p0_wr_en   <= '1';
-        alg_nstate <= alg_high;
-        
-      when others => null;
-    end case;
-  end process;
 
 end Behavioral;
 
