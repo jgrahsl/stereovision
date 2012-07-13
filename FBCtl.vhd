@@ -116,7 +116,7 @@ entity FBCtl is
     mcb3_dram_dqs_n  : inout std_logic;
     mcb3_dram_ck     : out   std_logic;
     mcb3_dram_ck_n   : out   std_logic;
-    fbctl_debug      : inout   fbctl_debug_t
+    fbctl_debug      : inout fbctl_debug_t
 
     );
 end FBCtl;
@@ -608,9 +608,16 @@ architecture Behavioral of FBCtl is
 
   signal vin       : stream_t;
   signal vout      : stream_t;
-  signal vin_data  : std_logic_vector(7 downto 0);
-  signal vout_data : std_logic_vector(7 downto 0);
-  
+
+  signal vin_data_565  : std_logic_vector(15 downto 0);
+  signal skin_vin_data_888  : std_logic_vector(23 downto 0);  
+  signal skin_vout_data_1 : std_logic_vector(0 downto 0);
+  signal vout_data_565 : std_logic_vector(15 downto 0);
+
+  signal avail     : std_logic;
+
+
+
 begin
 ----------------------------------------------------------------------------------
 -- mcb instantiation
@@ -1065,7 +1072,7 @@ begin
   p0_wr_clk  <= clkalg;
 
   p1_cmd_clk <= clkalg;
-  p1_cmd_bl  <= conv_std_logic_vector(P1_BATCH-1, 6);  
+  p1_cmd_bl  <= conv_std_logic_vector(P1_BATCH-1, 6);
   p1_rd_clk  <= clkalg;
   p1_wr_clk  <= clkalg;
 
@@ -1100,7 +1107,7 @@ begin
       when my_read_p0 =>
 
         if p0_rd_empty = '1' and p0_wr_empty = '1' and p1_wr_empty = '1' and p0_cmd_empty = '1' then
-          debug_wr   <= '1';debug_data <= X"0F";
+          debug_wr         <= '1'; debug_data <= X"0F";
           p0_cmd_en        <= '1';
           p0_cmd_instr     <= MCB_CMD_RD;
           p0_cmd_byte_addr <= conv_std_logic_vector(my_p0_rd_addr, 30);
@@ -1142,10 +1149,6 @@ begin
     end case;
   end process;
 
-
-  vin <= (others => '0');
-  vout <= (others => '0');  
-
   process (p0_rd_data)
     variable brightness : std_logic_vector(15 downto 0);
   begin  -- process
@@ -1166,8 +1169,6 @@ begin
     
   end process;
 
-
-  p0_wr_data <= p0_rd_data;
   p1_wr_data <= p1_rd_data;
 
   --p0_wr_data(15 downto 11) <= std_logic_vector(npixell(7 downto 3));
@@ -1177,7 +1178,7 @@ begin
   --p0_wr_data(15+16 downto 11+16) <= std_logic_vector(npixelh(7 downto 3));
   --p0_wr_data(10+16 downto 5+16)  <= std_logic_vector(npixelh(7 downto 2));
   --p0_wr_data(4+16 downto 0+16)   <= std_logic_vector(npixelh(7 downto 3));
-  
+
   --in_param1 <= unsigned(p1_rd_data(7 downto 0));
   --in_param2 <= unsigned(p1_rd_data(15 downto 8));
   --in_param3 <= unsigned(p1_rd_data(23 downto 16));
@@ -1189,14 +1190,90 @@ begin
   --p1_wr_data(31 downto 24) <= std_logic_vector(nparam4);
 
 
-  p0_rd_en <= '1' when p0_rd_empty = '0' else
-              '0';
-  p0_wr_en <= '1' when p0_rd_empty = '0' else
-              '0';
-  p1_rd_en <= '1' when p1_rd_empty = '0' else
-              '0';
-  p1_wr_en <= '1' when p1_rd_empty = '0' else
-              '0';
+  --p0_rd_en <= '1' when p0_rd_empty = '0' else
+  --            '0';
+  --p0_wr_en <= '1' when p0_rd_empty = '0' else
+  --            '0';
+  --p1_rd_en <= '1' when p1_rd_empty = '0' else
+  --            '0';
+  --p1_wr_en <= '1' when p1_rd_empty = '0' else
+  --            '0';
+
+
+  vin.valid    <= avail;
+  vin.init     <= '0';
+  vin_data_565 <= p0_rd_data(15 downto 0) when feed_is_high = '0' else
+                  p0_rd_data(31 downto 16);
+
+  skin_vin_data_888 <= vin_data_565(15 downto 11) & "000" &
+                   vin_data_565(10 downto 5) & "00" &
+                   vin_data_565(4 downto 0) & "000";
+  
+  avail    <= '1' when p0_rd_empty = '0' and p1_rd_empty = '0' else '0';
+  p1_rd_en <= avail;
+  p0_rd_en <= avail and not feed_is_high;
+
+  Feed : process (clkalg)
+  begin  -- process feed
+    if clkalg'event and clkalg = '1' then  -- rising clock edge
+      if rstalg = '1' then                 -- synchronous reset (active high)
+        feed_is_high <= '1';
+      else
+        if avail = '1' then
+          feed_is_high <= not feed_is_high;
+        end if;
+      end if;
+    end if;
+  end process feed;
+
+
+  p0_wr_data(15 downto 0) <= vout_data_565;
+  p1_wr_en                <= vout.valid;
+  p0_wr_en                <= vout.valid and not sink_is_high;
+
+  sink : process (clkalg)
+  begin  -- process feed
+    if clkalg'event and clkalg = '1' then  -- rising clock edge
+      if rstalg = '1' then                 -- synchronous reset (active high)
+        sink_is_high <= '1';
+      else
+        if vout.valid = '1' then
+          if sink_is_high = '1' then
+            p0_wr_data(31 downto 16) <= vout_data_565;
+          end if;
+          sink_is_high <= not sink_is_high;
+        end if;
+      end if;
+    end if;
+  end process sink;
+
+  fbctl_debug.vin  <= vin;
+  fbctl_debug.vout <= vout;
+
+
+  my_skinfilter : entity work.skinfilter
+    port map (
+      clk       => clkalg,                 -- [in]
+      rst       => rstalg,                 -- [in]
+      vin       => vin,                 -- [in]
+      vin_data  => skin_vin_data_888,       -- [in]
+      vout      => vout,           -- [out]
+      vout_data => skin_vout_data_1);     -- [out]
+
+  vout_data_565 <= (others => '1') when skin_vout_data_1(0) = '1' else
+                   (others => '0');
+  
+  --my_nullfilter : entity work.nullfilter
+  --  port map (
+  --    clk       => clkalg,              -- [in]
+  --    rst       => rstalg,              -- [in]
+  --    vin       => vin,                 -- [in]
+  --    vin_data  => vin_data,            -- [in]
+  --    vout      => vout,                -- [out]
+  --    vout_data => vout_data);          -- [out]
+
+
+
 
 
 
