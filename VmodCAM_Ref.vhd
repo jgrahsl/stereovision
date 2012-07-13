@@ -33,6 +33,10 @@ use digilent.Video.all;
 library UNISIM;
 use UNISIM.VComponents.all;
 
+library work;
+use work.cam_pkg.all;
+
+
 entity VmodCAM_Ref is
   generic (
     C3_NUM_DQ_PINS        : integer := 16;
@@ -138,27 +142,32 @@ architecture Behavioral of VmodCAM_Ref is
   signal wr      : std_logic;
   signal wr_data : std_logic_vector(7 downto 0);
   signal rd_data : std_logic_vector(7 downto 0);
- signal LED_O_T : std_logic_vector(7 downto 0);
+  signal LED_O_T : std_logic_vector(7 downto 0);
 
 -------------------------------------------------------------------------------
 -- FPGA Link
 -------------------------------------------------------------------------------
-	signal chanAddr  : std_logic_vector(6 downto 0);  -- the selected channel (0-127)
-	signal h2fData   : std_logic_vector(7 downto 0);  -- data lines used when the host writes to a channel
-	signal h2fValid  : std_logic;                     -- '1' means "on the next clock rising edge, please accept the data on h2fData"
-	signal h2fReady  : std_logic;                     -- channel logic can drive this low to say "I'm not ready for more data yet"
-	signal f2hData   : std_logic_vector(7 downto 0);  -- data lines used when the host reads from a channel
-	signal f2hValid  : std_logic;                     -- channel logic can drive this low to say "I don't have data ready for you"
-	signal f2hReady  : std_logic;                     -- '1' means "on the next clock rising edge, put your next byte of data on f2hData"
-	signal fx2Read                 : std_logic;  
-	-- ----------------------------------------------------------------------------------------------
-	-- Registers implementing the channels
-	signal reg0, reg0_next         : std_logic_vector(7 downto 0)  := x"00";
-	signal reg1, reg1_next         : std_logic_vector(7 downto 0)  := x"00";
-	signal reg2, reg2_next         : std_logic_vector(7 downto 0)  := x"00";
-	signal reg3, reg3_next         : std_logic_vector(7 downto 0)  := x"00";
+  signal chanAddr        : std_logic_vector(6 downto 0);  -- the selected channel (0-127)
+  signal h2fData         : std_logic_vector(7 downto 0);  -- data lines used when the host writes to a channel
+  signal h2fValid        : std_logic;  -- '1' means "on the next clock rising edge, please accept the data on h2fData"
+  signal h2fReady        : std_logic;  -- channel logic can drive this low to say "I'm not ready for more data yet"
+  signal f2hData         : std_logic_vector(7 downto 0);  -- data lines used when the host reads from a channel
+  signal f2hValid        : std_logic;  -- channel logic can drive this low to say "I don't have data ready for you"
+  signal f2hReady        : std_logic;  -- '1' means "on the next clock rising edge, put your next byte of data on f2hData"
+  signal fx2Read         : std_logic;
+  -- ----------------------------------------------------------------------------------------------
+  -- Registers implementing the channels
+  signal reg0, reg0_next : std_logic_vector(7 downto 0) := x"00";
+  signal reg1, reg1_next : std_logic_vector(7 downto 0) := x"00";
+  signal reg2, reg2_next : std_logic_vector(7 downto 0) := x"00";
+  signal reg3, reg3_next : std_logic_vector(7 downto 0) := x"00";
 
 
+
+  signal fbctl_debug_int : fbctl_debug_t;
+  signal fbctl_debug_0 : fbctl_debug_t;
+  signal fbctl_debug_1 : fbctl_debug_t;
+  signal fbctl_debug_2 : fbctl_debug_t;  
 begin
 
 
@@ -227,10 +236,10 @@ begin
       CLKC    => FbRdClk,
       RD_MODE => MSel,
 
-      ENB    => CamBDV,
-      RSTB_I => FbWrBRst,
-      DIB    => CamBD,
-      CLKB   => CamBPClk,
+      ENCAM  => CamBDV,
+      RSTCAM => FbWrBRst,
+      DCAM   => CamBD,
+      CLKCAM => CamBPClk,
 
 
       debug_wr   => wr,
@@ -260,7 +269,9 @@ begin
       mcb3_dram_dqs    => mcb3_dram_dqs,
       mcb3_dram_dqs_n  => mcb3_dram_dqs_n,
       mcb3_dram_ck     => mcb3_dram_ck,
-      mcb3_dram_ck_n   => mcb3_dram_ck_n
+      mcb3_dram_ck_n   => mcb3_dram_ck_n,
+
+      fbctl_debug =>  fbctl_debug_int
       );
 
   FbRdEn  <= VtcVde;
@@ -354,39 +365,56 @@ begin
 -------------------------------------------------------------------------------
 -- FPGA Link
 -------------------------------------------------------------------------------
-	-- Infer registers
-	process(fx2Clk_in)
-	begin
-		if ( rising_edge(fx2Clk_in) ) then
-			reg0 <= reg0_next;
-			reg1 <= reg1_next;
-			reg2 <= reg2_next;
-			reg3 <= reg3_next;
-		end if;
-	end process;
+  -- Infer registers
+  process(fx2Clk_in)
+  begin
+    if (rising_edge(fx2Clk_in)) then
+      reg0 <= reg0_next;
+      reg1 <= reg1_next;
+      reg2 <= reg2_next;
+      reg3 <= reg3_next;
+    end if;
+  end process;
 
-	reg0_next <= h2fData when chanAddr = "0000000" and h2fValid = '1' else reg0;
-	reg1_next <= h2fData when chanAddr = "0000001" and h2fValid = '1' else reg1;
-	reg2_next <= h2fData when chanAddr = "0000010" and h2fValid = '1' else reg2;
-	reg3_next <= h2fData when chanAddr = "0000011" and h2fValid = '1' else reg3;
-	
-	with chanAddr select f2hData <=
- 		reg0  when "0000000",
-		FbRdRst&FbRdEn&"001111"  when "0000001",
-		reg2  when "0000010",
-		reg3  when "0000011",
-		x"00" when others;
+  reg0_next <= h2fData when chanAddr = "0000000" and h2fValid = '1' else reg0;
+  reg1_next <= h2fData when chanAddr = "0000001" and h2fValid = '1' else reg1;
+  reg2_next <= h2fData when chanAddr = "0000010" and h2fValid = '1' else reg2;
+  reg3_next <= h2fData when chanAddr = "0000011" and h2fValid = '1' else reg3;
 
- 
+
+  process (fx2clk_in)
+  begin  -- process
+    if fx2clk_in'event and fx2clk_in = '1' then     -- rising clock edge
+      fbctl_debug_2 <= fbctl_debug_1;
+      fbctl_debug_1 <= fbctl_debug_0;
+      fbctl_debug_0 <= fbctl_debug_int;      
+
+    end if;
+  end process;
+
+  
+  with chanAddr select f2hData <=
+    reg0                    when "0000000",
+    fbctl_debug_2.vin.valid&fbctl_debug_2.vin.init&"000000"                    when "0000010",
+    fbctl_debug_2.vout.valid&fbctl_debug_2.vout.init&"000000"   when "0000011",
+    fbctl_debug_2.img   when "0000100",
+    std_logic_vector(to_Unsigned(fbctl_debug_2.count,8))  when "0000101",
+    std_logic_vector(to_Unsigned(fbctl_debug_2.count2,8))  when "0000110",
+    fbctl_debug_2.wr_cnt_0  when "0000111",
+    fbctl_debug_2.wr_cnt_1  when "0001000",    
+    fbctl_debug_2.state  when "0001001",        
+    x"00"                   when others;
+
+  
 
   f2hvalid <= '1';
   h2fReady <= '1';
 
   led_o <= "0000000" & int_FVB;
-  
+
   fx2Read_out    <= fx2Read;
   fx2OE_out      <= fx2Read;
-  fx2Addr_out(1) <= '1';                -- Use EP6OUT/EP8IN, not EP2OUT/EP4IN.  
+  fx2Addr_out(1) <= '1';  -- Use EP6OUT/EP8IN, not EP2OUT/EP4IN.  
   comm_fpga_fx2 : entity work.comm_fpga_fx2
     port map(
       -- FX2 interface

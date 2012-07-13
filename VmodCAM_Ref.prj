@@ -19,7 +19,7 @@ vhdl digilent "remote_sources/_/lib/digilent/VideoTimingCtl.vhd"
 vhdl digilent "remote_sources/_/lib/digilent/DVITransmitter.vhd"
 vhdl work "FBCtl.vhd"
 vhdl work "CamCtl.vhd"
-#vhdl work "cam_pkg.vhd"
+vhdl work "cam_pkg.vhd"
 #vhdl work "null.vhd"
 
 vhdl work "comm_fpga_fx2.vhdl"

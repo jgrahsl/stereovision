@@ -36,6 +36,9 @@ library digilent;
 library UNISIM;
 use UNISIM.VComponents.all;
 
+library work;
+use work.cam_pkg.all;
+
 entity FBCtl is
   generic (
     DEBUG_EN              : integer := 0;
@@ -75,10 +78,10 @@ entity FBCtl is
 ------------------------------------------------------------------------------------
 -- Title : Port B - write only
 ------------------------------------------------------------------------------------
-    ENB     : in  std_logic;            --port enable
-    RSTB_I  : in  std_logic;            --asynchronous port reset
-    DIB     : in  std_logic_vector (COLORDEPTH - 1 downto 0);  --data output
-    CLKB    : in  std_logic;            --port clock
+    ENCAM   : in  std_logic;            --port enable
+    RSTCAM  : in  std_logic;            --asynchronous port reset
+    DCAM    : in  std_logic_vector (COLORDEPTH - 1 downto 0);  --data output
+    CLKCAM  : in  std_logic;            --port clock
 
     debug_wr         : out   std_logic;
     debug_data       : out   std_logic_vector(7 downto 0);
@@ -112,7 +115,9 @@ entity FBCtl is
     mcb3_dram_dqs    : inout std_logic;
     mcb3_dram_dqs_n  : inout std_logic;
     mcb3_dram_ck     : out   std_logic;
-    mcb3_dram_ck_n   : out   std_logic
+    mcb3_dram_ck_n   : out   std_logic;
+    fbctl_debug      : inout   fbctl_debug_t
+
     );
 end FBCtl;
 
@@ -536,7 +541,7 @@ architecture Behavioral of FBCtl is
   signal rd_data_sel              : std_logic;
   signal int_rd_mode              : std_logic_vector(1 downto 0);
 
-  signal RstB, RstC, SRstC, SRstB, SCalibDoneB : std_logic;
+  signal RstC, SRstC, SRstcam, SCalibDoneB : std_logic;
 
 
   signal my_p0_rd_addr : natural range 0 to 2**22-1 := 0;
@@ -592,6 +597,19 @@ architecture Behavioral of FBCtl is
 
   signal alg_state  : alg_state_t;
   signal alg_nstate : alg_state_t;
+
+  signal clkalg     : std_logic;
+  signal rstalg     : std_logic;
+  signal rstcam_int : std_logic;
+
+  signal feed_is_high : std_logic;
+  signal sink_is_high : std_logic;
+
+
+  signal vin       : stream_t;
+  signal vout      : stream_t;
+  signal vin_data  : std_logic_vector(7 downto 0);
+  signal vout_data : std_logic_vector(7 downto 0);
   
 begin
 ----------------------------------------------------------------------------------
@@ -794,7 +812,7 @@ begin
       );
 
 -----------------------------------------------------------------------------
--- port c read-only (for dvi)
+-- DVI
 -----------------------------------------------------------------------------
   inst_localrstc : entity digilent.localrst port map(
     rst_i  => rstc,
@@ -802,12 +820,6 @@ begin
     srst_o => srstc
     );
   rstc <= rstc_i or not calib_done;
-
------------------------------------------------------------------------------
--- read fsm
--- clkc clock domain; issues a read 32 words command, when the data count in
--- the read fifo is below 16;
------------------------------------------------------------------------------
   sync_proc : process (clkc)
   begin
     if rising_edge(clkc) then
@@ -838,7 +850,7 @@ begin
     end if;
   end process;
   doc <= p3_rd_data(31 downto 16) when rd_data_sel = '1' else
-                      p3_rd_data(15 downto 0);
+         p3_rd_data(15 downto 0);
 
   next_state_decode : process (staterd, p3_rd_count, p3_rd_error)
   begin
@@ -877,47 +889,42 @@ begin
   end process;
 
 -----------------------------------------------------------------------------
--- port b write-only (for camera b)
+-- CAMERA
 -----------------------------------------------------------------------------
   inst_localrstb1 : entity digilent.localrst port map(
-    rst_i  => rstb,
-    clk_i  => clkb,
-    srst_o => srstb
+    rst_i  => rstcam_int,
+    clk_i  => clkcam,
+    srst_o => srstcam
     );
-  rstb <= rstb_i or not calib_done;
+  rstcam_int <= rstcam or not calib_done;
   
   inst_localrstb2 : entity digilent.localrst port map(
     rst_i  => calib_done,
-    clk_i  => clkb,
+    clk_i  => clkcam,
     srst_o => scalibdoneb
     );
------------------------------------------------------------------------------
--- upper/lower 16-bit selection mux
------------------------------------------------------------------------------
-  portarst_proc_b : process(clkb)
+
+  portarst_proc_b : process(clkcam)
   begin
-    if rising_edge(clkb) then
--------------------------------------------------------------------------------
--- PB_INT_RST
--------------------------------------------------------------------------------
-      if (srstb = '1') then
+    if rising_edge(clkcam) then
+      if (srstcam = '1') then
         pb_int_rst <= '1';
-      elsif (p2_wr_empty = '1') then  -- port has been reset when no more data is waiting to be written
+      elsif (p2_wr_empty = '1') then
         pb_int_rst <= '0';
       end if;
 
 -------------------------------------------------------------------------------
 -- SELECTOR
 -------------------------------------------------------------------------------
-      if (srstb = '1') then
+      if (srstcam = '1') then
         pb_wr_data_sel <= '0';
-      elsif (enb = '1') then
+      elsif (encam = '1') then
         pb_wr_data_sel <= not pb_wr_data_sel;
       end if;
 
-      if (enb = '1') then
+      if (encam = '1') then
         if (pb_wr_data_sel = '0') then
-          p2_wr_data(15 downto 0) <= dib;
+          p2_wr_data(15 downto 0) <= dcam;
         end if;
       end if;
 -------------------------------------------------------------------------------
@@ -956,16 +963,16 @@ begin
     end if;
   end process;
 
-  p2_wr_clk                <= clkb;
-  p2_wr_en                 <= pb_wr_data_sel and enb;  
-  p2_wr_data(31 downto 16) <= dib;
+  p2_wr_clk                <= clkcam;
+  p2_wr_en                 <= pb_wr_data_sel and encam;
+  p2_wr_data(31 downto 16) <= dcam;
   p2_wr_mask               <= "0000";
 
-  p2_cmd_clk   <= clkb;
-  p2_cmd_instr <= mcb_cmd_wr;           -- port 1 write-only
-  p2_cmd_byte_addr <= conv_std_logic_vector(pb_wr_addr * (wr_batch*4), 30);  
-  p2_cmd_bl <= conv_std_logic_vector(pb_wr_cnt-1, 6) when pb_int_rst = '1' else
-               conv_std_logic_vector(wr_batch-1, 6);
+  p2_cmd_clk       <= clkcam;
+  p2_cmd_instr     <= mcb_cmd_wr;       -- port 1 write-only
+  p2_cmd_byte_addr <= conv_std_logic_vector(pb_wr_addr * (wr_batch*4), 30);
+  p2_cmd_bl        <= conv_std_logic_vector(pb_wr_cnt-1, 6) when pb_int_rst = '1' else
+                      conv_std_logic_vector(wr_batch-1, 6);
 
   wrnext_state_decode_b : process (statewrb, p2_wr_count, p2_wr_error, pb_int_rst, p2_wr_empty, pb_wr_cnt)
   begin
@@ -995,14 +1002,19 @@ begin
 
 
 -------------------------------------------------------------------------------
--- jag
+-- ALGO on P0 and P1
 -------------------------------------------------------------------------------
+  clkalg <= clkcam;
+  inst_localrstalg : entity digilent.localrst port map(
+    rst_i  => srstc,
+    clk_i  => clkalg,
+    srst_o => rstalg
+    );
 
-
-  process (clkb)
+  process (clkalg)
   begin  -- process
-    if clkb'event and clkb = '1' then   -- rising clock edge
-      if SRSTC = '1' then               -- synchronous reset (active high)
+    if clkalg'event and clkalg = '1' then  -- rising clock edge
+      if rstalg = '1' then                 -- synchronous reset (active high)
         my_state      <= my_reset;
         my_p0_rd_addr <= 0;
         my_p0_wr_addr <= 2**20;
@@ -1046,6 +1058,20 @@ begin
     end if;
   end process;
 
+
+  p0_cmd_clk <= clkalg;
+  p0_cmd_bl  <= conv_std_logic_vector(P0_BATCH-1, 6);
+  p0_rd_clk  <= clkalg;
+  p0_wr_clk  <= clkalg;
+
+  p1_cmd_clk <= clkalg;
+  p1_cmd_bl  <= conv_std_logic_vector(P1_BATCH-1, 6);  
+  p1_rd_clk  <= clkalg;
+  p1_wr_clk  <= clkalg;
+
+
+  p0_wr_mask <= (others => '0');
+  p1_wr_mask <= (others => '0');
 
   process (my_state)
   begin  -- process
@@ -1117,7 +1143,8 @@ begin
   end process;
 
 
-
+  vin <= (others => '0');
+  vout <= (others => '0');  
 
   process (p0_rd_data)
     variable brightness : std_logic_vector(15 downto 0);
@@ -1204,9 +1231,9 @@ begin
           p0_rd_en   <= '1';
           p1_rd_en   <= '1';
         end if;
--------------------------------------------------------------------------------
--- (1)
--------------------------------------------------------------------------------        
+---------------------------------------------------------------------------------
+---- (1)
+---------------------------------------------------------------------------------        
       when alg_high_1 =>
         if param4(0) = '0' then
           if param1 < pixelh then
@@ -1217,9 +1244,9 @@ begin
         end if;
 
         alg_nstate <= alg_high_2;
--------------------------------------------------------------------------------
--- (2)
--------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+---- (2)
+---------------------------------------------------------------------------------
       when alg_high_2 =>
 
         if param1 < pixelh then
@@ -1229,9 +1256,9 @@ begin
         end if;
 
         alg_nstate <= alg_high_3;
--------------------------------------------------------------------------------
--- (3)
--------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+---- (3)
+---------------------------------------------------------------------------------
       when alg_high_3 =>
 
         if param3 < (param2&"0") then
@@ -1241,9 +1268,9 @@ begin
         end if;
 
         alg_nstate <= alg_high_4;
--------------------------------------------------------------------------------
--- (4)
--------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+---- (4)
+---------------------------------------------------------------------------------
       when alg_high_4 =>
 
         if param2 < param3 then
@@ -1256,15 +1283,15 @@ begin
 
 --        npixelh <= param1;        
         alg_nstate <= alg_finish_high;
--------------------------------------------------------------------------------
--- Finish High
--------------------------------------------------------------------------------       
+---------------------------------------------------------------------------------
+---- Finish High
+---------------------------------------------------------------------------------       
       when alg_finish_high =>
         p1_wr_en   <= '1';
         alg_nstate <= alg_low;
--------------------------------------------------------------------------------
--- Low
--------------------------------------------------------------------------------        
+---------------------------------------------------------------------------------
+---- Low
+---------------------------------------------------------------------------------        
 
       when alg_low =>
 
@@ -1279,9 +1306,9 @@ begin
           alg_nstate <= alg_low_1;
           p1_rd_en   <= '1';
         end if;
--------------------------------------------------------------------------------
--- (1)
--------------------------------------------------------------------------------        
+---------------------------------------------------------------------------------
+---- (1)
+---------------------------------------------------------------------------------        
       when alg_low_1 =>
         if param4(0) = '0' then
           if param1 < pixell then
@@ -1292,9 +1319,9 @@ begin
         end if;
         alg_nstate <= alg_low_2;
 
--------------------------------------------------------------------------------
--- (2)
--------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+---- (2)
+---------------------------------------------------------------------------------
       when alg_low_2 =>
 
         if param1 < pixell then
@@ -1304,9 +1331,9 @@ begin
         end if;
 
         alg_nstate <= alg_low_3;
--------------------------------------------------------------------------------
--- (3)
--------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+---- (3)
+---------------------------------------------------------------------------------
       when alg_low_3 =>
 
         if param3 < (param2&"0") then
@@ -1316,9 +1343,9 @@ begin
         end if;
 
         alg_nstate <= alg_low_4;
--------------------------------------------------------------------------------
--- (4)
--------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+---- (4)
+---------------------------------------------------------------------------------
       when alg_low_4 =>
 
         if param2 < param3 then
@@ -1331,9 +1358,9 @@ begin
 
 --        npixell <= param1;
         alg_nstate <= alg_finish_low;
--------------------------------------------------------------------------------
--- Finish Low
--------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+---- Finish Low
+---------------------------------------------------------------------------------
       when alg_finish_low =>
         p1_wr_en   <= '1';
         p0_wr_en   <= '1';
@@ -1342,20 +1369,6 @@ begin
       when others => null;
     end case;
   end process;
-
-  p0_cmd_clk <= clkb;
-  p0_cmd_bl  <= conv_std_logic_vector(P0_BATCH-1, 6);
-  p0_rd_clk  <= clkb;
-  p0_wr_clk  <= clkb;
-
-  p1_cmd_clk <= clkb;
-  p1_cmd_bl  <= conv_std_logic_vector(P1_BATCH-1, 6);
-  p1_rd_clk  <= clkb;
-  p1_wr_clk  <= clkb;
-
-
-  p0_wr_mask <= (others => '0');
-  p1_wr_mask <= (others => '0');
 
 end Behavioral;
 
