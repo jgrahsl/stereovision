@@ -39,5 +39,5 @@ NET "fx2Write_out"    LOC="E13"  | IOSTANDARD=LVTTL;   # RDY1/SLWR
 NET "fx2GotRoom_in"   LOC="A9"   | IOSTANDARD=LVTTL;   # CTL1/FLAGB
 NET "fx2PktEnd_out"   LOC="C4"   | IOSTANDARD=LVTTL;   # PA6/PKTEND
 
-NET "fx2Clk_in" TNM_NET = "fx2Clk_in";
-TIMESPEC "TS_clk" = PERIOD "fx2Clk_in" 20 ns HIGH 50 %;
+#NET "fx2Clk_int" TNM_NET = "fx2Clk_int";
+#TIMESPEC "TS_clklink" = PERIOD "fx2Clk_int" 20 ns HIGH 50 %;

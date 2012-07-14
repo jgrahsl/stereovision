@@ -41,7 +41,9 @@ entity VmodCAM_Ref is
   generic (
     C3_NUM_DQ_PINS        : integer := 16;
     C3_MEM_ADDR_WIDTH     : integer := 13;
-    C3_MEM_BANKADDR_WIDTH : integer := 3
+    C3_MEM_BANKADDR_WIDTH : integer := 3;
+    FPGALINK              : integer := 0
+
     );
   port (
     TMDS_TX_2_P   : out   std_logic;
@@ -165,12 +167,14 @@ architecture Behavioral of VmodCAM_Ref is
 
 
   signal fbctl_debug_int : fbctl_debug_t;
-  signal fbctl_debug_0 : fbctl_debug_t;
-  signal fbctl_debug_1 : fbctl_debug_t;
-  signal fbctl_debug_2 : fbctl_debug_t;  
+  signal fbctl_debug_0   : fbctl_debug_t;
+  signal fbctl_debug_1   : fbctl_debug_t;
+  signal fbctl_debug_2   : fbctl_debug_t;
+  signal fx2Clk_int      : std_logic;
 begin
 
-
+  
+  led_o <= fbctl_debug_int.vin.valid & fbctl_debug_int.vin.init & fbctl_debug_int.vout.valid & fbctl_debug_int.vout.init & "000" & int_FVB;
 
 --LED_O <= VtcHs & VtcHs & VtcVde & async_rst & "0000";
 ----------------------------------------------------------------------------------
@@ -237,7 +241,7 @@ begin
       RSTCAM => FbWrBRst,
       DCAM   => CamBD,
       CLKCAM => CamBPClk,
-
+      CLK24  => CAMCLK,
 
       debug_wr   => wr,
       debug_data => wr_data,
@@ -268,7 +272,7 @@ begin
       mcb3_dram_ck     => mcb3_dram_ck,
       mcb3_dram_ck_n   => mcb3_dram_ck_n,
 
-      fbctl_debug =>  fbctl_debug_int
+      fbctl_debug => fbctl_debug_int
       );
 
   FbRdEn  <= VtcVde;
@@ -359,13 +363,16 @@ begin
       txd     => txd,                   -- [out]
       rxd     => rxd);                  -- [in]
 
+
+  IBUFG_inst : IBUFG generic map (IOSTANDARD => "DEFAULT")port map (O => fx2Clk_int, I => fx2Clk_in);
+
 -------------------------------------------------------------------------------
 -- FPGA Link
 -------------------------------------------------------------------------------
   -- Infer registers
-  process(fx2Clk_in)
+  process(fx2Clk_int)
   begin
-    if (rising_edge(fx2Clk_in)) then
+    if (rising_edge(fx2Clk_int)) then
       reg0 <= reg0_next;
       reg1 <= reg1_next;
       reg2 <= reg2_next;
@@ -379,60 +386,64 @@ begin
   reg3_next <= h2fData when chanAddr = "0000011" and h2fValid = '1' else reg3;
 
 
-  process (fx2clk_in)
+  process (fx2clk_int)
   begin  -- process
-    if fx2clk_in'event and fx2clk_in = '1' then     -- rising clock edge
+    if fx2clk_int'event and fx2clk_int = '1' then  -- rising clock edge
       fbctl_debug_2 <= fbctl_debug_1;
       fbctl_debug_1 <= fbctl_debug_0;
-      fbctl_debug_0 <= fbctl_debug_int;      
+      fbctl_debug_0 <= fbctl_debug_int;
 
     end if;
   end process;
 
-  
+
   with chanAddr select f2hData <=
-    reg0                    when "0000000",
-    fbctl_debug_2.vin.valid&fbctl_debug_2.vin.init&"000000"                    when "0000010",
-    fbctl_debug_2.vout.valid&fbctl_debug_2.vout.init&"000000"   when "0000011",
-    fbctl_debug_2.img   when "0000100",
-    std_logic_vector(to_Unsigned(fbctl_debug_2.count,8))  when "0000101",
-    std_logic_vector(to_Unsigned(fbctl_debug_2.count2,8))  when "0000110",
-    fbctl_debug_2.wr_cnt_0  when "0000111",
-    fbctl_debug_2.wr_cnt_1  when "0001000",    
-    fbctl_debug_2.state  when "0001001",        
-    x"00"                   when others;
+    reg0                                                      when "0000000",
+    fbctl_debug_2.vin.valid&fbctl_debug_2.vin.init&"000000"   when "0000010",
+    fbctl_debug_2.vout.valid&fbctl_debug_2.vout.init&"000000" when "0000011",
+    fbctl_debug_2.img                                         when "0000100",
+    std_logic_vector(to_Unsigned(fbctl_debug_2.count, 8))     when "0000101",
+    std_logic_vector(to_Unsigned(fbctl_debug_2.count2, 8))    when "0000110",
+    fbctl_debug_2.wr_cnt_0                                    when "0000111",
+    fbctl_debug_2.wr_cnt_1                                    when "0001000",
+    fbctl_debug_2.state                                       when "0001001",
+    x"00"                                                     when others;
 
+  comm : if FPGALINK = 1 generate
+    f2hvalid       <= '1';
+    h2fReady       <= '1';
+    fx2Read_out    <= fx2Read;
+    fx2OE_out      <= fx2Read;
+    fx2Addr_out(1) <= '1';  -- Use EP6OUT/EP8IN, not EP2OUT/EP4IN.  
+    comm_fpga_fx2 : entity work.comm_fpga_fx2
+      port map(
+        -- FX2 interface
+        fx2Clk_in      => fx2Clk_int,
+        fx2FifoSel_out => fx2Addr_out(0),
+        fx2Data_io     => fx2Data_io,
+        fx2Read_out    => fx2Read,
+        fx2GotData_in  => fx2GotData_in,
+        fx2Write_out   => fx2Write_out,
+        fx2GotRoom_in  => fx2GotRoom_in,
+        fx2PktEnd_out  => fx2PktEnd_out,
+
+        -- Channel read/write interface
+        chanAddr_out => chanAddr,
+        h2fData_out  => h2fData,
+        h2fValid_out => h2fValid,
+        h2fReady_in  => h2fReady,
+        f2hData_in   => f2hData,
+        f2hValid_in  => f2hValid,
+        f2hReady_out => f2hReady
+        );
+  end generate comm;
+  comm_else : if FPGALINK = 0 generate
+    fx2Addr_out   <= (others => '0');
+    fx2Read_out   <= '0';
+    fx2PktEnd_out <= '0';
+    fx2Write_out  <= '0';
+    fx2OE_out     <= '0';
+  end generate comm_else;
   
-
-  f2hvalid <= '1';
-  h2fReady <= '1';
-
-  led_o <= "0000000" & int_FVB;
-
-  fx2Read_out    <= fx2Read;
-  fx2OE_out      <= fx2Read;
-  fx2Addr_out(1) <= '1';  -- Use EP6OUT/EP8IN, not EP2OUT/EP4IN.  
-  comm_fpga_fx2 : entity work.comm_fpga_fx2
-    port map(
-      -- FX2 interface
-      fx2Clk_in      => fx2Clk_in,
-      fx2FifoSel_out => fx2Addr_out(0),
-      fx2Data_io     => fx2Data_io,
-      fx2Read_out    => fx2Read,
-      fx2GotData_in  => fx2GotData_in,
-      fx2Write_out   => fx2Write_out,
-      fx2GotRoom_in  => fx2GotRoom_in,
-      fx2PktEnd_out  => fx2PktEnd_out,
-
-      -- Channel read/write interface
-      chanAddr_out => chanAddr,
-      h2fData_out  => h2fData,
-      h2fValid_out => h2fValid,
-      h2fReady_in  => h2fReady,
-      f2hData_in   => f2hData,
-      f2hValid_in  => f2hValid,
-      f2hReady_out => f2hReady
-      );
-
 end Behavioral;
 

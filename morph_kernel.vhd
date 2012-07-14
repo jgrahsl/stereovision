@@ -7,8 +7,8 @@ use work.cam_pkg.all;
 
 entity morphologic_kernel is
   generic (
-    KERNEL : natural range 1 to 5   := 5;
-    THRESH : natural range 0 to 25  := 12
+    KERNEL : natural range 1 to 5  := 5;
+    THRESH : natural range 0 to 25 := 12
     );
   port (
     clk        : in  std_logic;
@@ -21,15 +21,15 @@ end morphologic_kernel;
 
 architecture impl of morphologic_kernel is
   type reg_t is record
-    vout        : stream_t;
-    q           : bit_t;
+    vout : stream_t;
+    q    : bit_t;
   end record;
 
   procedure init (variable v : inout reg_t) is
   begin
-    v.vout.init    := '0';
-    v.vout.valid   := '0';
-    v.q            := (others => '0');
+    v.vout.init  := '0';
+    v.vout.valid := '0';
+    v.q          := (others => '0');
   end init;
 
   signal r      : reg_t;
@@ -42,9 +42,9 @@ begin
   vout_data <= r.q;
 
   process(rst, r, vin, vin_window)
-    variable v      : reg_t;
-    variable win    : bit_window2d_t;
-    variable sum    : natural range 0 to (KERNEL*KERNEL);
+    variable v   : reg_t;
+    variable win : bit_window2d_t;
+    variable sum : natural range 0 to (KERNEL*KERNEL);
   begin  -- process
 
     v      := r;

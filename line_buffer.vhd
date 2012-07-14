@@ -7,7 +7,7 @@ use work.cam_pkg.all;
 
 entity cyclic_bit_buffer is
   generic (
-    NUM_LINES : natural range 1 to 5   := 3;
+    NUM_LINES : natural range 1 to 5    := 3;
     WIDTH     : natural range 1 to 2048 := 2048;
     HEIGHT    : natural range 1 to 2048 := 2048);
   port (
@@ -30,7 +30,7 @@ architecture impl of cyclic_bit_buffer is
     sel  : natural range 0 to (NUM_LINES-1);
   end record;
   signal r                   :       reg_t;
-  signal r_next                 :       reg_t;
+  signal r_next              :       reg_t;
   procedure init (variable v : inout reg_t) is
   begin
     v.sel  := 0;
@@ -42,34 +42,34 @@ architecture impl of cyclic_bit_buffer is
 -- Signals
 -------------------------------------------------------------------------------
 --  type   adr_vector_t is array (0 to NUM_LINES) of lb_adr_t;
-  signal adr : std_logic_vector(10 downto 0);
-  type q_t is array (0 to (NUM_LINES-1)) of bit_t;
-  signal q          : q_t;
-  signal wren       : std_logic_vector((NUM_LINES-1) downto 0);
+  signal adr  : std_logic_vector(10 downto 0);
+  type   q_t is array (0 to (NUM_LINES-1)) of bit_t;
+  signal q    : q_t;
+  signal wren : std_logic_vector((NUM_LINES-1) downto 0);
 
-  signal vin_data_r  : bit_t;
+  signal vin_data_r : bit_t;
   signal vin_r      : stream_t;
-  signal r_r         : reg_t;
+  signal r_r        : reg_t;
 begin
   adr <= std_logic_vector(to_unsigned(r.cols, 11));
   rams : for i in 0 to (NUM_LINES-1) generate
-    kernel_rams : entity work.bit_ram_ip
+    kernel_rams : entity work.bit_ram
       generic map (
         ADDR_BITS  => 11,
         WIDTH_BITS => 1)
       port map (
         addra => adr,
-        clka   => clk,                 -- [in]
-        dina    => vin_data,            -- [in]
-        wea    => wren(i downto i),             -- [in]
-        douta       => q(i));               -- [out]    
+        clka  => clk,                   -- [in]
+        dina  => vin_data,              -- [in]
+        wea   => wren(i downto i),      -- [in]
+        douta => q(i));                 -- [out]    
   end generate rams;
 
   wr_enables : for i in 0 to (NUM_LINES-1) generate
     wren(i) <= '1' when vin.valid = '1' and r.sel = i else '0';
   end generate wr_enables;
 
-  process(rst, r, r_r, vin, vin_r,  q)
+  process(rst, r, r_r, vin, vin_r, q)
     variable v : reg_t;
   begin  -- process
     v := r;
@@ -91,14 +91,14 @@ begin
         if (r.rows = (HEIGHT-1)) then
           v.rows := 0;
         else
-          v.rows := r.rows + 1;          
+          v.rows := r.rows + 1;
         end if;
 
         if r.sel < (NUM_LINES-1) then
           v.sel := r.sel + 1;
         else
           v.sel := 0;
-        end if;       
+        end if;
       else
         v.cols := v.cols + 1;
       end if;
@@ -169,19 +169,19 @@ begin
       init(v);
     end if;
 
-    r_next  <= v;
-    vout <= vin_r;                    -- 1 cycles delay due to blockram
+    r_next <= v;
+    vout   <= vin_r;                    -- 1 cycles delay due to blockram
   end process;
 
   process (clk, r, r_next)
   begin  -- process
     if clk'event and clk = '1' then     -- rising clock edge
-      vin_data_r  <= vin_data;
+      vin_data_r <= vin_data;
 
-      vin_r  <= vin;
+      vin_r <= vin;
 
-      r_r  <= r;
-      r    <= r_next;
+      r_r <= r;
+      r   <= r_next;
     end if;
   end process;
 

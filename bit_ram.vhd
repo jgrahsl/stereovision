@@ -3,7 +3,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use IEEE.STD_LOGIC_ARITH.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
-entity bit_ram_ip is
+entity bit_ram is
 generic
 (
 	ADDR_BITS : integer := 8;
@@ -16,10 +16,10 @@ generic
     dina  : IN  STD_LOGIC_VECTOR(WIDTH_BITS-1 DOWNTO 0);
     douta : OUT STD_LOGIC_VECTOR(WIDTH_BITS-1 DOWNTO 0));
 
-end bit_ram_ip;
+end bit_ram;
 
 
-architecture myarch of bit_ram_ip is
+architecture myarch of bit_ram is
 type RAM_TYPE is array (2**ADDR_BITS-1 downto 0) of std_logic_vector (WIDTH_BITS-1 downto 0);
 signal RAM	: RAM_TYPE;
 

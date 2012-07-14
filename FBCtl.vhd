@@ -82,7 +82,7 @@ entity FBCtl is
     RSTCAM  : in  std_logic;            --asynchronous port reset
     DCAM    : in  std_logic_vector (COLORDEPTH - 1 downto 0);  --data output
     CLKCAM  : in  std_logic;            --port clock
-
+    CLK24  : in  std_logic;            --port clock
     debug_wr         : out   std_logic;
     debug_data       : out   std_logic_vector(7 downto 0);
 ---------------------------------------------------------------------------------      
@@ -623,6 +623,12 @@ architecture Behavioral of FBCtl is
   signal morph2_vout  : stream_t;  
   signal morph2_vout_data_1 : std_logic_vector(0 downto 0);  
   
+  signal morph3_vout  : stream_t;  
+  signal morph3_vout_data_1 : std_logic_vector(0 downto 0);  
+  
+  signal morph4_vout  : stream_t;  
+  signal morph4_vout_data_1 : std_logic_vector(0 downto 0);  
+  
   signal vout      : stream_t;
   signal vout_data_1 : std_logic_vector(0 downto 0);  
   signal vout_data_565 : std_logic_vector(15 downto 0);
@@ -1024,7 +1030,7 @@ begin
 -------------------------------------------------------------------------------
 -- ALGO on P0 and P1
 -------------------------------------------------------------------------------
-  clkalg <= clkcam;
+  clkalg <= clk24;
   inst_localrstalg : entity digilent.localrst port map(
     rst_i  => srstc,
     clk_i  => clkalg,
@@ -1213,20 +1219,11 @@ begin
   --            '0';
 
 
-  vin.valid    <= avail;
-  vin.init     <= '0';
-  vin_data_565 <= p0_rd_data(15 downto 0) when feed_is_high = '0' else
-                  p0_rd_data(31 downto 16);
-
-  vin_data_888 <= vin_data_565(15 downto 11) & "000" &
-                   vin_data_565(10 downto 5) & "00" &
-                   vin_data_565(4 downto 0) & "000";
-  
   avail    <= '1' when p0_rd_empty = '0' and p1_rd_empty = '0' else '0';
   p1_rd_en <= avail;
   p0_rd_en <= avail and not feed_is_high;
 
-  Feed : process (clkalg)
+  feed : process (clkalg)
   begin  -- process feed
     if clkalg'event and clkalg = '1' then  -- rising clock edge
       if rstalg = '1' then                 -- synchronous reset (active high)
@@ -1238,7 +1235,6 @@ begin
       end if;
     end if;
   end process feed;
-
 
   p0_wr_data(31 downto 16) <= vout_data_565;
   p1_wr_en                <= vout.valid;
@@ -1260,10 +1256,19 @@ begin
     end if;
   end process sink;
 
-  fbctl_debug.vin  <= vin;
-  fbctl_debug.vout <= vout;
+-------------------------------------------------------------------------------
+-- PIPE
+-------------------------------------------------------------------------------
 
+  vin.valid    <= avail;
+  vin.init     <= '0';
+  vin_data_565 <= p0_rd_data(15 downto 0) when feed_is_high = '0' else
+                  p0_rd_data(31 downto 16);
 
+  vin_data_888 <= vin_data_565(15 downto 11) & "000" &
+                   vin_data_565(10 downto 5) & "00" &
+                   vin_data_565(4 downto 0) & "000";
+    
   my_skinfilter : entity work.skinfilter
     port map (
       clk       => clkalg,                 -- [in]
@@ -1273,12 +1278,6 @@ begin
       vout      => skin_vout,           -- [out]
       vout_data => skin_vout_data_1);     -- [out]
 
-
-  vout_data_1 <= morph2_vout_data_1;
-  vout <= morph2_vout;
-  vout_data_565 <= (others => '1') when vout_data_1(0) = '1' else
-                   (others => '0');
-  
   --my_nullfilter : entity work.nullfilter
   --  port map (
   --    clk       => clkalg,              -- [in]
@@ -1287,7 +1286,6 @@ begin
   --    vin_data  => vin_data,            -- [in]
   --    vout      => vout,                -- [out]
   --    vout_data => vout_data);          -- [out]
-
 
   my_morph : entity work.morph
   generic map (
@@ -1303,22 +1301,15 @@ begin
       vout      => morph_vout,          -- [out]
       vout_data => morph_vout_data_1);         -- [out]
 
-  my_morph2 : entity work.morph
-  generic map (
-    KERNEL =>  5,
-    THRESH =>  1,
-    WIDTH  => 640,    
-    HEIGHT => 480)
-    port map (
-      clk       => clkalg,                -- [in]
-      reset     => rstalg,               -- [in]
-      vin       => morph_vout,           -- [in]
-      vin_data  => morph_vout_data_1,           -- [in]
-      vout      => morph2_vout,          -- [out]
-      vout_data => morph2_vout_data_1);         -- [out]
   
+  vout_data_1 <= morph_vout_data_1;
+  vout <= morph_vout;
   
-
+  vout_data_565 <= (others => '1') when vout_data_1(0) = '1' else
+                   (others => '0');
+  
+  fbctl_debug.vin  <= vin;
+  fbctl_debug.vout <= vout;
 
 
 end Behavioral;
