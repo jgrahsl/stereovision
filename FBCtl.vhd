@@ -1287,7 +1287,7 @@ begin
   --    vout      => vout,                -- [out]
   --    vout_data => vout_data);          -- [out]
 
-  my_morph : entity work.morph
+  my_morph : entity work.morph_multi
   generic map (
     KERNEL =>  5,
     THRESH =>  25,
