@@ -39,23 +39,10 @@ architecture impl of cyclic_bit_buffer is
   end init;
 
 -------------------------------------------------------------------------------
--- Components
--------------------------------------------------------------------------------
-  component bit_ram_ip
-    port (
-      clka  : IN  STD_LOGIC;
-      wea   : IN  STD_LOGIC_VECTOR(0 DOWNTO 0);
-      addra : IN  STD_LOGIC_VECTOR(10 DOWNTO 0);
-      dina  : IN  STD_LOGIC_VECTOR(0 DOWNTO 0);
-      douta : OUT STD_LOGIC_VECTOR(0 DOWNTO 0));
-  end component;
-  
-
--------------------------------------------------------------------------------
 -- Signals
 -------------------------------------------------------------------------------
 --  type   adr_vector_t is array (0 to NUM_LINES) of lb_adr_t;
-  signal adr : lb_adr_t;
+  signal adr : std_logic_vector(10 downto 0);
   type q_t is array (0 to (NUM_LINES-1)) of bit_t;
   signal q          : q_t;
   signal wren       : std_logic_vector((NUM_LINES-1) downto 0);
@@ -66,7 +53,10 @@ architecture impl of cyclic_bit_buffer is
 begin
   adr <= std_logic_vector(to_unsigned(r.cols, 11));
   rams : for i in 0 to (NUM_LINES-1) generate
-    kernel_rams : bit_ram_ip
+    kernel_rams : entity work.bit_ram_ip
+      generic map (
+        ADDR_BITS  => 11,
+        WIDTH_BITS => 1)
       port map (
         addra => adr,
         clka   => clk,                 -- [in]
