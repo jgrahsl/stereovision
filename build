@@ -4,4 +4,7 @@ ngdbuild -intstyle ise -dd _ngo -sd ipcore_dir -nt timestamp -uc atlys.ucf -uc t
 map -intstyle ise -p xc6slx45-csg324-3 -w -logic_opt off -ol high -t 1 -xt 0 -register_duplication off -r 4 -global_opt off -mt 2 -ir off -pr off -lc off -power off -o VmodCAM_Ref_map.ncd VmodCAM_Ref.ngd VmodCAM_Ref.pcf  && \
 par -w -intstyle ise -ol high -mt 2 VmodCAM_Ref_map.ncd VmodCAM_Ref.ncd VmodCAM_Ref.pcf && \
 bitgen -intstyle ise -f VmodCAM_Ref.ut VmodCAM_Ref.ncd && \
-impact -batch impact.batch
+impact -batch xsvf.batch && \
+flcli --vp=1443:0007 --ivp=1443:0007 -s -x top.xsvf 
+
+#impact -batch impact.batch

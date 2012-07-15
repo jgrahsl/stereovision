@@ -1290,7 +1290,7 @@ begin
   my_morph : entity work.morph_multi
   generic map (
     KERNEL =>  5,
-    THRESH =>  25,
+    THRESH =>  12,
     WIDTH  => 640,    
     HEIGHT => 480)
     port map (
