@@ -83,7 +83,6 @@ entity FBCtl is
     DCAM    : in  std_logic_vector (COLORDEPTH - 1 downto 0);  --data output
     CLKCAM  : in  std_logic;            --port clock
     CLK24  : in  std_logic;            --port clock
-
     debug_wr         : out   std_logic;
     debug_data       : out   std_logic_vector(7 downto 0);
 ---------------------------------------------------------------------------------      
@@ -118,6 +117,7 @@ entity FBCtl is
     mcb3_dram_ck     : out   std_logic;
     mcb3_dram_ck_n   : out   std_logic;
     fbctl_debug      : inout fbctl_debug_t
+
     );
 end FBCtl;
 
@@ -606,6 +606,10 @@ architecture Behavioral of FBCtl is
   signal sink_is_high : std_logic;
 
 
+
+
+
+
   signal vin       : stream_t;  
   signal vin_data_565  : std_logic_vector(15 downto 0);
   signal vin_data_888  : std_logic_vector(23 downto 0);  
@@ -955,12 +959,11 @@ begin
       if (pb_int_rst = '1' and p2_wr_empty = '1') then
         pb_wr_addr <= 0;
       elsif (statewrb = stwrcmd) then
---        if (pb_wr_addr = 640*480*2/(wr_batch*4)-1) then
---          pb_wr_addr <= 0;
---          null;
---        else
-        pb_wr_addr <= pb_wr_addr + 1;
---        end if;
+        if (pb_wr_addr = 640*480*2/(wr_batch*4)-1) then
+          pb_wr_addr <= 0;
+        else
+          pb_wr_addr <= pb_wr_addr + 1;
+        end if;
       end if;
 -------------------------------------------------------------------------------
 -- STATE
@@ -1027,9 +1030,7 @@ begin
 -------------------------------------------------------------------------------
 -- ALGO on P0 and P1
 -------------------------------------------------------------------------------
-
   clkalg <= clk24;
-
   inst_localrstalg : entity digilent.localrst port map(
     rst_i  => srstc,
     clk_i  => clkalg,
@@ -1064,11 +1065,7 @@ begin
           end if;
 
         end if;
-
-        if next_go = '1' then
-          go <= '1';
-        end if;
-        
+        go       <= next_go;
         my_state <= my_nstate;
 
 -------------------------------------------------------------------------------
@@ -1095,7 +1092,6 @@ begin
 
   p1_cmd_clk <= clkalg;
   p1_cmd_bl  <= conv_std_logic_vector(P1_BATCH-1, 6);
-
   p1_rd_clk  <= clkalg;
   p1_wr_clk  <= clkalg;
 
@@ -1140,6 +1136,7 @@ begin
       when my_read_p1 =>
 
         if p1_rd_empty = '1' and p1_wr_empty = '1' and p1_cmd_empty = '1' then
+          next_go          <= '1';
           p1_cmd_en        <= '1';
           p1_cmd_instr     <= MCB_CMD_RD;
           p1_cmd_byte_addr <= conv_std_logic_vector(my_p1_addr, 30);
@@ -1148,7 +1145,7 @@ begin
         
       when my_write_p0 =>
 
-        if p0_wr_count >= P0_BATCH and p0_cmd_empty = '1' then
+        if p0_wr_count = P0_BATCH and p0_cmd_empty = '1' then
           p0_cmd_en        <= '1';
           p0_cmd_instr     <= MCB_CMD_WR;
           p0_cmd_byte_addr <= conv_std_logic_vector(my_p0_wr_addr, 30);
@@ -1157,7 +1154,7 @@ begin
 
       when my_write_p1 =>
 
-        if p1_wr_count >= P1_BATCH and p1_cmd_empty = '1' then
+        if p1_wr_count = P1_BATCH and p1_cmd_empty = '1' then
           p1_cmd_en        <= '1';
           p1_cmd_instr     <= MCB_CMD_WR;
           p1_cmd_byte_addr <= conv_std_logic_vector(my_p1_addr, 30);
@@ -1191,13 +1188,11 @@ begin
     
   end process;
 
-
   p1_wr_data <= p1_rd_data;
 
   --p0_wr_data(15 downto 11) <= std_logic_vector(npixell(7 downto 3));
   --p0_wr_data(10 downto 5)  <= std_logic_vector(npixell(7 downto 2));
   --p0_wr_data(4 downto 0)   <= std_logic_vector(npixell(7 downto 3));
-
 
   --p0_wr_data(15+16 downto 11+16) <= std_logic_vector(npixelh(7 downto 3));
   --p0_wr_data(10+16 downto 5+16)  <= std_logic_vector(npixelh(7 downto 2));
@@ -1212,6 +1207,8 @@ begin
   --p1_wr_data(15 downto 8)  <= std_logic_vector(nparam2);
   --p1_wr_data(23 downto 16) <= std_logic_vector(nparam3);
   --p1_wr_data(31 downto 24) <= std_logic_vector(nparam4);
+
+
   --p0_rd_en <= '1' when p0_rd_empty = '0' else
   --            '0';
   --p0_wr_en <= '1' when p0_rd_empty = '0' else
@@ -1220,10 +1217,11 @@ begin
   --            '0';
   --p1_wr_en <= '1' when p1_rd_empty = '0' else
   --            '0';
+
+
   avail    <= '1' when p0_rd_empty = '0' and p1_rd_empty = '0' else '0';
   p1_rd_en <= avail;
   p0_rd_en <= avail and not feed_is_high;
-
 
   feed : process (clkalg)
   begin  -- process feed
@@ -1238,7 +1236,6 @@ begin
     end if;
   end process feed;
 
-
   p0_wr_data(31 downto 16) <= vout_data_565;
   p1_wr_en                <= vout.valid;
   p0_wr_en                <= vout.valid and not sink_is_high;
@@ -1252,11 +1249,9 @@ begin
         if vout.valid = '1' then
           if sink_is_high = '1' then
             p0_wr_data(15 downto 0) <= vout_data_565;
-
           end if;
           sink_is_high <= not sink_is_high;
         end if;
-
       end if;
     end if;
   end process sink;
@@ -1315,6 +1310,7 @@ begin
   
   fbctl_debug.vin  <= vin;
   fbctl_debug.vout <= vout;
+
 
 end Behavioral;
 
