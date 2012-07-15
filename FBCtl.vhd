@@ -74,7 +74,7 @@ entity FBCtl is
     RSTC_I  : in  std_logic;            --asynchronous port reset
     DOC     : out std_logic_vector (COLORDEPTH - 1 downto 0);  --data output
     CLKC    : in  std_logic;            --port clock
-    RD_MODE : in  std_logic_vector(1 downto 0);
+    RD_MODE : in  std_logic_vector(7 downto 0);
 ------------------------------------------------------------------------------------
 -- Title : Port B - write only
 ------------------------------------------------------------------------------------
@@ -82,6 +82,7 @@ entity FBCtl is
     RSTCAM  : in  std_logic;            --asynchronous port reset
     DCAM    : in  std_logic_vector (COLORDEPTH - 1 downto 0);  --data output
     CLKCAM  : in  std_logic;            --port clock
+    CLK24  : in  std_logic;            --port clock
 
     debug_wr         : out   std_logic;
     debug_data       : out   std_logic_vector(7 downto 0);
@@ -116,8 +117,7 @@ entity FBCtl is
     mcb3_dram_dqs_n  : inout std_logic;
     mcb3_dram_ck     : out   std_logic;
     mcb3_dram_ck_n   : out   std_logic;
-    fbctl_debug      : inout   fbctl_debug_t
-
+    fbctl_debug      : inout fbctl_debug_t
     );
 end FBCtl;
 
@@ -606,11 +606,33 @@ architecture Behavioral of FBCtl is
   signal sink_is_high : std_logic;
 
 
-  signal vin       : stream_t;
-  signal vout      : stream_t;
-  signal vin_data  : std_logic_vector(7 downto 0);
-  signal vout_data : std_logic_vector(7 downto 0);
+  signal vin       : stream_t;  
+  signal vin_data_565  : std_logic_vector(15 downto 0);
+  signal vin_data_888  : std_logic_vector(23 downto 0);  
+
+  signal skin_vout  : stream_t;
+  signal skin_vout_data_1 : std_logic_vector(0 downto 0);
+
+  signal morph_vout  : stream_t;  
+  signal morph_vout_data_1 : std_logic_vector(0 downto 0);  
+
+  signal morph2_vout  : stream_t;  
+  signal morph2_vout_data_1 : std_logic_vector(0 downto 0);  
   
+  signal morph3_vout  : stream_t;  
+  signal morph3_vout_data_1 : std_logic_vector(0 downto 0);  
+  
+  signal morph4_vout  : stream_t;  
+  signal morph4_vout_data_1 : std_logic_vector(0 downto 0);  
+  
+  signal vout      : stream_t;
+  signal vout_data_1 : std_logic_vector(0 downto 0);  
+  signal vout_data_565 : std_logic_vector(15 downto 0);
+
+  signal avail     : std_logic;
+
+
+
 begin
 ----------------------------------------------------------------------------------
 -- mcb instantiation
@@ -1005,7 +1027,9 @@ begin
 -------------------------------------------------------------------------------
 -- ALGO on P0 and P1
 -------------------------------------------------------------------------------
-  clkalg <= clkcam;
+
+  clkalg <= clk24;
+
   inst_localrstalg : entity digilent.localrst port map(
     rst_i  => srstc,
     clk_i  => clkalg,
@@ -1070,7 +1094,8 @@ begin
   p0_wr_clk  <= clkalg;
 
   p1_cmd_clk <= clkalg;
-  p1_cmd_bl  <= conv_std_logic_vector(P1_BATCH-1, 6);  
+  p1_cmd_bl  <= conv_std_logic_vector(P1_BATCH-1, 6);
+
   p1_rd_clk  <= clkalg;
   p1_wr_clk  <= clkalg;
 
@@ -1105,7 +1130,6 @@ begin
       when my_read_p0 =>
 
         if p0_rd_empty = '1' and p0_wr_empty = '1' and p1_wr_empty = '1' and p0_cmd_empty = '1' then
-          next_go          <= '1';          
           debug_wr         <= '1'; debug_data <= X"0F";
           p0_cmd_en        <= '1';
           p0_cmd_instr     <= MCB_CMD_RD;
@@ -1147,14 +1171,10 @@ begin
     end case;
   end process;
 
-
-  vin <= (others => '0');
-  vout <= (others => '0');  
-
   process (p0_rd_data)
     variable brightness : std_logic_vector(15 downto 0);
   begin  -- process
-    brightness := conv_std_logic_vector(unsigned("000" & p0_rd_data(15 downto 11) & "0") + unsigned("000" & p0_rd_data(10 downto 5)) + unsigned("000" & p0_rd_data(4 downto 0) & "0"), 16);
+--    brightness := conv_std_logic_vector(unsigned("000" & p0_rd_data(15 downto 11) & "0") + unsigned("000" & p0_rd_data(10 downto 5)) + unsigned("000" & p0_rd_data(4 downto 0) & "0"), 16);
 
 
     in_pixell <= unsigned(brightness(7 downto 0));
@@ -1164,362 +1184,137 @@ begin
   process (p0_rd_Data)
     variable brightness : std_logic_vector(15 downto 0);
   begin  -- process
-    brightness := conv_std_logic_vector(unsigned("000" & p0_rd_data(15+16 downto 11+16) & "0") + unsigned("000" & p0_rd_data(10+16 downto 5+16)) + unsigned("000" & p0_rd_data(4+16 downto 0+16) & "0"), 16);
+    --brightness := conv_std_logic_vector(unsigned("000" & p0_rd_data(15+16 downto 11+16) & "0") + unsigned("000" & p0_rd_data(10+16 downto 5+16)) + unsigned("000" & p0_rd_data(4+16 downto 0+16) & "0"), 16);
 
 
     in_pixelh <= unsigned(brightness(7 downto 0));
     
   end process;
 
-  process (clkalg)
-  begin  -- process
+
+  p1_wr_data <= p1_rd_data;
+
+  --p0_wr_data(15 downto 11) <= std_logic_vector(npixell(7 downto 3));
+  --p0_wr_data(10 downto 5)  <= std_logic_vector(npixell(7 downto 2));
+  --p0_wr_data(4 downto 0)   <= std_logic_vector(npixell(7 downto 3));
+
+
+  --p0_wr_data(15+16 downto 11+16) <= std_logic_vector(npixelh(7 downto 3));
+  --p0_wr_data(10+16 downto 5+16)  <= std_logic_vector(npixelh(7 downto 2));
+  --p0_wr_data(4+16 downto 0+16)   <= std_logic_vector(npixelh(7 downto 3));
+
+  --in_param1 <= unsigned(p1_rd_data(7 downto 0));
+  --in_param2 <= unsigned(p1_rd_data(15 downto 8));
+  --in_param3 <= unsigned(p1_rd_data(23 downto 16));
+  --in_param4 <= unsigned(p1_rd_data(31 downto 24));
+
+  --p1_wr_data(7 downto 0)   <= std_logic_vector(nparam1);
+  --p1_wr_data(15 downto 8)  <= std_logic_vector(nparam2);
+  --p1_wr_data(23 downto 16) <= std_logic_vector(nparam3);
+  --p1_wr_data(31 downto 24) <= std_logic_vector(nparam4);
+  --p0_rd_en <= '1' when p0_rd_empty = '0' else
+  --            '0';
+  --p0_wr_en <= '1' when p0_rd_empty = '0' else
+  --            '0';
+  --p1_rd_en <= '1' when p1_rd_empty = '0' else
+  --            '0';
+  --p1_wr_en <= '1' when p1_rd_empty = '0' else
+  --            '0';
+  avail    <= '1' when p0_rd_empty = '0' and p1_rd_empty = '0' else '0';
+  p1_rd_en <= avail;
+  p0_rd_en <= avail and not feed_is_high;
+
+
+  feed : process (clkalg)
+  begin  -- process feed
     if clkalg'event and clkalg = '1' then  -- rising clock edge
-      if rstalg = '1' then
-        fbctl_debug.img <= (others => '0');        
-        fbctl_debug.count <= 0;
-        fbctl_debug.count2 <= 0;
-        fbctl_debug.state <= (others => '0');        
+      if rstalg = '1' then                 -- synchronous reset (active high)
+        feed_is_high <= '1';
       else
-        fbctl_debug.img(7 downto 4) <= p0_rd_empty & p1_rd_empty & p0_rd_en & p1_rd_en;
-        if p0_rd_empty = '1' then
-          fbctl_debug.img(3) <= '1';
+        if avail = '1' then
+          feed_is_high <= not feed_is_high;
         end if;
-        if p1_rd_empty = '1' then
-          fbctl_debug.img(2) <= '1';
-        end if;
-        if p0_rd_en = '1' then
-          fbctl_debug.img(1) <= '1';
-        end if;
-        if p1_rd_en = '1' then
-          fbctl_debug.img(0) <= '1';
-        end if;
-
-        if vin.valid = '1' then
-          fbctl_debug.count <= fbctl_debug.count + 1;          
-        end if;
-
-        if vout.valid = '1' then
-          fbctl_debug.count2 <= fbctl_debug.count2 + 1;          
-        end if;
-                
-        fbctl_debug.state <= (others => '0');        
-        if my_state = my_inc then
-          fbctl_debug.state(7) <= '1';
-        end if;        
-        if my_state = my_read_p0 then
-          fbctl_debug.state(0) <= '1';
-        end if;
-        if my_state = my_read_p1 then
-          fbctl_debug.state(1) <= '1';
-        end if;
-        if my_state = my_write_p0 then
-          fbctl_debug.state(2) <= '1';
-        end if;
-        if my_state = my_write_p1 then
-          fbctl_debug.state(3) <= '1';
-        end if;
-        fbctl_debug.wr_cnt_0 <= "0"&p0_wr_count;
-        fbctl_debug.wr_cnt_1 <= "0"&p1_wr_count;        
-        
       end if;
-
     end if;
-  end process;
+  end process feed;
 
 
+  p0_wr_data(31 downto 16) <= vout_data_565;
+  p1_wr_en                <= vout.valid;
+  p0_wr_en                <= vout.valid and not sink_is_high;
 
---  feed : process (clkalg)
---  begin  -- process feed
---    if clkalg'event and clkalg = '1' then  -- rising clock edge
---      if rstalg = '1' then                 -- synchronous reset (active high)
---        feed_is_high <= '1';
---        p0_rd_en <= '0';
---        p1_rd_en <= '0';
---        vin.valid <= '0';
---        vin.init  <= '1';
+  sink : process (clkalg)
+  begin  -- process feed
+    if clkalg'event and clkalg = '1' then  -- rising clock edge
+      if rstalg = '1' then                 -- synchronous reset (active high)
+        sink_is_high <= '1';
+      else
+        if vout.valid = '1' then
+          if sink_is_high = '1' then
+            p0_wr_data(15 downto 0) <= vout_data_565;
 
---      elsif go = '1' then
-        
---        p0_rd_en <= '0';
---        p1_rd_en <= '0';
-
---        vin.valid <= '0';
---        vin.init  <= '1';
---        vin_data  <= (others => '0');
-
---        if p0_rd_empty = '0' and p1_rd_empty = '0' then
---          p1_rd_en <= '1';
---          vin.valid    <= '1';
-          
---          if feed_is_high = '1' then
---            vin_data     <= std_logic_vector(in_pixelh);
---            feed_is_high <= '0';
---          end if;
-
---          if feed_is_high = '0' then
---            vin_data     <= std_logic_vector(in_pixell);
---            feed_is_high <= '1';
---            p0_rd_en     <= '1';
---          end if;
---        end if;
---      end if;
---    end if;
---  end process feed;
-
---  fbctl_debug.vin  <= vin;
---  fbctl_debug.vout <= vout;
-
-
---  my_nullfilter : entity work.nullfilter
---    port map (
---      clk       => clkalg,              -- [in]
---      rst       => rstalg,              -- [in]
---      vin       => vin,                 -- [in]
---      vin_data  => vin_data,            -- [in]
---      vout      => vout,                -- [out]
---      vout_data => vout_data);          -- [out]
-
---  sink : process (clkalg)
---  begin  -- process feed
---    if clkalg'event and clkalg = '1' then  -- rising clock edge
---      if rstalg = '1' then                 -- synchronous reset (active high)
---        sink_is_high <= '1';
---        p0_wr_en <= '0';
---        p1_wr_en <= '0';
-
---      elsif go = '1' then
-        
---        p0_wr_en <= '0';
---        p1_wr_en <= '0';
-
---        if vout.valid = '1' then
---          p1_wr_en <= '1';
-
---          if sink_is_high = '1' then
---            sink_is_high             <= '0';
-----            p0_wr_data(15+16 downto 11+16) <= vout_data(7 downto 3);
-----            p0_wr_data(10+16 downto 5+16)  <= vout_data(7 downto 2);
-----            p0_wr_data(4+16 downto 0+16)   <= vout_data(7 downto 3);
---            p0_wr_data(31 downto 16) <= (others => '0');
---          end if;
-
---          if sink_is_high = '0' then
---            sink_is_high <= '1';
---            p0_wr_en     <= '1';
---          end if;
---        end if;
-
---      end if;
---    end if;
---  end process sink;
-
---  p0_wr_data(15 downto 0) <= (others => '0');
-  --p0_wr_data(15 downto 11) <= vout_data(7 downto 3);
-  --p0_wr_data(10 downto 5)  <= vout_data(7 downto 2);
-  --p0_wr_data(4 downto 0)   <= vout_data(7 downto 3);
-
-
-----  p0_wr_data <= p0_rd_data;
-  p0_wr_data(15 downto 11) <= std_logic_vector(npixell(7 downto 3));
-  p0_wr_data(10 downto 5)  <= std_logic_vector(npixell(7 downto 2));
-  p0_wr_data(4 downto 0)   <= std_logic_vector(npixell(7 downto 3));
-
-  p0_wr_data(15+16 downto 11+16) <= std_logic_vector(npixelh(7 downto 3));
-  p0_wr_data(10+16 downto 5+16)  <= std_logic_vector(npixelh(7 downto 2));
-  p0_wr_data(4+16 downto 0+16)   <= std_logic_vector(npixelh(7 downto 3));
-
-  in_param1 <= unsigned(p1_rd_data(7 downto 0));
-  in_param2 <= unsigned(p1_rd_data(15 downto 8));
-  in_param3 <= unsigned(p1_rd_data(23 downto 16));
-  in_param4 <= unsigned(p1_rd_data(31 downto 24));
-
-  p1_wr_data(7 downto 0)   <= std_logic_vector(nparam1);
-  p1_wr_data(15 downto 8)  <= std_logic_vector(nparam2);
-  p1_wr_data(23 downto 16) <= std_logic_vector(nparam3);
-  p1_wr_data(31 downto 24) <= std_logic_vector(nparam4);
-
-  process(alg_state)
-  begin  -- process
-
-    p0_rd_en <= '0';
-    p0_wr_en <= '0';
-    p1_rd_en <= '0';
-    p1_wr_en <= '0';
-
-    nparam1 <= param1;
-    nparam2 <= param2;
-    nparam3 <= param3;
-    nparam4 <= param4;
-
-    npixell <= pixell;
-    npixelh <= pixelh;
-
-    alg_nstate <= alg_state;
-
-    case alg_state is
-      when alg_reset =>
-        alg_nstate <= alg_high;
-
----------------------------------------------------------------------------------
----- High
----------------------------------------------------------------------------------
-      when alg_high =>
-
-        if p0_rd_empty = '0' then
-          npixell <= in_pixell;
-          npixelh <= in_pixelh;
-        end if;
-
-        if p1_rd_empty = '0' then
-          nparam1 <= in_param1;
-          nparam2 <= in_param2;
-          nparam3 <= in_param3;
-          nparam4 <= in_param4;
-        end if;
-
-        if p0_rd_empty = '0' and p1_rd_empty = '0' then
-          alg_nstate <= alg_high_1;
-          p0_rd_en   <= '1';
-          p1_rd_en   <= '1';
-        end if;
----------------------------------------------------------------------------------
----- (1)
----------------------------------------------------------------------------------        
-      when alg_high_1 =>
-        if param4(0) = '0' then
-          if param1 < pixelh then
-            nparam1 <= param1 + 1;
-          elsif param1 > pixelh then
-            nparam1 <= param1 - 1;
           end if;
+          sink_is_high <= not sink_is_high;
         end if;
 
-        alg_nstate <= alg_high_2;
----------------------------------------------------------------------------------
----- (2)
----------------------------------------------------------------------------------
-      when alg_high_2 =>
+      end if;
+    end if;
+  end process sink;
 
-        if param1 < pixelh then
-          nparam2 <= pixelh - param1;
-        elsif param1 > pixelh then
-          nparam2 <= param1 - pixelh;
-        end if;
+-------------------------------------------------------------------------------
+-- PIPE
+-------------------------------------------------------------------------------
 
-        alg_nstate <= alg_high_3;
----------------------------------------------------------------------------------
----- (3)
----------------------------------------------------------------------------------
-      when alg_high_3 =>
+  vin.valid    <= avail;
+  vin.init     <= '0';
+  vin_data_565 <= p0_rd_data(15 downto 0) when feed_is_high = '0' else
+                  p0_rd_data(31 downto 16);
 
-        if param3 < (param2&"0") then
-          nparam3 <= param3 + 1;
-        elsif param3 > (param2&"0") then
-          nparam3 <= param3 - 1;
-        end if;
+  vin_data_888 <= vin_data_565(15 downto 11) & "000" &
+                   vin_data_565(10 downto 5) & "00" &
+                   vin_data_565(4 downto 0) & "000";
+    
+  my_skinfilter : entity work.skinfilter
+    port map (
+      clk       => clkalg,                 -- [in]
+      rst       => rstalg,                 -- [in]
+      vin       => vin,                 -- [in]
+      vin_data  => vin_data_888,       -- [in]
+      vout      => skin_vout,           -- [out]
+      vout_data => skin_vout_data_1);     -- [out]
 
-        alg_nstate <= alg_high_4;
----------------------------------------------------------------------------------
----- (4)
----------------------------------------------------------------------------------
-      when alg_high_4 =>
+  --my_nullfilter : entity work.nullfilter
+  --  port map (
+  --    clk       => clkalg,              -- [in]
+  --    rst       => rstalg,              -- [in]
+  --    vin       => vin,                 -- [in]
+  --    vin_data  => vin_data,            -- [in]
+  --    vout      => vout,                -- [out]
+  --    vout_data => vout_data);          -- [out]
 
-        if param2 < param3 then
-          npixelh <= (others => '0');
-          nparam4 <= (others => '0');
-        else
-          npixelh <= (others => '1');
-          nparam4 <= (others => '1');
-        end if;
+  my_morph : entity work.morph_multi
+  generic map (
+    KERNEL =>  5,
+    THRESH =>  12,
+    WIDTH  => 640,    
+    HEIGHT => 480)
+    port map (
+      clk       => clkalg,                -- [in]
+      reset     => rstalg,               -- [in]
+      vin       => skin_vout,           -- [in]
+      vin_data  => skin_vout_data_1,           -- [in]
+      vout      => morph_vout,          -- [out]
+      vout_data => morph_vout_data_1);         -- [out]
 
-        npixelh <= param1;        
-        alg_nstate <= alg_finish_high;
----------------------------------------------------------------------------------
----- Finish High
----------------------------------------------------------------------------------       
-      when alg_finish_high =>
-        p1_wr_en   <= '1';
-        alg_nstate <= alg_low;
----------------------------------------------------------------------------------
----- Low
----------------------------------------------------------------------------------        
-
-      when alg_low =>
-
-        if p1_rd_empty = '0' then
-          nparam1 <= in_param1;
-          nparam2 <= in_param2;
-          nparam3 <= in_param3;
-          nparam4 <= in_param4;
-        end if;
-
-        if p1_rd_empty = '0' then
-          alg_nstate <= alg_low_1;
-          p1_rd_en   <= '1';
-        end if;
----------------------------------------------------------------------------------
----- (1)
----------------------------------------------------------------------------------        
-      when alg_low_1 =>
-        if param4(0) = '0' then
-          if param1 < pixell then
-            nparam1 <= param1 + 1;
-          elsif param1 > pixell then
-            nparam1 <= param1 - 1;
-          end if;
-        end if;
-        alg_nstate <= alg_low_2;
-
----------------------------------------------------------------------------------
----- (2)
----------------------------------------------------------------------------------
-      when alg_low_2 =>
-
-        if param1 < pixell then
-          nparam2 <= pixell - param1;
-        elsif param1 > pixell then
-          nparam2 <= param1 - pixell;
-        end if;
-
-        alg_nstate <= alg_low_3;
----------------------------------------------------------------------------------
----- (3)
----------------------------------------------------------------------------------
-      when alg_low_3 =>
-
-        if param3 < (param2&"0") then
-          nparam3 <= param3 + 1;
-        elsif param3 > (param2&"0") then
-          nparam3 <= param3 - 1;
-        end if;
-
-        alg_nstate <= alg_low_4;
----------------------------------------------------------------------------------
----- (4)
----------------------------------------------------------------------------------
-      when alg_low_4 =>
-
-        if param2 < param3 then
-          npixell <= (others => '0');
-          nparam4 <= (others => '0');
-        else
-          npixell <= (others => '1');
-          nparam4 <= (others => '1');
-        end if;
-
-        npixell <= param1;
-        alg_nstate <= alg_finish_low;
----------------------------------------------------------------------------------
----- Finish Low
----------------------------------------------------------------------------------
-      when alg_finish_low =>
-        p1_wr_en   <= '1';
-        p0_wr_en   <= '1';
-        alg_nstate <= alg_high;
-
-      when others => null;
-    end case;
-  end process;
+  
+  vout_data_1 <= morph_vout_data_1;
+  vout <= morph_vout;
+  
+  vout_data_565 <= (others => '1') when vout_data_1(0) = '1' else
+                   (others => '0');
+  
+  fbctl_debug.vin  <= vin;
+  fbctl_debug.vout <= vout;
 
 end Behavioral;
 
