@@ -1,11 +1,11 @@
 set -tmpdir "/tmp/"
 set -xsthdpdir "xst"
 run
--ifn VmodCAM_Ref.prj
--ofn VmodCAM_Ref
+-ifn cam.prj
+-ofn cam
 -ofmt NGC
 -p xc6slx45-3-csg324
--top VmodCAM_Ref
+-top top
 -opt_mode Speed
 -opt_level 1
 -power NO

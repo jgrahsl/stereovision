@@ -36,4 +36,4 @@ vhdl work "null.vhd"
 vhdl work "debug_sync.vhd"
 vhdl work "comm_fpga_fx2.vhdl"
 
-vhdl work "VmodCAM_Ref.vhd"
+vhdl work "top.vhd"

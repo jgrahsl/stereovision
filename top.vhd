@@ -37,7 +37,7 @@ library work;
 use work.cam_pkg.all;
 
 
-entity VmodCAM_Ref is
+entity top is
   generic (
     C3_NUM_DQ_PINS        : integer := 16;
     C3_MEM_ADDR_WIDTH     : integer := 13;
@@ -117,9 +117,9 @@ entity VmodCAM_Ref is
     fx2PktEnd_out : out std_logic  -- asserted (active-low) when a host read needs to be committed early
 
     );
-end VmodCAM_Ref;
+end top;
 
-architecture Behavioral of VmodCAM_Ref is
+architecture Behavioral of top is
   signal SysClk, PClk, PClkX2, SysRst, SerClk, SerStb : std_logic;
   signal MSel                                         : std_logic_vector(1 downto 0);
 
