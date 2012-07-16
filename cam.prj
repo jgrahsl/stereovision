@@ -32,6 +32,7 @@ vhdl work "morph_kernel.vhd"
 vhdl work "morph.vhd"
 vhdl work "morph_multi_new.vhd"
 vhdl work "null.vhd"
+vhdl work "motion.vhd"
 
 vhdl work "debug_sync.vhd"
 vhdl work "comm_fpga_fx2.vhdl"

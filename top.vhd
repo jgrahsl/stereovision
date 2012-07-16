@@ -237,11 +237,11 @@ begin
       DOC     => FbRdData,
       CLKC    => FbRdClk,
       RD_MODE => SW_I,
-      ENCAM  => CamBDV,
-      RSTCAM => FbWrBRst,
-      DCAM   => CamBD,
-      CLKCAM => CamBPClk,
-      CLK24  => CAMCLK,
+      ENCAM   => CamBDV,
+      RSTCAM  => FbWrBRst,
+      DCAM    => CamBD,
+      CLKCAM  => CamBPClk,
+      CLK24   => CAMCLK,
 
       debug_wr   => wr,
       debug_data => wr_data,
@@ -272,7 +272,7 @@ begin
       mcb3_dram_ck     => mcb3_dram_ck,
       mcb3_dram_ck_n   => mcb3_dram_ck_n,
 
-      fbctl_debug =>  fbctl_debug_unsync
+      fbctl_debug => fbctl_debug_unsync
       );
 
   FbRdEn  <= VtcVde;
@@ -371,7 +371,7 @@ begin
 -------------------------------------------------------------------------------
   my_debug_sync : entity work.debug_sync
     port map (
-      clk  => fx2clk_in,          -- [in]
+      clk  => fx2clk_in,                -- [in]
       din  => fbctl_debug_unsync,       -- [in]
       dout => fbctl_debug);             -- [out]
 
@@ -393,10 +393,15 @@ begin
   reg3_next <= h2fdata when chanAddr = "0000011" and h2fvalid = '1' else reg3;
 
   with chanAddr select f2hdata <=
-    reg0                                                  when "0000000",
-    X"AA"                                                 when "0001010",
-    reg1                                                  when "0001111",
-    X"00"                                                 when others;
+    reg0  when "0000000",
+    X"AA" when "0001010",
+    reg1  when "0001111",
+
+    "0000000" & fbctl_debug.vin.valid   when "0010000",
+    fbctl_debug.vin_data_8             when "0010001",
+    "0000000" & fbctl_debug.vout.valid  when "0010010",
+    "0000000" & fbctl_debug.vout_data_1 when "0010011",
+    X"FF"                             when others;
 
   comm : if FPGALINK = 1 generate
     h2fReady <= '1';

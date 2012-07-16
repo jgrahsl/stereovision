@@ -64,25 +64,25 @@ entity FBCtl is
 ------------------------------------------------------------------------------------
 -- Frame Buffer
 ------------------------------------------------------------------------------------
-    RDY_O   : out std_logic;
+    RDY_O            : out   std_logic;
 ------------------------------------------------------------------------------------
 -- Title : Port C - read only
 -- Description: Supports straightforward read functionality for whole frames on a
 -- constant basis. Connect to Display Controller
 ------------------------------------------------------------------------------------
-    ENC     : in  std_logic;            --port enable
-    RSTC_I  : in  std_logic;            --asynchronous port reset
-    DOC     : out std_logic_vector (COLORDEPTH - 1 downto 0);  --data output
-    CLKC    : in  std_logic;            --port clock
-    RD_MODE : in  std_logic_vector(7 downto 0);
+    ENC              : in    std_logic;  --port enable
+    RSTC_I           : in    std_logic;  --asynchronous port reset
+    DOC              : out   std_logic_vector (COLORDEPTH - 1 downto 0);  --data output
+    CLKC             : in    std_logic;  --port clock
+    RD_MODE          : in    std_logic_vector(7 downto 0);
 ------------------------------------------------------------------------------------
 -- Title : Port B - write only
 ------------------------------------------------------------------------------------
-    ENCAM   : in  std_logic;            --port enable
-    RSTCAM  : in  std_logic;            --asynchronous port reset
-    DCAM    : in  std_logic_vector (COLORDEPTH - 1 downto 0);  --data output
-    CLKCAM  : in  std_logic;            --port clock
-    CLK24  : in  std_logic;            --port clock
+    ENCAM            : in    std_logic;  --port enable
+    RSTCAM           : in    std_logic;  --asynchronous port reset
+    DCAM             : in    std_logic_vector (COLORDEPTH - 1 downto 0);  --data output
+    CLKCAM           : in    std_logic;  --port clock
+    CLK24            : in    std_logic;  --port clock
     debug_wr         : out   std_logic;
     debug_data       : out   std_logic_vector(7 downto 0);
 ---------------------------------------------------------------------------------      
@@ -548,13 +548,13 @@ architecture Behavioral of FBCtl is
   signal my_p0_wr_addr : natural range 0 to 2**22-1 := 0;
   signal my_p1_addr    : natural range 0 to 2**22-1 := 0;
 
-  signal   fill_count : natural range 0 to 32;
-  type     my_state_t is (my_idle, my_read_p0, my_read_p1, my_write_p0, my_write_p1, my_inc, my_wait, my_trans, my_trans_2, my_trans_3, my_trans_4, my_wait_l, my_wait_h, my_read_p0_wait, my_reset, my_reset_2, my_idle_2, my_idle_3);
-  signal   my_state   : my_state_t;
-  signal   my_nstate  : my_state_t;
+  signal fill_count : natural range 0 to 32;
+  type   my_state_t is (my_idle, my_read_p0, my_read_p1, my_write_p0, my_write_p1, my_inc, my_wait, my_trans, my_trans_2, my_trans_3, my_trans_4, my_wait_l, my_wait_h, my_read_p0_wait, my_reset, my_reset_2, my_idle_2, my_idle_3);
+  signal my_state   : my_state_t;
+  signal my_nstate  : my_state_t;
 
-  constant P0_BATCH   : natural := 16;
-  constant P1_BATCH   : natural := 32;
+  constant P0_BATCH : natural := 16;
+  constant P1_BATCH : natural := 32;
 
   type alg_state_t is (alg_reset,
 
@@ -582,24 +582,29 @@ architecture Behavioral of FBCtl is
   signal feed_is_high : std_logic;
   signal sink_is_high : std_logic;
 
-  signal vin       : stream_t;  
-  signal vin_data_565  : std_logic_vector(15 downto 0);
-  signal vin_data_888  : std_logic_vector(23 downto 0);  
+  signal vin          : stream_t;
+  signal vin_data_565 : std_logic_vector(15 downto 0);
+  signal vin_data_888 : std_logic_vector(23 downto 0);
+  signal vin_data_8 : std_logic_vector(7 downto 0);
+  signal vin_data_10 : std_logic_vector(9 downto 0);  
 
-  signal skin_vout  : stream_t;
+  signal skin_vout        : stream_t;
   signal skin_vout_data_1 : std_logic_vector(0 downto 0);
 
-  signal null_vout  : stream_t;
+  signal null_vout        : stream_t;
   signal null_vout_data_1 : std_logic_vector(0 downto 0);
 
-  signal morph_vout  : stream_t;  
-  signal morph_vout_data_1 : std_logic_vector(0 downto 0);  
-  
-  signal vout      : stream_t;
-  signal vout_data_1 : std_logic_vector(0 downto 0);  
+  signal motion_vout        : stream_t;
+  signal motion_vout_data_1 : std_logic_vector(0 downto 0);
+
+  signal morph_vout        : stream_t;
+  signal morph_vout_data_1 : std_logic_vector(0 downto 0);
+
+  signal vout          : stream_t;
+  signal vout_data_1   : std_logic_vector(0 downto 0);
   signal vout_data_565 : std_logic_vector(15 downto 0);
 
-  signal avail     : std_logic;
+  signal avail : std_logic;
 
 
 
@@ -1011,7 +1016,7 @@ begin
         my_p0_rd_addr <= 0;
         my_p0_wr_addr <= 2**20;
         my_p1_addr    <= 2**21;
-        alg_state <= alg_reset;
+        alg_state     <= alg_reset;
       else
 -------------------------------------------------------------------------------
 -- Memory 
@@ -1119,9 +1124,7 @@ begin
   end process;
 
 --    brightness := conv_std_logic_vector(unsigned("000" & p0_rd_data(15 downto 11) & "0") + unsigned("000" & p0_rd_data(10 downto 5)) + unsigned("000" & p0_rd_data(4 downto 0) & "0"), 16);
-    --brightness := conv_std_logic_vector(unsigned("000" & p0_rd_data(15+16 downto 11+16) & "0") + unsigned("000" & p0_rd_data(10+16 downto 5+16)) + unsigned("000" & p0_rd_data(4+16 downto 0+16) & "0"), 16);
-
-  p1_wr_data <= p1_rd_data;
+  --brightness := conv_std_logic_vector(unsigned("000" & p0_rd_data(15+16 downto 11+16) & "0") + unsigned("000" & p0_rd_data(10+16 downto 5+16)) + unsigned("000" & p0_rd_data(4+16 downto 0+16) & "0"), 16);
 
   --p0_wr_data(15 downto 11) <= std_logic_vector(npixell(7 downto 3));
   --p0_wr_data(10 downto 5)  <= std_logic_vector(npixell(7 downto 2));
@@ -1170,8 +1173,9 @@ begin
   end process feed;
 
   p0_wr_data(31 downto 16) <= vout_data_565;
-  p1_wr_en                <= vout.valid;
-  p0_wr_en                <= vout.valid and not sink_is_high;
+  p1_wr_en                 <= vout.valid;
+  p0_wr_en                 <= vout.valid and not sink_is_high;
+  p1_wr_data               <= vout.aux;
 
   sink : process (clkalg)
   begin  -- process feed
@@ -1193,56 +1197,64 @@ begin
 -- PIPE
 -------------------------------------------------------------------------------
 
-  vin.valid    <= avail;
-  vin.init     <= '0';
+  vin.valid <= avail;
+  vin.init  <= '0';
+  vin.aux   <= p1_rd_data;
+
   vin_data_565 <= p0_rd_data(15 downto 0) when feed_is_high = '0' else
                   p0_rd_data(31 downto 16);
 
   vin_data_888 <= vin_data_565(15 downto 11) & "000" &
-                   vin_data_565(10 downto 5) & "00" &
-                   vin_data_565(4 downto 0) & "000";
-    
-  my_skinfilter : entity work.skinfilter
-    port map (
-      clk       => clkalg,                 -- [in]
-      rst       => rstalg,                 -- [in]
-      vin       => vin,                 -- [in]
-      vin_data  => vin_data_888,       -- [in]
-      vout      => skin_vout,           -- [out]
-      vout_data => skin_vout_data_1);     -- [out]
+                  vin_data_565(10 downto 5) & "00" &
+                  vin_data_565(4 downto 0) & "000";
 
-  my_nullfilter : entity work.nullfilter
-    port map (
-      clk       => clkalg,              -- [in]
-      rst       => rstalg,              -- [in]
-      vin       => skin_vout,                 -- [in]
-      vin_data  => skin_vout_data_1,            -- [in]
-      vout      => null_vout,                -- [out]
-      vout_data => null_vout_data_1);          -- [out]
+  vin_data_10 <= conv_std_logic_vector(unsigned(vin_data_888(23 downto 16)) + unsigned(vin_data_888(15 downto 8)) + unsigned(vin_data_888(7 downto 0)), 10);
 
-  my_morph : entity work.morph_multi
-  generic map (
-    KERNEL =>  5,
-    THRESH =>  12,
-    WIDTH  => 640,    
-    HEIGHT => 480)
+  vin_data_8 <= vin_data_10(9 downto 2);
+
+  --my_skinfilter : entity work.skinfilter
+  --  port map (
+  --    clk       => clkalg,                 -- [in]
+  --    rst       => rstalg,                 -- [in]
+  --    vin       => vin,                 -- [in]
+  --    vin_data  => vin_data_888,       -- [in]
+  --    vout      => skin_vout,           -- [out]
+  --    vout_data => skin_vout_data_1);     -- [out]
+
+  my_motion : entity work.motion
     port map (
-      clk       => clkalg,                -- [in]
-      reset     => rstalg,               -- [in]
-      vin       => null_vout,           -- [in]
-      vin_data  => null_vout_data_1,           -- [in]
-      vout      => morph_vout,          -- [out]
-      vout_data => morph_vout_data_1);         -- [out]
+      clk       => clkalg,               -- [in]
+      rst       => rstalg,               -- [in]
+      vin       => vin,                  -- [in]
+      vin_data  => vin_data_8,           -- [in]
+      vout      => motion_vout,          -- [out]
+      vout_data => motion_vout_data_1);  -- [out]
+
+  --my_morph : entity work.morph_multi
+  --generic map (
+  --  KERNEL =>  5,
+  --  THRESH =>  12,
+  --  WIDTH  => 640,    
+  --  HEIGHT => 480)
+  --  port map (
+  --    clk       => clkalg,                -- [in]
+  --    reset     => rstalg,               -- [in]
+  --    vin       => null_vout,           -- [in]
+  --    vin_data  => null_vout_data_1,           -- [in]
+  --    vout      => morph_vout,          -- [out]
+  --    vout_data => morph_vout_data_1);         -- [out]
 
   
-  vout_data_1 <= morph_vout_data_1;
-  vout <= morph_vout;
-  
+  vout_data_1 <= motion_vout_data_1;
+  vout        <= motion_vout;
+
   vout_data_565 <= (others => '1') when vout_data_1(0) = '1' else
                    (others => '0');
   
   fbctl_debug.vin  <= vin;
+  fbctl_debug.vin_data_8  <= vin_data_8;  
   fbctl_debug.vout <= vout;
+  fbctl_debug.vout_data_1 <= vout_data_1;  
 
 
 end Behavioral;

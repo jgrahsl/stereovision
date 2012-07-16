@@ -12,6 +12,7 @@ package cam_pkg is
   type stream_t is record
     valid : std_logic;    
     init : std_logic;
+    aux : std_logic_vector(31 downto 0);
   end record;
 
   type window_t is array (0 to 4) of bayer_t;
@@ -41,14 +42,9 @@ package cam_pkg is
   end record;
   type fbctl_debug_t is record
     vin: stream_t;
+    vin_data_8 : std_logic_vector(7 downto 0);
     vout: stream_t;
-    img: std_logic_vector(7 downto 0);
-    count : integer range 0 to 255;
-    count2 : integer range 0 to 255;
-    rc : integer range 0 to 255;    
-    wr_cnt_0 : std_logic_vector(7 downto 0);
-    wr_cnt_1 : std_logic_vector(7 downto 0);
-    state: std_logic_vector(7 downto 0);        
+    vout_data_1 : std_logic_vector(0 downto 0);   
   end record;
   
 end cam_pkg;
