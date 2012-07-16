@@ -90,6 +90,7 @@ begin
 
         if (r.rows = (HEIGHT-1)) then
           v.rows := 0;
+          v.sel  := 0;
         else
           v.rows := r.rows + 1;
         end if;
@@ -106,7 +107,7 @@ begin
 -------------------------------------------------------------------------------
 -- Generate data from pipeline
 -------------------------------------------------------------------------------
-    vout_window    <= (others => (others => '0'));
+    vout_window <= (others => (others => '0'));
 
     case NUM_LINES is
       when 3 =>
@@ -166,7 +167,7 @@ begin
     end case;
 
     vout_window(0) <= vin_data_r;
-    
+
     if rst = '1' then
       init(v);
     end if;

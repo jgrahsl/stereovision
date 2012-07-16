@@ -15,7 +15,7 @@ entity morph_multi is
     HEIGHT : natural range 0 to 2048 := 2048);
   port (
     clk       : in  std_logic;
-    reset     : in  std_logic;
+    rst       : in  std_logic;
     vin       : in  stream_t;
     vin_data  : in  bit_t;
     vout      : out stream_t;
@@ -33,18 +33,18 @@ architecture myrtl of morph_multi is
 
   signal morph3_vout        : stream_t;
   signal morph3_vout_data_1 : std_logic_vector(0 downto 0);
-   
+  
 begin  -- myrtl
 
   my_morph : entity work.morph
     generic map (
       KERNEL => KERNEL,
-      THRESH => 1,
+      THRESH => THRESH,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (
       clk       => clk,                 -- [in]
-      reset     => reset,               -- [in]
+      rst       => rst,                 -- [in]
       vin       => vin,                 -- [in]
       vin_data  => vin_data,            -- [in]
       vout      => morph_vout,          -- [out]
@@ -53,12 +53,12 @@ begin  -- myrtl
   my_morph2 : entity work.morph
     generic map (
       KERNEL => KERNEL,
-      THRESH => 1,
+      THRESH => THRESH,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (
       clk       => clk,                  -- [in]
-      reset     => reset,                -- [in]
+      rst       => rst,                  -- [in]
       vin       => morph_vout,           -- [in]
       vin_data  => morph_data,           -- [in]
       vout      => morph2_vout,          -- [out]
@@ -67,12 +67,12 @@ begin  -- myrtl
   my_morph3 : entity work.morph
     generic map (
       KERNEL => KERNEL,
-      THRESH => 1,
+      THRESH => THRESH,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (
       clk       => clk,                  -- [in]
-      reset     => reset,                -- [in]
+      rst       => rst,                  -- [in]
       vin       => morph2_vout,          -- [in]
       vin_data  => morph2_vout_data_1,   -- [in]
       vout      => morph3_vout,          -- [out]
@@ -81,12 +81,12 @@ begin  -- myrtl
   my_morph4 : entity work.morph
     generic map (
       KERNEL => KERNEL,
-      THRESH => 1,
+      THRESH => THRESH,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (
       clk       => clk,                 -- [in]
-      reset     => reset,               -- [in]
+      rst       => rst,                 -- [in]
       vin       => morph3_vout,         -- [in]
       vin_data  => morph3_vout_data_1,  -- [in]
       vout      => vout,                -- [out]
