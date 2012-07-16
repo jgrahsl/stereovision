@@ -1,0 +1,8 @@
+#!/bin/bash
+. /opt/env.sh
+convert sim.tiff sim.mono
+cat sim.mono | hexdump -v -e '/1 "%02X\n"'  | ./bin2b.py > sim.dat
+vsim -c -do sim_batch.do
+cat sim.out | ./hex2b.py  > sim.out.mono
+convert -size 32x32  sim.out.mono -size 32x32  sim.out.tiff
+qiv -W 1000 sim.out.tiff sim.tiff 
