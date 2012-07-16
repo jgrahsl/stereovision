@@ -1,5 +1,6 @@
 vlib work
 vmap work work
+vcom -work work txt_util.vhd
 vcom -work work bit_ram.vhd
 vcom -work work cam_pkg.vhd
 vcom -work work line_buffer.vhd

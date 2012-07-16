@@ -12,7 +12,9 @@ entity morph_multi is
     KERNEL : natural range 0 to 5    := 5;
     THRESH : natural range 0 to 25   := 25;
     WIDTH  : natural range 0 to 2048 := 2048;
-    HEIGHT : natural range 0 to 2048 := 2048);
+    HEIGHT : natural range 0 to 2048 := 2048;
+    NUM : natural range 0 to 4 := 4
+    );
   port (
     clk       : in  std_logic;
     rst       : in  std_logic;
@@ -33,9 +35,25 @@ architecture myrtl of morph_multi is
 
   signal morph3_vout        : stream_t;
   signal morph3_vout_data_1 : std_logic_vector(0 downto 0);
+
+  signal morph4_vout        : stream_t;
+  signal morph4_vout_data_1 : std_logic_vector(0 downto 0);
   
 begin  -- myrtl
 
+  vout <= vin when NUM = 0 else
+          morph_vout when NUM = 1 else
+          morph2_vout when NUM = 2 else
+          morph3_vout when NUM = 3 else
+          morph4_vout;
+          
+  vout_data <= vin_data when NUM = 0 else
+          morph_data when NUM = 1 else
+          morph2_vout_data_1 when NUM = 2 else
+          morph3_vout_data_1 when NUM = 3 else
+          morph4_vout_data_1;
+          
+  
   my_morph : entity work.morph
     generic map (
       KERNEL => KERNEL,
@@ -89,7 +107,8 @@ begin  -- myrtl
       rst       => rst,                 -- [in]
       vin       => morph3_vout,         -- [in]
       vin_data  => morph3_vout_data_1,  -- [in]
-      vout      => vout,                -- [out]
-      vout_data => vout_data);          -- [out]
+      vout      => morph4_vout,                -- [out]
+      vout_data => morph4_vout_data_1);          -- [out]
+  
 
 end myrtl;
