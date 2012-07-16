@@ -96,7 +96,6 @@ begin  -- impl
     while not endfile(f) loop
       readline(f, l);
       read(l, s);                       --ok
-      assert false report s;
       b := to_std_logic_vector(s);      --ok
       for i in 0 to 7 loop
         mem(c) <= b(i downto i);

@@ -1,8 +1,55 @@
 #!/bin/bash
 . /opt/env.sh
-convert sim.tiff sim.mono
+#compile
+vsim -c -do compile.do
+
+rm -f *.mono sim.*out*
+
+convert input.tiff sim.mono
+mv sim-0.mono sim.mono
+
+# Raw to ascii bin
 cat sim.mono | hexdump -v -e '/1 "%02X\n"'  | ./bin2b.py > sim.dat
+
+# Pipe
 vsim -c -do sim_batch.do
-cat sim.out | ./hex2b.py  > sim.out.mono
-convert -size 32x32  sim.out.mono -size 32x32  sim.out.tiff
-qiv -W 1000 sim.out.tiff sim.tiff 
+
+#################################
+# From ascii to bin
+cat sim.out | ./hex2b.py  > sim.mono
+
+# From bin to tiff
+convert -size 32x32  sim.mono -size 32x32  sim.tiff
+
+# Offset by +2+2
+convert sim.tiff  -extent 34x34+2+2  -crop 32x32 _sim.tiff
+mv _sim.tiff sim.tiff
+
+# Back again to mono
+convert sim.tiff sim.mono
+mv sim-0.mono sim.mono
+
+# Cut relevant pixels
+head -c 128 sim.mono  > _sim.mono
+mv _sim.mono sim.mono
+
+md5sum sim.mono > sim.md5sum
+
+####################################
+# Generate reference
+convert input.tiff  -morphology Dilate Square:2 sim.tiff
+
+# To mono
+convert sim.tiff sim.mono
+mv sim-0.mono sim.mono
+
+# Cut relevant pixels
+head -c 128 sim.mono  > _sim.mono
+mv _sim.mono sim.mono
+
+md5sum --check sim.md5sum
+
+
+# Show
+#qiv -W 1000 sim.out.tiff sim.ref.tiff 
+
