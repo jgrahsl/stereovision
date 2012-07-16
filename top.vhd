@@ -394,14 +394,6 @@ begin
 
   with chanAddr select f2hdata <=
     reg0                                                  when "0000000",
-    fbctl_debug.vin.valid&fbctl_debug.vin.init&"000000"   when "0000010",
-    fbctl_debug.vout.valid&fbctl_debug.vout.init&"000000" when "0000011",
-    fbctl_debug.img                                       when "0000100",
-    std_logic_vector(to_Unsigned(fbctl_debug.count, 8))   when "0000101",
-    std_logic_vector(to_Unsigned(fbctl_debug.count2, 8))  when "0000110",
-    fbctl_debug.wr_cnt_0                                  when "0000111",
-    fbctl_debug.wr_cnt_1                                  when "0001000",
-    fbctl_debug.state                                     when "0001001",
     X"AA"                                                 when "0001010",
     reg1                                                  when "0001111",
     X"00"                                                 when others;

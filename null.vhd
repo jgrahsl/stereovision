@@ -12,16 +12,16 @@ entity nullfilter is
     clk       : in  std_logic;
     rst       : in  std_logic;
     vin       : in  stream_t;
-    vin_data  : in  std_logic_vector(15 downto 0);
+    vin_data  : in  std_logic_vector(0 downto 0);
     vout      : out stream_t;
-    vout_data : out std_logic_vector(15 downto 0)
+    vout_data : out std_logic_vector(0 downto 0)
     );
 end nullfilter;
 
 architecture impl of nullfilter is
 
 type nullfilter_t is record
-  data  : std_logic_vector(15 downto 0);
+  data  : std_logic_vector(0 downto 0);
   vin   : stream_t;
 end record;
 
