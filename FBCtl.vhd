@@ -1172,7 +1172,7 @@ begin
     end if;
   end process feed;
 
-  p0_wr_data(31 downto 16) <= vout_data_565;
+  p0_wr_data(15 downto 0) <= vout_data_565;
   p1_wr_en                 <= vout.valid;
   p0_wr_en                 <= vout.valid and not sink_is_high;
   p1_wr_data               <= vout.aux;
@@ -1185,7 +1185,7 @@ begin
       else
         if vout.valid = '1' then
           if sink_is_high = '1' then
-            p0_wr_data(15 downto 0) <= vout_data_565;
+            p0_wr_data(31 downto 16) <= vout_data_565;
           end if;
           sink_is_high <= not sink_is_high;
         end if;
@@ -1210,7 +1210,7 @@ begin
 
   vin_data_10 <= conv_std_logic_vector(unsigned(vin_data_888(23 downto 16)) + unsigned(vin_data_888(15 downto 8)) + unsigned(vin_data_888(7 downto 0)), 10);
 
-  vin_data_8 <= vin_data_10(9 downto 2);
+  vin_data_8 <= vin_data_10(7 downto 0);
 
   --my_skinfilter : entity work.skinfilter
   --  port map (
