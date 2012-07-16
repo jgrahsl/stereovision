@@ -14,8 +14,8 @@ entity tb is
   generic (
     KERNEL : natural range 0 to 5    := 5;
     THRESH : natural range 0 to 25   := 25;
-    WIDTH  : natural range 0 to 2048 := 30;
-    HEIGHT : natural range 0 to 2048 := 30;
+    WIDTH  : natural range 0 to 2048 := 32;
+    HEIGHT : natural range 0 to 2048 := 32;
     NUM    : natural range 0 to 4    := 1
     );
 end tb;
@@ -40,7 +40,7 @@ architecture impl of tb is
   signal go : std_logic;
 
   subtype pixel_t is std_logic_vector(0 downto 0);
-  type    mem_t is array (0 to (HEIGHT*WIDTH-1)) of pixel_t;
+  type    mem_t is array (0 to (2*HEIGHT*WIDTH-1)) of pixel_t;
 
   signal mem : mem_t;
 begin  -- impl
@@ -89,15 +89,16 @@ begin  -- impl
     constant stim_file : string  := "sim.dat";
     file f             : text open read_mode is stim_file;
     variable l         : line;
-    variable s         : string(1 to WIDTH);
+    variable s         : string(1 to 8);
     variable c         : integer := 0;
-    variable b         : std_logic_vector(WIDTH-1 downto 0);
+    variable b         : std_logic_vector(7 downto 0);
   begin
     while not endfile(f) loop
       readline(f, l);
       read(l, s);                       --ok
+      assert false report s;
       b := to_std_logic_vector(s);      --ok
-      for i in (WIDTH-1) downto 0 loop
+      for i in 0 to 7 loop
         mem(c) <= b(i downto i);
         c      := c + 1;
       end loop;  -- i
@@ -110,22 +111,26 @@ begin  -- impl
   process
     constant stim_file : string  := "sim.out";
     file f             : text open write_mode is stim_file;
-    variable l         : line;
-    variable s         : string(1 to WIDTH);
+    variable s         : string(1 to 8);
     variable c         : integer := 0;
-    variable b         : std_logic_vector(WIDTH-1 downto 0);
+    variable b         : std_logic_vector(7 downto 0);
+    variable p         : integer := 0;    
   begin
 
     wait until go = '1';
-
+    p := 0;
     for j in (HEIGHT-1) downto 0 loop
       for i in (WIDTH-1) downto 0 loop
         wait until clk = '0' and vout.valid = '1';
-        b(i downto i) := vout_data(0 downto 0);
+        b(p downto p) := vout_data(0 downto 0);
+        if p < 7 then
+          p := p + 1;            
+        else
+          p := 0;
+          print(f, str(b));          
+        end if;
         wait until clk = '1' and vout.valid = '1';
       end loop;
-      write(l, str(b));
-      writeline(f, l);
     end loop;  -- j
     
 
@@ -143,7 +148,6 @@ begin  -- impl
         row      <= 0;
         ce_count <= (others => '0');
         go       <= '0';
-        vin_data <= mem(0);        
       else
 
         ce <= '0';
@@ -173,6 +177,7 @@ begin  -- impl
       end if;
     end if;
   end process;
+
   vin_data <= mem(row*WIDTH + col); 
   
   vin.valid <= '1' when go = '1' else '0';
