@@ -35,40 +35,56 @@ begin  -- impl
   vout_data <= r.data;
 
   process (r, vin, vin_data)
-    variable diff : std_logic_vector(7 downto 0);
+    variable diff : unsigned(7 downto 0);
+    variable m : unsigned(7 downto 0);
+    variable v : unsigned(10 downto 0);
+    variable i : unsigned(7 downto 0);
+    variable d : unsigned(0 downto 0);
+    variable d_old : unsigned(0 downto 0);    
+    variable vmin : unsigned(v'high downto v'low);
+    variable vmax : unsigned(v'high downto v'low);
   begin 
 	r_next.vin <= vin;
    r_next.vin.aux <= vin.aux;
+   r_next.data <= vin_data;
+
    diff := (others => '0');
-
-   
-   if unsigned(vin_data) < unsigned(vin.aux(7 downto 0)) then
-     if (vin.aux(31) = '0') and (unsigned(vin.aux(7 downto 0)) > 0) then
-       r_next.vin.aux(7 downto 0) <= std_logic_vector(unsigned(vin.aux(7 downto 0)) - 1);
+   m := unsigned(vin.aux(7 downto 0));
+   v := unsigned(vin.aux(18 downto 8));
+   d := unsigned(vin.aux(31 downto 31));
+   i := unsigned(vin_data);
+   if i < m then
+     if d = 0 and (m > 0) then
+       m := m - 1;
      end if;
-     diff := std_logic_vector((unsigned(vin.aux(7 downto 0)) - unsigned(vin_data) - 1));
-   elsif unsigned(vin_data) > unsigned(vin.aux(7 downto 0)) then
-     if (vin.aux(31) = '0') and (unsigned(vin.aux(7 downto 0)) < 255) then
-       r_next.vin.aux(7 downto 0) <= std_logic_vector(unsigned(vin.aux(7 downto 0)) + 1);
+     diff := m - i;
+   elsif i > m then
+     if d = 0 and (m < (2**(m'length) - 1)) then
+       m := m + 1;
      end if;
-     diff := std_logic_vector((unsigned(vin_data) - unsigned(vin.aux(7 downto 0)) - 1));
+     diff := i - m;
    end if;
 
-   r_next.vin.aux(31) <= '0';
-   r_next.data <= (others => '0');            
-   if (unsigned(diff)&"00") < unsigned(vin.aux(18 downto 8)) then
-     if unsigned(vin.aux(18 downto 8)) > 0 then
-       r_next.vin.aux(18 downto 8) <= std_logic_vector(unsigned(vin.aux(18 downto 8)) - 1);
+   if ((diff&"00") < v) then
+     if v > 1 then
+       v := v - 1;       
      end if;
-     r_next.data <= (others => '0');
-     r_next.vin.aux(31) <= '0';     
-   elsif (unsigned(diff)&"00") > unsigned(vin.aux(18 downto 8)) then
-     if unsigned(vin.aux(18 downto 8)) < (2**11-1) then
-       r_next.vin.aux(18 downto 8) <= std_logic_vector(unsigned(vin.aux(18 downto 8)) + 1);
-     end if;
-     r_next.data <= (others => '1');
-     r_next.vin.aux(31) <= '1';      
+   elsif ((diff&"00") > v) then
+      if (v < 2040) then
+        v := v + 1;             
+      end if;
    end if;
+
+   if diff < v then
+     d := "0";
+     r_next.data <=  (others => '0');
+   else
+     d:= "1";
+     r_next.data <=  (others => '1');
+   end if;
+   r_next.vin.aux(7 downto 0) <= std_logic_vector(m);
+   r_next.vin.aux(18 downto 8) <= std_logic_vector(v);
+   r_next.vin.aux(31 downto 31) <= std_logic_vector(d);
 
   end process;
 

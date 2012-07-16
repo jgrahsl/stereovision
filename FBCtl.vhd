@@ -1292,7 +1292,7 @@ begin
 --                   morph_vout_data_8(7 downto 2) &
 --                   morph_vout_data_8(7 downto 3);
   
-  vout_data_565 <= (others => '1') when vout_data_1(0) = '1' else
+  vout_data_565 <= (others => '1') when vout_data_1 = "1" else
                    (others => '0');
   
   fbctl_debug.vin  <= vin;
