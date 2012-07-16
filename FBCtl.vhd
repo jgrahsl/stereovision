@@ -596,6 +596,7 @@ architecture Behavioral of FBCtl is
 
   signal motion_vout        : stream_t;
   signal motion_vout_data_1 : std_logic_vector(0 downto 0);
+  signal motion_vout_data_8 : std_logic_vector(7 downto 0);  
 
   signal morph_vout        : stream_t;
   signal morph_vout_data_1 : std_logic_vector(0 downto 0);
@@ -606,8 +607,10 @@ architecture Behavioral of FBCtl is
 
   signal avail : std_logic;
 
-
-
+  signal vout_window : bit_window_t;
+  signal vout_2dwindow : bit_window2d_t;  
+  signal buf_vout : stream_t;
+  signal win_vout : stream_t;  
 begin
 ----------------------------------------------------------------------------------
 -- mcb instantiation
@@ -1204,13 +1207,11 @@ begin
   vin_data_565 <= p0_rd_data(15 downto 0) when feed_is_high = '0' else
                   p0_rd_data(31 downto 16);
 
-  vin_data_888 <= vin_data_565(15 downto 11) & "000" &
-                  vin_data_565(10 downto 5) & "00" &
-                  vin_data_565(4 downto 0) & "000";
+  vin_data_888 <= "00" & vin_data_565(15 downto 11) & "0" &
+                  "00" & vin_data_565(10 downto 5) &
+                  "00" & vin_data_565(4 downto 0) & "0";
 
-  vin_data_10 <= conv_std_logic_vector(unsigned(vin_data_888(23 downto 16)) + unsigned(vin_data_888(15 downto 8)) + unsigned(vin_data_888(7 downto 0)), 10);
-
-  vin_data_8 <= vin_data_10(7 downto 0);
+  vin_data_8 <= conv_std_logic_vector(unsigned(vin_data_888(23 downto 16)) + unsigned(vin_data_888(15 downto 8)) + unsigned(vin_data_888(7 downto 0)), 8);
 
   --my_skinfilter : entity work.skinfilter
   --  port map (
@@ -1228,7 +1229,7 @@ begin
       vin       => vin,                  -- [in]
       vin_data  => vin_data_8,           -- [in]
       vout      => motion_vout,          -- [out]
-      vout_data => motion_vout_data_1);  -- [out]
+      vout_data => motion_vout_data_8);  -- [out]
 
   --my_morph : entity work.morph_multi
   --generic map (
@@ -1239,20 +1240,64 @@ begin
   --  port map (
   --    clk       => clkalg,                -- [in]
   --    reset     => rstalg,               -- [in]
-  --    vin       => null_vout,           -- [in]
-  --    vin_data  => null_vout_data_1,           -- [in]
+  --    vin       => motion_vout,           -- [in]
+  --    vin_data  => motion_vout_data_1(0 downto 0),           -- [in]
   --    vout      => morph_vout,          -- [out]
   --    vout_data => morph_vout_data_1);         -- [out]
 
-  
-  vout_data_1 <= motion_vout_data_1;
-  vout        <= motion_vout;
 
+  my_cyclic_bit_buffer: entity work.cyclic_bit_buffer
+    generic map (
+      NUM_LINES => 5,
+      WIDTH     => 640,
+      HEIGHT    => 480)
+    port map (
+      clk         => clkalg,               -- [in]
+      rst         => rstalg,               -- [in]
+      vin         => motion_vout,               -- [in]
+      vin_data    => motion_vout_data_8(0 downto 0),          -- [in]
+      vout        => buf_vout,              -- [out]
+      vout_window => vout_window);      -- [out]
+  
+  my_bit_window: entity work.bit_window
+    generic map (
+      NUM_COLS => 5,
+      WIDTH    => 640,
+      HEIGHT   => 480)
+    port map (
+      clk         => clkalg,               -- [in]
+      rst         => rstalg,               -- [in]
+      vin         => buf_vout,               -- [in]
+      vin_window  => vout_window,        -- [in]
+      vout        => win_vout,              -- [out]
+      vout_window => vout_2dwindow);      -- [out]
+
+  my_morphologic_kernel: entity work.morphologic_kernel
+    generic map (
+      KERNEL => 5,
+      THRESH => 25)
+    port map (
+      clk        => clkalg,                -- [in]
+      rst        => rstalg,                -- [in]
+      vin        => win_vout,                -- [in]
+      vin_window => vout_2dwindow,         -- [in]
+      vout       => vout,               -- [out]
+      vout_data  => vout_data_1);         -- [out]
+  
+  
+--  vout_data_1 <= morph_vout_data_1;
+--  vout        <= morph_vout;
+
+--  vout_data_565 <= morph_vout_data_8(7 downto 3) &
+--                   morph_vout_data_8(7 downto 2) &
+--                   morph_vout_data_8(7 downto 3);
+  
   vout_data_565 <= (others => '1') when vout_data_1(0) = '1' else
                    (others => '0');
   
   fbctl_debug.vin  <= vin;
-  fbctl_debug.vin_data_8  <= vin_data_8;  
+  fbctl_debug.vin_data_8  <= vin_data_8;
+  fbctl_debug.vin_data_888  <= vin_data_888;    
   fbctl_debug.vout <= vout;
   fbctl_debug.vout_data_1 <= vout_data_1;  
 

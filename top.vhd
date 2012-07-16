@@ -397,11 +397,15 @@ begin
     X"AA" when "0001010",
     reg1  when "0001111",
 
-    "0000000" & fbctl_debug.vin.valid   when "0010000",
-    fbctl_debug.vin_data_8             when "0010001",
-    "0000000" & fbctl_debug.vout.valid  when "0010010",
-    "0000000" & fbctl_debug.vout_data_1 when "0010011",
-    X"FF"                             when others;
+    "0000000" & fbctl_debug.vin.valid      when "0010000",
+    fbctl_debug.vin_data_8                 when "0010001",
+    "0000000" & fbctl_debug.vout.valid     when "0010010",
+    "0000000" & fbctl_debug.vout_data_1    when "0010011",
+    fbctl_debug.vin_data_888(23 downto 16) when "0010100",
+    fbctl_debug.vin_data_888(15 downto 8) when "0010101",
+    fbctl_debug.vin_data_888(7 downto 0) when "0010110",    
+
+    X"FF" when others;
 
   comm : if FPGALINK = 1 generate
     h2fReady <= '1';
