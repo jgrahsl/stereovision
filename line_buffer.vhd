@@ -107,7 +107,7 @@ begin
 -- Generate data from pipeline
 -------------------------------------------------------------------------------
     vout_window    <= (others => (others => '0'));
-    vout_window(0) <= vin_data_r;
+
     case NUM_LINES is
       when 3 =>
         if r_r.rows = 0 then
@@ -165,6 +165,8 @@ begin
       when others => null;
     end case;
 
+    vout_window(0) <= vin_data_r;
+    
     if rst = '1' then
       init(v);
     end if;

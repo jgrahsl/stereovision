@@ -16,7 +16,7 @@ entity morph is
     HEIGHT : natural range 0 to 2048 := 2048);
   port (
     clk       : in  std_logic;
-    reset     : in  std_logic;
+    rst     : in  std_logic;
     vin       : in  stream_t;
     vin_data  : in  bit_t;
     vout      : out stream_t;
@@ -41,7 +41,7 @@ begin  -- myrtl
       WIDTH     => WIDTH)
     port map (
       clk         => clk,                   -- [in]
-      rst         => reset,                 -- [in]
+      rst         => rst,                 -- [in]
       vin         => vin,                   -- [in]
       vin_data    => vin_data,              -- [in]
       vout        => filter0_buff_vout,     -- [out]
@@ -54,7 +54,7 @@ begin  -- myrtl
       WIDTH    => WIDTH)
     port map (
       clk         => clk,                  -- [in]
-      rst         => reset,                -- [in]
+      rst         => rst,                -- [in]
       vin         => filter0_buff_vout,    -- [in]
       vin_window  => filter0_buff_window,  --
       vout        => filter0_win_vout,     -- [out]
@@ -66,7 +66,7 @@ begin  -- myrtl
       THRESH => THRESH)
     port map (
       clk        => clk,                 -- [in]
-      rst        => reset,               -- [in]
+      rst        => rst,               -- [in]
       vin        => filter0_win_vout,    -- [in]
       vin_window => filter0_win_window,  -- [in]
       vout       => vout,                -- [out]
