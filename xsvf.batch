@@ -1,5 +1,5 @@
 setMode -bs
 setCable -port xsvf -file top.xsvf
-addDevice -p 1 -file VmodCAM_Ref.bit
+addDevice -p 1 -file cam.bit
 program -p 1
 quit
