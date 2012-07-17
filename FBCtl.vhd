@@ -1217,7 +1217,7 @@ begin
       THRESH2 => 21,
       WIDTH   => 640,
       HEIGHT  => 480,
-      NUM     => 4)
+      NUM     => 0)
     port map (
       clk       => clkalg,              -- [in]
       rst       => rstalg,              -- [in]

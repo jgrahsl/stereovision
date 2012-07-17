@@ -49,36 +49,47 @@ begin  -- impl
     r_next.data    <= (others => '0');
 
     diff := (others => '0');
-    m    := unsigned(vin.aux(7 downto 0));
-    v    := unsigned(vin.aux(18 downto 8));
+    m    := unsigned(vin.aux((0+m'high) downto 0));
+    v    := unsigned(vin.aux((15+v'high) downto 15));
     d    := unsigned(vin.aux(31 downto 31));
     i    := unsigned(vin_data);
     vmax := to_unsigned(2040, v'length);
-    vmin := to_unsigned(1, v'length);
+    vmin := to_unsigned(0, v'length);
 -------------------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------------------
-    if i < m then
-      if d = 0 and (m > 0) then
+    if d = 0 then 
+      if i < m then
         m := m - 1;
-      end if;
-      diff := m - i;
-    elsif i > m then
-      if d = 0 and (m < (2**(m'length) - 1)) then
+      elsif i > m then
         m := m + 1;
       end if;
-      diff := i - m;
     end if;
 
-    if ((diff&"00") < v) then
+    if i < m then
+      diff := m - i;      
+    elsif i > m then
+      diff := i - m;      
+    end if;
+      
+    if v < (diff&"0") then
+      if v < vmax then
+        v := v + 1;
+      end if;
+    elsif v > (diff&"0") then
       if v > vmin then
         v := v - 1;
       end if;
-    elsif ((diff&"00") > v) then
-      if (v < vmax) then
-        v := v + 1;
-      end if;
     end if;
+    
+--    if ((diff&"0") < v) then
+--        v := v - 1;
+----      end if;
+--    elsif ((diff&"0") > v) then
+----      if (v < vmax) then
+--        v := v + 1;
+----      end if;
+--    end if;
 
     if diff < v then
       d := "0";
@@ -88,10 +99,11 @@ begin  -- impl
 -------------------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------------------   
-    r_next.vin.aux(7 downto 0)   <= std_logic_vector(m);
-    r_next.vin.aux(18 downto 8)  <= std_logic_vector(v);
-    r_next.vin.aux(31 downto 31) <= std_logic_vector(d);
-    r_next.data                  <= std_logic_vector(d);
+    r_next.vin.aux((0+m'high) downto 0)   <= std_logic_vector(m);
+    r_next.vin.aux((15+v'high) downto 15) <= std_logic_vector(v);
+    r_next.vin.aux(31 downto 31)          <= std_logic_vector(d);
+    r_next.data                           <= std_logic_vector(d);
+
   end process;
 
   proc_clk : process(clk, rst)
