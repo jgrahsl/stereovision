@@ -13,8 +13,8 @@ use work.cam_pkg.all;
 entity tb is
   generic (
     KERNEL : natural range 0 to 5    := 5;
-    THRESH1 : natural range 0 to 25   := 25;
-    THRESH2 : natural range 0 to 25   := 25;    
+    THRESH1 : natural range 0 to 25   := 21;
+    THRESH2 : natural range 0 to 25   := 21;    
     WIDTH  : natural range 0 to 2048 := 160;
     HEIGHT : natural range 0 to 2048 := 160;
     NUM    : natural range 0 to 4    := 4

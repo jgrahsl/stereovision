@@ -33,6 +33,7 @@ architecture impl of morphologic_kernel is
   end init;
 
   signal r      : reg_t;
+  signal r2      : reg_t;  
   signal r_next : reg_t;
 
 begin
@@ -53,15 +54,45 @@ begin
     win := vin_window;
     sum := 0;
 
-    for i in 0 to (KERNEL-1) loop
-      for j in 0 to (KERNEL-1) loop
-        sum := sum + to_integer(unsigned(win(i)(j)));
-      end loop;
-    end loop;
+    ---------------------------------------------------------------------------
+    -- Square
+    ---------------------------------------------------------------------------
+    --for i in 0 to (KERNEL-1) loop
+    --  for j in 0 to (KERNEL-1) loop
+    --    sum := sum + to_integer(unsigned(win(i)(j)));
+    --  end loop;
+    --end loop;
 
-    sum := sum - to_integer(unsigned(win(0)(0)))- to_integer(unsigned(win(4)(0)))- to_integer(unsigned(win(0)(4)))- to_integer(unsigned(win(4)(4)));
+    -------------------------------------------------------------------------------
+    -- Octagon
+    -------------------------------------------------------------------------------
+    sum := to_integer(unsigned(win(0)(1))) +
+           to_integer(unsigned(win(0)(2))) +
+           to_integer(unsigned(win(0)(3))) +
+
+           to_integer(unsigned(win(1)(0))) +           
+           to_integer(unsigned(win(1)(1))) +
+           to_integer(unsigned(win(1)(2))) +
+           to_integer(unsigned(win(1)(3))) +
+           to_integer(unsigned(win(1)(4))) +           
+
+           to_integer(unsigned(win(2)(0))) +           
+           to_integer(unsigned(win(2)(1))) +
+           to_integer(unsigned(win(2)(2))) +
+           to_integer(unsigned(win(2)(3))) +
+           to_integer(unsigned(win(2)(4))) +           
+
+           to_integer(unsigned(win(3)(0))) +           
+           to_integer(unsigned(win(3)(1))) +
+           to_integer(unsigned(win(3)(2))) +
+           to_integer(unsigned(win(3)(3))) +
+           to_integer(unsigned(win(3)(4))) +           
+
+           to_integer(unsigned(win(4)(1))) +
+           to_integer(unsigned(win(4)(2))) +
+           to_integer(unsigned(win(4)(3)));                     
     
-    if (sum >= (THRESH-4)) then
+    if (sum >= (THRESH)) then
       v.q := "1";
     else
       v.q := "0";
@@ -79,6 +110,7 @@ begin
   begin  -- process
     if rising_edge(clk) then            -- rising clock edge
       r <= r_next;
+      r2 <= r;
     end if;
   end process;
 
