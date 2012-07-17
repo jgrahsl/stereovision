@@ -556,25 +556,6 @@ architecture Behavioral of FBCtl is
   constant P0_BATCH : natural := 16;
   constant P1_BATCH : natural := 32;
 
-  type alg_state_t is (alg_reset,
-
-                       alg_low,
-                       alg_low_1,
-                       alg_low_2,
-                       alg_low_3,
-                       alg_low_4,
-                       alg_finish_low,
-
-                       alg_high,
-                       alg_high_1,
-                       alg_high_2,
-                       alg_high_3,
-                       alg_high_4,
-                       alg_finish_high);
-
-  signal alg_state  : alg_state_t;
-  signal alg_nstate : alg_state_t;
-
   signal clkalg     : std_logic;
   signal rstalg     : std_logic;
   signal rstcam_int : std_logic;
@@ -883,8 +864,6 @@ begin
         end if;
       when strderr =>
         null;
-      when others =>
-        nstaterd <= strdidle;
     end case;
   end process;
 
@@ -995,8 +974,6 @@ begin
         end if;
       when stwrerr =>
         null;
-      when others =>
-        nstatewrb <= stwridle;
     end case;
   end process;
 
@@ -1019,7 +996,6 @@ begin
         my_p0_rd_addr <= 0;
         my_p0_wr_addr <= 2**20;
         my_p1_addr    <= 2**21;
-        alg_state     <= alg_reset;
       else
 -------------------------------------------------------------------------------
 -- Memory 
@@ -1038,8 +1014,6 @@ begin
 
         end if;
         my_state <= my_nstate;
-
-        alg_state <= alg_nstate;
         
       end if;
     end if;
@@ -1249,6 +1223,7 @@ begin
   my_morph : entity work.morph
     generic map (
       KERNEL => 5,
+      THRESH => 25,
       WIDTH  => 640,
       HEIGHT => 480)
     port map (

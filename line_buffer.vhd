@@ -69,7 +69,7 @@ begin
     wren(i) <= '1' when vin.valid = '1' and r.sel = i else '0';
   end generate wr_enables;
 
-  process(rst, r, r_r, vin, vin_r, q)
+  process(rst, r, r_r, vin, vin_r, q, vin_data_r)
     variable v : reg_t;
   begin  -- process
     v := r;
