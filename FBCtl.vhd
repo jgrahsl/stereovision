@@ -1218,7 +1218,7 @@ begin
       THRESH2 => 1,
       WIDTH   => 640,
       HEIGHT  => 480,
-      NUM     => 0)
+      NUM     => 1)
     port map (
       clk       => clkalg,              -- [in]
       rst       => rstalg,              -- [in]
@@ -1228,8 +1228,8 @@ begin
       vout_data => morph_vout_data_1);  -- [out]
 
 
-  vout        <= skin_vout;
-  vout_data_1 <= skin_vout_data_1;
+  vout        <= morph_vout;
+  vout_data_1 <= morph_vout_data_1;
 
   vout_data_565 <= (others => '1') when vout_data_1 = "1" else
                    (others => '0');
