@@ -61,7 +61,7 @@ begin
 
       if r.cols = (WIDTH-1) then
         v.cols := 0;
-        next_q <= (others => (others => (others => '0')));
+        next_q <= (others => (others => (others => '1')));
       else
         v.cols := v.cols + 1;
       end if;
@@ -73,7 +73,7 @@ begin
 -------------------------------------------------------------------------------
     if vin.init = '1' or rst = '1' then
       init(v);
-      next_q <= (others => (others => (others => '0')));
+      next_q <= (others => (others => (others => '1')));
     end if;
 
     rin         <= v;

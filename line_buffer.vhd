@@ -131,25 +131,25 @@ begin
         end if;
       when 5 =>
         if r_r.rows = 0 then
-          vout_window(1) <= (others => '0');
-          vout_window(2) <= (others => '0');
-          vout_window(3) <= (others => '0');
-          vout_window(4) <= (others => '0');
+          vout_window(1) <= (others => '1');
+          vout_window(2) <= (others => '1');
+          vout_window(3) <= (others => '1');
+          vout_window(4) <= (others => '1');
         elsif r_r.rows = 1 then
           vout_window(1) <= q(0);
-          vout_window(2) <= (others => '0');
-          vout_window(3) <= (others => '0');
-          vout_window(4) <= (others => '0');
+          vout_window(2) <= (others => '1');
+          vout_window(3) <= (others => '1');
+          vout_window(4) <= (others => '1');
         elsif r_r.rows = 2 then
           vout_window(1) <= q(1);
           vout_window(2) <= q(0);
-          vout_window(3) <= (others => '0');
-          vout_window(4) <= (others => '0');
+          vout_window(3) <= (others => '1');
+          vout_window(4) <= (others => '1');
         elsif r_r.rows = 3 then
           vout_window(1) <= q(2);
           vout_window(2) <= q(1);
           vout_window(3) <= q(0);
-          vout_window(4) <= (others => '0');
+          vout_window(4) <= (others => '1');
         else
           if r_r.sel = 0 then
             vout_window(1) <= q(4); vout_window(2) <= q(3); vout_window(3) <= q(2); vout_window(4) <= q(1);
