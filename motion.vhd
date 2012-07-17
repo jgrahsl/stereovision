@@ -12,14 +12,14 @@ entity motion is
     vin       : in  stream_t;
     vin_data  : in  std_logic_vector(7 downto 0);
     vout      : out stream_t;
-    vout_data : out std_logic_vector(7 downto 0)
+    vout_data : out std_logic_vector(0 downto 0)
     );
 end motion;
 
 architecture impl of motion is
 
   type nullfilter_t is record
-    data : std_logic_vector(7 downto 0);
+    data : std_logic_vector(0 downto 0);
     vin  : stream_t;
   end record;
 
@@ -46,7 +46,7 @@ begin  -- impl
   begin
     r_next.vin     <= vin;
     r_next.vin.aux <= vin.aux;
-    r_next.data    <= vin_data;
+    r_next.data    <= (others => '0');
 
     diff := (others => '0');
     m    := unsigned(vin.aux(7 downto 0));
@@ -82,10 +82,8 @@ begin  -- impl
 
     if diff < v then
       d := "0";
-      i := (others => '0');
     else
       d := "1";
-      i := (others => '1');
     end if;
 -------------------------------------------------------------------------------
 -- 
@@ -93,7 +91,7 @@ begin  -- impl
     r_next.vin.aux(7 downto 0)   <= std_logic_vector(m);
     r_next.vin.aux(18 downto 8)  <= std_logic_vector(v);
     r_next.vin.aux(31 downto 31) <= std_logic_vector(d);
-    r_next.data                  <= std_logic_vector(i);
+    r_next.data                  <= std_logic_vector(d);
   end process;
 
   proc_clk : process(clk, rst)
