@@ -1150,7 +1150,7 @@ begin
     end if;
   end process feed;
 
-  p0_wr_data(15 downto 0) <= vout_data_565;
+  p0_wr_data(31 downto 16) <= vout_data_565;
   p1_wr_en                <= vout.valid;
   p0_wr_en                <= vout.valid and not sink_is_high;
   p1_wr_data              <= vout.aux;
@@ -1163,7 +1163,7 @@ begin
       else
         if vout.valid = '1' then
           if sink_is_high = '1' then
-            p0_wr_data(31 downto 16) <= vout_data_565;
+            p0_wr_data(15 downto 0) <= vout_data_565;
           end if;
           sink_is_high <= not sink_is_high;
         end if;
@@ -1179,8 +1179,8 @@ begin
   vin.init  <= '0';
   vin.aux   <= p1_rd_data;
 
-  vin_data_565 <= p0_rd_data(15 downto 0) when feed_is_high = '0' else
-                  p0_rd_data(31 downto 16);
+  vin_data_565 <= p0_rd_data(31 downto 16) when feed_is_high = '0' else
+                  p0_rd_data(15 downto 0);
 
   vin_data_888 <= "00" & vin_data_565(15 downto 11) & "0" &
                   "00" & vin_data_565(10 downto 5) &
@@ -1217,12 +1217,12 @@ begin
       THRESH2 => 21,
       WIDTH   => 640,
       HEIGHT  => 480,
-      NUM     => 4)
+      NUM     => 1)
     port map (
       clk       => clkalg,              -- [in]
       rst       => rstalg,              -- [in]
-      vin       => motion_vout,           -- [in]
-      vin_data  => motion_vout_data_1,  --8(0 downto 0),  -- [in]
+      vin       => skin_vout,           -- [in]
+      vin_data  => skin_vout_data_1,  --8(0 downto 0),  -- [in]
       vout      => morph_vout,          -- [out]
       vout_data => morph_vout_data_1);  -- [out]
 

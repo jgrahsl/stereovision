@@ -97,6 +97,8 @@ begin
     else
       v.q := "0";
     end if;
+
+--    v.q := win(2)(0);
     
     if rst = '1' then
       init(v);
