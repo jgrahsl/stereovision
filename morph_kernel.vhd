@@ -53,25 +53,20 @@ begin
     win := vin_window;
     sum := 0;
 
-    if vin.valid = '1' then
-      for i in 0 to (KERNEL-1) loop
-        for j in 0 to (KERNEL-1) loop
-          sum := sum + to_integer(unsigned(win(i)(j)));
-        end loop;
+    for i in 0 to (KERNEL-1) loop
+      for j in 0 to (KERNEL-1) loop
+        sum := sum + to_integer(unsigned(win(i)(j)));
       end loop;
-
-      if (sum >= THRESH) then
-        v.q := "1";
-      else
-        v.q := "0";
-      end if;
-
-      v.q := vin_window(0)(1);
-      
-      if rst = '1' then
-        init(v);
-      end if;
-
+    end loop;
+    
+    if (sum >= THRESH) then
+      v.q := "1";
+    else
+      v.q := "0";
+    end if;
+    
+    if rst = '1' then
+      init(v);
     end if;
 
     r_next <= v;
