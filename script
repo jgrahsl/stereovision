@@ -1,18 +1,23 @@
 #!/bin/bash
 . /opt/env.sh
+
+convert -bordercolor white -border 16x16 input.tiff binput.tiff
+
+SIZE=`identify binput.tiff  |cut -d' ' -f3`
+PIXELS=`echo $SIZE | tr 'x' '*'|bc`
 #compile
 vsim -c -do compile.do
 
 rm -f *.mono sim.*out*
 
-convert input.tiff sim.mono
+convert binput.tiff sim.mono
 #mv sim-0.mono sim.mono
 
 # Raw to ascii bin
 cat sim.mono | hexdump -v -e '/1 "%02X\n"'  | ./bin2b.py > sim.dat
 
 # Pipe
-vsim -c -do sim_batch.do
+vsim -c -GWIDTH=160 -GHEIGHT=160 -do sim_batch.do
 
 #################################
 # From ascii to bin
@@ -20,10 +25,16 @@ cat sim.out | ./hex2b.py  > sim.mono
 
 rm -f sim.tiff
 # From bin to tiff
-convert -size 32x32  sim.mono -size 32x32  sim.tiff
+convert -size $SIZE  sim.mono -size $SIZE  sim.tiff
 
 # Offset by +2+2
-convert sim.tiff -background black  -chop 2x2 -gravity southeast -splice 2x2 _sim.tiff
+convert sim.tiff -background white -chop 2x2 -gravity southeast -splice 2x2 _sim.tiff
+mv _sim.tiff sim.tiff
+convert sim.tiff -background white -chop 2x2 -gravity southeast -splice 2x2 _sim.tiff
+mv _sim.tiff sim.tiff
+convert sim.tiff -background white -chop 2x2 -gravity southeast -splice 2x2 _sim.tiff
+mv _sim.tiff sim.tiff
+convert sim.tiff -background white -chop 2x2 -gravity southeast -splice 2x2 _sim.tiff
 mv _sim.tiff sim.tiff
 
 rm -f sim.mono
@@ -33,7 +44,7 @@ convert sim.tiff sim.mono
 #mv sim-0.mono sim.mono
 cp sim.tiff sim.out.tiff
 # Cut relevant pixels
-head -c 128 sim.mono  > _sim.mono
+head -c $PIXELS sim.mono  > _sim.mono
 mv _sim.mono sim.mono
 
 md5sum sim.mono > sim.md5sum
@@ -42,14 +53,15 @@ rm -f *.mono
 
 ####################################
 # Generate reference
-convert input.tiff  -morphology Dilate Square:2 sim.tiff
+convert binput.tiff  -morphology Dilate Square:2 -morphology Dilate Square:2 -morphology Dilate Square:2 -morphology Dilate Square:2 sim.tiff
+#convert binput.tiff  -morphology Erode Square:2 sim.tiff
 
 # To mono
 convert sim.tiff sim.mono
 #mv sim-0.mono sim.mono
 
 # Cut relevant pixels
-head -c 128 sim.mono  > _sim.mono
+head -c $PIXELS sim.mono  > _sim.mono
 mv _sim.mono sim.mono
 
 md5sum --check sim.md5sum
@@ -57,4 +69,3 @@ md5sum --check sim.md5sum
 
 # Show
 #qiv -W 1000 sim.out.tiff sim.ref.tiff 
-

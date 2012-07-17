@@ -14,9 +14,9 @@ entity tb is
   generic (
     KERNEL : natural range 0 to 5    := 5;
     THRESH : natural range 0 to 25   := 25;
-    WIDTH  : natural range 0 to 2048 := 32;
-    HEIGHT : natural range 0 to 2048 := 32;
-    NUM    : natural range 0 to 4    := 1
+    WIDTH  : natural range 0 to 2048 := 160;
+    HEIGHT : natural range 0 to 2048 := 160;
+    NUM    : natural range 0 to 4    := 4
     );
 end tb;
 
