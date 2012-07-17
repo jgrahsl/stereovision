@@ -58,8 +58,10 @@ begin
         sum := sum + to_integer(unsigned(win(i)(j)));
       end loop;
     end loop;
+
+    sum := sum - to_integer(unsigned(win(0)(0)))- to_integer(unsigned(win(4)(0)))- to_integer(unsigned(win(0)(4)))- to_integer(unsigned(win(4)(4)));
     
-    if (sum >= THRESH) then
+    if (sum >= (THRESH-4)) then
       v.q := "1";
     else
       v.q := "0";

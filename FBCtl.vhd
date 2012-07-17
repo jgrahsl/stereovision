@@ -569,8 +569,9 @@ architecture Behavioral of FBCtl is
   signal vin_data_8   : std_logic_vector(7 downto 0);
   signal vin_data_10  : std_logic_vector(9 downto 0);
 
-  signal skin_vout        : stream_t;
-  signal skin_vout_data_1 : std_logic_vector(0 downto 0);
+  signal skin_vout          : stream_t;
+  signal skin_vout_data_1   : std_logic_vector(0 downto 0);
+  signal skin_vin_data_888 : std_logic_vector(23 downto 0);
 
   signal null_vout        : stream_t;
   signal null_vout_data_1 : std_logic_vector(0 downto 0);
@@ -1150,9 +1151,9 @@ begin
   end process feed;
 
   p0_wr_data(15 downto 0) <= vout_data_565;
-  p1_wr_en                 <= vout.valid;
-  p0_wr_en                 <= vout.valid and not sink_is_high;
-  p1_wr_data               <= vout.aux;
+  p1_wr_en                <= vout.valid;
+  p0_wr_en                <= vout.valid and not sink_is_high;
+  p1_wr_data              <= vout.aux;
 
   sink : process (clkalg)
   begin  -- process feed
@@ -1185,74 +1186,66 @@ begin
                   "00" & vin_data_565(10 downto 5) &
                   "00" & vin_data_565(4 downto 0) & "0";
 
+  skin_vin_data_888 <= vin_data_565(15 downto 11) & "000" &
+                       vin_data_565(10 downto 5) & "00" &
+                       vin_data_565(4 downto 0) & "000";
+
   vin_data_8 <= conv_std_logic_vector(unsigned(vin_data_888(23 downto 16)) + unsigned(vin_data_888(15 downto 8)) + unsigned(vin_data_888(7 downto 0)), 8);
 
-  --my_skinfilter : entity work.skinfilter
-  --  port map (
-  --    clk       => clkalg,                 -- [in]
-  --    rst       => rstalg,                 -- [in]
-  --    vin       => vin,                 -- [in]
-  --    vin_data  => vin_data_888,       -- [in]
-  --    vout      => skin_vout,           -- [out]
-  --    vout_data => skin_vout_data_1);     -- [out]
-
-  my_motion : entity work.motion
+  my_skinfilter : entity work.skinfilter
     port map (
-      clk       => clkalg,               -- [in]
-      rst       => rstalg,               -- [in]
-      vin       => vin,                  -- [in]
-      vin_data  => vin_data_8,           -- [in]
-      vout      => motion_vout,          -- [out]
-      vout_data => motion_vout_data_8);  -- [out]
+      clk       => clkalg,              -- [in]
+      rst       => rstalg,              -- [in]
+      vin       => vin,                 -- [in]
+      vin_data  => skin_vin_data_888,   -- [in]
+      vout      => skin_vout,           -- [out]
+      vout_data => skin_vout_data_1);   -- [out]
 
-  --my_morph : entity work.morph_multi
-  --generic map (
-  --  KERNEL =>  5,
-  --  THRESH =>  12,
-  --  WIDTH  => 640,    
-  --  HEIGHT => 480)
+  --my_motion : entity work.motion
   --  port map (
-  --    clk       => clkalg,                -- [in]
-  --    reset     => rstalg,               -- [in]
-  --    vin       => motion_vout,           -- [in]
-  --    vin_data  => motion_vout_data_1(0 downto 0),           -- [in]
-  --    vout      => morph_vout,          -- [out]
-  --    vout_data => morph_vout_data_1);         -- [out]
+  --    clk       => clkalg,               -- [in]
+  --    rst       => rstalg,               -- [in]
+  --    vin       => vin,                  -- [in]
+  --    vin_data  => vin_data_8,           -- [in]
+  --    vout      => motion_vout,          -- [out]
+  --    vout_data => motion_vout_data_8);  -- [out]
 
 
   my_morph : entity work.morph_multi
     generic map (
-      KERNEL => 5,
-      THRESH1 => 25,      
-      THRESH2 => 25,
-      WIDTH  => 640,
-      HEIGHT => 480,
-      NUM => 4)
+      KERNEL  => 5,
+      THRESH1 => 1,
+      THRESH2 => 1,
+      WIDTH   => 640,
+      HEIGHT  => 480,
+      NUM     => 1)
     port map (
-      clk       => clkalg,                          -- [in]
-      rst       => rstalg,                          -- [in]
-      vin       => motion_vout,                     -- [in]
-      vin_data  => motion_vout_data_8(0 downto 0),  -- [in]
-      vout      => vout,                            -- [out]
-      vout_data => vout_data_1);                    -- [out]
+      clk       => clkalg,              -- [in]
+      rst       => rstalg,              -- [in]
+      vin       => skin_vout,           -- [in]
+      vin_data  => skin_vout_data_1,  --8(0 downto 0),  -- [in]
+      vout      => morph_vout,          -- [out]
+      vout_data => morph_vout_data_1);  -- [out]
 
 
---  vout_data_1 <= morph_vout_data_1;
---  vout        <= morph_vout;
-
---  vout_data_565 <= morph_vout_data_8(7 downto 3) &
---                   morph_vout_data_8(7 downto 2) &
---                   morph_vout_data_8(7 downto 3);
+  vout        <= skin_vout;
+  vout_data_1 <= skin_vout_data_1;
 
   vout_data_565 <= (others => '1') when vout_data_1 = "1" else
                    (others => '0');
-  
-  fbctl_debug.vin          <= vin;
-  fbctl_debug.vin_data_8   <= vin_data_8;
-  fbctl_debug.vin_data_888 <= vin_data_888;
-  fbctl_debug.vout         <= vout;
-  fbctl_debug.vout_data_1  <= vout_data_1;
 
+  --vout_data_565 <= morph_vout_data_8(7 downto 3) &
+  --                 morph_vout_data_8(7 downto 2) &
+  --                 morph_vout_data_8(7 downto 3);
+
+  
+  fbctl_debug.vin              <= vin;
+  fbctl_debug.vin_data_8       <= vin_data_8;
+  fbctl_debug.vin_data_888     <= vin_data_888;
+  fbctl_debug.vout             <= vout;
+  fbctl_debug.vout_data_1      <= vout_data_1;
+  fbctl_debug.skin_vout        <= skin_vout;
+  fbctl_debug.skin_vout_data_1 <= skin_vout_data_1;
 
 end Behavioral;
 

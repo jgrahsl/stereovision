@@ -45,6 +45,10 @@ package cam_pkg is
     vin: stream_t;
     vin_data_8 : std_logic_vector(7 downto 0);
     vin_data_888 : std_logic_vector(23 downto 0);    
+
+    skin_vout: stream_t;
+    skin_vout_data_1 : std_logic_vector(0 downto 0);   
+
     vout: stream_t;
     vout_data_1 : std_logic_vector(0 downto 0);   
   end record;

@@ -53,7 +53,7 @@ rm -f *.mono
 
 ####################################
 # Generate reference
-convert binput.tiff  -morphology Dilate Square:2 -morphology Dilate Square:2 -morphology Dilate Square:2 -morphology Dilate Square:2 sim.tiff
+convert binput.tiff  -morphology Dilate Octagon:2 -morphology Dilate Octagon:2 -morphology Dilate Octagon:2 -morphology Dilate Octagon:2 sim.tiff
 #convert binput.tiff  -morphology Erode Square:2 sim.tiff
 
 # To mono

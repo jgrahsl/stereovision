@@ -13,7 +13,8 @@ use work.cam_pkg.all;
 entity tb is
   generic (
     KERNEL : natural range 0 to 5    := 5;
-    THRESH : natural range 0 to 25   := 25;
+    THRESH1 : natural range 0 to 25   := 25;
+    THRESH2 : natural range 0 to 25   := 25;    
     WIDTH  : natural range 0 to 2048 := 160;
     HEIGHT : natural range 0 to 2048 := 160;
     NUM    : natural range 0 to 4    := 4
@@ -48,7 +49,8 @@ begin  -- impl
   dut : entity work.morph_multi
     generic map (
       KERNEL => KERNEL,
-      THRESH => THRESH,
+      THRESH1 => THRESH1,
+      THRESH2 => THRESH2,      
       HEIGHT => HEIGHT,
       WIDTH  => WIDTH,
       NUM    => NUM)
