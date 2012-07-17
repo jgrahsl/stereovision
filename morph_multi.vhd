@@ -10,7 +10,8 @@ entity morph_multi is
 
   generic (
     KERNEL : natural range 0 to 5    := 5;
-    THRESH : natural range 0 to 25   := 25;
+    THRESH1 : natural range 0 to 25   := 25;
+    THRESH2 : natural range 0 to 25   := 25;    
     WIDTH  : natural range 0 to 2048 := 2048;
     HEIGHT : natural range 0 to 2048 := 2048;
     NUM : natural range 0 to 4 := 4
@@ -57,7 +58,7 @@ begin  -- myrtl
   my_morph : entity work.morph
     generic map (
       KERNEL => KERNEL,
-      THRESH => THRESH,
+      THRESH => THRESH1,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (
@@ -71,7 +72,7 @@ begin  -- myrtl
   my_morph2 : entity work.morph
     generic map (
       KERNEL => KERNEL,
-      THRESH => THRESH,
+      THRESH => THRESH2,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (
@@ -85,7 +86,7 @@ begin  -- myrtl
   my_morph3 : entity work.morph
     generic map (
       KERNEL => KERNEL,
-      THRESH => THRESH,
+      THRESH => THRESH1,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (
@@ -99,7 +100,7 @@ begin  -- myrtl
   my_morph4 : entity work.morph
     generic map (
       KERNEL => KERNEL,
-      THRESH => THRESH,
+      THRESH => THRESH2,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (

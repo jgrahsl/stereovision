@@ -1220,12 +1220,14 @@ begin
   --    vout_data => morph_vout_data_1);         -- [out]
 
 
-  my_morph : entity work.morph
+  my_morph : entity work.morph_multi
     generic map (
       KERNEL => 5,
-      THRESH => 25,
+      THRESH1 => 25,      
+      THRESH2 => 25,
       WIDTH  => 640,
-      HEIGHT => 480)
+      HEIGHT => 480,
+      NUM => 4)
     port map (
       clk       => clkalg,                          -- [in]
       rst       => rstalg,                          -- [in]

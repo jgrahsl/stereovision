@@ -30,7 +30,7 @@ vhdl work "bit_ram.vhd"
 vhdl work "line_buffer.vhd"
 vhdl work "morph_kernel.vhd"
 vhdl work "morph.vhd"
-vhdl work "morph_multi_new.vhd"
+vhdl work "morph_multi.vhd"
 vhdl work "null.vhd"
 vhdl work "motion.vhd"
 
