@@ -12,20 +12,21 @@ entity nullfilter is
     clk       : in  std_logic;
     rst       : in  std_logic;
     vin       : in  stream_t;
-    vin_data  : in  std_logic_vector(0 downto 0);
+    vin_data  : in  bit_window2d_t;
     vout      : out stream_t;
-    vout_data : out std_logic_vector(0 downto 0)
+    vout_data : out bit_t
     );
 end nullfilter;
 
 architecture impl of nullfilter is
 
 type nullfilter_t is record
-  data  : std_logic_vector(0 downto 0);
+  data  : bit_t;
   vin   : stream_t;
 end record;
 
 signal r : nullfilter_t;
+signal r2 : nullfilter_t;
 signal r_next : nullfilter_t;
 
 -------------------------------------------------------------------------------
@@ -39,7 +40,7 @@ begin  -- impl
   process (r, vin, vin_data)
   begin 
 	r_next.vin <= vin;
-   r_next.data <= vin_data;
+   r_next.data <= vin_data(0)(0);
   end process;
 
   proc_clk : process(clk, rst)
@@ -50,6 +51,7 @@ begin  -- impl
     else 
 		if rising_edge(clk) then
 			r <= r_next;
+         r2 <= r;
 		end if;
     end if;
   end process;

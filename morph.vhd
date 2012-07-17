@@ -60,17 +60,27 @@ begin  -- myrtl
       vout        => filter0_win_vout,     -- [out]
       vout_window => filter0_win_window);  -- [out]
 
-  my_filter0_kernel : entity work.morphologic_kernel
-    generic map (
-      KERNEL => KERNEL,
-      THRESH => THRESH)
+  --my_filter0_kernel : entity work.morphologic_kernel
+  --  generic map (
+  --    KERNEL => KERNEL,
+  --    THRESH => THRESH)
+  --  port map (
+  --    clk        => clk,                 -- [in]
+  --    rst        => rst,               -- [in]
+  --    vin        => filter0_win_vout,    -- [in]
+  --    vin_window => filter0_win_window,  -- [in]
+  --    vout       => vout,                -- [out]
+  --    vout_data  => vout_data);          -- [out]
+
+  my_filter0_kernel : entity work.nullfilter
     port map (
       clk        => clk,                 -- [in]
       rst        => rst,               -- [in]
       vin        => filter0_win_vout,    -- [in]
-      vin_window => filter0_win_window,  -- [in]
+      vin_data  => filter0_win_window,  -- [in]
       vout       => vout,                -- [out]
       vout_data  => vout_data);          -- [out]
+  
 
-
+  
 end myrtl;

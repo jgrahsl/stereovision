@@ -66,6 +66,8 @@ begin
         v.q := "0";
       end if;
 
+      v.q := vin_window(0)(1);
+      
       if rst = '1' then
         init(v);
       end if;

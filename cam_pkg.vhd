@@ -3,7 +3,8 @@ use ieee.std_logic_1164.all;
 
 package cam_pkg is
 
-
+-- vin_data(1)(0) 1 col delay
+-- vin_data(0)(1) 1 row delay
   subtype bit_t is std_logic_vector(0 downto 0);
   subtype bayer_t is std_logic_vector(7 downto 0);
   subtype rgb_t is std_logic_vector(31 downto 0);  
