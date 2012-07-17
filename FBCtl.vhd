@@ -1217,12 +1217,12 @@ begin
       THRESH2 => 21,
       WIDTH   => 640,
       HEIGHT  => 480,
-      NUM     => 1)
+      NUM     => 4)
     port map (
       clk       => clkalg,              -- [in]
       rst       => rstalg,              -- [in]
-      vin       => skin_vout,           -- [in]
-      vin_data  => skin_vout_data_1,  --8(0 downto 0),  -- [in]
+      vin       => motion_vout,           -- [in]
+      vin_data  => motion_vout_data_1,  --8(0 downto 0),  -- [in]
       vout      => morph_vout,          -- [out]
       vout_data => morph_vout_data_1);  -- [out]
 
