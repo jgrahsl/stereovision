@@ -49,6 +49,9 @@ package cam_pkg is
     skin_vout: stream_t;
     skin_vout_data_1 : std_logic_vector(0 downto 0);   
 
+    motion_vout: stream_t;
+    motion_vout_data_8 : std_logic_vector(7 downto 0);   
+    
     vout: stream_t;
     vout_data_1 : std_logic_vector(0 downto 0);   
   end record;

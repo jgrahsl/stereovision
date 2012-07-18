@@ -566,8 +566,10 @@ architecture Behavioral of FBCtl is
   signal vin          : stream_t;
   signal vin_data_565 : std_logic_vector(15 downto 0);
   signal vin_data_888 : std_logic_vector(23 downto 0);
+  signal vin_data_999 : std_logic_vector(26 downto 0);  
   signal vin_data_8   : std_logic_vector(7 downto 0);
   signal vin_data_10  : std_logic_vector(9 downto 0);
+  signal vin_data_16  : std_logic_vector(15 downto 0);  
 
   signal skin_vout          : stream_t;
   signal skin_vout_data_1   : std_logic_vector(0 downto 0);
@@ -1178,7 +1180,7 @@ begin
   vin.valid <= avail;
   vin.init  <= '0';
   vin.aux   <= p1_rd_data;
-
+  
   vin_data_565 <= p0_rd_data(31 downto 16) when feed_is_high = '0' else
                   p0_rd_data(15 downto 0);
 
@@ -1186,11 +1188,25 @@ begin
                   "00" & vin_data_565(10 downto 5) &
                   "00" & vin_data_565(4 downto 0) & "0";
 
+  vin_data_999 <= "000" & vin_data_565(15 downto 11) & "0" &
+                  "000" & vin_data_565(10 downto 5) &
+                  "000" & vin_data_565(4 downto 0) & "0";
+  
   skin_vin_data_888 <= vin_data_565(15 downto 11) & "000" &
                        vin_data_565(10 downto 5) & "00" &
                        vin_data_565(4 downto 0) & "000";
 
-  vin_data_8 <= conv_std_logic_vector(unsigned(vin_data_888(23 downto 16)) + unsigned(vin_data_888(15 downto 8)) + unsigned(vin_data_888(7 downto 0)), 8);
+  --vin_data_8 <= conv_std_logic_vector(unsigned(vin_data_888(23 downto 16)) + unsigned(vin_data_888(15 downto 8)) + unsigned(vin_data_888(7 downto 0)), 8);
+
+  process (p0_rd_data)
+    variable brightness : std_logic_vector(15 downto 0);
+  begin  -- process
+     brightness := conv_std_logic_vector(unsigned(vin_data_999(26 downto 18)) +
+                                         unsigned(vin_data_999(17 downto 9)) +
+                                         unsigned(vin_data_999(8 downto 0)),16);
+                   
+     vin_data_8 <= std_logic_vector(brightness(7 downto 0));
+  end process;
 
   my_skinfilter : entity work.skinfilter
     port map (
@@ -1208,7 +1224,7 @@ begin
       vin       => vin,                  -- [in]
       vin_data  => vin_data_8,           -- [in]
       vout      => motion_vout,          -- [out]
-      vout_data => motion_vout_data_1);  -- [out]
+      vout_data => motion_vout_data_8);  -- [out]
 
   my_morph : entity work.morph_multi
     generic map (
@@ -1227,24 +1243,23 @@ begin
       vout_data => morph_vout_data_1);  -- [out]
 
 
-  vout        <= morph_vout;
-  vout_data_1 <= morph_vout_data_1;
+  vout        <= motion_vout;
+  
+--  vout_data_1 <= morph_vout_data_1;
+--  vout_data_565 <= (others => '1') when vout_data_1 = "1" else
+                   --(others => '0');
 
-  vout_data_565 <= (others => '1') when vout_data_1 = "1" else
-                   (others => '0');
-
-  --vout_data_565 <= morph_vout_data_8(7 downto 3) &
-  --                 morph_vout_data_8(7 downto 2) &
-  --                 morph_vout_data_8(7 downto 3);
-
+  vout_data_565 <= motion_vout_data_8(7 downto 3) &
+                   motion_vout_data_8(7 downto 2) &
+                   motion_vout_data_8(7 downto 3);
   
   fbctl_debug.vin              <= vin;
   fbctl_debug.vin_data_8       <= vin_data_8;
   fbctl_debug.vin_data_888     <= vin_data_888;
   fbctl_debug.vout             <= vout;
   fbctl_debug.vout_data_1      <= vout_data_1;
-  fbctl_debug.skin_vout        <= skin_vout;
-  fbctl_debug.skin_vout_data_1 <= skin_vout_data_1;
+  fbctl_debug.motion_vout        <= motion_vout;
+  fbctl_debug.motion_vout_data_8 <= motion_vout_data_8;
 
 end Behavioral;
 
