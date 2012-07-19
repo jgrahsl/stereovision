@@ -33,7 +33,7 @@ begin  -- myrtl
 
   my_filter0_buffer : entity work.cyclic_bit_buffer
     generic map (
-      ID        => 2,
+      ID        => (ID),
       NUM_LINES => KERNEL,
       HEIGHT    => HEIGHT,
       WIDTH     => WIDTH)
@@ -45,7 +45,7 @@ begin  -- myrtl
 
   my_filter0_window : entity work.bit_window
     generic map (
-      ID       => 3,
+      ID       => (ID+1),
       NUM_COLS => KERNEL,
       HEIGHT   => HEIGHT,
       WIDTH    => WIDTH)
@@ -58,7 +58,7 @@ begin  -- myrtl
 
   my_filter0_kernel : entity work.morph_kernel
     generic map (
-      ID     => 4,
+      ID     => (ID+2),
       KERNEL => KERNEL)
     port map (
       pipe_in    => pipe(2),

@@ -1007,7 +1007,11 @@ begin
   p1_rd_clk  <= clkalg;
   p1_wr_clk  <= clkalg;
 
-
+  avail    <= '1' when p0_rd_empty = '0' and p1_rd_empty = '0' else '0';
+  
+  p1_rd_en <= avail;
+  p0_rd_en <= avail and not feed_is_high;
+  
   p0_wr_mask <= (others => '0');
   p1_wr_mask <= (others => '0');
 
@@ -1077,42 +1081,6 @@ begin
     end case;
   end process;
 
---    brightness := conv_std_logic_vector(unsigned("000" & p0_rd_data(15 downto 11) & "0") + unsigned("000" & p0_rd_data(10 downto 5)) + unsigned("000" & p0_rd_data(4 downto 0) & "0"), 16);
-  --brightness := conv_std_logic_vector(unsigned("000" & p0_rd_data(15+16 downto 11+16) & "0") + unsigned("000" & p0_rd_data(10+16 downto 5+16)) + unsigned("000" & p0_rd_data(4+16 downto 0+16) & "0"), 16);
-
-  --p0_wr_data(15 downto 11) <= std_logic_vector(npixell(7 downto 3));
-  --p0_wr_data(10 downto 5)  <= std_logic_vector(npixell(7 downto 2));
-  --p0_wr_data(4 downto 0)   <= std_logic_vector(npixell(7 downto 3));
-
-  --p0_wr_data(15+16 downto 11+16) <= std_logic_vector(npixelh(7 downto 3));
-  --p0_wr_data(10+16 downto 5+16)  <= std_logic_vector(npixelh(7 downto 2));
-  --p0_wr_data(4+16 downto 0+16)   <= std_logic_vector(npixelh(7 downto 3));
-
-  --in_param1 <= unsigned(p1_rd_data(7 downto 0));
-  --in_param2 <= unsigned(p1_rd_data(15 downto 8));
-  --in_param3 <= unsigned(p1_rd_data(23 downto 16));
-  --in_param4 <= unsigned(p1_rd_data(31 downto 24));
-
-  --p1_wr_data(7 downto 0)   <= std_logic_vector(nparam1);
-  --p1_wr_data(15 downto 8)  <= std_logic_vector(nparam2);
-  --p1_wr_data(23 downto 16) <= std_logic_vector(nparam3);
-  --p1_wr_data(31 downto 24) <= std_logic_vector(nparam4);
-
-
-  --p0_rd_en <= '1' when p0_rd_empty = '0' else
-  --            '0';
-  --p0_wr_en <= '1' when p0_rd_empty = '0' else
-  --            '0';
-  --p1_rd_en <= '1' when p1_rd_empty = '0' else
-  --            '0';
-  --p1_wr_en <= '1' when p1_rd_empty = '0' else
-  --            '0';
-
-
-  avail    <= '1' when p0_rd_empty = '0' and p1_rd_empty = '0' else '0';
-  p1_rd_en <= avail;
-  p0_rd_en <= avail and not feed_is_high;
-
   feed : process (clkalg)
   begin  -- process feed
     if clkalg'event and clkalg = '1' then  -- rising clock edge
@@ -1125,11 +1093,6 @@ begin
       end if;
     end if;
   end process feed;
-
-  p0_wr_data(31 downto 16) <= pipe_out.stage.data_565;
-  p1_wr_en                 <= pipe_out.stage.valid;
-  p0_wr_en                 <= pipe_out.stage.valid and not sink_is_high;
-  p1_wr_data               <= pipe_out.stage.aux;
 
   sink : process (clkalg)
   begin  -- process feed
@@ -1146,33 +1109,17 @@ begin
       end if;
     end if;
   end process sink;
-
--------------------------------------------------------------------------------
--- PIPE
--------------------------------------------------------------------------------
-
+  
   my_cfg_sync : entity work.cfg_sync
     port map (
       clk  => clkalg,                   -- [in]
       din  => cfg_unsync,               -- [in]
       dout => cfg);                     -- [out] 
 
-
-  --vin_data_888 <= "00" & vin_data_565(15 downto 11) & "0" &
-  --                "00" & vin_data_565(10 downto 5) &
-  --                "00" & vin_data_565(4 downto 0) & "0";
-
-  --vin_data_999 <= "000" & vin_data_565(15 downto 11) & "0" &
-  --                "000" & vin_data_565(10 downto 5) &
-  --                "000" & vin_data_565(4 downto 0) & "0";
-
-  --skin_vin_data_888 <= vin_data_565(15 downto 11) & "000" &
-  --                     vin_data_565(10 downto 5) & "00" &
-  --                     vin_data_565(4 downto 0) & "000";
-
-  --vin_data_8 <= conv_std_logic_vector(unsigned(vin_data_888(23 downto 16)) + unsigned(vin_data_888(15 downto 8)) + unsigned(vin_data_888(7 downto 0)), 8);
-
-
+-------------------------------------------------------------------------------
+-- PIPE IN
+-------------------------------------------------------------------------------
+ 
   pipe_in.ctrl.clk <= clkalg;
   pipe_in.ctrl.rst <= rstalg;
 
@@ -1190,9 +1137,25 @@ begin
                             pipe_in.stage.data_565(10 downto 5) & "00" &
                             pipe_in.stage.data_565(4 downto 0) & "000";
 
+-------------------------------------------------------------------------------
+-- PIPE OUT
+-------------------------------------------------------------------------------  
+
+  p0_wr_data(31 downto 16) <= pipe_out.stage.data_565;
+  p1_wr_en                 <= pipe_out.stage.valid;
+  p0_wr_en                 <= pipe_out.stage.valid and not sink_is_high;
+  p1_wr_data               <= pipe_out.stage.aux;
+
+-------------------------------------------------------------------------------
+-- MAP PIPE_SET
+-------------------------------------------------------------------------------
+  
   pipe(0)  <= pipe_in;
   pipe_out <= pipe(3);
-
+  
+-------------------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------------------
   led_o <= pipe(0).stage.valid &
            pipe(1).stage.valid &
            pipe(2).stage.valid &
@@ -1206,9 +1169,11 @@ begin
   --                                    unsigned(vin_data_999(17 downto 9)) +
   --                                    unsigned(vin_data_999(8 downto 0)), 16);
 
-  --  vin_data_8 <= std_logic_vector(brightness(7 downto 0));
 
-
+-------------------------------------------------------------------------------
+-- PIPE
+-------------------------------------------------------------------------------
+  
   my_skinfilter : entity work.skinfilter
     generic map (
       ID => 0)
@@ -1232,37 +1197,6 @@ begin
     port map (
       pipe_in  => pipe(2),              -- [in]
       pipe_out => pipe(3));             -- [out]
-
-
-
-  --my_motion : entity work.motion
-  --  port map (
-  --    clk       => clkalg,              -- [in]
-  --    rst       => rstalg,              -- [in]
-  --    vin       => vin,                 -- [in]
-  --    vin_data  => vin_data_8,          -- [in]
-  --    vout      => motion_vout,         -- [out]
-  --    vout_data => motion_vout_data_8,
-  --    cfg       => pipe_cfg.motion);    -- [out]
-
-  --my_morph : entity work.morph_multi
---    generic map (
-  --    KERNEL  => 5,
-  --    THRESH1 => 21,
-  --    THRESH2 => 21,
-  --    WIDTH   => 640,
-  --    HEIGHT  => 480,
-  --    NUM     => 2)
-  --  port map (
-  --    clk       => clkalg,              -- [in]
-  --    rst       => rstalg,              -- [in]
-  --    vin       => motion_vout,         -- [in]
-  --    vin_data  => motion_vout_data_8(0 downto 0),  --8(0 downto 0),  -- [in]
-  --    vout      => morph_vout,          -- [out]
-  --    vout_data => morph_vout_data_1,
-  --    cfg => pipe_cfg.morph
-  --    );  -- [out]
-
 
 end Behavioral;
 
