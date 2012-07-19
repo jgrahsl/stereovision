@@ -12,7 +12,8 @@ entity motion is
     vin       : in  stream_t;
     vin_data  : in  std_logic_vector(7 downto 0);
     vout      : out stream_t;
-    vout_data : out std_logic_vector(7 downto 0)
+    vout_data : out std_logic_vector(7 downto 0);
+    cfg: in motion_cfg_t
     );
 end motion;
 
@@ -37,7 +38,7 @@ begin  -- impl
   process (r, vin, vin_data)
     variable diff  : unsigned(7 downto 0);
     variable m     : unsigned(7 downto 0);
-    variable v     : unsigned(7 downto 0);
+    variable v     : unsigned(15 downto 0);
     variable i     : unsigned(7 downto 0);
     variable d     : unsigned(0 downto 0);
     variable d_old : unsigned(0 downto 0);
@@ -53,12 +54,14 @@ begin  -- impl
     v    := unsigned(vin.aux((15+v'high) downto 15));
     d    := unsigned(vin.aux(31 downto 31));
     i    := unsigned(vin_data);
-    vmax := to_unsigned(255, v'length);
-    vmin := to_unsigned(0, v'length);
+    vmax := unsigned(cfg.vmax);
+    vmin := unsigned(cfg.vmin);
+--    vmax := to_unsigned(1023, v'length);
+--    vmin := to_unsigned(2, v'length);
 -------------------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------------------
-    if d = 0 then 
+    if d = 0 then
       if i < m then
         m := m - 1;
       elsif i > m then
@@ -67,30 +70,29 @@ begin  -- impl
     end if;
 
     if i < m then
-      diff := m - i;      
+      diff := m - i;
     elsif i > m then
-      diff := i - m;      
+      diff := i - m;
     end if;
-      
-    if v < (diff&"0") then
-      if v < vmax then
-        v := v + 1;
-      end if;
-    elsif v > (diff&"0") then
-      if v > vmin then
-        v := v - 1;
-      end if;
-    end if;
-    
---    if ((diff&"0") < v) then
---        v := v - 1;
-----      end if;
---    elsif ((diff&"0") > v) then
-----      if (v < vmax) then
---        v := v + 1;
-----      end if;
---    end if;
 
+    if v < (diff&"000") then
+--      if v < vmax then
+        v := v + 1;
+--      end if;
+    elsif v > (diff&"000") then
+--      if v > vmin then
+        v := v - 1;
+--      end if;
+    end if;
+
+    if v < vmin then
+      v := vmin;
+    end if;
+
+    if v > vmax then
+      v := vmax;
+    end if;   
+    
     if diff < v then
       d := "0";
     else
@@ -102,16 +104,15 @@ begin  -- impl
     r_next.vin.aux((0+m'high) downto 0)   <= std_logic_vector(m);
     r_next.vin.aux((15+v'high) downto 15) <= std_logic_vector(v);
     r_next.vin.aux(31 downto 31)          <= std_logic_vector(d);
-    --if d = 0 then
-    --  r_next.data                           <= (others => '0');
-    --else
-    --  r_next.data                           <= (others => '1');
-    --end if;
 
     if vin.valid = '1' then
-      r_next.data                           <= std_logic_vector(v);
+      if d = 0 then
+        r_next.data <= (others => '0');
+      else
+        r_next.data <= (others => '1');
+      end if;
     else
-      r_next.data                           <= (others => '1');      
+      r_next.data <= X"AA";
     end if;
 
   end process;

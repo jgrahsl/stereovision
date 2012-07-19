@@ -55,5 +55,14 @@ package cam_pkg is
     vout: stream_t;
     vout_data_1 : std_logic_vector(0 downto 0);   
   end record;
-  
+
+
+  type motion_cfg_t is record
+    vmin : std_logic_vector(15 downto 0);
+    vmax : std_logic_vector(15 downto 0);    
+  end record;
+
+  type pipe_cfg_t is record
+    motion : motion_cfg_t;
+  end record;
 end cam_pkg;

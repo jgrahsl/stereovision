@@ -35,6 +35,7 @@ vhdl work "null.vhd"
 vhdl work "motion.vhd"
 
 vhdl work "debug_sync.vhd"
+vhdl work "pipe_sync.vhd"
 vhdl work "comm_fpga_fx2.vhdl"
 
 vhdl work "top.vhd"

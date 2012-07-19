@@ -173,10 +173,13 @@ architecture Behavioral of top is
   signal fbctl_debug_unsync : fbctl_debug_t;
   signal fbctl_debug        : fbctl_debug_t;
 
-
+  signal pipe_cfg : pipe_cfg_t;
+  
 begin
 
-  led_o <= fbctl_debug.vin.valid & fbctl_debug.vin.init & fbctl_debug.vout.valid & fbctl_debug.vout.init & "000" & int_FVB;
+--  led_o <= fbctl_debug.vin.valid & fbctl_debug.vin.init & fbctl_debug.vout.valid & fbctl_debug.vout.init & "000" & int_FVB;
+
+
 
 ----------------------------------------------------------------------------------
 -- System Control Unit
@@ -272,7 +275,8 @@ begin
       mcb3_dram_ck     => mcb3_dram_ck,
       mcb3_dram_ck_n   => mcb3_dram_ck_n,
 
-      fbctl_debug => fbctl_debug_unsync
+      fbctl_debug => fbctl_debug_unsync,
+      pipe_cfg_unsync => pipe_cfg
       );
 
   FbRdEn  <= VtcVde;
@@ -379,22 +383,36 @@ begin
   process(fx2Clk_in)
   begin
     if (rising_edge(fx2Clk_in)) then
-      reg0 <= reg0_next;
-      reg1 <= std_logic_vector(unsigned(reg1) + 1);
-      reg2 <= reg2_next;
-      reg3 <= reg3_next;
+      if f2hReady = '1' then
+        reg1 <= std_logic_vector(unsigned(reg1) + 1);        
+      end if;
+
+      if h2fvalid = '1' then
+        case chanAddr is
+          when "0000000" =>
+            reg0 <= h2fData;
+          when "0000010" =>
+            reg2 <= h2fData;
+          when "0000011" =>
+            reg3 <= h2fData;
+          when "1110000" =>
+            pipe_cfg.motion.vmin(15 downto 8) <= h2fData;
+          when "1110001" =>
+            pipe_cfg.motion.vmin(7 downto 0) <= h2fData;
+          when "1110010" =>
+            pipe_cfg.motion.vmax(15 downto 8) <= h2fData;
+          when "1110011" =>
+            pipe_cfg.motion.vmax(7 downto 0) <= h2fData;
+            
+          when others => null;
+        end case;
+      end if;
     end if;
   end process;
 
-
-  reg0_next <= h2fdata when chanAddr = "0000000" and h2fvalid = '1' else reg0;
-  reg1_next <= h2fdata when chanAddr = "0000001" and h2fvalid = '1' else reg1;
-  reg2_next <= h2fdata when chanAddr = "0000010" and h2fvalid = '1' else reg2;
-  reg3_next <= h2fdata when chanAddr = "0000011" and h2fvalid = '1' else reg3;
-
   with chanAddr select f2hdata <=
     reg0  when "0000000",
-    X"AA" when "0001010",
+    X"AA" when "0000001",
     reg1  when "0001111",
 
     "0000000" & fbctl_debug.vin.valid         when "0010000",
@@ -408,8 +426,6 @@ begin
     "0000000" & fbctl_debug.skin_vout_data_1  when "0110001",
     "0000000" & fbctl_debug.motion_vout.valid when "1000000",
     fbctl_debug.motion_vout_data_8            when "1000001",
-
-
 
     X"FF" when others;
 
@@ -454,6 +470,8 @@ begin
     fx2PktEnd_out <= '0';
     fx2Write_out  <= '0';
   end generate comm_else;
+
+  led_o <= h2fValid &  f2hReady & "000000";
   
 end Behavioral;
 

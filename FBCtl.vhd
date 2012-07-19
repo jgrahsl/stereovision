@@ -116,8 +116,8 @@ entity FBCtl is
     mcb3_dram_dqs_n  : inout std_logic;
     mcb3_dram_ck     : out   std_logic;
     mcb3_dram_ck_n   : out   std_logic;
-    fbctl_debug      : inout fbctl_debug_t
-
+    fbctl_debug      : inout fbctl_debug_t;
+    pipe_cfg_unsync  : in    pipe_cfg_t
     );
 end FBCtl;
 
@@ -566,13 +566,13 @@ architecture Behavioral of FBCtl is
   signal vin          : stream_t;
   signal vin_data_565 : std_logic_vector(15 downto 0);
   signal vin_data_888 : std_logic_vector(23 downto 0);
-  signal vin_data_999 : std_logic_vector(26 downto 0);  
+  signal vin_data_999 : std_logic_vector(26 downto 0);
   signal vin_data_8   : std_logic_vector(7 downto 0);
   signal vin_data_10  : std_logic_vector(9 downto 0);
-  signal vin_data_16  : std_logic_vector(15 downto 0);  
+  signal vin_data_16  : std_logic_vector(15 downto 0);
 
-  signal skin_vout          : stream_t;
-  signal skin_vout_data_1   : std_logic_vector(0 downto 0);
+  signal skin_vout         : stream_t;
+  signal skin_vout_data_1  : std_logic_vector(0 downto 0);
   signal skin_vin_data_888 : std_logic_vector(23 downto 0);
 
   signal null_vout        : stream_t;
@@ -595,6 +595,9 @@ architecture Behavioral of FBCtl is
   signal vout_2dwindow : bit_window2d_t;
   signal buf_vout      : stream_t;
   signal win_vout      : stream_t;
+
+  signal pipe_cfg : pipe_cfg_t;
+  
 begin
 ----------------------------------------------------------------------------------
 -- mcb instantiation
@@ -1153,9 +1156,9 @@ begin
   end process feed;
 
   p0_wr_data(31 downto 16) <= vout_data_565;
-  p1_wr_en                <= vout.valid;
-  p0_wr_en                <= vout.valid and not sink_is_high;
-  p1_wr_data              <= vout.aux;
+  p1_wr_en                 <= vout.valid;
+  p0_wr_en                 <= vout.valid and not sink_is_high;
+  p1_wr_data               <= vout.aux;
 
   sink : process (clkalg)
   begin  -- process feed
@@ -1177,10 +1180,16 @@ begin
 -- PIPE
 -------------------------------------------------------------------------------
 
+  my_pipe_sync : entity work.pipe_sync
+    port map (
+      clk  => clkalg,                   -- [in]
+      din  => pipe_cfg_unsync,          -- [in]
+      dout => pipe_cfg);                -- [out] 
+
   vin.valid <= avail;
   vin.init  <= '0';
   vin.aux   <= p1_rd_data;
-  
+
   vin_data_565 <= p0_rd_data(31 downto 16) when feed_is_high = '0' else
                   p0_rd_data(15 downto 0);
 
@@ -1201,30 +1210,31 @@ begin
   process (p0_rd_data)
     variable brightness : std_logic_vector(15 downto 0);
   begin  -- process
-     brightness := conv_std_logic_vector(unsigned(vin_data_999(26 downto 18)) +
-                                         unsigned(vin_data_999(17 downto 9)) +
-                                         unsigned(vin_data_999(8 downto 0)),16);
-                   
-     vin_data_8 <= std_logic_vector(brightness(7 downto 0));
+    brightness := conv_std_logic_vector(unsigned(vin_data_999(26 downto 18)) +
+                                        unsigned(vin_data_999(17 downto 9)) +
+                                        unsigned(vin_data_999(8 downto 0)), 16);
+
+    vin_data_8 <= std_logic_vector(brightness(7 downto 0));
   end process;
 
-  my_skinfilter : entity work.skinfilter
+  --my_skinfilter : entity work.skinfilter
+  --  port map (
+  --    clk       => clkalg,              -- [in]
+  --    rst       => rstalg,              -- [in]
+  --    vin       => vin,                 -- [in]
+  --    vin_data  => skin_vin_data_888,   -- [in]
+  --    vout      => skin_vout,           -- [out]
+  --    vout_data => skin_vout_data_1);   -- [out]
+
+  my_motion : entity work.motion
     port map (
       clk       => clkalg,              -- [in]
       rst       => rstalg,              -- [in]
       vin       => vin,                 -- [in]
-      vin_data  => skin_vin_data_888,   -- [in]
-      vout      => skin_vout,           -- [out]
-      vout_data => skin_vout_data_1);   -- [out]
-
-  my_motion : entity work.motion
-    port map (
-      clk       => clkalg,               -- [in]
-      rst       => rstalg,               -- [in]
-      vin       => vin,                  -- [in]
-      vin_data  => vin_data_8,           -- [in]
-      vout      => motion_vout,          -- [out]
-      vout_data => motion_vout_data_8);  -- [out]
+      vin_data  => vin_data_8,          -- [in]
+      vout      => motion_vout,         -- [out]
+      vout_data => motion_vout_data_8,
+      cfg       => pipe_cfg.motion);    -- [out]
 
   my_morph : entity work.morph_multi
     generic map (
@@ -1233,31 +1243,31 @@ begin
       THRESH2 => 21,
       WIDTH   => 640,
       HEIGHT  => 480,
-      NUM     => 0)
+      NUM     => 2)
     port map (
       clk       => clkalg,              -- [in]
       rst       => rstalg,              -- [in]
-      vin       => motion_vout,           -- [in]
-      vin_data  => motion_vout_data_1,  --8(0 downto 0),  -- [in]
+      vin       => motion_vout,         -- [in]
+      vin_data  => motion_vout_data_8(0 downto 0),  --8(0 downto 0),  -- [in]
       vout      => morph_vout,          -- [out]
       vout_data => morph_vout_data_1);  -- [out]
 
 
-  vout        <= motion_vout;
-  
---  vout_data_1 <= morph_vout_data_1;
---  vout_data_565 <= (others => '1') when vout_data_1 = "1" else
-                   --(others => '0');
+  vout <= motion_vout;
 
-  vout_data_565 <= motion_vout_data_8(7 downto 3) &
-                   motion_vout_data_8(7 downto 2) &
-                   motion_vout_data_8(7 downto 3);
+  vout_data_1   <= morph_vout_data_1;
+  vout_data_565 <= (others => '1') when vout_data_1 = "1" else
+                   (others => '0');
+
+  --vout_data_565 <= motion_vout_data_8(7 downto 3) &
+  --                 motion_vout_data_8(7 downto 2) &
+  --                 motion_vout_data_8(7 downto 3);
   
-  fbctl_debug.vin              <= vin;
-  fbctl_debug.vin_data_8       <= vin_data_8;
-  fbctl_debug.vin_data_888     <= vin_data_888;
-  fbctl_debug.vout             <= vout;
-  fbctl_debug.vout_data_1      <= vout_data_1;
+  fbctl_debug.vin                <= vin;
+  fbctl_debug.vin_data_8         <= vin_data_8;
+  fbctl_debug.vin_data_888       <= vin_data_888;
+  fbctl_debug.vout               <= vout;
+  fbctl_debug.vout_data_1        <= vout_data_1;
   fbctl_debug.motion_vout        <= motion_vout;
   fbctl_debug.motion_vout_data_8 <= motion_vout_data_8;
 
