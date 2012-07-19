@@ -116,7 +116,8 @@ entity FBCtl is
     mcb3_dram_dqs_n  : inout std_logic;
     mcb3_dram_ck     : out   std_logic;
     mcb3_dram_ck_n   : out   std_logic;
-    cfg_unsync       : in    cfg_set_t
+    cfg_unsync       : in    cfg_set_t;
+    LED_O            : out   std_logic_vector(7 downto 0)
     );
 end FBCtl;
 
@@ -1189,7 +1190,17 @@ begin
                             pipe_in.stage.data_565(10 downto 5) & "00" &
                             pipe_in.stage.data_565(4 downto 0) & "000";
 
+  pipe(0)  <= pipe_in;
+  pipe_out <= pipe(3);
 
+  led_o <= pipe(0).stage.valid &
+           pipe(1).stage.valid &
+           pipe(2).stage.valid &
+           pipe(3).stage.valid &
+           pipe(0).cfg(0).enable &
+           pipe(0).cfg(1).enable &
+           pipe(0).cfg(2).enable &
+           pipe(0).cfg(3).enable;
   --brightness <=
   --conv_std_logic_vector(unsigned(vin_data_999(26 downto 18)) +
   --                                    unsigned(vin_data_999(17 downto 9)) +
@@ -1201,12 +1212,28 @@ begin
   my_skinfilter : entity work.skinfilter
     generic map (
       ID => 0)
-  port map (
-    pipe_in  => pipe_in,
-    pipe_out => pipe(0));
+    port map (
+      pipe_in  => pipe(0),
+      pipe_out => pipe(1));
+
+  my_null: entity work.null_filter
+    generic map (
+      ID => 1)
+    port map (
+      pipe_in  => pipe(1),              -- [in]
+      pipe_out => pipe(2));            -- [out]
+  
+  my_morph : entity work.morph
+    generic map (
+      ID     => 2,
+      KERNEL => 5,
+      WIDTH  => 640,
+      HEIGHT => 480)
+    port map (
+      pipe_in  => pipe(2),              -- [in]
+      pipe_out => pipe(3));             -- [out]
 
 
-  pipe_out <= pipe(0);
 
   --my_motion : entity work.motion
   --  port map (
@@ -1219,7 +1246,7 @@ begin
   --    cfg       => pipe_cfg.motion);    -- [out]
 
   --my_morph : entity work.morph_multi
-  --  generic map (
+--    generic map (
   --    KERNEL  => 5,
   --    THRESH1 => 21,
   --    THRESH2 => 21,

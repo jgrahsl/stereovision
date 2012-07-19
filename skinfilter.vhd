@@ -15,10 +15,10 @@ end skinfilter;
 
 architecture impl of skinfilter is
 
-  signal stage      : stage_t;
-  signal stage_next : stage_t;
   signal clk        : std_logic;
   signal rst        : std_logic;
+  signal stage      : stage_t;
+  signal stage_next : stage_t;
 
 begin
   clk <= pipe_in.ctrl.clk;
@@ -27,7 +27,6 @@ begin
   pipe_out.ctrl  <= pipe_in.ctrl;
   pipe_out.cfg   <= pipe_in.cfg;
   pipe_out.stage <= stage;
-
 
   process (pipe_in)
     variable colr : std_logic_vector(15 downto 0);

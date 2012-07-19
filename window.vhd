@@ -7,54 +7,61 @@ use work.cam_pkg.all;
 
 entity bit_window is
   generic (
+    ID       : integer range 0 to 63   := 0;
     NUM_COLS : natural range 0 to 5    := 5;
     WIDTH    : natural range 1 to 2048 := 2048;
-    HEIGHT   : natural range 1 to 2048 := 2048);
+    HEIGHT   : natural range 1 to 2048 := 2048
+  );
   port (
-    clk         : in  std_logic;
-    rst         : in  std_logic;
-    vin         : in  stream_t;
-    vin_window  : in  bit_window_t;
-    vout        : out stream_t;
-    vout_window : out bit_window2d_t
+    pipe_in     : in  pipe_t;
+    pipe_out    : out pipe_t;
+    mono_1d_in  : in  mono_1d_t;
+    mono_2d_out : out mono_2d_t
     );
 end bit_window;
 
 architecture impl of bit_window is
--------------------------------------------------------------------------------
--- Registers and init
--------------------------------------------------------------------------------
+
+  signal clk        : std_logic;
+  signal rst        : std_logic;
+  signal stage      : stage_t;
+  signal stage_next : stage_t;
+
   type reg_t is record
     cols : natural range 0 to WIDTH;
     rows : natural range 0 to HEIGHT;
   end record;
-  signal r                   :       reg_t;
-  signal rin                 :       reg_t;
+  signal r   : reg_t;
+  signal rin : reg_t;
+
   procedure init (variable v : inout reg_t) is
   begin
     v.cols := 0;
     v.rows := 0;
   end init;
 
--------------------------------------------------------------------------------
--- Signals
--------------------------------------------------------------------------------
---  type   adr_vector_t is array (0 to NUM_LINES) of lb_adr_t;
-  signal q      : bit_window2d_t;
-  signal next_q : bit_window2d_t;
-  signal vin_r  : stream_t;
+  signal q      : mono_2d_t;
+  signal next_q : mono_2d_t;
   
 begin
+  clk <= pipe_in.ctrl.clk;
+  rst <= pipe_in.ctrl.rst;
 
-  process(rst, r, vin, vin_r, vin_window, q)
+  pipe_out.ctrl  <= pipe_in.ctrl;
+  pipe_out.cfg   <= pipe_in.cfg;
+  pipe_out.stage <= stage;
+
+  process(pipe_in)
     variable v : reg_t;
   begin  -- process
+    stage_next <= pipe_in.stage;
+
     v      := r;
     next_q <= q;
 -------------------------------------------------------------------------------
 -- Counters
 -------------------------------------------------------------------------------
-    if vin.valid = '1' then
+    if pipe_in.stage.valid = '1' then
       for i in 0 to (NUM_COLS-2) loop
         next_q(i+1) <= q(i);
       end loop;  -- i
@@ -66,27 +73,50 @@ begin
         v.cols := v.cols + 1;
       end if;
 
-      next_q(0) <= vin_window;
+      next_q(0) <= mono_1d_in;
     end if;
 -------------------------------------------------------------------------------
 -- VIN.INIT
 -------------------------------------------------------------------------------
-    if vin.init = '1' or rst = '1' then
+    if rst = '1' then
       init(v);
       next_q <= (others => (others => (others => '0')));
     end if;
 
+    if pipe_in.stage.data_1 = "1" then
+      stage_next.data_1   <= (others => '1');
+      stage_next.data_8   <= (others => '1');
+      stage_next.data_565 <= (others => '1');
+      stage_next.data_888 <= (others => '1');
+    else
+      stage_next.data_1   <= (others => '0');
+      stage_next.data_8   <= (others => '0');
+      stage_next.data_565 <= (others => '0');
+      stage_next.data_888 <= (others => '0');
+    end if;
+    
     rin         <= v;
-    vout        <= vin_r;
-    vout_window <= q;
+    mono_2d_out <= q;
   end process;
 
-  process (clk, r, rin)
-  begin  -- process
-    if clk'event and clk = '1' then     -- rising clock edge
-      r     <= rin;
-      q     <= next_q;
-      vin_r <= vin;
+
+  proc_clk : process(pipe_in)
+  begin
+    if rst = '1' then
+      stage.valid <= '0';
+      stage.init  <= '0';
+    else
+      if rising_edge(clk) then
+        if (pipe_in.cfg(ID).enable = '1') then
+          stage <= stage_next;
+        else
+          stage <= pipe_in.stage;
+        end if;
+
+        r <= rin;
+        q <= next_q;
+
+      end if;
     end if;
   end process;
 

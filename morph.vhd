@@ -10,77 +10,60 @@ use work.cam_pkg.all;
 entity morph is
 
   generic (
+    ID     : integer range 0 to 63   := 0;
     KERNEL : natural range 0 to 5    := 5;
-    THRESH : natural range 0 to 25   := 25;
     WIDTH  : natural range 0 to 2048 := 2048;
     HEIGHT : natural range 0 to 2048 := 2048);
   port (
-    clk       : in  std_logic;
-    rst     : in  std_logic;
-    vin       : in  stream_t;
-    vin_data  : in  bit_t;
-    vout      : out stream_t;
-    vout_data : out bit_t);
+    pipe_in  : in  pipe_t;
+    pipe_out : out pipe_t);  
 
 end morph;
 
 architecture myrtl of morph is
 
-  signal filter0_buff_vout   : stream_t;
-  signal filter0_buff_window : bit_window_t;
-  signal filter0_win_vout    : stream_t;
-  signal filter0_win_window  : bit_window2d_t;
+  signal pipe    : pipe_set_t;
+  signal mono_1d : mono_1d_t;
+  signal mono_2d : mono_2d_t;
   
 begin  -- myrtl
-
+  
+  pipe(0)  <= pipe_in;
+  pipe_out <= pipe(3);
 
   my_filter0_buffer : entity work.cyclic_bit_buffer
     generic map (
+      ID        => 2,
       NUM_LINES => KERNEL,
       HEIGHT    => HEIGHT,
       WIDTH     => WIDTH)
     port map (
-      clk         => clk,                   -- [in]
-      rst         => rst,                 -- [in]
-      vin         => vin,                   -- [in]
-      vin_data    => vin_data,              -- [in]
-      vout        => filter0_buff_vout,     -- [out]
-      vout_window => filter0_buff_window);  -- [out]
+      pipe_in     => pipe(0),
+      pipe_out    => pipe(1),
+      mono_1d_out => mono_1d
+      );
 
   my_filter0_window : entity work.bit_window
     generic map (
+      ID       => 3,
       NUM_COLS => KERNEL,
       HEIGHT   => HEIGHT,
       WIDTH    => WIDTH)
     port map (
-      clk         => clk,                  -- [in]
-      rst         => rst,                -- [in]
-      vin         => filter0_buff_vout,    -- [in]
-      vin_window  => filter0_buff_window,  --
-      vout        => filter0_win_vout,     -- [out]
-      vout_window => filter0_win_window);  -- [out]
+      pipe_in     => pipe(1),
+      pipe_out    => pipe(2),
+      mono_1d_in  => mono_1d,
+      mono_2d_out => mono_2d
+      );
 
-  my_filter0_kernel : entity work.morphologic_kernel
+  my_filter0_kernel : entity work.morph_kernel
     generic map (
-      KERNEL => KERNEL,
-      THRESH => THRESH)
+      ID     => 4,
+      KERNEL => KERNEL)
     port map (
-      clk        => clk,                 -- [in]
-      rst        => rst,               -- [in]
-      vin        => filter0_win_vout,    -- [in]
-      vin_window => filter0_win_window,  -- [in]
-      vout       => vout,                -- [out]
-      vout_data  => vout_data);          -- [out]
+      pipe_in    => pipe(2),
+      pipe_out   => pipe(3),
+      mono_2d_in => mono_2d
+      );
 
-  --my_filter0_kernel : entity work.nullfilter
-  --  port map (
-  --    clk        => clk,                 -- [in]
-  --    rst        => rst,               -- [in]
-  --    vin        => filter0_win_vout,    -- [in]
-  --    vin_data  => filter0_win_window,  -- [in]
-  --    vout       => vout,                -- [out]
-  --    vout_data  => vout_data);          -- [out]
-  
-
-  
 end myrtl;

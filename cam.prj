@@ -18,27 +18,29 @@ vhdl digilent "remote_sources/_/lib/digilent/InputSync.vhd"
 vhdl digilent "remote_sources/_/lib/digilent/VideoTimingCtl.vhd"
 vhdl digilent "remote_sources/_/lib/digilent/DVITransmitter.vhd"
 
-vhdl work "uart.vhd"
-vhdl work "SysCon.vhd"
-vhdl work "FBCtl.vhd"
-vhdl work "CamCtl.vhd"
 
 vhdl work "cam_pkg.vhd"
 
 vhdl work "skinfilter.vhd"
 
-#vhdl work "window.vhd"
-#vhdl work "bit_ram.vhd"
-#vhdl work "line_buffer.vhd"
-#vhdl work "morph_kernel.vhd"
-#vhdl work "morph.vhd"
+vhdl work "window.vhd"
+vhdl work "bit_ram.vhd"
+vhdl work "line_buffer.vhd"
+vhdl work "morph_kernel.vhd"
+vhdl work "morph.vhd"
 #vhdl work "morph_multi.vhd"
 
-#vhdl work "null.vhd"
+vhdl work "null2.vhd"
 
 #vhdl work "motion.vhd"
 
 vhdl work "comm_fpga_fx2.vhdl"
 
 vhdl work "cfg_sync.vhd"
+
+vhdl work "uart.vhd"
+vhdl work "SysCon.vhd"
+vhdl work "FBCtl.vhd"
+vhdl work "CamCtl.vhd"
+
 vhdl work "top.vhd"

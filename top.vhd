@@ -105,7 +105,7 @@ entity top is
 -- FPGA Link
 -------------------------------------------------------------------------------
     -- FX2 interface -----------------------------------------------------------------------------
-    fx2Clk_in   : in    std_logic;      -- 48MHz clock from FX2
+    fx2Clk_int   : in    std_logic;      -- 48MHz clock from FX2
     fx2Addr_out : out   std_logic_vector(1 downto 0);  -- select FIFO: "10" for EP6OUT, "11" for EP8IN
     fx2Data_io  : inout std_logic_vector(7 downto 0);  -- 8-bit data to/from FX2
 
@@ -176,6 +176,8 @@ architecture Behavioral of top is
 
   signal cfg : cfg_set_t;
   signal adr : integer range 0 to 63;
+
+  signal fx2Clk_in : std_logic;
 begin
 
 --  led_o <= fbctl_debug.vin.valid & fbctl_debug.vin.init & fbctl_debug.vout.valid & fbctl_debug.vout.init & "000" & int_FVB;
@@ -276,7 +278,8 @@ begin
       mcb3_dram_ck     => mcb3_dram_ck,
       mcb3_dram_ck_n   => mcb3_dram_ck_n,
 
-      cfg_unsync  => cfg
+      cfg_unsync  => cfg,
+      led_o => led_o
       );
 
   FbRdEn  <= VtcVde;
@@ -368,7 +371,7 @@ begin
       rxd     => rxd);                  -- [in]
 
 
---  IBUFG_inst : IBUFG generic map (IOSTANDARD => "DEFAULT")port map (O => fx2Clk_buffered, I => fx2Clk_in);
+  IBUFG_inst : IBUFG generic map (IOSTANDARD => "DEFAULT")port map (O => fx2Clk_in, I => fx2Clk_int);
 --  fx2Clk_in <= fx2Clk_in;
 -------------------------------------------------------------------------------
 -- FPGA Link
@@ -398,18 +401,18 @@ begin
             cfg(adr).p(0) <= h2fData;
           when "1110001" =>
             cfg(adr).p(1) <= h2fData;
-          when "1110010" =>
-            cfg(adr).p(2) <= h2fData;
-          when "1110011" =>
-            cfg(adr).p(3) <= h2fData;
-          when "1110100" =>
-            cfg(adr).p(4) <= h2fData;
-          when "1110101" =>
-            cfg(adr).p(5) <= h2fData;
-          when "1110110" =>
-            cfg(adr).p(6) <= h2fData;
-          when "1110111" =>
-            cfg(adr).p(7) <= h2fData;
+          --when "1110010" =>
+          --  cfg(adr).p(2) <= h2fData;
+          --when "1110011" =>
+          --  cfg(adr).p(3) <= h2fData;
+          --when "1110100" =>
+          --  cfg(adr).p(4) <= h2fData;
+          --when "1110101" =>
+          --  cfg(adr).p(5) <= h2fData;
+          --when "1110110" =>
+          --  cfg(adr).p(6) <= h2fData;
+          --when "1110111" =>
+          --  cfg(adr).p(7) <= h2fData;
           when others => null;
         end case;
       end if;
@@ -424,13 +427,13 @@ begin
     std_logic_vector(to_unsigned(adr,8))      when "1100000",
     "0000000" & cfg(adr).enable when "1100001",
     cfg(adr).p(0)               when "1110000",
-    cfg(adr).p(2)               when "1110001",
-    cfg(adr).p(1)               when "1110010",
-    cfg(adr).p(3)               when "1110011",
-    cfg(adr).p(4)               when "1110100",
-    cfg(adr).p(5)               when "1110101",
-    cfg(adr).p(6)               when "1110110",
-    cfg(adr).p(7)               when "1110111",
+    cfg(adr).p(1)               when "1110001",
+    --cfg(adr).p(2)               when "1110010",
+    --cfg(adr).p(3)               when "1110011",
+    --cfg(adr).p(4)               when "1110100",
+    --cfg(adr).p(5)               when "1110101",
+    --cfg(adr).p(6)               when "1110110",
+    --cfg(adr).p(7)               when "1110111",
     X"FF"                       when others;
 
   comm : if FPGALINK = 1 generate
@@ -476,6 +479,6 @@ begin
   end generate comm_else;
 
 --  led_o <= h2fValid &  f2hReady & "000000";
-  led_o <= (others => '0');
+--  led_o <= (others => '0');
 end Behavioral;
 
