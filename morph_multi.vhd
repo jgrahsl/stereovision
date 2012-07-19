@@ -42,11 +42,12 @@ architecture myrtl of morph_multi is
   
 begin  -- myrtl
 
-  vout <= vin when NUM = 0 else
-          morph_vout when NUM = 1 else
-          morph2_vout when NUM = 2 else
-          morph3_vout when NUM = 3 else
-          morph4_vout;
+  vout <= vin when cfg.num = to_unsigned(0,8) else
+          morph_vout when cfg.num = to_unsigned(1,8) else
+          morph2_vout when cfg.num = to_unsigned(2,8) else
+          morph3_vout when cfg.num = to_unsigned(3,8) else
+          morph4_vout when cfg.num = to_unsigned(4,8) else
+          (0,0,(others => '0'));
           
   vout_data <= vin_data when NUM = 0 else
           morph_data when NUM = 1 else

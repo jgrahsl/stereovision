@@ -13,7 +13,7 @@ entity motion is
     vin_data  : in  std_logic_vector(7 downto 0);
     vout      : out stream_t;
     vout_data : out std_logic_vector(7 downto 0);
-    cfg: in motion_cfg_t
+    cfg       : in  motion_cfg_t
     );
 end motion;
 
@@ -36,7 +36,7 @@ begin  -- impl
   vout_data <= r.data;
 
   process (r, vin, vin_data)
-    variable diff  : unsigned(7 downto 0);
+    variable diff  : unsigned(15 downto 0);
     variable m     : unsigned(7 downto 0);
     variable v     : unsigned(15 downto 0);
     variable i     : unsigned(7 downto 0);
@@ -70,19 +70,30 @@ begin  -- impl
     end if;
 
     if i < m then
-      diff := m - i;
+      diff(7 downto 0) := m - i;
     elsif i > m then
-      diff := i - m;
+      diff(7 downto 0) := i - m;
     end if;
 
-    if v < (diff&"000") then
---      if v < vmax then
-        v := v + 1;
---      end if;
-    elsif v > (diff&"000") then
---      if v > vmin then
-        v := v - 1;
---      end if;
+    case unsigned(cfg.n) is
+      when to_unsigned(0,8) =>
+        diff := diff;
+      when to_unsigned(1,8) =>
+        diff := diff(14 downto 0) & "0";
+      when to_unsigned(2,8) =>
+        diff := diff(13 downto 0) & "00";
+      when to_unsigned(3,8) =>
+        diff := diff(12 downto 0) & "000";
+      when to_unsigned(4,8) =>
+        diff := diff(11 downto 0) & "0000";
+      when others =>
+        diff := diff;
+    end case;
+
+    if v < (diff) then
+      v := v + 1;
+    elsif v > (diff) then
+      v := v - 1;
     end if;
 
     if v < vmin then
@@ -91,8 +102,8 @@ begin  -- impl
 
     if v > vmax then
       v := vmax;
-    end if;   
-    
+    end if;
+
     if diff < v then
       d := "0";
     else

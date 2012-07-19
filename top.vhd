@@ -22,6 +22,9 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.all;
 use ieee.numeric_std.all;
+use IEEE.std_logic_unsigned.all;
+
+
 library digilent;
 use digilent.Video.all;
 -- Uncomment the following library declaration if using
@@ -163,18 +166,16 @@ architecture Behavioral of top is
 ------------------------------------------------------------------------------------------------
 -- Registers implementing the channels
 -------------------------------------------------------------------------------
-  signal reg0, reg0_next    : std_logic_vector(7 downto 0) := x"00";
-  signal reg1, reg1_next    : std_logic_vector(7 downto 0) := x"00";
-  signal reg2, reg2_next    : std_logic_vector(7 downto 0) := x"00";
-  signal reg3, reg3_next    : std_logic_vector(7 downto 0) := x"00";
+  signal reg0, reg0_next : std_logic_vector(7 downto 0) := x"00";
+  signal reg1, reg1_next : std_logic_vector(7 downto 0) := x"00";
+  signal reg2, reg2_next : std_logic_vector(7 downto 0) := x"00";
+  signal reg3, reg3_next : std_logic_vector(7 downto 0) := x"00";
 -------------------------------------------------------------------------------
 -- Debug
 -------------------------------------------------------------------------------
-  signal fbctl_debug_unsync : fbctl_debug_t;
-  signal fbctl_debug        : fbctl_debug_t;
 
-  signal pipe_cfg : pipe_cfg_t;
-  
+  signal cfg : cfg_set_t;
+  signal adr : integer range 0 to 63;
 begin
 
 --  led_o <= fbctl_debug.vin.valid & fbctl_debug.vin.init & fbctl_debug.vout.valid & fbctl_debug.vout.init & "000" & int_FVB;
@@ -275,8 +276,7 @@ begin
       mcb3_dram_ck     => mcb3_dram_ck,
       mcb3_dram_ck_n   => mcb3_dram_ck_n,
 
-      fbctl_debug => fbctl_debug_unsync,
-      pipe_cfg_unsync => pipe_cfg
+      cfg_unsync  => cfg
       );
 
   FbRdEn  <= VtcVde;
@@ -373,18 +373,13 @@ begin
 -------------------------------------------------------------------------------
 -- FPGA Link
 -------------------------------------------------------------------------------
-  my_debug_sync : entity work.debug_sync
-    port map (
-      clk  => fx2clk_in,                -- [in]
-      din  => fbctl_debug_unsync,       -- [in]
-      dout => fbctl_debug);             -- [out]
 
   -- Infer registers
   process(fx2Clk_in)
   begin
     if (rising_edge(fx2Clk_in)) then
       if f2hReady = '1' then
-        reg1 <= std_logic_vector(unsigned(reg1) + 1);        
+        reg1 <= std_logic_vector(unsigned(reg1) + 1);
       end if;
 
       if h2fvalid = '1' then
@@ -395,15 +390,26 @@ begin
             reg2 <= h2fData;
           when "0000011" =>
             reg3 <= h2fData;
+          when "1100000" =>
+            adr <= to_integer(unsigned(h2fData));
+          when "1100001" =>
+            cfg(adr).enable <= h2fData(0);
           when "1110000" =>
-            pipe_cfg.motion.vmin(15 downto 8) <= h2fData;
+            cfg(adr).p(0) <= h2fData;
           when "1110001" =>
-            pipe_cfg.motion.vmin(7 downto 0) <= h2fData;
+            cfg(adr).p(1) <= h2fData;
           when "1110010" =>
-            pipe_cfg.motion.vmax(15 downto 8) <= h2fData;
+            cfg(adr).p(2) <= h2fData;
           when "1110011" =>
-            pipe_cfg.motion.vmax(7 downto 0) <= h2fData;
-            
+            cfg(adr).p(3) <= h2fData;
+          when "1110100" =>
+            cfg(adr).p(4) <= h2fData;
+          when "1110101" =>
+            cfg(adr).p(5) <= h2fData;
+          when "1110110" =>
+            cfg(adr).p(6) <= h2fData;
+          when "1110111" =>
+            cfg(adr).p(7) <= h2fData;
           when others => null;
         end case;
       end if;
@@ -415,19 +421,17 @@ begin
     X"AA" when "0000001",
     reg1  when "0001111",
 
-    "0000000" & fbctl_debug.vin.valid         when "0010000",
-    fbctl_debug.vin_data_8                    when "0010001",
-    fbctl_debug.vin_data_888(23 downto 16)    when "0010010",
-    fbctl_debug.vin_data_888(15 downto 8)     when "0010011",
-    fbctl_debug.vin_data_888(7 downto 0)      when "0010100",
-    "0000000" & fbctl_debug.vout.valid        when "0100000",
-    "0000000" & fbctl_debug.vout_data_1       when "0100001",
-    "0000000" & fbctl_debug.skin_vout.valid   when "0110000",
-    "0000000" & fbctl_debug.skin_vout_data_1  when "0110001",
-    "0000000" & fbctl_debug.motion_vout.valid when "1000000",
-    fbctl_debug.motion_vout_data_8            when "1000001",
-
-    X"FF" when others;
+    std_logic_vector(to_unsigned(adr,8))      when "1100000",
+    "0000000" & cfg(adr).enable when "1100001",
+    cfg(adr).p(0)               when "1110000",
+    cfg(adr).p(2)               when "1110001",
+    cfg(adr).p(1)               when "1110010",
+    cfg(adr).p(3)               when "1110011",
+    cfg(adr).p(4)               when "1110100",
+    cfg(adr).p(5)               when "1110101",
+    cfg(adr).p(6)               when "1110110",
+    cfg(adr).p(7)               when "1110111",
+    X"FF"                       when others;
 
   comm : if FPGALINK = 1 generate
     h2fReady <= '1';
@@ -471,7 +475,7 @@ begin
     fx2Write_out  <= '0';
   end generate comm_else;
 
-  led_o <= h2fValid &  f2hReady & "000000";
-  
+--  led_o <= h2fValid &  f2hReady & "000000";
+  led_o <= (others => '0');
 end Behavioral;
 
