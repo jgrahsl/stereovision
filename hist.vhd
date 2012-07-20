@@ -5,21 +5,36 @@ use ieee.numeric_std.all;
 library work;
 use work.cam_pkg.all;
 
-entity null_filter is
+entity hist is
   generic (
-    ID : integer range 0 to 63 := 0);
+    ID : integer range 0 to 63 := 0;
+    WIDTH    : natural range 1 to 2048 := 2048;
+    HEIGHT   : natural range 1 to 2048 := 2048
+    );
   port (
     pipe_in  : in  pipe_t;
     pipe_out : out pipe_t);
-end null_filter;
+end hist;
 
-architecture impl of null_filter is
+architecture impl of hist is
 
   signal clk        : std_logic;
   signal rst        : std_logic;
   signal stage      : stage_t;
   signal stage_next : stage_t;
 
+  type reg_t is record
+    cols : natural range 0 to WIDTH;
+    rows : natural range 0 to HEIGHT;
+  end record;
+  signal r   : reg_t;
+  signal rin : reg_t;
+  procedure init (variable v : inout reg_t) is
+  begin
+    v.cols := 0;
+    v.rows := 0;
+  end init;
+  
 begin
   
   clk <= pipe_in.ctrl.clk;
@@ -30,8 +45,12 @@ begin
   pipe_out.stage <= stage;
 
   process (pipe_in)
+    variable v : reg_t;
   begin
     stage_next <= pipe_in.stage;
+    v      := r;
+
+    rin         <= v;    
   end process;
 
   proc_clk : process(pipe_in)

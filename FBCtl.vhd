@@ -1151,7 +1151,7 @@ begin
 -------------------------------------------------------------------------------
   
   pipe(0)  <= pipe_in;
-  pipe_out <= pipe(3);
+  pipe_out <= pipe(4);
   
 -------------------------------------------------------------------------------
 -- 
@@ -1187,16 +1187,23 @@ begin
     port map (
       pipe_in  => pipe(1),              -- [in]
       pipe_out => pipe(2));            -- [out]
+
+  my_motion: entity work.motion
+    generic map (
+      ID => 2)
+    port map (
+      pipe_in  => pipe(2),              -- [in]
+      pipe_out => pipe(3));            -- [out]
   
   my_morph : entity work.morph
     generic map (
-      ID     => 2,
+      ID     => 3,
       KERNEL => 5,
       WIDTH  => 640,
       HEIGHT => 480)
     port map (
-      pipe_in  => pipe(2),              -- [in]
-      pipe_out => pipe(3));             -- [out]
+      pipe_in  => pipe(3),              -- [in]
+      pipe_out => pipe(4));             -- [out]
 
 end Behavioral;
 

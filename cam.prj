@@ -32,7 +32,7 @@ vhdl work "morph.vhd"
 
 vhdl work "null2.vhd"
 
-#vhdl work "motion.vhd"
+vhdl work "motion2.vhd"
 
 vhdl work "comm_fpga_fx2.vhdl"
 
