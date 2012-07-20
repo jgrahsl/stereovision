@@ -43,14 +43,18 @@ ui.setupUi(MainWindow)
 def add_item(s):
     t = QtGui.QListWidgetItem(s)
     t.setFlags(t.flags() | QtCore.Qt.ItemIsUserCheckable)
-    t.setCheckState(QtCore.Qt.Unchecked)
+    t.setCheckState(QtCore.Qt.Checked)
     ui.enable.addItem(t)
+    r = ui.enable.row(t)
+    set_enable(r,1)
+    return r
 
 def add_morph():
     add_item("Morph: 1d")
     add_item("Morph: 2d")
-    add_item("Morph: kernel")
+    t = add_item("Morph: kernel")
 
+    set_reg(t,0x70,1)
 
 add_item("Skin")
 add_item("Hist")
@@ -73,9 +77,6 @@ def clicked(item):
 
     set_enable(ui.enable.row(item),en)
 
-QtCore.QObject.connect(ui.pushButton_exit, QtCore.SIGNAL("clicked()"), do_exit)
-ui.enable.itemClicked.connect(clicked)
-
 def th1_c(v):
     set_reg(5,0x70,v)
 def th2_c(v):
@@ -89,9 +90,14 @@ ui.morph_th.valueChanged.connect(th1_c)
 ui.morph_th_2.valueChanged.connect(th2_c)
 ui.morph_th_3.valueChanged.connect(th3_c)
 ui.morph_th_4.valueChanged.connect(th4_c)
+QtCore.QObject.connect(ui.pushButton_exit, QtCore.SIGNAL("clicked()"), do_exit)
+ui.enable.itemClicked.connect(clicked)
+ui.enable.itemChanged.connect(clicked)
 
-for i in range(0,16):
-    set_enable(i,0)
+th1_c(1)
+th2_c(1)
+th3_c(1)
+th4_c(1)
 
 MainWindow.show()
 r = app.exec_()
