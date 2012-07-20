@@ -11,6 +11,7 @@ def send_byte(chan,val):
     ba[1] = val
     ba[2] = val
     ba[3] = val
+    print "wrChan:" +str(chan) + " " + str(val)
     flWriteChannel(handle, 1000, chan,ba)
 
 def set_pipe(n):
@@ -21,18 +22,18 @@ def set_enable(adr,en):
     send_byte(0x61,en)
 
 def set_reg(adr,reg,en):
-    print "Set pipe " + str(adr) + " reg " + str(reg) + " to " + str(en)
+#    print "Set pipe " + str(adr) + " reg " + str(reg) + " to " + str(en)
     set_pipe(adr)
     send_byte(reg,en)
 
 
 vp = "1443:0007"
-flLoadStandardFirmware(vp, vp, "D0234")                # 1443:0007 for Nexys3 & Atlys
+handle = None
+
+#flLoadStandardFirmware(vp, vp, "D0234")                # 1443:0007 for Nexys3 & Atlys    
 flAwaitDevice(vp, 600)
 handle = flOpen(vp)                                             # Open the connection
-#flPortAccess(handle, 0x0080, 0x0080)                                     # Skip this for Nexys3 & Atlys
-flPlayXSVF(handle, "/home/julian/cam/top.xsvf")  # Or other SVF, XSVF or CSVF
-
+#flPlayXSVF(handle, "/home/julian/cam/top.xsvf")  # Or other SVF, XSVF or CSVF
 
 app = QtGui.QApplication(sys.argv)
 MainWindow = QtGui.QMainWindow(None)
@@ -93,6 +94,37 @@ ui.morph_th_4.valueChanged.connect(th4_c)
 QtCore.QObject.connect(ui.pushButton_exit, QtCore.SIGNAL("clicked()"), do_exit)
 ui.enable.itemClicked.connect(clicked)
 ui.enable.itemChanged.connect(clicked)
+
+
+def radio(c):
+    if ui.radioButton.isChecked():
+        set_reg(2,0x075,0)
+    if ui.radioButton_2.isChecked():
+        set_reg(2,0x075,4)
+    if ui.radioButton_3.isChecked():
+        set_reg(2,0x075,2)
+    if ui.radioButton_4.isChecked():
+        set_reg(2,0x075,1)
+    if ui.radioButton_5.isChecked():
+        set_reg(2,0x075,3)
+
+ui.radioButton.toggled.connect(radio)
+ui.radioButton_2.toggled.connect(radio)
+ui.radioButton_3.toggled.connect(radio)
+ui.radioButton_4.toggled.connect(radio)
+ui.radioButton_5.toggled.connect(radio)
+
+
+def motion_c(v):
+    set_reg(2,0x70,ui.motion_p01.value()/256)
+    set_reg(2,0x71,ui.motion_p01.value()%256)
+    set_reg(2,0x72,ui.motion_p23.value()/256)
+    set_reg(2,0x73,ui.motion_p23.value()%256)
+    set_reg(2,0x74,ui.motion_p4.value())
+
+ui.motion_p01.valueChanged.connect(motion_c)
+ui.motion_p23.valueChanged.connect(motion_c)
+ui.motion_p4.valueChanged.connect(motion_c)
 
 th1_c(1)
 th2_c(1)

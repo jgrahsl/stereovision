@@ -97,8 +97,6 @@ begin
     if v > vmax then
       v := vmax;
     end if;
-    i := v(7 downto 0);
-    v := to_unsigned(200, 15);
 
     if diff < v then
       d := "0";
