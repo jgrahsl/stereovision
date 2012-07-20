@@ -41,3 +41,4 @@ _ngo*
 *.md5sum
 *.tiff
 *.out
+.\#*

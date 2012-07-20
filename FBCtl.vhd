@@ -1198,7 +1198,7 @@ begin
       pipe_in  => pipe(2),              -- [in]
       pipe_out => pipe(3));            -- [out]
   
-  my_morph : entity work.morph
+  my_morph : entity work.morph_set
     generic map (
       ID     => 3,
       KERNEL => 5,

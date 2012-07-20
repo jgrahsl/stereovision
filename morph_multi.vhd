@@ -28,7 +28,7 @@ begin  -- myrtl
   pipe(0)  <= pipe_in;
   pipe_out <= pipe(4);
 
-  my_morph : morph
+  my_morph_1 : entity work.morph
     generic map (
       ID     => ID,
       KERNEL => KERNEL,
@@ -37,7 +37,7 @@ begin  -- myrtl
     port map (
       pipe_in  => pipe(0),              -- [in]
       pipe_out => pipe(1));             -- [out]
-  my_morph : morph
+  my_morph_2 : entity work.morph
     generic map (
       ID     => (ID+3),
       KERNEL => KERNEL,
@@ -46,7 +46,7 @@ begin  -- myrtl
     port map (
       pipe_in  => pipe(1),              -- [in]
       pipe_out => pipe(2));             -- [out]
-  my_morph : morph
+  my_morph_3 : entity work.morph
     generic map (
       ID     => (ID+6),
       KERNEL => KERNEL,
@@ -55,7 +55,7 @@ begin  -- myrtl
     port map (
       pipe_in  => pipe(2),              -- [in]
       pipe_out => pipe(3));             -- [out]
-  my_morph : morph
+  my_morph_4 : entity work.morph
     generic map (
       ID     => (ID+9),
       KERNEL => KERNEL,

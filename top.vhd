@@ -409,10 +409,10 @@ begin
             cfg(adr).p(4) <= h2fData;
           when "1110101" =>
             cfg(adr).p(5) <= h2fData;
-          when "1110110" =>
-            cfg(adr).p(6) <= h2fData;
-          when "1110111" =>
-            cfg(adr).p(7) <= h2fData;
+          --when "1110110" =>
+          --  cfg(adr).p(6) <= h2fData;
+          --when "1110111" =>
+          --  cfg(adr).p(7) <= h2fData;
           when others => null;
         end case;
       end if;
@@ -432,8 +432,8 @@ begin
     cfg(adr).p(3)               when "1110011",
     cfg(adr).p(4)               when "1110100",
     cfg(adr).p(5)               when "1110101",
-    cfg(adr).p(6)               when "1110110",
-    cfg(adr).p(7)               when "1110111",
+    --cfg(adr).p(6)               when "1110110",
+    --cfg(adr).p(7)               when "1110111",
     X"FF"                       when others;
 
   comm : if FPGALINK = 1 generate

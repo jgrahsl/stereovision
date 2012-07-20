@@ -5,8 +5,8 @@ package cam_pkg is
 
 -- vin_data(1)(0) 1 col delay
 -- vin_data(0)(1) 1 row delay
-  constant MAX_PIPE : integer := 8;
-  constant MAX_PARAM : integer := 8;  
+  constant MAX_PIPE : integer := 16;
+  constant MAX_PARAM : integer := 6;  
   
   subtype mono_t is std_logic_vector(0 downto 0);
   subtype rgb565_t is std_logic_vector(15 downto 0);
