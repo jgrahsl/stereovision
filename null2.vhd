@@ -32,20 +32,27 @@ begin
   process (pipe_in)
   begin
     stage_next <= pipe_in.stage;
+-------------------------------------------------------------------------------
+-- Logic
+-------------------------------------------------------------------------------    
+-------------------------------------------------------------------------------
+-- Output
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+-- Reset
+-------------------------------------------------------------------------------
+    if rst = '1' then
+      stage_next <= NULL_STAGE;
+    end if;
   end process;
 
   proc_clk : process(pipe_in)
   begin
-    if rst = '1' then
-      stage.valid <= '0';
-      stage.init  <= '0';
-    else
-      if rising_edge(clk) then
-        if (pipe_in.cfg(ID).enable = '1') then
-          stage <= stage_next;
-        else
-          stage <= pipe_in.stage;
-        end if;
+    if rising_edge(clk) then
+      if (pipe_in.cfg(ID).enable = '1') then
+        stage <= stage_next;
+      else
+        stage <= pipe_in.stage;
       end if;
     end if;
   end process;

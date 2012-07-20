@@ -29,7 +29,7 @@ vhdl work "line_buffer.vhd"
 vhdl work "morph_kernel.vhd"
 vhdl work "morph.vhd"
 #vhdl work "morph_multi.vhd"
-
+vhdl work "hist.vhd"
 vhdl work "null2.vhd"
 
 vhdl work "motion2.vhd"

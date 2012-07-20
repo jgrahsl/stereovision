@@ -9,11 +9,10 @@ use work.cam_pkg.all;
 entity morph_set is
 
   generic (
-    ID     : integer range 0 to 63   := 0;
-    KERNEL : natural range 0 to 5    := 5;
-    THRESH : natural range 0 to 25   := 25;
-    WIDTH  : natural range 0 to 2048 := 2048;
-    HEIGHT : natural range 0 to 2048 := 2048);
+    ID     : integer range 0 to (MAX_PIPE-1) := 0;
+    KERNEL : natural range 0 to 5            := 5;
+    WIDTH  : natural range 0 to 2048         := 2048;
+    HEIGHT : natural range 0 to 2048         := 2048);
   port (
     pipe_in  : in  pipe_t;
     pipe_out : out pipe_t);  
@@ -33,7 +32,6 @@ begin  -- myrtl
     generic map (
       ID     => ID,
       KERNEL => KERNEL,
-      THRESH => THRESH,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (
@@ -43,7 +41,6 @@ begin  -- myrtl
     generic map (
       ID     => (ID+3),
       KERNEL => KERNEL,
-      THRESH => THRESH,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (
@@ -53,7 +50,6 @@ begin  -- myrtl
     generic map (
       ID     => (ID+6),
       KERNEL => KERNEL,
-      THRESH => THRESH,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (
@@ -63,7 +59,6 @@ begin  -- myrtl
     generic map (
       ID     => (ID+9),
       KERNEL => KERNEL,
-      THRESH => THRESH,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (

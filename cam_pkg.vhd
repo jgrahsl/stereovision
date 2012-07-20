@@ -28,7 +28,8 @@ package cam_pkg is
     data_565 : rgb565_t;
     data_888 : rgb888_t;    
   end record;
-
+  constant NULL_STAGE : stage_t := ('0','0',(others => '0'),(others => '0'),(others => '0'),(others => '0'),(others => '0'));
+  
   type cfg_t is record
     enable : std_logic;
     p : param_t;

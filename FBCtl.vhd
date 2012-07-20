@@ -569,6 +569,7 @@ architecture Behavioral of FBCtl is
   signal pipe_in    : pipe_t;
   signal pipe_out   : pipe_t;
   signal pipe       : pipe_set_t;
+  signal hist_row : natural range 0 to 2047;
 begin
 ----------------------------------------------------------------------------------
 -- mcb instantiation
@@ -1181,9 +1182,11 @@ begin
       pipe_in  => pipe(0),
       pipe_out => pipe(1));
 
-  my_null: entity work.null_filter
+  my_hist: entity work.hist_x
     generic map (
-      ID => 1)
+      ID => 1,
+      WIDTH  => 640,
+      HEIGHT => 480)
     port map (
       pipe_in  => pipe(1),              -- [in]
       pipe_out => pipe(2));            -- [out]

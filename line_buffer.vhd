@@ -32,15 +32,6 @@ architecture impl of cyclic_bit_buffer is
     sel  : natural range 0 to (NUM_LINES-1);
   end record;
 
-  procedure init (variable v : inout reg_t) is
-  begin
-    v.sel  := 0;
-    v.cols := 0;
-    v.rows := 0;
-  end init;
-
---
-
   signal adr  : std_logic_vector(10 downto 0);
   type   q_t is array (0 to (NUM_LINES-1)) of mono_t;
   signal q    : q_t;
@@ -49,16 +40,22 @@ architecture impl of cyclic_bit_buffer is
   signal r_r : reg_t;
   signal r : reg_t;
   signal r_next : reg_t;
+
+  procedure init (variable v : inout reg_t) is
+  begin
+    v.sel  := 0;
+    v.cols := 0;
+    v.rows := 0;
+  end init;
   
 begin
+
   clk <= pipe_in.ctrl.clk;
   rst <= pipe_in.ctrl.rst;
 
   pipe_out.ctrl  <= pipe_in.ctrl;
   pipe_out.cfg   <= pipe_in.cfg;
   pipe_out.stage <= stage;
-
---
 
   adr <= std_logic_vector(to_unsigned(r.cols, 11));
   rams : for i in 0 to (NUM_LINES-1) generate
@@ -182,12 +179,15 @@ begin
     end if;
 
 -------------------------------------------------------------------------------
--- VIN.INIT
+-- Reset
 -------------------------------------------------------------------------------
     if rst = '1' then
       init(v);
+      stage_next <= NULL_STAGE;
     end if;
-
+-------------------------------------------------------------------------------
+-- Next
+-------------------------------------------------------------------------------
     r_next <= v;
   end process;
 
@@ -199,7 +199,6 @@ begin
       else
         stage <= pipe_in.stage;
       end if;
-
       r_r <= r;
       r   <= r_next;
     end if;

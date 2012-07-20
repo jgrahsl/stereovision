@@ -37,10 +37,11 @@ begin
     variable sum : natural range 0 to (KERNEL*KERNEL);
   begin  -- process
     stage_next <= pipe_in.stage;
-
-    win := mono_2d_in;
-    sum := 0;
-
+-------------------------------------------------------------------------------
+-- Logic
+-------------------------------------------------------------------------------
+    win        := mono_2d_in;
+    sum        := 0;
     ---------------------------------------------------------------------------
     -- Square
     ---------------------------------------------------------------------------
@@ -49,36 +50,37 @@ begin
     --    sum := sum + to_integer(unsigned(win(i)(j)));
     --  end loop;
     --end loop;
-
     -------------------------------------------------------------------------------
     -- Octagon
     -------------------------------------------------------------------------------
-    sum := to_integer(unsigned(win(0)(1))) +
-           to_integer(unsigned(win(0)(2))) +
-           to_integer(unsigned(win(0)(3))) +
+    sum        := to_integer(unsigned(win(0)(1))) +
+                  to_integer(unsigned(win(0)(2))) +
+                  to_integer(unsigned(win(0)(3))) +
 
-           to_integer(unsigned(win(1)(0))) +
-           to_integer(unsigned(win(1)(1))) +
-           to_integer(unsigned(win(1)(2))) +
-           to_integer(unsigned(win(1)(3))) +
-           to_integer(unsigned(win(1)(4))) +
+                  to_integer(unsigned(win(1)(0))) +
+                  to_integer(unsigned(win(1)(1))) +
+                  to_integer(unsigned(win(1)(2))) +
+                  to_integer(unsigned(win(1)(3))) +
+                  to_integer(unsigned(win(1)(4))) +
 
-           to_integer(unsigned(win(2)(0))) +
-           to_integer(unsigned(win(2)(1))) +
-           to_integer(unsigned(win(2)(2))) +
-           to_integer(unsigned(win(2)(3))) +
-           to_integer(unsigned(win(2)(4))) +
+                  to_integer(unsigned(win(2)(0))) +
+                  to_integer(unsigned(win(2)(1))) +
+                  to_integer(unsigned(win(2)(2))) +
+                  to_integer(unsigned(win(2)(3))) +
+                  to_integer(unsigned(win(2)(4))) +
 
-           to_integer(unsigned(win(3)(0))) +
-           to_integer(unsigned(win(3)(1))) +
-           to_integer(unsigned(win(3)(2))) +
-           to_integer(unsigned(win(3)(3))) +
-           to_integer(unsigned(win(3)(4))) +
+                  to_integer(unsigned(win(3)(0))) +
+                  to_integer(unsigned(win(3)(1))) +
+                  to_integer(unsigned(win(3)(2))) +
+                  to_integer(unsigned(win(3)(3))) +
+                  to_integer(unsigned(win(3)(4))) +
 
-           to_integer(unsigned(win(4)(1))) +
-           to_integer(unsigned(win(4)(2))) +
-           to_integer(unsigned(win(4)(3)));
-    
+                  to_integer(unsigned(win(4)(1))) +
+                  to_integer(unsigned(win(4)(2))) +
+                  to_integer(unsigned(win(4)(3)));
+-------------------------------------------------------------------------------
+-- Output
+-------------------------------------------------------------------------------    
     if (sum >= (to_integer(unsigned(pipe_in.cfg(ID).p(0))))) then
       stage_next.data_1   <= (others => '1');
       stage_next.data_8   <= (others => '1');
@@ -90,21 +92,21 @@ begin
       stage_next.data_565 <= (others => '0');
       stage_next.data_888 <= (others => '0');
     end if;
-
+-------------------------------------------------------------------------------
+-- Reset
+-------------------------------------------------------------------------------
+    if rst = '1' then
+      stage_next <= NULL_STAGE;
+    end if;
   end process;
 
   proc_clk : process(pipe_in)
   begin
-    if rst = '1' then
-      stage.valid <= '0';
-      stage.init  <= '0';
-    else
-      if rising_edge(clk) then
-        if (pipe_in.cfg(ID).enable = '1') then
-          stage <= stage_next;
-        else
-          stage <= pipe_in.stage;
-        end if;
+    if rising_edge(clk) then
+      if (pipe_in.cfg(ID).enable = '1') then
+        stage <= stage_next;
+      else
+        stage <= pipe_in.stage;
       end if;
     end if;
   end process;

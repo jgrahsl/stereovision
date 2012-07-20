@@ -11,7 +11,7 @@ entity bit_window is
     NUM_COLS : natural range 0 to 5    := 5;
     WIDTH    : natural range 1 to 2048 := 2048;
     HEIGHT   : natural range 1 to 2048 := 2048
-  );
+    );
   port (
     pipe_in     : in  pipe_t;
     pipe_out    : out pipe_t;
@@ -33,15 +33,13 @@ architecture impl of bit_window is
   end record;
   signal r   : reg_t;
   signal rin : reg_t;
-
+  signal q      : mono_2d_t;
+  signal next_q : mono_2d_t;
   procedure init (variable v : inout reg_t) is
   begin
     v.cols := 0;
     v.rows := 0;
   end init;
-
-  signal q      : mono_2d_t;
-  signal next_q : mono_2d_t;
   
 begin
   clk <= pipe_in.ctrl.clk;
@@ -76,12 +74,9 @@ begin
       next_q(0) <= mono_1d_in;
     end if;
 -------------------------------------------------------------------------------
--- VIN.INIT
+-- Output
 -------------------------------------------------------------------------------
-    if rst = '1' then
-      init(v);
-      next_q <= (others => (others => (others => '0')));
-    end if;
+    mono_2d_out <= q;
 
     if pipe_in.stage.data_1 = "1" then
       stage_next.data_1   <= (others => '1');
@@ -94,29 +89,30 @@ begin
       stage_next.data_565 <= (others => '0');
       stage_next.data_888 <= (others => '0');
     end if;
-    
-    rin         <= v;
-    mono_2d_out <= q;
+-------------------------------------------------------------------------------
+-- Reset
+-------------------------------------------------------------------------------
+    if rst = '1' then
+      init(v);
+      next_q     <= (others => (others => (others => '0')));
+      stage_next <= NULL_STAGE;
+    end if;
+-------------------------------------------------------------------------------
+-- Next
+-------------------------------------------------------------------------------    
+    rin <= v;
   end process;
-
 
   proc_clk : process(pipe_in)
   begin
-    if rst = '1' then
-      stage.valid <= '0';
-      stage.init  <= '0';
-    else
-      if rising_edge(clk) then
-        if (pipe_in.cfg(ID).enable = '1') then
-          stage <= stage_next;
-        else
-          stage <= pipe_in.stage;
-        end if;
-
-        r <= rin;
-        q <= next_q;
-
+    if rising_edge(clk) then
+      if (pipe_in.cfg(ID).enable = '1') then
+        stage <= stage_next;
+      else
+        stage <= pipe_in.stage;
       end if;
+      r <= rin;
+      q <= next_q;
     end if;
   end process;
 

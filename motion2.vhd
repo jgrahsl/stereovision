@@ -41,7 +41,9 @@ begin
     variable brightness : unsigned(8 downto 0);
   begin
     stage_next <= pipe_in.stage;
-
+-------------------------------------------------------------------------------
+-- Logic
+-------------------------------------------------------------------------------
     diff       := (others => '0');
     m          := unsigned(pipe_in.stage.aux((0+m'high) downto 0));
     v          := unsigned(pipe_in.stage.aux((16+v'high) downto 16));
@@ -53,15 +55,12 @@ begin
     vmin := unsigned(pipe_in.cfg(ID).p(1)(6 downto 0)) & unsigned(pipe_in.cfg(ID).p(0));
     vmax := unsigned(pipe_in.cfg(ID).p(3)(6 downto 0)) & unsigned(pipe_in.cfg(ID).p(2));
 
--------------------------------------------------------------------------------
--- 
--------------------------------------------------------------------------------
 --    if d = 0 then
-      if i < m then
-        m := m - 1;
-      elsif i > m then
-        m := m + 1;
-      end if;
+    if i < m then
+      m := m - 1;
+    elsif i > m then
+      m := m + 1;
+    end if;
 --    end if;
 
     if i < m then
@@ -99,7 +98,7 @@ begin
       v := vmax;
     end if;
     i := v(7 downto 0);
-    v := to_unsigned(200,15);
+    v := to_unsigned(200, 15);
 
     if diff < v then
       d := "0";
@@ -107,7 +106,7 @@ begin
       d := "1";
     end if;
 -------------------------------------------------------------------------------
--- 
+-- Output
 -------------------------------------------------------------------------------   
     stage_next.aux((0+m'high) downto 0)   <= std_logic_vector(m);
     stage_next.aux((15+v'high) downto 15) <= std_logic_vector(v);
@@ -127,30 +126,30 @@ begin
 
     case unsigned(pipe_in.cfg(ID).p(5)) is
       when "00000001" =>
-        stage_next.data_565 <= std_logic_vector(i(7 downto 3)) & std_logic_vector(i(7 downto 2)) & std_logic_vector(i(7 downto 3));        
+        stage_next.data_565 <= std_logic_vector(i(7 downto 3)) & std_logic_vector(i(7 downto 2)) & std_logic_vector(i(7 downto 3));
       when "00000010" =>                --to_unsigned(1, 8) =>
         stage_next.data_565 <= std_logic_vector(m(7 downto 3)) & std_logic_vector(m(7 downto 2)) & std_logic_vector(m(7 downto 3));
       when "00000011" =>                --to_unsigned(2, 8) =>
         stage_next.data_565 <= std_logic_vector(diff(7 downto 3)) & std_logic_vector(diff(7 downto 2)) & std_logic_vector(diff(7 downto 3));
       when "00000100" =>                --to_unsigned(3, 8) =>
         stage_next.data_565 <= std_logic_vector(v(7 downto 3)) & std_logic_vector(v(7 downto 2)) & std_logic_vector(v(7 downto 3));
-      when others => null;        
+      when others => null;
     end case;
-    
+-------------------------------------------------------------------------------
+-- Reset
+-------------------------------------------------------------------------------
+    if rst = '1' then
+      stage_next <= NULL_STAGE;
+    end if;
   end process;
 
   proc_clk : process(pipe_in)
   begin
-    if rst = '1' then
-      stage.valid <= '0';
-      stage.init  <= '0';
-    else
-      if rising_edge(clk) then
-        if (pipe_in.cfg(ID).enable = '1') then
-          stage <= stage_next;
-        else
-          stage <= pipe_in.stage;
-        end if;
+    if rising_edge(clk) then
+      if (pipe_in.cfg(ID).enable = '1') then
+        stage <= stage_next;
+      else
+        stage <= pipe_in.stage;
       end if;
     end if;
   end process;

@@ -54,9 +54,10 @@ begin
     constant COEFF_CR_LOW  : signed(31 downto 0) := to_signed(838861, 32);
     constant COEFF_CR_HIGH : signed(31 downto 0) := to_signed(3355443, 32);
   begin
-
     stage_next <= pipe_in.stage;
-
+-------------------------------------------------------------------------------
+-- Logic
+-------------------------------------------------------------------------------
     colr := "00000000" & pipe_in.stage.data_888(23 downto 16);
     colg := "00000000" & pipe_in.stage.data_888(15 downto 8);
     colb := "00000000" & pipe_in.stage.data_888(7 downto 0);
@@ -64,7 +65,9 @@ begin
     Y  := resize(COEFF_Y_R * signed(colr) + COEFF_Y_G * signed(colg) + COEFF_Y_B * signed(colb), 32);
     Cb := resize(COEFF_CB_R * signed(colr) - COEFF_CB_G * signed(colg) + COEFF_CB_B * signed(colb), 32);
     Cr := resize(COEFF_CR_R * signed(colr) - COEFF_CR_G * signed(colg) - COEFF_CR_B * signed(colb), 32);
-
+-------------------------------------------------------------------------------
+-- Output
+-------------------------------------------------------------------------------    
     if (Y >= COEFF_Y_LOW) and (Y <= COEFF_Y_HIGH)
       and (Cb >= COEFF_CB_LOW) and (Cb <= COEFF_CB_HIGH)
       and (Cr >= COEFF_CR_LOW) and (Cr <= COEFF_CR_HIGH) then
@@ -79,20 +82,21 @@ begin
       stage_next.data_565 <= (others => '0');
       stage_next.data_888 <= (others => '0');
     end if;
+-------------------------------------------------------------------------------
+-- Reset
+-------------------------------------------------------------------------------    
+    if rst = '1' then
+      stage_next <= NULL_STAGE;
+    end if;
   end process;
 
   proc_clk : process(pipe_in)
   begin
-    if rst = '1' then
-      stage.valid <= '0';
-      stage.init  <= '0';
-    else
-      if rising_edge(clk) then
-        if (pipe_in.cfg(ID).enable = '1') then
-          stage <= stage_next;
-        else
-          stage <= pipe_in.stage;
-        end if;
+    if rising_edge(clk) then
+      if (pipe_in.cfg(ID).enable = '1') then
+        stage <= stage_next;
+      else
+        stage <= pipe_in.stage;
       end if;
     end if;
   end process;
