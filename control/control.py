@@ -30,10 +30,31 @@ def set_reg(adr,reg,en):
 vp = "1443:0007"
 handle = None
 
-#flLoadStandardFirmware(vp, vp, "D0234")                # 1443:0007 for Nexys3 & Atlys    
-flAwaitDevice(vp, 600)
-handle = flOpen(vp)                                             # Open the connection
-#flPlayXSVF(handle, "/home/julian/cam/top.xsvf")  # Or other SVF, XSVF or CSVF
+
+handle = FLHandle()
+try:
+    print "Attempting to open connection to FPGALink device %s..." % vp
+    try:
+        handle = flOpen(vp)
+    except FLException, ex:
+        
+        jtagPort = "D0234"
+        print "Loading firmware into %s..." %  vp
+        flLoadStandardFirmware( vp, vp, jtagPort);
+
+    print "Awaiting renumeration..."
+    if ( not flAwaitDevice(vp, 600) ):
+        raise FLException("FPGALink device did not renumerate properly as %s" % vp)
+
+    print "Attempting to open connection to FPGALink device %s again..." % vp
+    handle = flOpen(vp)
+
+    set_reg(0,0,0)
+
+except FLException, ex:
+    xsvfFile = "/home/julian/cam/top.xsvf"
+    print "Playing \"%s\" into the JTAG chain on FPGALink device %s..." % (xsvfFile, vp)
+    flPlayXSVF(handle, xsvfFile)  # Or other SVF, XSVF or CSVF
 
 app = QtGui.QApplication(sys.argv)
 MainWindow = QtGui.QMainWindow(None)
