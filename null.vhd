@@ -1,58 +1,59 @@
 library ieee;
 use ieee.std_logic_1164.all;
-use IEEE.NUMERIC_STD.all;
+use ieee.numeric_std.all;
 
 library work;
 use work.cam_pkg.all;
 
-entity nullfilter is
-
-
+entity null_filter is
+  generic (
+    ID : integer range 0 to 63 := 0);
   port (
-    clk       : in  std_logic;
-    rst       : in  std_logic;
-    vin       : in  stream_t;
-    vin_data  : in  bit_window2d_t;
-    vout      : out stream_t;
-    vout_data : out bit_t
-    );
-end nullfilter;
+    pipe_in  : in  pipe_t;
+    pipe_out : out pipe_t);
+end null_filter;
 
-architecture impl of nullfilter is
+architecture impl of null_filter is
 
-type nullfilter_t is record
-  data  : bit_t;
-  vin   : stream_t;
-end record;
+  signal clk        : std_logic;
+  signal rst        : std_logic;
+  signal stage      : stage_t;
+  signal stage_next : stage_t;
 
-signal r : nullfilter_t;
-signal r2 : nullfilter_t;
-signal r_next : nullfilter_t;
+begin
+  
+  clk <= pipe_in.ctrl.clk;
+  rst <= pipe_in.ctrl.rst;
 
+  pipe_out.ctrl  <= pipe_in.ctrl;
+  pipe_out.cfg   <= pipe_in.cfg;
+  pipe_out.stage <= stage;
+
+  process (pipe_in)
+  begin
+    stage_next <= pipe_in.stage;
 -------------------------------------------------------------------------------
--- Implementation
--------------------------------------------------------------------------------  
-begin  -- impl
-
-  vout <= r.vin;
-  vout_data <= r.data;
-
-  process (r, vin, vin_data)
-  begin 
-	r_next.vin <= vin;
-   r_next.data <= vin_data(0)(0);
+-- Logic
+-------------------------------------------------------------------------------    
+-------------------------------------------------------------------------------
+-- Output
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+-- Reset
+-------------------------------------------------------------------------------
+    if rst = '1' then
+      stage_next <= NULL_STAGE;
+    end if;
   end process;
 
-  proc_clk : process(clk, rst)
+  proc_clk : process(pipe_in)
   begin
-    if rst = '1' then
-      r.vin.valid <= '0';
-      r.vin.init <= '0';
-    else 
-		if rising_edge(clk) then
-			r <= r_next;
-         r2 <= r;
-		end if;
+    if rising_edge(clk) then
+      if (pipe_in.cfg(ID).enable = '1') then
+        stage <= stage_next;
+      else
+        stage <= pipe_in.stage;
+      end if;
     end if;
   end process;
 
