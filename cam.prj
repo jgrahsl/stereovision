@@ -1,6 +1,5 @@
 vhdl work "ipcore_dir/dcm_fixed.vhd"
 vhdl work "ipcore_dir/dcm_recfg.vhd"
-vhdl work "ipcore_dir/my_fifofifo.vhd"
 
 vhdl work "iodrp_mcb_controller.vhd"
 vhdl work "iodrp_controller.vhd"
@@ -18,7 +17,6 @@ vhdl digilent "remote_sources/_/lib/digilent/InputSync.vhd"
 vhdl digilent "remote_sources/_/lib/digilent/VideoTimingCtl.vhd"
 vhdl digilent "remote_sources/_/lib/digilent/DVITransmitter.vhd"
 
-
 vhdl work "cam_pkg.vhd"
 
 vhdl work "skinfilter.vhd"
@@ -29,14 +27,13 @@ vhdl work "morph_kernel.vhd"
 vhdl work "morph.vhd"
 vhdl work "morph_multi.vhd"
 vhdl work "hist.vhd"
-vhdl work "null2.vhd"
-vhdl work "motion2.vhd"
+vhdl work "null.vhd"
+vhdl work "motion.vhd"
 
 vhdl work "comm_fpga_fx2.vhdl"
 
 vhdl work "cfg_sync.vhd"
 
-vhdl work "uart.vhd"
 vhdl work "SysCon.vhd"
 vhdl work "FBCtl.vhd"
 vhdl work "CamCtl.vhd"

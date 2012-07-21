@@ -278,8 +278,8 @@ begin
       mcb3_dram_ck     => mcb3_dram_ck,
       mcb3_dram_ck_n   => mcb3_dram_ck_n,
 
-      cfg_unsync  => cfg,
-      led_o => led_o
+      cfg_unsync  => cfg
+--      led_o => led_o
       );
 
   FbRdEn  <= VtcVde;
@@ -359,23 +359,15 @@ begin
 
   rd <= '0';
 
-  my_uart : entity work.uart
-    port map (
-      clk     => CamBPClk,              -- [in]
-      reset   => async_rst,             -- [in]
-      wr_data => wr_data,               -- [in]
-      rd      => rd,                    -- [in]
-      wr      => wr,                    -- [in]
-      rd_data => rd_data,               -- [out]
-      txd     => txd,                   -- [out]
-      rxd     => rxd);                  -- [in]
-
-
   IBUFG_inst : IBUFG generic map (IOSTANDARD => "DEFAULT")port map (O => fx2Clk_in, I => fx2Clk_int);
 --  fx2Clk_in <= fx2Clk_in;
 -------------------------------------------------------------------------------
 -- FPGA Link
 -------------------------------------------------------------------------------
+
+  --gen: for i in 0 to 7 generate
+  --  led_o(i) <= cfg(i).enable; 
+  --end generate gen;
 
   -- Infer registers
   process(fx2Clk_in)
@@ -395,6 +387,7 @@ begin
             reg3 <= h2fData;
           when "1100000" =>
             adr <= to_integer(unsigned(h2fData));
+--            led_o <= h2fData;
           when "1100001" =>
             cfg(adr).enable <= h2fData(0);
           when "1110000" =>

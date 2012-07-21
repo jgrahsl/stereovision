@@ -116,8 +116,8 @@ entity FBCtl is
     mcb3_dram_dqs_n  : inout std_logic;
     mcb3_dram_ck     : out   std_logic;
     mcb3_dram_ck_n   : out   std_logic;
-    cfg_unsync       : in    cfg_set_t;
-    LED_O            : out   std_logic_vector(7 downto 0)
+    cfg_unsync       : in    cfg_set_t
+--    LED_O            : out   std_logic_vector(7 downto 0)
     );
 end FBCtl;
 
@@ -1157,14 +1157,14 @@ begin
 -------------------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------------------
-  led_o <= pipe(0).stage.valid &
-           pipe(1).stage.valid &
-           pipe(2).stage.valid &
-           pipe(3).stage.valid &
-           pipe(0).cfg(0).enable &
-           pipe(0).cfg(1).enable &
-           pipe(0).cfg(2).enable &
-           pipe(0).cfg(3).enable;
+  --led_o <= pipe(0).stage.valid &
+  --         pipe(1).stage.valid &
+  --         pipe(2).stage.valid &
+  --         pipe(3).stage.valid &
+  --         pipe(0).cfg(0).enable &
+  --         pipe(0).cfg(1).enable &
+  --         pipe(0).cfg(2).enable &
+  --         pipe(0).cfg(3).enable;
   --brightness <=
   --conv_std_logic_vector(unsigned(vin_data_999(26 downto 18)) +
   --                                    unsigned(vin_data_999(17 downto 9)) +
