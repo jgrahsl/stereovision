@@ -76,9 +76,6 @@ entity top is
     CAMB_RST_O  : out   std_logic;      --Reset active LOW
     CAMB_PWDN_O : out   std_logic;      --Power-down active HIGH           
 
-
-    txd              : out   std_logic;
-    rxd              : in    std_logic;
 ----------------------------------------------------------------------------------
 -- DDR2 Interface
 ----------------------------------------------------------------------------------
@@ -278,8 +275,8 @@ begin
       mcb3_dram_ck     => mcb3_dram_ck,
       mcb3_dram_ck_n   => mcb3_dram_ck_n,
 
-      cfg_unsync  => cfg
---      led_o => led_o
+      cfg_unsync  => cfg,
+      led_o => led_o
       );
 
   FbRdEn  <= VtcVde;
@@ -368,7 +365,8 @@ begin
   --gen: for i in 0 to 7 generate
   --  led_o(i) <= cfg(i).enable; 
   --end generate gen;
-
+--  led_o <= (others => '0');
+            
   -- Infer registers
   process(fx2Clk_in)
   begin

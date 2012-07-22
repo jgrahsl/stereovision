@@ -116,8 +116,8 @@ entity FBCtl is
     mcb3_dram_dqs_n  : inout std_logic;
     mcb3_dram_ck     : out   std_logic;
     mcb3_dram_ck_n   : out   std_logic;
-    cfg_unsync       : in    cfg_set_t
---    LED_O            : out   std_logic_vector(7 downto 0)
+    cfg_unsync       : in    cfg_set_t;
+    LED_O            : out   std_logic_vector(7 downto 0)
     );
 end FBCtl;
 
@@ -570,6 +570,9 @@ architecture Behavioral of FBCtl is
   signal pipe_out   : pipe_t;
   signal pipe       : pipe_set_t;
   signal hist_row : natural range 0 to 2047;
+
+  signal p0_fifo : mcb_fifo_t;
+  signal p1_fifo : mcb_fifo_t;  
 begin
 ----------------------------------------------------------------------------------
 -- mcb instantiation
@@ -1000,19 +1003,15 @@ begin
 
   p0_cmd_clk <= clkalg;
   p0_cmd_bl  <= conv_std_logic_vector(P0_BATCH-1, 6);
-  p0_rd_clk  <= clkalg;
-  p0_wr_clk  <= clkalg;
 
   p1_cmd_clk <= clkalg;
   p1_cmd_bl  <= conv_std_logic_vector(P1_BATCH-1, 6);
-  p1_rd_clk  <= clkalg;
+
+
+  p0_wr_clk  <= clkalg;
   p1_wr_clk  <= clkalg;
 
-  avail    <= '1' when p0_rd_empty = '0' and p1_rd_empty = '0' else '0';
-  
-  p1_rd_en <= avail;
-  p0_rd_en <= avail and not feed_is_high;
-  
+ 
   p0_wr_mask <= (others => '0');
   p1_wr_mask <= (others => '0');
 
@@ -1082,19 +1081,6 @@ begin
     end case;
   end process;
 
-  feed : process (clkalg)
-  begin  -- process feed
-    if clkalg'event and clkalg = '1' then  -- rising clock edge
-      if rstalg = '1' then                 -- synchronous reset (active high)
-        feed_is_high <= '1';
-      else
-        if avail = '1' then
-          feed_is_high <= not feed_is_high;
-        end if;
-      end if;
-    end if;
-  end process feed;
-
   sink : process (clkalg)
   begin  -- process feed
     if clkalg'event and clkalg = '1' then  -- rising clock edge
@@ -1118,27 +1104,6 @@ begin
       dout => cfg);                     -- [out] 
 
 -------------------------------------------------------------------------------
--- PIPE IN
--------------------------------------------------------------------------------
- 
-  pipe_in.ctrl.clk <= clkalg;
-  pipe_in.ctrl.rst <= rstalg;
-
-  pipe_in.cfg <= cfg;
-
-  pipe_in.stage.valid <= avail;
-  pipe_in.stage.init  <= '0';
-  pipe_in.stage.aux   <= p1_rd_data;
-
-  pipe_in.stage.data_1   <= (others => '0');
-  pipe_in.stage.data_8   <= (others => '0');
-  pipe_in.stage.data_565 <= p0_rd_data(31 downto 16) when feed_is_high = '0' else
-                            p0_rd_data(15 downto 0);
-  pipe_in.stage.data_888 <= pipe_in.stage.data_565(15 downto 11) & "000" &
-                            pipe_in.stage.data_565(10 downto 5) & "00" &
-                            pipe_in.stage.data_565(4 downto 0) & "000";
-
--------------------------------------------------------------------------------
 -- PIPE OUT
 -------------------------------------------------------------------------------  
 
@@ -1150,9 +1115,8 @@ begin
 -------------------------------------------------------------------------------
 -- MAP PIPE_SET
 -------------------------------------------------------------------------------
-  
-  pipe(0)  <= pipe_in;
-  pipe_out <= pipe(4);
+
+  pipe_out <= pipe(5);
   
 -------------------------------------------------------------------------------
 -- 
@@ -1174,39 +1138,76 @@ begin
 -------------------------------------------------------------------------------
 -- PIPE
 -------------------------------------------------------------------------------
+  p0_rd_en <= p0_fifo.en;
+  p0_rd_clk <= p0_fifo.clk;
+  p0_fifo.stall <= p0_rd_empty;
+  p0_fifo.data <= p0_rd_data;
   
-  my_skinfilter : entity work.skinfilter
+  p1_rd_en <= p1_fifo.en;
+  p1_rd_clk <= p1_fifo.clk;
+  p1_fifo.stall <= p1_rd_empty;
+  p1_fifo.data <= p1_rd_data;  
+
+
+  led_o <= "1" & p0_rd_count when rd_mode(0) = '1' else
+           "1" & p1_rd_count when rd_mode(1) = '1' else
+           "1" & p0_wr_count when rd_mode(2) = '1' else
+           "1" & p1_wr_count when rd_mode(3) = '1' else
+           p0_fifo.stall & p1_fifo.stall & p0_rd_empty & p1_rd_empty & p0_wr_empty & p1_wr_empty & "00" when rd_mode(4) = '1' else
+           pipe(0).stage.valid & pipe(1).stage.valid & pipe(2).stage.valid & pipe(3).stage.valid & pipe(4).stage.valid & pipe(5).stage.valid& "00" when rd_mode(5) = '1' else  "11100000";
+
+  
+  my_pipe_head: entity work.pipe_head
     generic map (
       ID => 0)
     port map (
-      pipe_in  => pipe(0),
-      pipe_out => pipe(1));
+      clk      => clkalg,                  -- [in]
+      rst      => rstalg,                  -- [in]
+      cfg      => cfg,                  -- [in]
+      pipe_out => pipe(0));            -- [out]
 
-  my_hist: entity work.hist_x
+  my_mcb_feed: entity work.mcb_feed
     generic map (
-      ID => 1,
-      WIDTH  => 640,
-      HEIGHT => 480)
+      ID => 1)
     port map (
-      pipe_in  => pipe(1),              -- [in]
-      pipe_out => pipe(2));            -- [out]
-
-  my_motion: entity work.motion
+      pipe_in  => pipe(0),              -- [in]
+      pipe_out => pipe(1),             -- [out]
+      p0_fifo  => p0_fifo,               -- [inout]
+      p1_fifo  => p1_fifo);              -- [inout]
+  
+  my_skinfilter : entity work.skinfilter
     generic map (
       ID => 2)
     port map (
+      pipe_in  => pipe(1),
+      pipe_out => pipe(2));
+
+  my_hist: entity work.hist_x
+    generic map (
+      ID => 3,
+      WIDTH  => 640,
+      HEIGHT => 480)
+    port map (
       pipe_in  => pipe(2),              -- [in]
       pipe_out => pipe(3));            -- [out]
+
+  my_motion: entity work.motion
+    generic map (
+      ID => 4)
+    port map (
+      pipe_in  => pipe(3),              -- [in]
+      pipe_out => pipe(4));            -- [out]
   
   my_morph : entity work.morph_set
     generic map (
-      ID     => 3,
+      ID     => 5,
       KERNEL => 5,
       WIDTH  => 640,
       HEIGHT => 480)
     port map (
-      pipe_in  => pipe(3),              -- [in]
-      pipe_out => pipe(4));             -- [out]
+      pipe_in  => pipe(4),              -- [in]
+      pipe_out => pipe(5));             -- [out]
 
+  
 end Behavioral;
 

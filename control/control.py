@@ -78,6 +78,8 @@ def add_morph():
 
     set_reg(t,0x70,1)
 
+add_item("Head")
+add_item("Feed")
 add_item("Skin")
 add_item("Hist")
 add_item("Motion")

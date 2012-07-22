@@ -5,7 +5,7 @@ package cam_pkg is
 
 -- vin_data(1)(0) 1 col delay
 -- vin_data(0)(1) 1 row delay
-  constant MAX_PIPE : integer := 16;
+  constant MAX_PIPE : integer := 20;
   constant MAX_PARAM : integer := 6;  
   
   subtype mono_t is std_logic_vector(0 downto 0);
@@ -50,4 +50,11 @@ package cam_pkg is
 
   type pipe_set_t is array (0 to MAX_PIPE-1) of pipe_t;  
 
-  end cam_pkg;
+  type mcb_fifo_t is record
+    clk :  std_logic;
+    en   : std_logic;
+    stall : std_logic;
+    data : std_logic_vector(31 downto 0);
+  end record;
+  
+end cam_pkg;

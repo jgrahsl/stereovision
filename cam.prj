@@ -29,7 +29,8 @@ vhdl work "morph_multi.vhd"
 vhdl work "hist.vhd"
 vhdl work "null.vhd"
 vhdl work "motion.vhd"
-
+vhdl work "pipe_head.vhd"
+vhdl work "mcb_feed.vhd"
 vhdl work "comm_fpga_fx2.vhdl"
 
 vhdl work "cfg_sync.vhd"
