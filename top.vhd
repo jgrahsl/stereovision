@@ -168,19 +168,13 @@ architecture Behavioral of top is
   signal reg2, reg2_next : std_logic_vector(7 downto 0) := x"00";
   signal reg3, reg3_next : std_logic_vector(7 downto 0) := x"00";
 -------------------------------------------------------------------------------
--- Debug
+-- User
 -------------------------------------------------------------------------------
 
   signal cfg : cfg_set_t;
   signal adr : integer range 0 to 63;
-
   signal fx2Clk_in : std_logic;
 begin
-
---  led_o <= fbctl_debug.vin.valid & fbctl_debug.vin.init & fbctl_debug.vout.valid & fbctl_debug.vout.init & "000" & int_FVB;
-
-
-
 ----------------------------------------------------------------------------------
 -- System Control Unit
 -- This component provides a System Clock, a Synchronous Reset and other signals
@@ -245,9 +239,6 @@ begin
       DCAM    => CamBD,
       CLKCAM  => CamBPClk,
       CLK24   => CAMCLK,
-
-      debug_wr   => wr,
-      debug_data => wr_data,
 
       ddr2clk_2x       => DDR2Clk_2x,
       ddr2clk_2x_180   => DDR2Clk_2x_180,

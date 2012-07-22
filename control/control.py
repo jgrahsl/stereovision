@@ -31,30 +31,31 @@ vp = "1443:0007"
 handle = None
 
 
-handle = FLHandle()
+#handle = FLHandle()
 try:
-    print "Attempting to open connection to FPGALink device %s..." % vp
     try:
         handle = flOpen(vp)
     except FLException, ex:
-        
         jtagPort = "D0234"
         print "Loading firmware into %s..." %  vp
         flLoadStandardFirmware( vp, vp, jtagPort);
 
-    print "Awaiting renumeration..."
-    if ( not flAwaitDevice(vp, 600) ):
-        raise FLException("FPGALink device did not renumerate properly as %s" % vp)
+        print "Awaiting renumeration..."
+        if ( not flAwaitDevice(vp, 600) ):
+            raise FLException("FPGALink device did not renumerate properly as %s" % vp)
 
-    print "Attempting to open connection to FPGALink device %s again..." % vp
-    handle = flOpen(vp)
+        print "Attempting to open connection to FPGALink device %s ..." % vp
+        handle = flOpen(vp)
 
-    set_reg(0,0,0)
+        set_reg(0,0,0)
 
 except FLException, ex:
+#    print str(ex)
     xsvfFile = "/home/julian/cam/top.xsvf"
     print "Playing \"%s\" into the JTAG chain on FPGALink device %s..." % (xsvfFile, vp)
     flPlayXSVF(handle, xsvfFile)  # Or other SVF, XSVF or CSVF
+
+set_reg(0,0,0)
 
 app = QtGui.QApplication(sys.argv)
 MainWindow = QtGui.QMainWindow(None)
@@ -102,13 +103,13 @@ def clicked(item):
     set_enable(ui.enable.row(item),en)
 
 def th1_c(v):
-    set_reg(5,0x70,v)
+    set_reg(7,0x70,v)
 def th2_c(v):
-    set_reg(8,0x70,v)
+    set_reg(10,0x70,v)
 def th3_c(v):
-    set_reg(11,0x70,v)
+    set_reg(13,0x70,v)
 def th4_c(v):
-    set_reg(14,0x70,v)
+    set_reg(16,0x70,v)
 
 ui.morph_th.valueChanged.connect(th1_c)
 ui.morph_th_2.valueChanged.connect(th2_c)
@@ -121,15 +122,15 @@ ui.enable.itemChanged.connect(clicked)
 
 def radio(c):
     if ui.radioButton.isChecked():
-        set_reg(2,0x075,0)
+        set_reg(4,0x075,0)
     if ui.radioButton_2.isChecked():
-        set_reg(2,0x075,4)
+        set_reg(4,0x075,4)
     if ui.radioButton_3.isChecked():
-        set_reg(2,0x075,2)
+        set_reg(4,0x075,2)
     if ui.radioButton_4.isChecked():
-        set_reg(2,0x075,1)
+        set_reg(4,0x075,1)
     if ui.radioButton_5.isChecked():
-        set_reg(2,0x075,3)
+        set_reg(4,0x075,3)
 
 ui.radioButton.toggled.connect(radio)
 ui.radioButton_2.toggled.connect(radio)
@@ -139,11 +140,11 @@ ui.radioButton_5.toggled.connect(radio)
 
 
 def motion_c(v):
-    set_reg(2,0x70,ui.motion_p01.value()/256)
-    set_reg(2,0x71,ui.motion_p01.value()%256)
-    set_reg(2,0x72,ui.motion_p23.value()/256)
-    set_reg(2,0x73,ui.motion_p23.value()%256)
-    set_reg(2,0x74,ui.motion_p4.value())
+    set_reg(4,0x70,ui.motion_p01.value()/256)
+    set_reg(4,0x71,ui.motion_p01.value()%256)
+    set_reg(4,0x72,ui.motion_p23.value()/256)
+    set_reg(4,0x73,ui.motion_p23.value()%256)
+    set_reg(4,0x74,ui.motion_p4.value())
 
 ui.motion_p01.valueChanged.connect(motion_c)
 ui.motion_p23.valueChanged.connect(motion_c)

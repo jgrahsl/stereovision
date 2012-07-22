@@ -83,8 +83,6 @@ entity FBCtl is
     DCAM             : in    std_logic_vector (COLORDEPTH - 1 downto 0);  --data output
     CLKCAM           : in    std_logic;  --port clock
     CLK24            : in    std_logic;  --port clock
-    debug_wr         : out   std_logic;
-    debug_data       : out   std_logic_vector(7 downto 0);
 ---------------------------------------------------------------------------------      
 -- High-speed PLL clock interface/reset
 ----------------------------------------------------------------------------------  
@@ -569,10 +567,12 @@ architecture Behavioral of FBCtl is
   signal pipe_in    : pipe_t;
   signal pipe_out   : pipe_t;
   signal pipe       : pipe_set_t;
-  signal hist_row : natural range 0 to 2047;
+  signal hist_row   : natural range 0 to 2047;
 
-  signal p0_fifo : mcb_fifo_t;
-  signal p1_fifo : mcb_fifo_t;  
+  signal p0_rd_fifo : mcb_fifo_t;
+  signal p1_rd_fifo : mcb_fifo_t;
+  signal p0_wr_fifo : mcb_fifo_t;
+  signal p1_wr_fifo : mcb_fifo_t;
 begin
 ----------------------------------------------------------------------------------
 -- mcb instantiation
@@ -1001,35 +1001,21 @@ begin
   end process;
 
 
-  p0_cmd_clk <= clkalg;
-  p0_cmd_bl  <= conv_std_logic_vector(P0_BATCH-1, 6);
-
-  p1_cmd_clk <= clkalg;
-  p1_cmd_bl  <= conv_std_logic_vector(P1_BATCH-1, 6);
-
-
-  p0_wr_clk  <= clkalg;
-  p1_wr_clk  <= clkalg;
-
- 
-  p0_wr_mask <= (others => '0');
-  p1_wr_mask <= (others => '0');
-
   process (my_state)
   begin  -- process
     my_nstate <= my_state;
 
-    p0_cmd_en <= '0';
-    p1_cmd_en <= '0';
-
+    p0_cmd_clk       <= clkalg;
+    p0_cmd_en        <= '0';
+    p0_cmd_instr     <= (others => '0');
+    p0_cmd_bl        <= conv_std_logic_vector(P0_BATCH-1, 6);
     p0_cmd_byte_addr <= (others => '0');
+
+    p1_cmd_clk       <= clkalg;
+    p1_cmd_en        <= '0';
+    p1_cmd_instr     <= (others => '0');
+    p1_cmd_bl        <= conv_std_logic_vector(P1_BATCH-1, 6);
     p1_cmd_byte_addr <= conv_std_logic_vector(my_p1_addr, 30);
-
-    p0_cmd_instr <= (others => '0');
-    p1_cmd_instr <= (others => '0');
-
-    debug_wr   <= '0';
-    debug_data <= (others => '0');
 
     case my_state is
 
@@ -1040,7 +1026,6 @@ begin
       when my_read_p0 =>
 
         if p0_rd_empty = '1' and p0_wr_empty = '1' and p1_wr_empty = '1' and p0_cmd_empty = '1' then
-          debug_wr         <= '1'; debug_data <= X"0F";
           p0_cmd_en        <= '1';
           p0_cmd_instr     <= MCB_CMD_RD;
           p0_cmd_byte_addr <= conv_std_logic_vector(my_p0_rd_addr, 30);
@@ -1081,22 +1066,7 @@ begin
     end case;
   end process;
 
-  sink : process (clkalg)
-  begin  -- process feed
-    if clkalg'event and clkalg = '1' then  -- rising clock edge
-      if rstalg = '1' then                 -- synchronous reset (active high)
-        sink_is_high <= '1';
-      else
-        if pipe_out.stage.valid = '1' then
-          if sink_is_high = '1' then
-            p0_wr_data(15 downto 0) <= pipe_out.stage.data_565;
-          end if;
-          sink_is_high <= not sink_is_high;
-        end if;
-      end if;
-    end if;
-  end process sink;
-  
+
   my_cfg_sync : entity work.cfg_sync
     port map (
       clk  => clkalg,                   -- [in]
@@ -1104,77 +1074,64 @@ begin
       dout => cfg);                     -- [out] 
 
 -------------------------------------------------------------------------------
--- PIPE OUT
+-- FROM MCB
+-------------------------------------------------------------------------------
+  p0_rd_en         <= p0_rd_fifo.en;
+  p0_rd_clk        <= p0_rd_fifo.clk;
+  p0_rd_fifo.stall <= p0_rd_empty;
+  p0_rd_fifo.data  <= p0_rd_data;
+
+  p1_rd_en         <= p1_rd_fifo.en;
+  p1_rd_clk        <= p1_rd_fifo.clk;
+  p1_rd_fifo.stall <= p1_rd_empty;
+  p1_rd_fifo.data  <= p1_rd_data;
+
+-------------------------------------------------------------------------------
+-- TO MCB
 -------------------------------------------------------------------------------  
+  p0_wr_en         <= p0_wr_fifo.en;
+  p0_wr_clk        <= p0_wr_fifo.clk;
+  p0_wr_fifo.stall <= p0_wr_full;
+  p0_wr_data       <= p0_wr_fifo.data;
 
-  p0_wr_data(31 downto 16) <= pipe_out.stage.data_565;
-  p1_wr_en                 <= pipe_out.stage.valid;
-  p0_wr_en                 <= pipe_out.stage.valid and not sink_is_high;
-  p1_wr_data               <= pipe_out.stage.aux;
+  p1_wr_en         <= p1_wr_fifo.en;
+  p1_wr_clk        <= p0_wr_fifo.clk;
+  p1_wr_fifo.stall <= p1_wr_full;
+  p1_wr_data       <= p1_wr_fifo.data;
 
 -------------------------------------------------------------------------------
--- MAP PIPE_SET
--------------------------------------------------------------------------------
-
-  pipe_out <= pipe(5);
-  
--------------------------------------------------------------------------------
--- 
--------------------------------------------------------------------------------
-  --led_o <= pipe(0).stage.valid &
-  --         pipe(1).stage.valid &
-  --         pipe(2).stage.valid &
-  --         pipe(3).stage.valid &
-  --         pipe(0).cfg(0).enable &
-  --         pipe(0).cfg(1).enable &
-  --         pipe(0).cfg(2).enable &
-  --         pipe(0).cfg(3).enable;
-  --brightness <=
-  --conv_std_logic_vector(unsigned(vin_data_999(26 downto 18)) +
-  --                                    unsigned(vin_data_999(17 downto 9)) +
-  --                                    unsigned(vin_data_999(8 downto 0)), 16);
-
+-- LED
+-------------------------------------------------------------------------------  
+  led_o <= "1" & p0_rd_count when rd_mode(0) = '1' else
+           "1" & p1_rd_count                                                                                                                                            when rd_mode(1) = '1' else
+           "1" & p0_wr_count                                                                                                                                            when rd_mode(2) = '1' else
+           "1" & p1_wr_count                                                                                                                                            when rd_mode(3) = '1' else
+           p0_rd_fifo.en & p0_wr_fifo.en & p0_rd_fifo.stall & "00000"                                                                                                   when rd_mode(4) = '1' else
+           p1_rd_fifo.en & p1_wr_fifo.en & p1_rd_fifo.stall & "00000"                                                                                                   when rd_mode(5) = '1' else
+           pipe(0).stage.valid & pipe(1).stage.valid & pipe(2).stage.valid & pipe(3).stage.valid & pipe(4).stage.valid & pipe(5).stage.valid& pipe(6).stage.valid & "0" when rd_mode(6) = '1' else "00000000";
 
 -------------------------------------------------------------------------------
 -- PIPE
--------------------------------------------------------------------------------
-  p0_rd_en <= p0_fifo.en;
-  p0_rd_clk <= p0_fifo.clk;
-  p0_fifo.stall <= p0_rd_empty;
-  p0_fifo.data <= p0_rd_data;
+-------------------------------------------------------------------------------  
   
-  p1_rd_en <= p1_fifo.en;
-  p1_rd_clk <= p1_fifo.clk;
-  p1_fifo.stall <= p1_rd_empty;
-  p1_fifo.data <= p1_rd_data;  
-
-
-  led_o <= "1" & p0_rd_count when rd_mode(0) = '1' else
-           "1" & p1_rd_count when rd_mode(1) = '1' else
-           "1" & p0_wr_count when rd_mode(2) = '1' else
-           "1" & p1_wr_count when rd_mode(3) = '1' else
-           p0_fifo.stall & p1_fifo.stall & p0_rd_empty & p1_rd_empty & p0_wr_empty & p1_wr_empty & "00" when rd_mode(4) = '1' else
-           pipe(0).stage.valid & pipe(1).stage.valid & pipe(2).stage.valid & pipe(3).stage.valid & pipe(4).stage.valid & pipe(5).stage.valid& "00" when rd_mode(5) = '1' else  "11100000";
-
-  
-  my_pipe_head: entity work.pipe_head
+  my_pipe_head : entity work.pipe_head
     generic map (
       ID => 0)
     port map (
-      clk      => clkalg,                  -- [in]
-      rst      => rstalg,                  -- [in]
+      clk      => clkalg,               -- [in]
+      rst      => rstalg,               -- [in]
       cfg      => cfg,                  -- [in]
-      pipe_out => pipe(0));            -- [out]
+      pipe_out => pipe(0));             -- [out]
 
-  my_mcb_feed: entity work.mcb_feed
+  my_mcb_feed : entity work.mcb_feed
     generic map (
       ID => 1)
     port map (
       pipe_in  => pipe(0),              -- [in]
-      pipe_out => pipe(1),             -- [out]
-      p0_fifo  => p0_fifo,               -- [inout]
-      p1_fifo  => p1_fifo);              -- [inout]
-  
+      pipe_out => pipe(1),              -- [out]
+      p0_fifo  => p0_rd_fifo,           -- [inout]
+      p1_fifo  => p1_rd_fifo);          -- [inout]
+
   my_skinfilter : entity work.skinfilter
     generic map (
       ID => 2)
@@ -1182,22 +1139,22 @@ begin
       pipe_in  => pipe(1),
       pipe_out => pipe(2));
 
-  my_hist: entity work.hist_x
+  my_hist : entity work.hist_x
     generic map (
-      ID => 3,
+      ID     => 3,
       WIDTH  => 640,
       HEIGHT => 480)
     port map (
       pipe_in  => pipe(2),              -- [in]
-      pipe_out => pipe(3));            -- [out]
+      pipe_out => pipe(3));             -- [out]
 
-  my_motion: entity work.motion
+  my_motion : entity work.motion
     generic map (
       ID => 4)
     port map (
       pipe_in  => pipe(3),              -- [in]
-      pipe_out => pipe(4));            -- [out]
-  
+      pipe_out => pipe(4));             -- [out]
+
   my_morph : entity work.morph_set
     generic map (
       ID     => 5,
@@ -1208,6 +1165,15 @@ begin
       pipe_in  => pipe(4),              -- [in]
       pipe_out => pipe(5));             -- [out]
 
-  
+  my_mcb_sink : entity work.mcb_sink
+    generic map (
+      ID => 17)
+    port map (
+      pipe_in  => pipe(5),              -- [in]
+      pipe_out => pipe(6),              -- [out]
+      p0_fifo  => p0_wr_fifo,           -- [inout]
+      p1_fifo  => p1_wr_fifo);          -- [inout]
+
+
 end Behavioral;
 
