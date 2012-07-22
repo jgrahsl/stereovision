@@ -73,19 +73,30 @@ def add_item(s):
     return r
 
 def add_morph():
+    global morph
     add_item("Morph: 1d")
     add_item("Morph: 2d")
     t = add_item("Morph: kernel")
+    morph.append(t)
+
+
+
+
+
+morph = []
+motion = 0
+#############################
 
 add_item("Head")
 add_item("Feed")
 add_item("Skin")
-add_item("Hist")
-add_item("Motion")
+motion = add_item("Motion")
 add_morph()
 add_morph()
 add_morph()
 add_morph()
+add_item("Hist_X")
+add_item("Hist_Y")
 
 def do_exit():
     global handle
@@ -120,15 +131,15 @@ ui.enable.itemChanged.connect(clicked)
 
 def radio(c):
     if ui.radioButton.isChecked():
-        set_reg(4,0x075,0)
+        set_reg(motion,0x075,0)
     if ui.radioButton_2.isChecked():
-        set_reg(4,0x075,4)
+        set_reg(motion,0x075,4)
     if ui.radioButton_3.isChecked():
-        set_reg(4,0x075,2)
+        set_reg(motion,0x075,2)
     if ui.radioButton_4.isChecked():
-        set_reg(4,0x075,1)
+        set_reg(motion,0x075,1)
     if ui.radioButton_5.isChecked():
-        set_reg(4,0x075,3)
+        set_reg(motion,0x075,3)
 
 ui.radioButton.toggled.connect(radio)
 ui.radioButton_2.toggled.connect(radio)
@@ -138,11 +149,11 @@ ui.radioButton_5.toggled.connect(radio)
 
 
 def motion_c(v):
-    set_reg(4,0x70,ui.motion_p01.value()%256)
-    set_reg(4,0x71,ui.motion_p01.value()/256)
-    set_reg(4,0x72,ui.motion_p23.value()%256)
-    set_reg(4,0x73,ui.motion_p23.value()/256)
-    set_reg(4,0x74,ui.motion_p4.value())
+    set_reg(motion,0x70,ui.motion_p01.value()%256)
+    set_reg(motion,0x71,ui.motion_p01.value()/256)
+    set_reg(motion,0x72,ui.motion_p23.value()%256)
+    set_reg(motion,0x73,ui.motion_p23.value()/256)
+    set_reg(motion,0x74,ui.motion_p4.value())
 
 ui.motion_p01.valueChanged.connect(motion_c)
 ui.motion_p23.valueChanged.connect(motion_c)
@@ -166,13 +177,10 @@ def preset_2():
     set_enable(morph[3],0)
 
 
-
 ui.preset_1.clicked.connect(preset_1)
 ui.preset_2.clicked.connect(preset_2)
 #ui.preset_3.clicked.connect(preset_3)
 #ui.preset_4.clicked.connect(preset_4)
-
-morph = [7,10,13,16]
 
 
 MainWindow.show()

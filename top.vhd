@@ -102,7 +102,7 @@ entity top is
 -- FPGA Link
 -------------------------------------------------------------------------------
     -- FX2 interface -----------------------------------------------------------------------------
-    fx2Clk_int   : in    std_logic;      -- 48MHz clock from FX2
+    fx2Clk_int  : in    std_logic;      -- 48MHz clock from FX2
     fx2Addr_out : out   std_logic_vector(1 downto 0);  -- select FIFO: "10" for EP6OUT, "11" for EP8IN
     fx2Data_io  : inout std_logic_vector(7 downto 0);  -- 8-bit data to/from FX2
 
@@ -171,9 +171,13 @@ architecture Behavioral of top is
 -- User
 -------------------------------------------------------------------------------
 
-  signal cfg : cfg_set_t;
-  signal adr : integer range 0 to 63;
+  signal cfg       : cfg_set_t;
+  signal adr       : integer range 0 to 63;
   signal fx2Clk_in : std_logic;
+
+
+  signal out_fifo : pixel_fifo_t;
+  signal usb_fifo : pixel_fifo_t;
 begin
 ----------------------------------------------------------------------------------
 -- System Control Unit
@@ -266,8 +270,10 @@ begin
       mcb3_dram_ck     => mcb3_dram_ck,
       mcb3_dram_ck_n   => mcb3_dram_ck_n,
 
-      cfg_unsync  => cfg,
-      led_o => led_o
+      cfg_unsync => cfg,
+      led_o      => led_o_t,
+      usb_fifo   => usb_fifo,
+      out_fifo   => out_fifo
       );
 
   FbRdEn  <= VtcVde;
@@ -357,13 +363,26 @@ begin
   --  led_o(i) <= cfg(i).enable; 
   --end generate gen;
 --  led_o <= (others => '0');
-            
+
   -- Infer registers
+
+  usb_fifo.clk <= fx2Clk_in;
+  out_fifo.clk <= fx2Clk_in;
   process(fx2Clk_in)
   begin
     if (rising_edge(fx2Clk_in)) then
+      usb_fifo.en <= '0';
+      out_fifo.en <= '0';
+
       if f2hReady = '1' then
         reg1 <= std_logic_vector(unsigned(reg1) + 1);
+
+        case chanAddr is
+          when "0100001" =>
+            usb_fifo.en <= '1';
+          when others =>
+              null;
+        end case;
       end if;
 
       if h2fvalid = '1' then
@@ -374,6 +393,17 @@ begin
             reg2 <= h2fData;
           when "0000011" =>
             reg3 <= h2fData;
+-------------------------------------------------------------------------------
+-- FIFO
+-------------------------------------------------------------------------------
+          when "0010000" =>
+            out_fifo.data(7 downto 0) <= h2fData;
+          when "0010001" =>
+            out_fifo.data(15 downto 8) <= h2fData;
+            out_fifo.en                <= '1';
+-------------------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------------------            
           when "1100000" =>
             adr <= to_integer(unsigned(h2fData));
 --            led_o <= h2fData;
@@ -391,10 +421,10 @@ begin
             cfg(adr).p(4) <= h2fData;
           when "1110101" =>
             cfg(adr).p(5) <= h2fData;
-          --when "1110110" =>
-          --  cfg(adr).p(6) <= h2fData;
-          --when "1110111" =>
-          --  cfg(adr).p(7) <= h2fData;
+            --when "1110110" =>
+            --  cfg(adr).p(6) <= h2fData;
+            --when "1110111" =>
+            --  cfg(adr).p(7) <= h2fData;
           when others => null;
         end case;
       end if;
@@ -406,17 +436,21 @@ begin
     X"AA" when "0000001",
     reg1  when "0001111",
 
-    std_logic_vector(to_unsigned(adr,8))      when "1100000",
-    "0000000" & cfg(adr).enable when "1100001",
-    cfg(adr).p(0)               when "1110000",
-    cfg(adr).p(1)               when "1110001",
-    cfg(adr).p(2)               when "1110010",
-    cfg(adr).p(3)               when "1110011",
-    cfg(adr).p(4)               when "1110100",
-    cfg(adr).p(5)               when "1110101",
+    std_logic_vector(to_unsigned(adr, 8)) when "1100000",
+    "0000000" & cfg(adr).enable           when "1100001",
+    cfg(adr).p(0)                         when "1110000",
+    cfg(adr).p(1)                         when "1110001",
+    cfg(adr).p(2)                         when "1110010",
+    cfg(adr).p(3)                         when "1110011",
+    cfg(adr).p(4)                         when "1110100",
+    cfg(adr).p(5)                         when "1110101",
     --cfg(adr).p(6)               when "1110110",
     --cfg(adr).p(7)               when "1110111",
-    X"FF"                       when others;
+
+    usb_fifo.data(7 downto 0)  when "0100000",
+    usb_fifo.data(15 downto 8) when "0100001",
+
+    X"FF" when others;
 
   comm : if FPGALINK = 1 generate
     h2fReady <= '1';
@@ -461,6 +495,9 @@ begin
   end generate comm_else;
 
 --  led_o <= h2fValid &  f2hReady & "000000";
---  led_o <= (others => '0');
+  led_o <= out_fifo.stall & usb_fifo.stall & "000000";
+
+  
+
 end Behavioral;
 
