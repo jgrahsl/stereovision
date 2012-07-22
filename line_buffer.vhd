@@ -5,7 +5,7 @@ use IEEE.NUMERIC_STD.all;
 library work;
 use work.cam_pkg.all;
 
-entity cyclic_bit_buffer is
+entity line_buffer is
   generic (
     ID        : integer range 0 to 63   := 0;
     NUM_LINES : natural range 1 to 5    := 3;
@@ -17,9 +17,9 @@ entity cyclic_bit_buffer is
 
       mono_1d_out : out mono_1d_t
       );
-end cyclic_bit_buffer;
+end line_buffer;
 
-architecture impl of cyclic_bit_buffer is
+architecture impl of line_buffer is
 
   signal clk        : std_logic;
   signal rst        : std_logic;

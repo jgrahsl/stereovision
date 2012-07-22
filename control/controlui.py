@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'control.ui'
 #
-# Created: Sat Jul 21 01:23:08 2012
+# Created: Sun Jul 22 14:19:07 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -36,6 +36,7 @@ class Ui_MainWindow(object):
         self.morph_th = QtGui.QSlider(self.horizontalLayoutWidget)
         self.morph_th.setMinimum(1)
         self.morph_th.setMaximum(21)
+        self.morph_th.setPageStep(4)
         self.morph_th.setOrientation(QtCore.Qt.Vertical)
         self.morph_th.setInvertedAppearance(False)
         self.morph_th.setInvertedControls(False)
@@ -46,6 +47,7 @@ class Ui_MainWindow(object):
         self.morph_th_2 = QtGui.QSlider(self.horizontalLayoutWidget)
         self.morph_th_2.setMinimum(1)
         self.morph_th_2.setMaximum(21)
+        self.morph_th_2.setPageStep(4)
         self.morph_th_2.setOrientation(QtCore.Qt.Vertical)
         self.morph_th_2.setInvertedAppearance(False)
         self.morph_th_2.setInvertedControls(False)
@@ -56,6 +58,7 @@ class Ui_MainWindow(object):
         self.morph_th_3 = QtGui.QSlider(self.horizontalLayoutWidget)
         self.morph_th_3.setMinimum(1)
         self.morph_th_3.setMaximum(21)
+        self.morph_th_3.setPageStep(4)
         self.morph_th_3.setOrientation(QtCore.Qt.Vertical)
         self.morph_th_3.setInvertedAppearance(False)
         self.morph_th_3.setInvertedControls(False)
@@ -66,6 +69,7 @@ class Ui_MainWindow(object):
         self.morph_th_4 = QtGui.QSlider(self.horizontalLayoutWidget)
         self.morph_th_4.setMinimum(1)
         self.morph_th_4.setMaximum(21)
+        self.morph_th_4.setPageStep(4)
         self.morph_th_4.setOrientation(QtCore.Qt.Vertical)
         self.morph_th_4.setInvertedAppearance(False)
         self.morph_th_4.setInvertedControls(False)
@@ -102,6 +106,7 @@ class Ui_MainWindow(object):
         self.motion_p01 = QtGui.QSlider(self.horizontalLayoutWidget_3)
         self.motion_p01.setMinimum(0)
         self.motion_p01.setMaximum(65535)
+        self.motion_p01.setPageStep(127)
         self.motion_p01.setOrientation(QtCore.Qt.Vertical)
         self.motion_p01.setInvertedAppearance(False)
         self.motion_p01.setInvertedControls(False)
@@ -112,6 +117,7 @@ class Ui_MainWindow(object):
         self.motion_p23 = QtGui.QSlider(self.horizontalLayoutWidget_3)
         self.motion_p23.setMinimum(0)
         self.motion_p23.setMaximum(65535)
+        self.motion_p23.setPageStep(127)
         self.motion_p23.setOrientation(QtCore.Qt.Vertical)
         self.motion_p23.setInvertedAppearance(False)
         self.motion_p23.setInvertedControls(False)
@@ -122,6 +128,7 @@ class Ui_MainWindow(object):
         self.motion_p4 = QtGui.QSlider(self.horizontalLayoutWidget_3)
         self.motion_p4.setMinimum(0)
         self.motion_p4.setMaximum(7)
+        self.motion_p4.setPageStep(1)
         self.motion_p4.setOrientation(QtCore.Qt.Vertical)
         self.motion_p4.setInvertedAppearance(False)
         self.motion_p4.setInvertedControls(False)

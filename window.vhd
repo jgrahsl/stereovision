@@ -5,7 +5,7 @@ use IEEE.NUMERIC_STD.all;
 library work;
 use work.cam_pkg.all;
 
-entity bit_window is
+entity window is
   generic (
     ID       : integer range 0 to 63   := 0;
     NUM_COLS : natural range 0 to 5    := 5;
@@ -18,9 +18,9 @@ entity bit_window is
     mono_1d_in  : in  mono_1d_t;
     mono_2d_out : out mono_2d_t
     );
-end bit_window;
+end window;
 
-architecture impl of bit_window is
+architecture impl of window is
 
   signal clk        : std_logic;
   signal rst        : std_logic;

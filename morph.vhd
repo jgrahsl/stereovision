@@ -31,7 +31,7 @@ begin  -- myrtl
   pipe(0)  <= pipe_in;
   pipe_out <= pipe(3);
 
-  my_filter0_buffer : entity work.cyclic_bit_buffer
+  my_filter0_buffer : entity work.line_buffer
     generic map (
       ID        => (ID),
       NUM_LINES => KERNEL,
@@ -43,7 +43,7 @@ begin  -- myrtl
       mono_1d_out => mono_1d
       );
 
-  my_filter0_window : entity work.bit_window
+  my_filter0_window : entity work.window
     generic map (
       ID       => (ID+1),
       NUM_COLS => KERNEL,
