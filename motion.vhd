@@ -52,12 +52,9 @@ begin
     m          := unsigned(pipe_in.stage.aux((M_BIT+m'high) downto M_BIT));
     v          := unsigned(pipe_in.stage.aux((V_BIT+v'high) downto V_BIT));
     d          := unsigned(pipe_in.stage.aux(D_BIT downto D_BIT));
-    brightness := ("000" & unsigned(pipe_in.stage.data_565(15 downto 11)) & "0") +
-                  ("000" & unsigned(pipe_in.stage.data_565(10 downto 5))) +
-                  ("000" & unsigned(pipe_in.stage.data_565(4 downto 0)) & "0");
-    i    := brightness(7 downto 0);
-    vmin := unsigned(pipe_in.cfg(ID).p(1)(6 downto 0)) & unsigned(pipe_in.cfg(ID).p(0));
-    vmax := unsigned(pipe_in.cfg(ID).p(3)(6 downto 0)) & unsigned(pipe_in.cfg(ID).p(2));
+    i          := unsigned(pipe_in.stage.data_8);
+    vmin       := unsigned(pipe_in.cfg(ID).p(1)(6 downto 0)) & unsigned(pipe_in.cfg(ID).p(0));
+    vmax       := unsigned(pipe_in.cfg(ID).p(3)(6 downto 0)) & unsigned(pipe_in.cfg(ID).p(2));
 
     if d = 0 then
       if i < m then
@@ -79,21 +76,23 @@ begin
       when "00000000" =>
         diff := diff;
       when "00000001" =>
-        diff := diff(14 downto 0) & "0";
+        diff := "0000000" & diff(7 downto 0) & "0";
       when "00000010" =>
-        diff := diff(13 downto 0) & "00";
+        diff := "000000" & diff(7 downto 0) & "00";
       when "00000011" =>
-        diff := diff(12 downto 0) & "000";
+        diff := "00000" & diff(7 downto 0) & "000";
       when "00000100" =>
-        diff := diff(11 downto 0) & "0000";
+        diff := "0000" & diff(7 downto 0) & "0000";
       when "00000101" =>
-        diff := diff(10 downto 0) & "00000";
+        diff := "000" & diff(7 downto 0) & "00000";
       when "00000110" =>
-        diff := diff(9 downto 0) & "000000";
+        diff := "00" & diff(7 downto 0) & "000000";
       when "00000111" =>
-        diff := diff(8 downto 0) & "0000000";
+        diff := "0" & diff(7 downto 0) & "0000000";
+      when "00001000" =>
+        diff := diff(7 downto 0) & "00000000";
       when others =>
-        diff := diff;
+        diff := "00000000" & diff(7 downto 0);
     end case;
 
     if v < (diff) then
@@ -105,12 +104,11 @@ begin
     if v < vmin then
       v := vmin;
     end if;
-
     if v > vmax then
       v := vmax;
     end if;
 
-    if diff < v then
+    if diff_unshifted < v then
       d := "0";
     else
       d := "1";

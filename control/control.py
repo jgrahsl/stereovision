@@ -140,10 +140,10 @@ ui.radioButton_5.toggled.connect(radio)
 
 
 def motion_c(v):
-    set_reg(4,0x70,ui.motion_p01.value()/256)
-    set_reg(4,0x71,ui.motion_p01.value()%256)
-    set_reg(4,0x72,ui.motion_p23.value()/256)
-    set_reg(4,0x73,ui.motion_p23.value()%256)
+    set_reg(4,0x70,ui.motion_p01.value()%256)
+    set_reg(4,0x71,ui.motion_p01.value()/256)
+    set_reg(4,0x72,ui.motion_p23.value()%256)
+    set_reg(4,0x73,ui.motion_p23.value()/256)
     set_reg(4,0x74,ui.motion_p4.value())
 
 ui.motion_p01.valueChanged.connect(motion_c)
