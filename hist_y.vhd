@@ -51,7 +51,8 @@ architecture impl of hist_y is
     v.rows := 0;
     v.cur  := 0;
     v.val  := 0;
-
+    v.rd_adr := 1;
+    v.wr_adr := 0;
     v.phase := 0;
   end init;
 
