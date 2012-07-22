@@ -66,18 +66,16 @@ ui.setupUi(MainWindow)
 def add_item(s):
     t = QtGui.QListWidgetItem(s)
     t.setFlags(t.flags() | QtCore.Qt.ItemIsUserCheckable)
-    t.setCheckState(QtCore.Qt.Checked)
+    t.setCheckState(QtCore.Qt.Unchecked)
     ui.enable.addItem(t)
     r = ui.enable.row(t)
-    set_enable(r,1)
+    set_enable(r,0)
     return r
 
 def add_morph():
     add_item("Morph: 1d")
     add_item("Morph: 2d")
     t = add_item("Morph: kernel")
-
-    set_reg(t,0x70,1)
 
 add_item("Head")
 add_item("Feed")
@@ -103,13 +101,13 @@ def clicked(item):
     set_enable(ui.enable.row(item),en)
 
 def th1_c(v):
-    set_reg(7,0x70,v)
+    set_reg(morph[0],0x70,v)
 def th2_c(v):
-    set_reg(10,0x70,v)
+    set_reg(morph[1],0x70,v)
 def th3_c(v):
-    set_reg(13,0x70,v)
+    set_reg(morph[2],0x70,v)
 def th4_c(v):
-    set_reg(16,0x70,v)
+    set_reg(morph[3],0x70,v)
 
 ui.morph_th.valueChanged.connect(th1_c)
 ui.morph_th_2.valueChanged.connect(th2_c)
@@ -150,10 +148,32 @@ ui.motion_p01.valueChanged.connect(motion_c)
 ui.motion_p23.valueChanged.connect(motion_c)
 ui.motion_p4.valueChanged.connect(motion_c)
 
-th1_c(1)
-th2_c(1)
-th3_c(1)
-th4_c(1)
+def preset_1():
+    set_reg(morph[0],0x70,21)
+    set_reg(morph[1],0x70,12)
+    set_reg(morph[2],0x70,12)
+    set_reg(morph[3],0x70,12)
+
+    set_enable(morph[0],1)
+    set_enable(morph[1],1)
+    set_enable(morph[2],1)
+    set_enable(morph[3],1)
+def preset_2():
+
+    set_enable(morph[0],0)
+    set_enable(morph[1],0)
+    set_enable(morph[2],0)
+    set_enable(morph[3],0)
+
+
+
+ui.preset_1.clicked.connect(preset_1)
+ui.preset_2.clicked.connect(preset_2)
+#ui.preset_3.clicked.connect(preset_3)
+#ui.preset_4.clicked.connect(preset_4)
+
+morph = [7,10,13,16]
+
 
 MainWindow.show()
 r = app.exec_()

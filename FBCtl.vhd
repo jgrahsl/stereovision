@@ -1139,21 +1139,12 @@ begin
       pipe_in  => pipe(1),
       pipe_out => pipe(2));
 
-  my_hist : entity work.hist_x
-    generic map (
-      ID     => 3,
-      WIDTH  => 640,
-      HEIGHT => 480)
-    port map (
-      pipe_in  => pipe(2),              -- [in]
-      pipe_out => pipe(3));             -- [out]
-
   my_motion : entity work.motion
     generic map (
       ID => 4)
     port map (
-      pipe_in  => pipe(3),              -- [in]
-      pipe_out => pipe(4));             -- [out]
+      pipe_in  => pipe(2),              -- [in]
+      pipe_out => pipe(3));             -- [out]
 
   my_morph : entity work.morph_set
     generic map (
@@ -1162,8 +1153,18 @@ begin
       WIDTH  => 640,
       HEIGHT => 480)
     port map (
+      pipe_in  => pipe(3),              -- [in]
+      pipe_out => pipe(4));             -- [out]
+
+  my_hist_y : entity work.hist_y
+    generic map (
+      ID     => 3,
+      WIDTH  => 640,
+      HEIGHT => 480)
+    port map (
       pipe_in  => pipe(4),              -- [in]
       pipe_out => pipe(5));             -- [out]
+
 
   my_mcb_sink : entity work.mcb_sink
     generic map (
