@@ -225,6 +225,13 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QCheckBox" name="lock">
+            <property name="text">
+             <string>Lock</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
        </layout>
@@ -395,14 +402,14 @@
      <item>
       <widget class="QPushButton" name="preset_3">
        <property name="text">
-        <string>Preset 3</string>
+        <string>learn</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="preset_4">
        <property name="text">
-        <string>Preset 4</string>
+        <string>detect</string>
        </property>
       </widget>
      </item>

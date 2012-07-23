@@ -35,6 +35,7 @@ begin
     variable m              : unsigned(7 downto 0);
     variable v              : unsigned(14 downto 0);
     variable i              : unsigned(7 downto 0);
+    variable l              : std_logic;
     variable d              : unsigned(0 downto 0);
     variable d_old          : unsigned(0 downto 0);
     variable vmin           : unsigned(v'high downto v'low);
@@ -53,10 +54,11 @@ begin
     v          := unsigned(pipe_in.stage.aux((V_BIT+v'high) downto V_BIT));
     d          := unsigned(pipe_in.stage.aux(D_BIT downto D_BIT));
     i          := unsigned(pipe_in.stage.data_8);
+    l          := pipe_in.cfg(ID).p(5)(7);
     vmin       := unsigned(pipe_in.cfg(ID).p(1)(6 downto 0)) & unsigned(pipe_in.cfg(ID).p(0));
     vmax       := unsigned(pipe_in.cfg(ID).p(3)(6 downto 0)) & unsigned(pipe_in.cfg(ID).p(2));
 
-    if d = 0 then
+    if d = 0 and l = '0' then
       if i < m then
         m := m - 1;
       elsif i > m then
@@ -132,14 +134,14 @@ begin
       stage_next.data_888 <= (others => '0');
     end if;
 
-    case unsigned(pipe_in.cfg(ID).p(5)) is
-      when "00000001" =>
+    case unsigned(pipe_in.cfg(ID).p(5)(6 downto 0)) is
+      when "0000001" =>
         stage_next.data_565 <= std_logic_vector(i(7 downto 3)) & std_logic_vector(i(7 downto 2)) & std_logic_vector(i(7 downto 3));
-      when "00000010" =>
+      when "0000010" =>
         stage_next.data_565 <= std_logic_vector(m(7 downto 3)) & std_logic_vector(m(7 downto 2)) & std_logic_vector(m(7 downto 3));
-      when "00000011" =>
+      when "0000011" =>
         stage_next.data_565 <= std_logic_vector(diff_unshifted(7 downto 3)) & std_logic_vector(diff_unshifted(7 downto 2)) & std_logic_vector(diff_unshifted(7 downto 3));
-      when "00000100" =>
+      when "0000100" =>
         stage_next.data_565 <= std_logic_vector(v(7 downto 3)) & std_logic_vector(v(7 downto 2)) & std_logic_vector(v(7 downto 3));
       when others => null;
     end case;

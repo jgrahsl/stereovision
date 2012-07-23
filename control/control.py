@@ -132,16 +132,23 @@ ui.enable.itemChanged.connect(clicked)
 
 
 def radio(c):
+    v = 0
+    if ui.lock.isChecked():
+        v = 0x80
+        
     if ui.radioButton.isChecked():
-        set_reg(motion,0x075,0)
+        set_reg(motion,0x075,v)
     if ui.radioButton_2.isChecked():
-        set_reg(motion,0x075,4)
+        set_reg(motion,0x075,v|4)
     if ui.radioButton_3.isChecked():
-        set_reg(motion,0x075,2)
+        set_reg(motion,0x075,v|2)
     if ui.radioButton_4.isChecked():
-        set_reg(motion,0x075,1)
+        set_reg(motion,0x075,v|1)
     if ui.radioButton_5.isChecked():
-        set_reg(motion,0x075,3)
+        set_reg(motion,0x075,v|3)
+
+        
+
 
 ui.radioButton.toggled.connect(radio)
 ui.radioButton_2.toggled.connect(radio)
@@ -178,12 +185,45 @@ def preset_2():
     set_enable(morph[2],0)
     set_enable(morph[3],0)
 
+def learn():
+    preset_2()
+    set_enable(motion,1)
+    set_reg(motion,0x70,4)
+    set_reg(motion,0x71,0)
+
+    set_reg(motion,0x72,0)
+    set_reg(motion,0x73,2)
+
+    set_reg(motion,0x74,1)
+
+    set_reg(motion,0x75,3)
+
+def detect():
+    preset_1()
+    set_reg(motion,0x70,8)
+    set_reg(motion,0x71,0)
+    set_reg(motion,0x72,8)
+    set_reg(motion,0x73,0)
+
+    set_reg(motion,0x74,1)
+
+    set_reg(motion,0x75,0)
+
+
 
 ui.preset_1.clicked.connect(preset_1)
 ui.preset_2.clicked.connect(preset_2)
-#ui.preset_3.clicked.connect(preset_3)
-#ui.preset_4.clicked.connect(preset_4)
+ui.preset_3.clicked.connect(learn)
+ui.preset_4.clicked.connect(detect)
 
+
+def lock(i):
+    if i == 0:
+        set_reg(motion,0x75,0)
+    else:
+        set_reg(motion,0x75,1)
+
+ui.lock.stateChanged.connect(lock)
 
 
 #f = open("w.dat")

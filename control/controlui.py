@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'control.ui'
 #
-# Created: Sun Jul 22 23:32:03 2012
+# Created: Mon Jul 23 18:30:03 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -105,6 +105,9 @@ class Ui_MainWindow(object):
         self.radioButton_5 = QtGui.QRadioButton(self.horizontalLayoutWidget_4)
         self.radioButton_5.setObjectName(_fromUtf8("radioButton_5"))
         self.verticalLayout.addWidget(self.radioButton_5)
+        self.lock = QtGui.QCheckBox(self.horizontalLayoutWidget_4)
+        self.lock.setObjectName(_fromUtf8("lock"))
+        self.verticalLayout.addWidget(self.lock)
         self.horizontalLayout_2.addLayout(self.verticalLayout)
         self.horizontalLayout_4.addLayout(self.horizontalLayout_2)
         self.gridLayout = QtGui.QGridLayout()
@@ -207,13 +210,14 @@ class Ui_MainWindow(object):
         self.radioButton_3.setText(QtGui.QApplication.translate("MainWindow", "MEM", None, QtGui.QApplication.UnicodeUTF8))
         self.radioButton_4.setText(QtGui.QApplication.translate("MainWindow", "IMG", None, QtGui.QApplication.UnicodeUTF8))
         self.radioButton_5.setText(QtGui.QApplication.translate("MainWindow", "DELTA", None, QtGui.QApplication.UnicodeUTF8))
+        self.lock.setText(QtGui.QApplication.translate("MainWindow", "Lock", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("MainWindow", "vmax", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("MainWindow", "n", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("MainWindow", "vmin", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_exit.setText(QtGui.QApplication.translate("MainWindow", "EXIT", None, QtGui.QApplication.UnicodeUTF8))
         self.preset_1.setText(QtGui.QApplication.translate("MainWindow", "Preset 1", None, QtGui.QApplication.UnicodeUTF8))
         self.preset_2.setText(QtGui.QApplication.translate("MainWindow", "Preset 2", None, QtGui.QApplication.UnicodeUTF8))
-        self.preset_3.setText(QtGui.QApplication.translate("MainWindow", "Preset 3", None, QtGui.QApplication.UnicodeUTF8))
-        self.preset_4.setText(QtGui.QApplication.translate("MainWindow", "Preset 4", None, QtGui.QApplication.UnicodeUTF8))
+        self.preset_3.setText(QtGui.QApplication.translate("MainWindow", "learn", None, QtGui.QApplication.UnicodeUTF8))
+        self.preset_4.setText(QtGui.QApplication.translate("MainWindow", "detect", None, QtGui.QApplication.UnicodeUTF8))
         self.label_pic.setText(QtGui.QApplication.translate("MainWindow", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
 
