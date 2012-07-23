@@ -576,6 +576,7 @@ architecture Behavioral of FBCtl is
   signal p1_rd_fifo : mcb_fifo_t;
   signal p0_wr_fifo : mcb_fifo_t;
   signal p1_wr_fifo : mcb_fifo_t;
+
 begin
 ----------------------------------------------------------------------------------
 -- mcb instantiation
@@ -1159,7 +1160,7 @@ begin
       pipe_in  => pipe(3),              -- [in]
       pipe_out => pipe(4));             -- [out]
 
-  my_hist_y : entity work.hist_y
+  my_hist_x : entity work.hist_x
     generic map (
       ID     => 16,
       WIDTH  => 640,
@@ -1168,7 +1169,7 @@ begin
       pipe_in  => pipe(4),              -- [in]
       pipe_out => pipe(5));             -- [out]
 
-  my_hist_x : entity work.hist_x
+  my_hist_y : entity work.hist_y
     generic map (
       ID     => 17,
       WIDTH  => 640,
@@ -1176,29 +1177,38 @@ begin
     port map (
       pipe_in  => pipe(5),              -- [in]
       pipe_out => pipe(6));             -- [out]
-  
 
-  my_mcb_sink : entity work.mcb_sink
+
+  my_fifo_sink : entity work.fifo_sink
     generic map (
       ID => 18)
     port map (
       pipe_in  => pipe(6),              -- [in]
       pipe_out => pipe(7),              -- [out]
+      fifo     => out_fifo);            -- [inout]
+
+  my_mcb_sink : entity work.mcb_sink
+    generic map (
+      ID => 19)
+    port map (
+      pipe_in  => pipe(7),              -- [in]
+      pipe_out => pipe(8),              -- [out]
       p0_fifo  => p0_wr_fifo,           -- [inout]
       p1_fifo  => p1_wr_fifo);          -- [inout]
 
   
-  my_pixel_fifo: entity work.pixel_fifo
+  my_pixel_fifo : entity work.pixel_fifo
     port map (
-      rst    => rstalg,                    -- [IN]
-      wr_clk => out_fifo.clk,                 -- [IN]
-      rd_clk => usb_fifo.clk,                 -- [IN]
-      din    => out_fifo.data,                    -- [IN]
-      wr_en  => out_fifo.en,                  -- [IN]
-      rd_en  => usb_fifo.en,                  -- [IN]
-      dout   => usb_fifo.data,                   -- [OUT]
-      full   => out_fifo.stall,                   -- [OUT]
-      empty  => usb_fifo.stall);                 -- [OUT]
+      rst           => rstalg,                     -- [IN]
+      wr_clk        => out_fifo.clk,               -- [IN]
+      rd_clk        => usb_fifo.clk,               -- [IN]
+      din           => out_fifo.data,              -- [IN]
+      wr_en         => out_fifo.en,                -- [IN]
+      rd_en         => usb_fifo.en,                -- [IN]
+      dout          => usb_fifo.data(7 downto 0),  -- [OUT]
+      full          => out_fifo.stall,             -- [OUT]
+      empty         => usb_fifo.stall,
+      rd_data_count => usb_fifo.count);            -- [OUT]
 
 
 end Behavioral;

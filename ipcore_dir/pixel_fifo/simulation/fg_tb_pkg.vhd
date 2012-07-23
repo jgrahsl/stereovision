@@ -201,11 +201,12 @@ PACKAGE fg_tb_pkg IS
    PORT (
            WR_CLK                    : IN  std_logic;
      	   RD_CLK                    : IN  std_logic;
+           RD_DATA_COUNT             : OUT std_logic_vector(10-1 DOWNTO 0);
            RST                       : IN  std_logic;
            WR_EN 		     : IN  std_logic;
            RD_EN                     : IN  std_logic;
            DIN                       : IN  std_logic_vector(16-1 DOWNTO 0);
-           DOUT                      : OUT std_logic_vector(16-1 DOWNTO 0);
+           DOUT                      : OUT std_logic_vector(8-1 DOWNTO 0);
            FULL                      : OUT std_logic;
            EMPTY                     : OUT std_logic);
  END COMPONENT;

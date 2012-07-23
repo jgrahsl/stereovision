@@ -34,6 +34,7 @@ vhdl work "motion.vhd"
 vhdl work "pipe_head.vhd"
 vhdl work "mcb_feed.vhd"
 vhdl work "mcb_sink.vhd"
+vhdl work "fifo_sink.vhd"
 vhdl work "comm_fpga_fx2.vhdl"
 
 vhdl work "cfg_sync.vhd"

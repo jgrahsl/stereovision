@@ -93,6 +93,7 @@ ARCHITECTURE fg_dv_arch OF fg_tb_dverif IS
  CONSTANT C_DATA_WIDTH    : INTEGER := if_then_else(C_DIN_WIDTH > C_DOUT_WIDTH,C_DIN_WIDTH,C_DOUT_WIDTH);
  CONSTANT EXTRA_WIDTH     : INTEGER := if_then_else(C_CH_TYPE = 2,1,0);
  CONSTANT LOOP_COUNT      : INTEGER := divroundup(C_DATA_WIDTH+EXTRA_WIDTH,8);
+  CONSTANT D_WIDTH_DIFF   : INTEGER := log2roundup(C_DIN_WIDTH/C_DOUT_WIDTH);
 
  SIGNAL expected_dout     : STD_LOGIC_VECTOR(C_DOUT_WIDTH-1 DOWNTO 0) := (OTHERS => '0');
  SIGNAL data_chk          : STD_LOGIC := '1';
@@ -100,6 +101,7 @@ ARCHITECTURE fg_dv_arch OF fg_tb_dverif IS
  SIGNAL rd_en_i           : STD_LOGIC := '0';
  SIGNAL pr_r_en           : STD_LOGIC := '0';
  SIGNAL rd_en_d1          : STD_LOGIC := '1';
+ SIGNAL rd_d_sel_d1       : STD_LOGIC_VECTOR(D_WIDTH_DIFF-1 DOWNTO 0):= (OTHERS => '0');
 BEGIN
 
  
@@ -114,8 +116,19 @@ BEGIN
   -- Expected data generation and checking for data_fifo
   -------------------------------------------------------
    
-      pr_r_en       <= rd_en_i AND NOT EMPTY AND rd_en_d1;
-      expected_dout <= rand_num(C_DOUT_WIDTH-1 DOWNTO 0);
+     PROCESS (RD_CLK,RESET)
+     BEGIN
+       IF (RESET = '1') THEN
+         rd_d_sel_d1 <= (OTHERS => '0');
+       ELSIF (RD_CLK'event AND RD_CLK='1') THEN
+         IF (rd_en_i = '1' AND EMPTY = '0' AND rd_en_d1 = '1') THEN
+           rd_d_sel_d1 <= rd_d_sel_d1+"1";
+         END IF;
+       END IF;
+     END PROCESS;
+
+     pr_r_en       <= (AND_REDUCE(rd_d_sel_d1)) AND rd_en_i AND NOT EMPTY;
+     expected_dout <= rand_num(C_DIN_WIDTH-C_DOUT_WIDTH*conv_integer(rd_d_sel_d1)-1 DOWNTO C_DIN_WIDTH-C_DOUT_WIDTH*(conv_integer(rd_d_sel_d1)+1));
 
     gen_num:FOR N IN LOOP_COUNT-1 DOWNTO 0 GENERATE
       rd_gen_inst2:fg_tb_rng

@@ -74,12 +74,12 @@ entity pixel_fifo_top_wrapper is
       BACKUP                         : IN STD_LOGIC;
       BACKUP_MARKER                  : IN STD_LOGIC;
       DIN                            : IN STD_LOGIC_VECTOR(16-1 downto 0);
-      PROG_EMPTY_THRESH              : IN STD_LOGIC_VECTOR(8-1 downto 0);
-      PROG_EMPTY_THRESH_ASSERT       : IN STD_LOGIC_VECTOR(8-1 downto 0);
-      PROG_EMPTY_THRESH_NEGATE       : IN STD_LOGIC_VECTOR(8-1 downto 0);
-      PROG_FULL_THRESH               : IN STD_LOGIC_VECTOR(8-1 downto 0);
-      PROG_FULL_THRESH_ASSERT        : IN STD_LOGIC_VECTOR(8-1 downto 0);
-      PROG_FULL_THRESH_NEGATE        : IN STD_LOGIC_VECTOR(8-1 downto 0);
+      PROG_EMPTY_THRESH              : IN STD_LOGIC_VECTOR(10-1 downto 0);
+      PROG_EMPTY_THRESH_ASSERT       : IN STD_LOGIC_VECTOR(10-1 downto 0);
+      PROG_EMPTY_THRESH_NEGATE       : IN STD_LOGIC_VECTOR(10-1 downto 0);
+      PROG_FULL_THRESH               : IN STD_LOGIC_VECTOR(9-1 downto 0);
+      PROG_FULL_THRESH_ASSERT        : IN STD_LOGIC_VECTOR(9-1 downto 0);
+      PROG_FULL_THRESH_NEGATE        : IN STD_LOGIC_VECTOR(9-1 downto 0);
       RD_CLK                         : IN STD_LOGIC;
       RD_EN                          : IN STD_LOGIC;
       RD_RST                         : IN STD_LOGIC;
@@ -92,18 +92,18 @@ entity pixel_fifo_top_wrapper is
       INJECTSBITERR                  : IN STD_LOGIC;
       ALMOST_EMPTY                   : OUT STD_LOGIC;
       ALMOST_FULL                    : OUT STD_LOGIC;
-      DATA_COUNT                     : OUT STD_LOGIC_VECTOR(8-1 downto 0);
-      DOUT                           : OUT STD_LOGIC_VECTOR(16-1 downto 0);
+      DATA_COUNT                     : OUT STD_LOGIC_VECTOR(9-1 downto 0);
+      DOUT                           : OUT STD_LOGIC_VECTOR(8-1 downto 0);
       EMPTY                          : OUT STD_LOGIC;
       FULL                           : OUT STD_LOGIC;
       OVERFLOW                       : OUT STD_LOGIC;
       PROG_EMPTY                     : OUT STD_LOGIC;
       PROG_FULL                      : OUT STD_LOGIC;
       VALID                          : OUT STD_LOGIC;
-      RD_DATA_COUNT                  : OUT STD_LOGIC_VECTOR(8-1 downto 0);
+      RD_DATA_COUNT                  : OUT STD_LOGIC_VECTOR(10-1 downto 0);
       UNDERFLOW                      : OUT STD_LOGIC;
       WR_ACK                         : OUT STD_LOGIC;
-      WR_DATA_COUNT                  : OUT STD_LOGIC_VECTOR(8-1 downto 0);
+      WR_DATA_COUNT                  : OUT STD_LOGIC_VECTOR(9-1 downto 0);
       SBITERR                        : OUT STD_LOGIC;
       DBITERR                        : OUT STD_LOGIC;
       -- AXI Global Signal
@@ -314,11 +314,12 @@ architecture xilinx of pixel_fifo_top_wrapper is
    PORT (
            WR_CLK                    : IN  std_logic;
      	   RD_CLK                    : IN  std_logic;
+           RD_DATA_COUNT             : OUT std_logic_vector(10-1 DOWNTO 0);
            RST                       : IN  std_logic;
            WR_EN 		     : IN  std_logic;
            RD_EN                     : IN  std_logic;
            DIN                       : IN  std_logic_vector(16-1 DOWNTO 0);
-           DOUT                      : OUT std_logic_vector(16-1 DOWNTO 0);
+           DOUT                      : OUT std_logic_vector(8-1 DOWNTO 0);
            FULL                      : OUT std_logic;
            EMPTY                     : OUT std_logic);
   end component;
@@ -332,6 +333,7 @@ rd_clk_i <= rd_clk;
       PORT MAP (
            WR_CLK                    => wr_clk_i,
            RD_CLK                    => rd_clk_i,
+           RD_DATA_COUNT             => rd_data_count,
            RST                       => rst,
            WR_EN 		     => wr_en,
            RD_EN                     => rd_en,

@@ -1,5 +1,6 @@
 #!/usr/bin/python
-
+from sip import *
+import sip
 from controlui import *
 import time
 from fpgalink2 import *
@@ -98,6 +99,7 @@ add_morph()
 add_item("Hist_X")
 add_item("Hist_Y")
 
+
 def do_exit():
     global handle
 
@@ -181,6 +183,15 @@ ui.preset_1.clicked.connect(preset_1)
 ui.preset_2.clicked.connect(preset_2)
 #ui.preset_3.clicked.connect(preset_3)
 #ui.preset_4.clicked.connect(preset_4)
+
+
+
+#f = open("w.dat")
+#s = f.read()
+#qi = QtGui.QImage(s,640/128,480, QtGui.QImage.Format_RGB888);
+#ui.label_pic.setPixmap(QtGui.QPixmap.fromImage(qi));
+
+#myLabel.show();
 
 
 MainWindow.show()

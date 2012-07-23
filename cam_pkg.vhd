@@ -62,6 +62,7 @@ package cam_pkg is
     en   : std_logic;
     stall : std_logic;
     data : std_logic_vector(15 downto 0);
+    count : std_logic_vector(9 downto 0);
   end record;
   
 end cam_pkg;

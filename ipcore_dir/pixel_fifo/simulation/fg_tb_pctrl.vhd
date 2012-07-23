@@ -107,7 +107,7 @@ ARCHITECTURE fg_pc_arch OF fg_tb_pctrl IS
  
  CONSTANT C_DATA_WIDTH   : INTEGER := if_then_else(C_DIN_WIDTH > C_DOUT_WIDTH,C_DIN_WIDTH,C_DOUT_WIDTH);
  CONSTANT LOOP_COUNT     : INTEGER := divroundup(C_DATA_WIDTH,8);
- CONSTANT D_WIDTH_DIFF   :   INTEGER := log2roundup(C_DOUT_WIDTH/C_DIN_WIDTH);
+ CONSTANT D_WIDTH_DIFF   :   INTEGER := log2roundup(C_DIN_WIDTH/C_DOUT_WIDTH);
 
  SIGNAL data_chk_i       : STD_LOGIC := if_then_else(C_CH_TYPE /= 2,'1','0');
  SIGNAL full_chk_i       : STD_LOGIC := if_then_else(C_CH_TYPE /= 2,'1','0');
@@ -174,7 +174,6 @@ BEGIN
 
  SIM_DONE   <= sim_done_i;
  rdw_gt_wrw <= (OTHERS => '1');
- wrw_gt_rdw <= (OTHERS => '1');
 
  PROCESS(RD_CLK)
  BEGIN
@@ -257,6 +256,17 @@ END PROCESS;
     END IF;
   END PROCESS;
 
+
+   PROCESS(WR_CLK,RESET_WR) 
+   BEGIN
+     IF(RESET_WR = '1') THEN
+      wrw_gt_rdw <= (OTHERS => '1');
+     ELSIF (WR_CLK'event AND WR_CLK='1') THEN
+        IF(rd_en_wr2 = '1' AND wr_en_i = '0' AND FULL = '1') THEN
+         wrw_gt_rdw <= wrw_gt_rdw + '1';
+       END IF;
+     END IF;
+   END PROCESS;
 
   -- FULL de-assert Counter
   PROCESS(WR_CLK,RESET_WR) 

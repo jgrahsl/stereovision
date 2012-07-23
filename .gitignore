@@ -1,3 +1,8 @@
+*.cgc
+*.tcl
+tmp
+*.asy
+*.vho
 *~
 iseconfig
 *.*ise

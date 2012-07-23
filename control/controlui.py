@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'control.ui'
 #
-# Created: Sun Jul 22 19:59:19 2012
+# Created: Sun Jul 22 23:32:03 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@ except AttributeError:
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
-        MainWindow.resize(740, 608)
+        MainWindow.resize(1084, 604)
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
         self.enable = QtGui.QListWidget(self.centralwidget)
@@ -183,9 +183,12 @@ class Ui_MainWindow(object):
         self.preset_4 = QtGui.QPushButton(self.verticalLayoutWidget)
         self.preset_4.setObjectName(_fromUtf8("preset_4"))
         self.verticalLayout_2.addWidget(self.preset_4)
+        self.label_pic = QtGui.QLabel(self.centralwidget)
+        self.label_pic.setGeometry(QtCore.QRect(760, 40, 271, 401))
+        self.label_pic.setObjectName(_fromUtf8("label_pic"))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 740, 29))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1084, 29))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtGui.QStatusBar(MainWindow)
@@ -212,4 +215,5 @@ class Ui_MainWindow(object):
         self.preset_2.setText(QtGui.QApplication.translate("MainWindow", "Preset 2", None, QtGui.QApplication.UnicodeUTF8))
         self.preset_3.setText(QtGui.QApplication.translate("MainWindow", "Preset 3", None, QtGui.QApplication.UnicodeUTF8))
         self.preset_4.setText(QtGui.QApplication.translate("MainWindow", "Preset 4", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_pic.setText(QtGui.QApplication.translate("MainWindow", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
 
