@@ -2,6 +2,13 @@
 from sip import *
 import sip
 from controlui import *
+from morph import *
+from motion import *
+from skin import *
+from histx import *
+from histy import *
+
+
 import time
 from fpgalink2 import *
 
@@ -27,10 +34,8 @@ def set_reg(adr,reg,en):
     set_pipe(adr)
     send_byte(reg,en)
 
-
 vp = "1443:0007"
 handle = None
-
 
 #handle = FLHandle()
 try:
@@ -55,49 +60,14 @@ except FLException, ex:
     xsvfFile = "../top.xsvf"
     print "Playing \"%s\" into the JTAG chain on FPGALink device %s..." % (xsvfFile, vp)
     flPlayXSVF(handle, xsvfFile)  # Or other SVF, XSVF or CSVF
-
 set_reg(0,0,0)
 
-app = QtGui.QApplication(sys.argv)
-MainWindow = QtGui.QMainWindow(None)
-ui = Ui_MainWindow()
-ui.setupUi(MainWindow)
-
-
-def add_item(s):
-    t = QtGui.QListWidgetItem(s)
-    t.setFlags(t.flags() | QtCore.Qt.ItemIsUserCheckable)
-    t.setCheckState(QtCore.Qt.Unchecked)
-    ui.enable.addItem(t)
-    r = ui.enable.row(t)
-    set_enable(r,0)
-    return r
-
-def add_morph():
-    global morph
-    add_item("Morph: 1d")
-    add_item("Morph: 2d")
-    t = add_item("Morph: kernel")
-    morph.append(t)
+############
+############
+############
 
 
 
-
-
-morph = []
-motion = 0
-#############################
-
-add_item("Head")
-add_item("Feed")
-add_item("Skin")
-motion = add_item("Motion")
-add_morph()
-add_morph()
-add_morph()
-add_morph()
-add_item("Hist_X")
-add_item("Hist_Y")
 
 
 def do_exit():
@@ -106,124 +76,164 @@ def do_exit():
     flClose(handle)
     app.exit(0)
 
-def clicked(item):
-    en = 0
-    if item.checkState() == QtCore.Qt.Checked:
-        en = 1
-
-    set_enable(ui.enable.row(item),en)
-
-def th1_c(v):
-    set_reg(morph[0],0x70,v)
-def th2_c(v):
-    set_reg(morph[1],0x70,v)
-def th3_c(v):
-    set_reg(morph[2],0x70,v)
-def th4_c(v):
-    set_reg(morph[3],0x70,v)
-
-ui.morph_th.valueChanged.connect(th1_c)
-ui.morph_th_2.valueChanged.connect(th2_c)
-ui.morph_th_3.valueChanged.connect(th3_c)
-ui.morph_th_4.valueChanged.connect(th4_c)
-QtCore.QObject.connect(ui.pushButton_exit, QtCore.SIGNAL("clicked()"), do_exit)
-ui.enable.itemClicked.connect(clicked)
-ui.enable.itemChanged.connect(clicked)
 
 
-def radio(c):
-    v = 0
-    if ui.lock.isChecked():
-        v = 0x80
+class Skin(Ui_SkinBox):
+    def __init__(self, box,pid):
+        self.pid = pid
+        self.pipe = box
+        self.box = QtGui.QGroupBox(box.parentWidget())
+        self.setupUi(self.box)
+        self.pipe.addWidget(self.box)
+        self.enable.stateChanged.connect(self.en)
+
+    def en(self,v):
+        if v:
+            set_enable(self.pid,1)
+        else:
+            set_enable(self.pid,0)
+
+class HistX(Ui_HistXBox):
+    def __init__(self, box,pid):
+        self.pid = pid
+        self.pipe = box
+        self.box = QtGui.QGroupBox(box.parentWidget())
+        self.setupUi(self.box)
+        self.pipe.addWidget(self.box)
+        self.enable.stateChanged.connect(self.en)
+
+    def en(self,v):
+        if v:
+            set_enable(self.pid,1)
+        else:
+            set_enable(self.pid,0)
+
+class HistY(Ui_HistYBox):
+    def __init__(self, box,pid):
+        self.pid = pid
+        self.pipe = box
+        self.box = QtGui.QGroupBox(box.parentWidget())
+        self.setupUi(self.box)
+        self.pipe.addWidget(self.box)
+        self.enable.stateChanged.connect(self.en)
+
+    def en(self,v):
+        if v:
+            set_enable(self.pid,1)
+        else:
+            set_enable(self.pid,0)
+
+class Morph(Ui_MorphBox):
+    def __init__(self, box,pid):
+        self.pid = pid
+        self.pipe = box
+        self.box = QtGui.QGroupBox(box.parentWidget())
+        self.setupUi(self.box)
+        self.pipe.addWidget(self.box)
+        self.enable.stateChanged.connect(self.en)
+
+        self.morph_th_5.valueChanged.connect(self.th1_c)
+        self.morph_th_6.valueChanged.connect(self.th2_c)
+        self.morph_th_7.valueChanged.connect(self.th3_c)
+        self.morph_th_8.valueChanged.connect(self.th4_c)
+
+    def en(self,v):
+        if v:
+            for i in range(0,12):
+                set_enable(self.pid+i,1)
+        else:
+            for i in range(0,12):
+                set_enable(self.pid+i,0)
+
+    def th1_c(self,v):
+        set_reg(self.pid+2,0x70,v)
+    def th2_c(self,v):
+        set_reg(self.pid+5,0x70,v)
+    def th3_c(self,v):
+        set_reg(self.pid+8,0x70,v)
+    def th4_c(self,v):
+        set_reg(self.pid+11,0x70,v)
+
+
+class Motion(Ui_MotionBox):
+
+    def __init__(self,box,pid):
+        self.pid = pid
+        self.pipe = box        
+        self.box = QtGui.QGroupBox(box.parentWidget())
+        self.setupUi(self.box) 
+        self.pipe.addWidget(self.box)     
+        self.enable.stateChanged.connect(self.en)
+
+        self.radioButton.toggled.connect(self.radio)
+        self.radioButton_2.toggled.connect(self.radio)
+        self.radioButton_3.toggled.connect(self.radio)
+        self.radioButton_4.toggled.connect(self.radio)
+        self.radioButton_5.toggled.connect(self.radio)
+
+        self.motion_p01.valueChanged.connect(self.motion_c)
+        self.motion_p23.valueChanged.connect(self.motion_c)
+        self.motion_p4.valueChanged.connect(self.motion_c)
+
+        self.learn.clicked.connect(self.setlearn)
+        self.detect.clicked.connect(self.setdetect)
+        self.lock.stateChanged.connect(self.radio)
+
+    def en(self,v):
+        if v:
+            set_enable(self.pid,1)
+        else:
+            set_enable(self.pid,0)
+
+    def motion_c(self,v):
+        set_reg(self.pid,0x70,self.motion_p01.value()%256)
+        set_reg(self.pid,0x71,self.motion_p01.value()/256)
+        set_reg(self.pid,0x72,self.motion_p23.value()%256)
+        set_reg(self.pid,0x73,self.motion_p23.value()/256)
+        set_reg(self.pid,0x74,self.motion_p4.value())
+
+
+    def radio(self,p):
+        v = 0
+        if self.lock.isChecked():
+            v = 0x80
         
-    if ui.radioButton.isChecked():
-        set_reg(motion,0x075,v)
-    if ui.radioButton_2.isChecked():
-        set_reg(motion,0x075,v|4)
-    if ui.radioButton_3.isChecked():
-        set_reg(motion,0x075,v|2)
-    if ui.radioButton_4.isChecked():
-        set_reg(motion,0x075,v|1)
-    if ui.radioButton_5.isChecked():
-        set_reg(motion,0x075,v|3)
+        if self.radioButton.isChecked():
+            set_reg(self.pid,0x075,v)
+        if self.radioButton_2.isChecked():
+            set_reg(self.pid,0x075,v|4)
+        if self.radioButton_3.isChecked():
+            set_reg(self.pid,0x075,v|2)
+        if self.radioButton_4.isChecked():
+            set_reg(self.pid,0x075,v|1)
+        if self.radioButton_5.isChecked():
+            set_reg(self.pid,0x075,v|3)
+            
 
+    def setlearn(self):
+
+        set_enable(self.pid,1)
+        set_reg(self.pid,0x70,4)
+        set_reg(self.pid,0x71,0)
         
+        set_reg(self.pid,0x72,0)
+        set_reg(self.pid,0x73,2)
 
+        set_reg(self.pid,0x74,1)
 
-ui.radioButton.toggled.connect(radio)
-ui.radioButton_2.toggled.connect(radio)
-ui.radioButton_3.toggled.connect(radio)
-ui.radioButton_4.toggled.connect(radio)
-ui.radioButton_5.toggled.connect(radio)
+        set_reg(self.pid,0x75,3)
 
+    def setdetect(self):
+    
+        set_reg(self.pid,0x70,8)
+        set_reg(self.pid,0x71,0)
+        set_reg(self.pid,0x72,8)
+        set_reg(self.pid,0x73,0)
+        
+        set_reg(self.pid,0x74,1)
+        
+        set_reg(self.pid,0x75,0)
 
-def motion_c(v):
-    set_reg(motion,0x70,ui.motion_p01.value()%256)
-    set_reg(motion,0x71,ui.motion_p01.value()/256)
-    set_reg(motion,0x72,ui.motion_p23.value()%256)
-    set_reg(motion,0x73,ui.motion_p23.value()/256)
-    set_reg(motion,0x74,ui.motion_p4.value())
-
-ui.motion_p01.valueChanged.connect(motion_c)
-ui.motion_p23.valueChanged.connect(motion_c)
-ui.motion_p4.valueChanged.connect(motion_c)
-
-def preset_1():
-    set_reg(morph[0],0x70,21)
-    set_reg(morph[1],0x70,12)
-    set_reg(morph[2],0x70,12)
-    set_reg(morph[3],0x70,12)
-
-    set_enable(morph[0],1)
-    set_enable(morph[1],1)
-    set_enable(morph[2],1)
-    set_enable(morph[3],1)
-def preset_2():
-
-    set_enable(morph[0],0)
-    set_enable(morph[1],0)
-    set_enable(morph[2],0)
-    set_enable(morph[3],0)
-
-def learn():
-    preset_2()
-    set_enable(motion,1)
-    set_reg(motion,0x70,4)
-    set_reg(motion,0x71,0)
-
-    set_reg(motion,0x72,0)
-    set_reg(motion,0x73,2)
-
-    set_reg(motion,0x74,1)
-
-    set_reg(motion,0x75,3)
-
-def detect():
-    preset_1()
-    set_reg(motion,0x70,8)
-    set_reg(motion,0x71,0)
-    set_reg(motion,0x72,8)
-    set_reg(motion,0x73,0)
-
-    set_reg(motion,0x74,1)
-
-    set_reg(motion,0x75,0)
-
-
-
-ui.preset_1.clicked.connect(preset_1)
-ui.preset_2.clicked.connect(preset_2)
-ui.preset_3.clicked.connect(learn)
-ui.preset_4.clicked.connect(detect)
-
-
-def lock(i):
-    if i == 0:
-        set_reg(motion,0x75,0)
-    else:
-        set_reg(motion,0x75,1)
-
-ui.lock.stateChanged.connect(lock)
 
 
 #f = open("w.dat")
@@ -234,7 +244,22 @@ ui.lock.stateChanged.connect(lock)
 #myLabel.show();
 
 
+app = QtGui.QApplication(sys.argv)
+MainWindow = QtGui.QMainWindow(None)
+ui = Ui_MainWindow()
+ui.setupUi(MainWindow)
+
+sk = Skin(ui.pipe,2)
+mt = Motion(ui.pipe,3)
+mp = Morph(ui.pipe,4)
+hx = HistX(ui.pipe,16)
+hy = HistY(ui.pipe,17)
+
+QtCore.QObject.connect(ui.pushButton_exit, QtCore.SIGNAL("clicked()"), do_exit)
+
+
 MainWindow.show()
 r = app.exec_()
 sys.exit(r)
+
 
