@@ -73,14 +73,14 @@ begin
       and (Cr >= COEFF_CR_LOW) and (Cr <= COEFF_CR_HIGH) then
 
       stage_next.data_1   <= (others => '1');
-      stage_next.data_8   <= (others => '1');
-      stage_next.data_565 <= (others => '1');
-      stage_next.data_888 <= (others => '1');
+--      stage_next.data_8   <= (others => '1');
+--      stage_next.data_565 <= (others => '1');
+--      stage_next.data_888 <= (others => '1');
     else
       stage_next.data_1   <= (others => '0');
-      stage_next.data_8   <= (others => '0');
-      stage_next.data_565 <= (others => '0');
-      stage_next.data_888 <= (others => '0');
+--      stage_next.data_8   <= (others => '0');
+--      stage_next.data_565 <= (others => '0');
+--      stage_next.data_888 <= (others => '0');
     end if;
 -------------------------------------------------------------------------------
 -- Reset

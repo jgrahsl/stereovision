@@ -15,6 +15,7 @@ package cam_pkg is
   constant IDENT_HISTX   : std_logic_vector(7 downto 0) := X"05";
   constant IDENT_HISTY   : std_logic_vector(7 downto 0) := X"06";
   constant IDENT_MCBSINK : std_logic_vector(7 downto 0) := X"07";
+  constant IDENT_COLMUX : std_logic_vector(7 downto 0) := X"08";
 
   subtype mono_t is std_logic_vector(0 downto 0);
   subtype rgb565_t is std_logic_vector(15 downto 0);

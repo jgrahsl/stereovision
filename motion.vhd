@@ -124,14 +124,14 @@ begin
 
     if d = 1 then
       stage_next.data_1   <= (others => '1');
-      stage_next.data_8   <= (others => '1');
-      stage_next.data_565 <= (others => '1');
-      stage_next.data_888 <= (others => '1');
+--      stage_next.data_8   <= (others => '1');
+--      stage_next.data_565 <= (others => '1');
+--      stage_next.data_888 <= (others => '1');
     else
       stage_next.data_1   <= (others => '0');
-      stage_next.data_8   <= (others => '0');
-      stage_next.data_565 <= (others => '0');
-      stage_next.data_888 <= (others => '0');
+--      stage_next.data_8   <= (others => '0');
+--      stage_next.data_565 <= (others => '0');
+--      stage_next.data_888 <= (others => '0');
     end if;
 
     case unsigned(pipe_in.cfg(ID).p(5)(6 downto 0)) is

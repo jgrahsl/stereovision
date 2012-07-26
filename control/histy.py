@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'histy.ui'
 #
-# Created: Thu Jul 26 10:21:06 2012
+# Created: Thu Jul 26 16:24:05 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -25,8 +25,22 @@ class Ui_HistYBox(object):
         HistYBox.setSizePolicy(sizePolicy)
         HistYBox.setMinimumSize(QtCore.QSize(116, 0))
         self.enable = QtGui.QCheckBox(HistYBox)
-        self.enable.setGeometry(QtCore.QRect(10, 40, 93, 26))
+        self.enable.setGeometry(QtCore.QRect(10, 260, 93, 26))
         self.enable.setObjectName(_fromUtf8("enable"))
+        self.verticalSlider = QtGui.QSlider(HistYBox)
+        self.verticalSlider.setGeometry(QtCore.QRect(40, 72, 19, 159))
+        self.verticalSlider.setMaximum(255)
+        self.verticalSlider.setPageStep(16)
+        self.verticalSlider.setOrientation(QtCore.Qt.Vertical)
+        self.verticalSlider.setTickPosition(QtGui.QSlider.TicksBothSides)
+        self.verticalSlider.setTickInterval(16)
+        self.verticalSlider.setObjectName(_fromUtf8("verticalSlider"))
+        self.label = QtGui.QLabel(HistYBox)
+        self.label.setGeometry(QtCore.QRect(20, 232, 66, 20))
+        self.label.setObjectName(_fromUtf8("label"))
+        self.show = QtGui.QCheckBox(HistYBox)
+        self.show.setGeometry(QtCore.QRect(10, 30, 93, 26))
+        self.show.setObjectName(_fromUtf8("show"))
 
         self.retranslateUi(HistYBox)
         QtCore.QMetaObject.connectSlotsByName(HistYBox)
@@ -35,4 +49,6 @@ class Ui_HistYBox(object):
         HistYBox.setWindowTitle(QtGui.QApplication.translate("HistYBox", "GroupBox", None, QtGui.QApplication.UnicodeUTF8))
         HistYBox.setTitle(QtGui.QApplication.translate("HistYBox", "HistY", None, QtGui.QApplication.UnicodeUTF8))
         self.enable.setText(QtGui.QApplication.translate("HistYBox", "enable", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("HistYBox", "threshold", None, QtGui.QApplication.UnicodeUTF8))
+        self.show.setText(QtGui.QApplication.translate("HistYBox", "show", None, QtGui.QApplication.UnicodeUTF8))
 

@@ -168,14 +168,14 @@ begin
     mono_1d_out(0) <= stage.data_1;
     if pipe_in.stage.data_1 = "1" then
       stage_next.data_1   <= (others => '1');
-      stage_next.data_8   <= (others => '1');
-      stage_next.data_565 <= (others => '1');
-      stage_next.data_888 <= (others => '1');
+--      stage_next.data_8   <= (others => '1');
+--      stage_next.data_565 <= (others => '1');
+--      stage_next.data_888 <= (others => '1');
     else
       stage_next.data_1   <= (others => '0');
-      stage_next.data_8   <= (others => '0');
-      stage_next.data_565 <= (others => '0');
-      stage_next.data_888 <= (others => '0');
+--      stage_next.data_8   <= (others => '0');
+--      stage_next.data_565 <= (others => '0');
+--      stage_next.data_888 <= (others => '0');
     end if;
 
 -------------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mcbfeed.ui'
 #
-# Created: Thu Jul 26 10:21:06 2012
+# Created: Thu Jul 26 16:24:05 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!

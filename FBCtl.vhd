@@ -1182,14 +1182,21 @@ begin
       pipe_in  => pipe(5),              -- [in]
       pipe_out => pipe(6));             -- [out]
 
-
-  my_fifo_sink : entity work.fifo_sink
+  my_col_mux : entity work.color_mux
     generic map (
       ID => 18)
     port map (
       pipe_in  => pipe(6),              -- [in]
-      pipe_out => pipe(7),              -- [out]
-      fifo     => out_fifo);            -- [inout]
+      pipe_out => pipe(7));            -- [inout]
+
+  
+  --my_fifo_sink : entity work.fifo_sink
+  --  generic map (
+  --    ID => 18)
+  --  port map (
+  --    pipe_in  => pipe(6),              -- [in]
+  --    pipe_out => pipe(7),              -- [out]
+  --    fifo     => out_fifo);            -- [inout]
 
   my_mcb_sink : entity work.mcb_sink
     generic map (
@@ -1203,19 +1210,20 @@ begin
 
   inspect.identity <= pipe(8).stage.identity;
   
-  my_pixel_fifo : entity work.pixel_fifo
-    port map (
-      rst           => rstalg,                     -- [IN]
-      wr_clk        => out_fifo.clk,               -- [IN]
-      rd_clk        => usb_fifo.clk,               -- [IN]
-      din           => out_fifo.data,              -- [IN]
-      wr_en         => out_fifo.en,                -- [IN]
-      rd_en         => usb_fifo.en,                -- [IN]
-      dout          => usb_fifo.data(7 downto 0),  -- [OUT]
-      full          => out_fifo.stall,             -- [OUT]
-      empty         => usb_fifo.stall,
-      rd_data_count => usb_fifo.count);            -- [OUT]
-
-
+  --my_pixel_fifo : entity work.pixel_fifo
+  --  port map (
+  --    rst           => rstalg,                     -- [IN]
+  --    wr_clk        => out_fifo.clk,               -- [IN]
+  --    rd_clk        => usb_fifo.clk,               -- [IN]
+  --    din           => out_fifo.data,              -- [IN]
+  --    wr_en         => out_fifo.en,                -- [IN]
+  --    rd_en         => usb_fifo.en,                -- [IN]
+  --    dout          => usb_fifo.data(7 downto 0),  -- [OUT]
+  --    full          => out_fifo.stall,             -- [OUT]
+  --    empty         => usb_fifo.stall,
+  --    rd_data_count => usb_fifo.count);            -- [OUT]
+  usb_fifo.data <= (others => '0');
+  usb_fifo.count <= (others => '0');
+  usb_fifo.stall <= '0';
 end Behavioral;
 

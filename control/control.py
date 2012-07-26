@@ -9,6 +9,7 @@ from histx import *
 from histy import *
 from mcbfeed import *
 from mcbsink import *
+from colmux import * 
 
 import time
 from fpgalink2 import *
@@ -76,6 +77,24 @@ def do_exit():
     flClose(handle)
     app.exit(0)
 
+class ColMux(Ui_ColMuxBox):
+    def __init__(self, box,pid):
+        self.pid = pid
+        self.pipe = box
+        self.box = QtGui.QGroupBox(box.parentWidget())
+        self.setupUi(self.box)
+        self.pipe.addWidget(self.box)
+        self.enable.stateChanged.connect(self.en)
+        self.en(0)
+
+    def en(self,v):
+        self.enable.setChecked(v)
+        if v:
+            set_enable(self.pid,1)
+        else:
+            set_enable(self.pid,0)
+
+
 class MCBFeed(Ui_MCBFeedBox):
     def __init__(self, box,pid):
         self.pid = pid
@@ -87,7 +106,7 @@ class MCBFeed(Ui_MCBFeedBox):
         self.en(1)
 
     def en(self,v):
-        self.enable.setCheckState(v)
+        self.enable.setChecked(v)
         if v:
             set_enable(self.pid,1)
         else:
@@ -104,7 +123,7 @@ class MCBSink(Ui_MCBSinkBox):
         self.en(1)
 
     def en(self,v):
-        self.enable.setCheckState(v)
+        self.enable.setChecked(v)
         if v:
             set_enable(self.pid,1)
         else:
@@ -122,7 +141,7 @@ class Skin(Ui_SkinBox):
         self.en(0)
 
     def en(self,v):
-        self.enable.setCheckState(v)
+        self.enable.setChecked(v)
         if v:
             set_enable(self.pid,1)
         else:
@@ -139,7 +158,7 @@ class HistX(Ui_HistXBox):
         self.en(0)
 
     def en(self,v):
-        self.enable.setCheckState(v)
+        self.enable.setChecked(v)
         if v:
             set_enable(self.pid,1)
         else:
@@ -153,14 +172,26 @@ class HistY(Ui_HistYBox):
         self.setupUi(self.box)
         self.pipe.addWidget(self.box)
         self.enable.stateChanged.connect(self.en)
+        self.show.stateChanged.connect(self.sh)
+        self.verticalSlider.valueChanged.connect(self.val)
         self.en(0)
 
     def en(self,v):
-        self.enable.setCheckState(v)
+        self.enable.setChecked(v)
         if v:
             set_enable(self.pid,1)
         else:
             set_enable(self.pid,0)
+
+    def sh(self,v):
+        self.show.setChecked(v)
+        if v > 0:
+            v = 1
+        
+        set_reg(self.pid,0x70,v)        
+
+    def val(self,v):
+        set_reg(self.pid,0x71,v)        
 
 class Morph(Ui_MorphBox):
     def __init__(self, box,pid):
@@ -178,7 +209,7 @@ class Morph(Ui_MorphBox):
         self.en(0)
 
     def en(self,v):
-        self.enable.setCheckState(v)
+        self.enable.setChecked(v)
         if v:
             for i in range(0,12):
                 set_enable(self.pid+i,1)
@@ -222,7 +253,7 @@ class Motion(Ui_MotionBox):
         self.en(0)
 
     def en(self,v):
-        self.enable.setCheckState(v)
+        self.enable.setChecked(v)
         if v:
             set_enable(self.pid,1)
         else:
@@ -295,7 +326,7 @@ t = []
 i = 0
 while True:
     set_reg(i,0x61,3)
-    v = flReadChannel(handle, 5000, 0x62,6)
+    v = flReadChannel(handle, 5000, 0x62,2)
 
     set_reg(i,0x61,0)
 
@@ -321,6 +352,9 @@ while True:
     if v[0] == 0x07:
         print "MCBSink at " + str(i)
         t.append(MCBSink(ui.pipe,i))
+    if v[0] == 0x08:
+        print "ColMux at " + str(i)
+        t.append(ColMux(ui.pipe,i))
        
     i = i + 1
     if i > 20:
