@@ -84,8 +84,10 @@ class MCBFeed(Ui_MCBFeedBox):
         self.setupUi(self.box)
         self.pipe.addWidget(self.box)
         self.enable.stateChanged.connect(self.en)
+        self.en(1)
 
     def en(self,v):
+        self.enable.setCheckState(v)
         if v:
             set_enable(self.pid,1)
         else:
@@ -99,8 +101,10 @@ class MCBSink(Ui_MCBSinkBox):
         self.setupUi(self.box)
         self.pipe.addWidget(self.box)
         self.enable.stateChanged.connect(self.en)
+        self.en(1)
 
     def en(self,v):
+        self.enable.setCheckState(v)
         if v:
             set_enable(self.pid,1)
         else:
@@ -115,8 +119,10 @@ class Skin(Ui_SkinBox):
         self.setupUi(self.box)
         self.pipe.addWidget(self.box)
         self.enable.stateChanged.connect(self.en)
+        self.en(0)
 
     def en(self,v):
+        self.enable.setCheckState(v)
         if v:
             set_enable(self.pid,1)
         else:
@@ -130,8 +136,10 @@ class HistX(Ui_HistXBox):
         self.setupUi(self.box)
         self.pipe.addWidget(self.box)
         self.enable.stateChanged.connect(self.en)
+        self.en(0)
 
     def en(self,v):
+        self.enable.setCheckState(v)
         if v:
             set_enable(self.pid,1)
         else:
@@ -145,8 +153,10 @@ class HistY(Ui_HistYBox):
         self.setupUi(self.box)
         self.pipe.addWidget(self.box)
         self.enable.stateChanged.connect(self.en)
+        self.en(0)
 
     def en(self,v):
+        self.enable.setCheckState(v)
         if v:
             set_enable(self.pid,1)
         else:
@@ -165,8 +175,10 @@ class Morph(Ui_MorphBox):
         self.morph_th_6.valueChanged.connect(self.th2_c)
         self.morph_th_7.valueChanged.connect(self.th3_c)
         self.morph_th_8.valueChanged.connect(self.th4_c)
+        self.en(0)
 
     def en(self,v):
+        self.enable.setCheckState(v)
         if v:
             for i in range(0,12):
                 set_enable(self.pid+i,1)
@@ -207,8 +219,10 @@ class Motion(Ui_MotionBox):
         self.learn.clicked.connect(self.setlearn)
         self.detect.clicked.connect(self.setdetect)
         self.lock.stateChanged.connect(self.radio)
+        self.en(0)
 
     def en(self,v):
+        self.enable.setCheckState(v)
         if v:
             set_enable(self.pid,1)
         else:
