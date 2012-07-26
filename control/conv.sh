@@ -6,3 +6,5 @@ pyuic4  motion.ui  > motion.py
 pyuic4  histx.ui  > histx.py
 pyuic4  histy.ui  > histy.py
 pyuic4  control.ui  > controlui.py
+pyuic4  mcbfeed.ui > mcbfeed.py
+pyuic4  mcbsink.ui > mcbsink.py

@@ -115,6 +115,7 @@ entity FBCtl is
     mcb3_dram_ck     : out   std_logic;
     mcb3_dram_ck_n   : out   std_logic;
     cfg_unsync       : in    cfg_set_t;
+    inspect          : out    inspect_t;
     LED_O            : out   std_logic_vector(7 downto 0);
 
     out_fifo : inout pixel_fifo_t;
@@ -1112,7 +1113,10 @@ begin
            "1" & p1_wr_count                                                                                                                                            when rd_mode(3) = '1' else
            p0_rd_fifo.en & p0_wr_fifo.en & p0_rd_fifo.stall & "00000"                                                                                                   when rd_mode(4) = '1' else
            p1_rd_fifo.en & p1_wr_fifo.en & p1_rd_fifo.stall & "00000"                                                                                                   when rd_mode(5) = '1' else
-           pipe(0).stage.valid & pipe(1).stage.valid & pipe(2).stage.valid & pipe(3).stage.valid & pipe(4).stage.valid & pipe(5).stage.valid& pipe(6).stage.valid & "0" when rd_mode(6) = '1' else "00000000";
+           pipe(0).stage.valid & pipe(1).stage.valid & pipe(2).stage.valid & pipe(3).stage.valid & pipe(4).stage.valid & pipe(5).stage.valid& pipe(6).stage.valid & "0" when rd_mode(6) = '1' else
+           pipe(1).stage.identity when rd_mode(7) = '1' else
+
+           "00000000";
 
 -------------------------------------------------------------------------------
 -- PIPE
@@ -1196,6 +1200,8 @@ begin
       p0_fifo  => p0_wr_fifo,           -- [inout]
       p1_fifo  => p1_wr_fifo);          -- [inout]
 
+
+  inspect.identity <= pipe(8).stage.identity;
   
   my_pixel_fifo : entity work.pixel_fifo
     port map (

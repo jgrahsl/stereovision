@@ -38,6 +38,7 @@ vhdl work "fifo_sink.vhd"
 vhdl work "comm_fpga_fx2.vhdl"
 
 vhdl work "cfg_sync.vhd"
+vhdl work "inspect_sync.vhd"
 
 vhdl work "SysCon.vhd"
 vhdl work "FBCtl.vhd"

@@ -7,7 +7,8 @@ from motion import *
 from skin import *
 from histx import *
 from histy import *
-
+from mcbfeed import *
+from mcbsink import *
 
 import time
 from fpgalink2 import *
@@ -26,8 +27,7 @@ def set_pipe(n):
     send_byte(0x60,n)
 
 def set_enable(adr,en):
-    set_pipe(adr)
-    send_byte(0x61,en)
+    set_reg(adr,0x61,en)
 
 def set_reg(adr,reg,en):
 #    print "Set pipe " + str(adr) + " reg " + str(reg) + " to " + str(en)
@@ -76,6 +76,35 @@ def do_exit():
     flClose(handle)
     app.exit(0)
 
+class MCBFeed(Ui_MCBFeedBox):
+    def __init__(self, box,pid):
+        self.pid = pid
+        self.pipe = box
+        self.box = QtGui.QGroupBox(box.parentWidget())
+        self.setupUi(self.box)
+        self.pipe.addWidget(self.box)
+        self.enable.stateChanged.connect(self.en)
+
+    def en(self,v):
+        if v:
+            set_enable(self.pid,1)
+        else:
+            set_enable(self.pid,0)
+
+class MCBSink(Ui_MCBSinkBox):
+    def __init__(self, box,pid):
+        self.pid = pid
+        self.pipe = box
+        self.box = QtGui.QGroupBox(box.parentWidget())
+        self.setupUi(self.box)
+        self.pipe.addWidget(self.box)
+        self.enable.stateChanged.connect(self.en)
+
+    def en(self,v):
+        if v:
+            set_enable(self.pid,1)
+        else:
+            set_enable(self.pid,0)
 
 
 class Skin(Ui_SkinBox):
@@ -248,13 +277,40 @@ app = QtGui.QApplication(sys.argv)
 MainWindow = QtGui.QMainWindow(None)
 ui = Ui_MainWindow()
 ui.setupUi(MainWindow)
+t = []
+i = 0
+while True:
+    set_reg(i,0x61,3)
+    v = flReadChannel(handle, 5000, 0x62,6)
 
-sk = Skin(ui.pipe,2)
-mt = Motion(ui.pipe,3)
-mp = Morph(ui.pipe,4)
-hx = HistX(ui.pipe,16)
-hy = HistY(ui.pipe,17)
+    set_reg(i,0x61,0)
 
+    if v[0] == 0x01:
+        print "MCBFeed at " + str(i)
+        t.append(MCBFeed(ui.pipe,i))
+    if v[0] == 0x02:
+        print "Skin at " + str(i)
+        t.append(Skin(ui.pipe,i)) 
+    if v[0] == 0x03:
+        print "Motion at " + str(i)
+        t.append(Motion(ui.pipe,i)) 
+    if v[0] == 0x04:
+        print "Morph at " + str(i-2)
+        t.append(Morph(ui.pipe,i-2))
+        i = i + 9
+    if v[0] == 0x05:
+        print "HistX at " + str(i)
+        t.append(HistX(ui.pipe,i)) 
+    if v[0] == 0x06:
+        print "HistY at " + str(i)
+        t.append(HistY(ui.pipe,i)) 
+    if v[0] == 0x07:
+        print "MCBSink at " + str(i)
+        t.append(MCBSink(ui.pipe,i))
+       
+    i = i + 1
+    if i > 20:
+        break
 QtCore.QObject.connect(ui.pushButton_exit, QtCore.SIGNAL("clicked()"), do_exit)
 
 

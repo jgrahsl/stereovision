@@ -45,7 +45,7 @@ begin
   pipe_out.cfg   <= pipe_in.cfg;
   pipe_out.stage <= stage;
 
-  avail <= '1' when p0_fifo.stall = '0' and p1_fifo.stall = '0' else '0';  --and pipe_in.cfg(ID).enable = '1' else '0';
+  avail <= '1' when p0_fifo.stall = '0' and p1_fifo.stall = '0' and pipe_in.cfg(ID).enable = '1' else '0';
 
   p0_fifo.en  <= avail and not r.sel_is_high;
   p0_fifo.clk <= clk;
@@ -95,22 +95,24 @@ begin
 -------------------------------------------------------------------------------
 -- Reset
 -------------------------------------------------------------------------------
+    if pipe_in.cfg(ID).identify = '1' then
+      stage_next.identity <= IDENT_MCBFEED;
+    end if;
     if rst = '1' then
       stage_next <= NULL_STAGE;
       init(v);
     end if;
-
     r_next <= v;
   end process;
 
   proc_clk : process(pipe_in)
   begin
     if rising_edge(clk) then
---      if (pipe_in.cfg(ID).enable = '1') then
-      stage <= stage_next;
---      else
---        stage <= pipe_in.stage;
---      end if;
+      if (pipe_in.cfg(ID).enable = '1') then
+        stage <= stage_next;
+      else
+        stage <= pipe_in.stage;
+      end if;     
       r     <= r_next;
     end if;
   end process;
