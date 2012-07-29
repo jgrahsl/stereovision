@@ -115,7 +115,7 @@ begin
             if v.area > v.maxarea then
               --current area bigger
               v.maxstart := v.start;
-              v.maxend   := v.cols-1;
+              v.maxend   := v.rows-1;
               v.maxarea  := v.area;
             else
               v.area := 0;
@@ -128,7 +128,7 @@ begin
         else
           if to_unsigned(v.val, 10) > unsigned(pipe_in.cfg(ID).p(1)) then
             v.area  := v.val;
-            v.start := v.cols;
+            v.start := v.rows;
           end if;
         end if;
       end if;
@@ -138,10 +138,13 @@ begin
 -------------------------------------------------------------------------------
 -- Output
 -------------------------------------------------------------------------------
-    if v.cols < v.val then
-      stage_next.data_1 <= (others => '1');
-    else
-      stage_next.data_1 <= (others => '0');
+
+    if pipe_in.cfg(ID).p(0)(1) = '1' then    
+      if v.cols < v.val then
+        stage_next.data_1 <= (others => '1');
+      else
+        stage_next.data_1 <= (others => '0');
+      end if;
     end if;
 
     if pipe_in.cfg(ID).p(0)(0) = '1' then

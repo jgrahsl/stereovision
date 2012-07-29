@@ -2,14 +2,12 @@
 from sip import *
 import sip
 from controlui import *
+
+from enable import * 
 from morph import *
 from motion import *
-from skin import *
-from histx import *
-from histy import *
-from mcbfeed import *
-from mcbsink import *
-from colmux import * 
+from hist import *
+
 
 import time
 from fpgalink2 import *
@@ -77,8 +75,8 @@ def do_exit():
     flClose(handle)
     app.exit(0)
 
-class ColMux(Ui_ColMuxBox):
-    def __init__(self, box,pid):
+class Enable(Ui_EnableBox):
+    def __init__(self, box,pid,name):
         self.pid = pid
         self.pipe = box
         self.box = QtGui.QGroupBox(box.parentWidget())
@@ -86,6 +84,11 @@ class ColMux(Ui_ColMuxBox):
         self.pipe.addWidget(self.box)
         self.enable.stateChanged.connect(self.en)
         self.en(0)
+        self.box.setTitle(name)
+#        self.box.setWindowTitle(QtGui.QApplication.translate("SkinBox", "GroupBox", None, QtGui.QApplication.UnicodeUTF8))
+#        SkinBox.setTitle(QtGui.QApplication.translate("SkinBox", "SkinBox", None, QtGui.QApplication.UnicodeUTF8))
+#        self.enable.setText(QtGui.QApplication.translate("SkinBox", "enable", None, QtGui.QApplication.UnicodeUTF8))
+
 
     def en(self,v):
         self.enable.setChecked(v)
@@ -94,61 +97,8 @@ class ColMux(Ui_ColMuxBox):
         else:
             set_enable(self.pid,0)
 
-
-class MCBFeed(Ui_MCBFeedBox):
-    def __init__(self, box,pid):
-        self.pid = pid
-        self.pipe = box
-        self.box = QtGui.QGroupBox(box.parentWidget())
-        self.setupUi(self.box)
-        self.pipe.addWidget(self.box)
-        self.enable.stateChanged.connect(self.en)
-        self.en(1)
-
-    def en(self,v):
-        self.enable.setChecked(v)
-        if v:
-            set_enable(self.pid,1)
-        else:
-            set_enable(self.pid,0)
-
-class MCBSink(Ui_MCBSinkBox):
-    def __init__(self, box,pid):
-        self.pid = pid
-        self.pipe = box
-        self.box = QtGui.QGroupBox(box.parentWidget())
-        self.setupUi(self.box)
-        self.pipe.addWidget(self.box)
-        self.enable.stateChanged.connect(self.en)
-        self.en(1)
-
-    def en(self,v):
-        self.enable.setChecked(v)
-        if v:
-            set_enable(self.pid,1)
-        else:
-            set_enable(self.pid,0)
-
-
-class Skin(Ui_SkinBox):
-    def __init__(self, box,pid):
-        self.pid = pid
-        self.pipe = box
-        self.box = QtGui.QGroupBox(box.parentWidget())
-        self.setupUi(self.box)
-        self.pipe.addWidget(self.box)
-        self.enable.stateChanged.connect(self.en)
-        self.en(0)
-
-    def en(self,v):
-        self.enable.setChecked(v)
-        if v:
-            set_enable(self.pid,1)
-        else:
-            set_enable(self.pid,0)
-
-class HistX(Ui_HistXBox):
-    def __init__(self, box,pid):
+class Hist(Ui_HistBox):
+    def __init__(self, box,pid,name):
         self.pid = pid
         self.pipe = box
         self.box = QtGui.QGroupBox(box.parentWidget())
@@ -158,35 +108,7 @@ class HistX(Ui_HistXBox):
         self.show.stateChanged.connect(self.sh)
         self.verticalSlider.valueChanged.connect(self.val)
         self.en(0)
-
-    def en(self,v):
-        self.enable.setChecked(v)
-        if v:
-            set_enable(self.pid,1)
-        else:
-            set_enable(self.pid,0)
-
-    def sh(self,v):
-        self.show.setChecked(v)
-        if v > 0:
-            v = 1
-        
-        set_reg(self.pid,0x70,v)        
-
-    def val(self,v):
-        set_reg(self.pid,0x71,v)        
-
-class HistY(Ui_HistYBox):
-    def __init__(self, box,pid):
-        self.pid = pid
-        self.pipe = box
-        self.box = QtGui.QGroupBox(box.parentWidget())
-        self.setupUi(self.box)
-        self.pipe.addWidget(self.box)
-        self.enable.stateChanged.connect(self.en)
-        self.show.stateChanged.connect(self.sh)
-        self.verticalSlider.valueChanged.connect(self.val)
-        self.en(0)
+        self.box.setTitle(name)
 
     def en(self,v):
         self.enable.setChecked(v)
@@ -344,10 +266,10 @@ while True:
 
     if v[0] == 0x01:
         print "MCBFeed at " + str(i)
-        t.append(MCBFeed(ui.pipe,i))
+        t.append(Enable(ui.pipe,i,"MCBFeed"))
     if v[0] == 0x02:
         print "Skin at " + str(i)
-        t.append(Skin(ui.pipe,i)) 
+        t.append(Enable(ui.pipe,i,"Skin")) 
     if v[0] == 0x03:
         print "Motion at " + str(i)
         t.append(Motion(ui.pipe,i)) 
@@ -357,16 +279,16 @@ while True:
         i = i + 9
     if v[0] == 0x05:
         print "HistX at " + str(i)
-        t.append(HistX(ui.pipe,i)) 
+        t.append(Hist(ui.pipe,i,"HistX")) 
     if v[0] == 0x06:
         print "HistY at " + str(i)
-        t.append(HistY(ui.pipe,i)) 
+        t.append(Hist(ui.pipe,i,"HistY")) 
     if v[0] == 0x07:
         print "MCBSink at " + str(i)
-        t.append(MCBSink(ui.pipe,i))
+        t.append(Enable(ui.pipe,i,"MCBSink"))
     if v[0] == 0x08:
         print "ColMux at " + str(i)
-        t.append(ColMux(ui.pipe,i))
+        t.append(Enable(ui.pipe,i,"ColMux"))
        
     i = i + 1
     if i > 20:

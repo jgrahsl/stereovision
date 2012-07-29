@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ColMuxBox</class>
- <widget class="QGroupBox" name="ColMuxBox">
+ <class>EnableBox</class>
+ <widget class="QGroupBox" name="EnableBox">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -26,7 +26,7 @@
    <string>GroupBox</string>
   </property>
   <property name="title">
-   <string>ColMux</string>
+   <string>EnableBox</string>
   </property>
   <widget class="QCheckBox" name="enable">
    <property name="geometry">

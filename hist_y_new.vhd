@@ -63,11 +63,11 @@ architecture impl of hist_y is
     v.wr_adr := 0;
     v.phase  := 0;
 
-    v.maxarea    := 0;
-    v.maxstart   := 0;
-    v.maxend     := 0;
-    v.area       := 0;
-    v.start      := 0;
+    v.maxarea  := 0;
+    v.maxstart := 0;
+    v.maxend   := 0;
+    v.area     := 0;
+    v.start    := 0;
   end init;
 
   signal ram2_wen  : std_logic_vector(0 downto 0);
@@ -277,10 +277,12 @@ begin
 -------------------------------------------------------------------------------
 -- Output
 -------------------------------------------------------------------------------
-    if v.rows < cur then
-      stage_next.data_1 <= (others => '1');
-    else
-      stage_next.data_1 <= (others => '0');
+    if pipe_in.cfg(ID).p(0)(1) = '1' then
+      if v.rows < cur then
+        stage_next.data_1 <= (others => '1');
+      else
+        stage_next.data_1 <= (others => '0');
+      end if;
     end if;
 
     if pipe_in.cfg(ID).p(0)(0) = '1' then

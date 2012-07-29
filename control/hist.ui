@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>HistXBox</class>
- <widget class="QGroupBox" name="HistXBox">
+ <class>HistBox</class>
+ <widget class="QGroupBox" name="HistBox">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -26,7 +26,7 @@
    <string>GroupBox</string>
   </property>
   <property name="title">
-   <string>HistX</string>
+   <string>Hist</string>
   </property>
   <widget class="QCheckBox" name="enable">
    <property name="geometry">
