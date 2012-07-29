@@ -155,6 +155,8 @@ class HistX(Ui_HistXBox):
         self.setupUi(self.box)
         self.pipe.addWidget(self.box)
         self.enable.stateChanged.connect(self.en)
+        self.show.stateChanged.connect(self.sh)
+        self.verticalSlider.valueChanged.connect(self.val)
         self.en(0)
 
     def en(self,v):
@@ -163,6 +165,16 @@ class HistX(Ui_HistXBox):
             set_enable(self.pid,1)
         else:
             set_enable(self.pid,0)
+
+    def sh(self,v):
+        self.show.setChecked(v)
+        if v > 0:
+            v = 1
+        
+        set_reg(self.pid,0x70,v)        
+
+    def val(self,v):
+        set_reg(self.pid,0x71,v)        
 
 class HistY(Ui_HistYBox):
     def __init__(self, box,pid):

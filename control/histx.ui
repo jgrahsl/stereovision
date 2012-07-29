@@ -32,13 +32,64 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>40</y>
+     <y>260</y>
      <width>93</width>
      <height>26</height>
     </rect>
    </property>
    <property name="text">
     <string>enable</string>
+   </property>
+  </widget>
+  <widget class="QSlider" name="verticalSlider">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>72</y>
+     <width>19</width>
+     <height>159</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>255</number>
+   </property>
+   <property name="pageStep">
+    <number>16</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+   <property name="tickPosition">
+    <enum>QSlider::TicksBothSides</enum>
+   </property>
+   <property name="tickInterval">
+    <number>16</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>232</y>
+     <width>66</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>threshold</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="show">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>30</y>
+     <width>93</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>show</string>
    </property>
   </widget>
  </widget>

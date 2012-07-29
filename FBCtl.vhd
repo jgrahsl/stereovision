@@ -115,7 +115,7 @@ entity FBCtl is
     mcb3_dram_ck     : out   std_logic;
     mcb3_dram_ck_n   : out   std_logic;
     cfg_unsync       : in    cfg_set_t;
-    inspect          : out    inspect_t;
+    inspect          : out   inspect_t;
     LED_O            : out   std_logic_vector(7 downto 0);
 
     out_fifo : inout pixel_fifo_t;
@@ -1015,12 +1015,14 @@ begin
     p0_cmd_instr     <= (others => '0');
     p0_cmd_bl        <= conv_std_logic_vector(P0_BATCH-1, 6);
     p0_cmd_byte_addr <= (others => '0');
+    p0_wr_mask       <= "0000";
 
     p1_cmd_clk       <= clkalg;
     p1_cmd_en        <= '0';
     p1_cmd_instr     <= (others => '0');
     p1_cmd_bl        <= conv_std_logic_vector(P1_BATCH-1, 6);
     p1_cmd_byte_addr <= conv_std_logic_vector(my_p1_addr, 30);
+    p1_wr_mask       <= "0000";
 
     case my_state is
 
@@ -1114,7 +1116,7 @@ begin
            p0_rd_fifo.en & p0_wr_fifo.en & p0_rd_fifo.stall & "00000"                                                                                                   when rd_mode(4) = '1' else
            p1_rd_fifo.en & p1_wr_fifo.en & p1_rd_fifo.stall & "00000"                                                                                                   when rd_mode(5) = '1' else
            pipe(0).stage.valid & pipe(1).stage.valid & pipe(2).stage.valid & pipe(3).stage.valid & pipe(4).stage.valid & pipe(5).stage.valid& pipe(6).stage.valid & "0" when rd_mode(6) = '1' else
-           pipe(1).stage.identity when rd_mode(7) = '1' else
+           pipe(1).stage.identity                                                                                                                                       when rd_mode(7) = '1' else
 
            "00000000";
 
@@ -1187,9 +1189,9 @@ begin
       ID => 18)
     port map (
       pipe_in  => pipe(6),              -- [in]
-      pipe_out => pipe(7));            -- [inout]
+      pipe_out => pipe(7));             -- [inout]
 
-  
+
   --my_fifo_sink : entity work.fifo_sink
   --  generic map (
   --    ID => 18)
@@ -1209,7 +1211,7 @@ begin
 
 
   inspect.identity <= pipe(8).stage.identity;
-  
+
   --my_pixel_fifo : entity work.pixel_fifo
   --  port map (
   --    rst           => rstalg,                     -- [IN]
@@ -1222,7 +1224,7 @@ begin
   --    full          => out_fifo.stall,             -- [OUT]
   --    empty         => usb_fifo.stall,
   --    rd_data_count => usb_fifo.count);            -- [OUT]
-  usb_fifo.data <= (others => '0');
+  usb_fifo.data  <= (others => '0');
   usb_fifo.count <= (others => '0');
   usb_fifo.stall <= '0';
 end Behavioral;

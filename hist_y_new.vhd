@@ -41,11 +41,13 @@ architecture impl of hist_y is
     wr_adr : natural range 0 to WIDTH-1;
     phase  : natural range 0 to 3;
 
-    maxarea  : natural range 0 to (WIDTH*HEIGHT);
-    maxstart : natural range 0 to (WIDTH-1);
-    maxend   : natural range 0 to (WIDTH-1);
-    area     : natural range 0 to (WIDTH*HEIGHT);
-    start    : natural range 0 to (WIDTH-1);
+    draw_start : natural range 0 to (HEIGHT-1);
+    draw_end   : natural range 0 to (HEIGHT-1);
+    maxarea    : natural range 0 to (WIDTH*HEIGHT);
+    maxstart   : natural range 0 to (WIDTH-1);
+    maxend     : natural range 0 to (WIDTH-1);
+    area       : natural range 0 to (WIDTH*HEIGHT);
+    start      : natural range 0 to (WIDTH-1);
   end record;
 
   signal r      : reg_t;
@@ -61,11 +63,11 @@ architecture impl of hist_y is
     v.wr_adr := 0;
     v.phase  := 0;
 
-    v.maxarea  := 0;
-    v.maxstart := 0;
-    v.maxend   := 0;
-    v.area     := 0;
-    v.start    := 0;
+    v.maxarea    := 0;
+    v.maxstart   := 0;
+    v.maxend     := 0;
+    v.area       := 0;
+    v.start      := 0;
   end init;
 
   signal ram2_wen  : std_logic_vector(0 downto 0);
@@ -242,8 +244,8 @@ begin
       if v.rows = 0 then
         if v.cols = 0 then
           v.maxstart := 0;
-          v.maxend := 0;
-          v.maxarea := 0;
+          v.maxend   := 0;
+          v.maxarea  := 0;
         end if;
         if v.area > 0 then
           -- area is open
@@ -276,15 +278,15 @@ begin
 -- Output
 -------------------------------------------------------------------------------
     if v.rows < cur then
-      stage_next.data_1   <= (others => '1');
+      stage_next.data_1 <= (others => '1');
     else
-      stage_next.data_1   <= (others => '0');
-    end if;      
+      stage_next.data_1 <= (others => '0');
+    end if;
 
     if pipe_in.cfg(ID).p(0)(0) = '1' then
       if (v.cols = v.maxstart or v.cols = v.maxend) and v.maxarea > 0 then
         stage_next.data_565 <= "0000011111100000";
-        stage_next.data_1   <= (others => '1');        
+        stage_next.data_1   <= (others => '1');
       end if;
     end if;
 -------------------------------------------------------------------------------
