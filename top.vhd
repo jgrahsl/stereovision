@@ -193,7 +193,7 @@ begin
   Inst_SysCon : entity work.SysCon port map(
     CLK_I          => CLK_I,
     CLK_O          => open,
-    RSTN_I         => reg0(0),
+    RSTN_I         => reset_i,
     RSEL_O         => open,  --resolution selector synchronized with PClk
     CAMCLK_O       => CamClk,
     CAMCLK_180_O   => CamClk_180,
@@ -421,7 +421,7 @@ begin
           when "1110011" =>
             cfg(adr).p(3) <= h2fData;
           when "1110100" =>
-            cfg(adr).p(4) <= h2fData;
+             cfg(adr).p(4) <= h2fData;
           when "1110101" =>
             cfg(adr).p(5) <= h2fData;
             --when "1110110" =>
