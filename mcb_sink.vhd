@@ -21,6 +21,8 @@ architecture impl of mcb_sink is
 
   signal clk        : std_logic;
   signal rst        : std_logic;
+  signal issue      : std_logic := '0';
+  signal stall      : std_logic;  
   signal stage      : stage_t;
   signal stage_next : stage_t;
 
@@ -37,18 +39,18 @@ architecture impl of mcb_sink is
   signal avail         : std_logic;
   signal selected_word : std_logic_vector(15 downto 0);
 begin
-  
+
   clk <= pipe_in.ctrl.clk;
   rst <= pipe_in.ctrl.rst;
 
-  pipe_out.ctrl  <= pipe_in.ctrl;
+  connect_ctrl(pipe_in.ctrl, pipe_out.ctrl, issue, stall);
   pipe_out.cfg   <= pipe_in.cfg;
   pipe_out.stage <= stage;
 
-  p0_fifo.en  <= pipe_in.stage.valid and not r.sel_is_high;
+  p0_fifo.en  <= pipe_in.stage.valid and not r.sel_is_high;-- and not stall;
   p0_fifo.clk <= clk;
   
-  p1_fifo.en  <= pipe_in.stage.valid;
+  p1_fifo.en  <= pipe_in.stage.valid;-- and not stall;
   p1_fifo.clk <= clk;
 
   p0_fifo.data(31 downto 16) <= pipe_in.stage.data_565;
@@ -98,6 +100,9 @@ begin
         p0_fifo.data(15 downto 0) <= pipe_in.stage.data_565;
       end if;
       r <= r_next;
+    end if;
+    if rising_edge(clk) then
+      issue <= not issue;
     end if;
   end process;
 

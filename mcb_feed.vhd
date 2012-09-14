@@ -21,6 +21,8 @@ architecture impl of mcb_feed is
 
   signal clk        : std_logic;
   signal rst        : std_logic;
+  signal issue      : std_logic;
+  signal stall      : std_logic;
   signal stage      : stage_t;
   signal stage_next : stage_t;
 
@@ -37,28 +39,28 @@ architecture impl of mcb_feed is
   signal avail         : std_logic;
   signal selected_word : std_logic_vector(15 downto 0);
 begin
-  
+  issue <= '0';
   clk <= pipe_in.ctrl.clk;
   rst <= pipe_in.ctrl.rst;
 
-  pipe_out.ctrl  <= pipe_in.ctrl;
+  connect_ctrl(pipe_in.ctrl, pipe_out.ctrl, issue, stall);
   pipe_out.cfg   <= pipe_in.cfg;
   pipe_out.stage <= stage;
 
   avail <= '1' when p0_fifo.stall = '0' and p1_fifo.stall = '0' and pipe_in.cfg(ID).enable = '1' else '0';
 
-  p0_fifo.en  <= avail and not r.sel_is_high;
+  p0_fifo.en  <= avail and not r.sel_is_high and not stall;
   p0_fifo.clk <= clk;
 
-  p1_fifo.en  <= avail;
+  p1_fifo.en  <= avail and not stall;
   p1_fifo.clk <= clk;
 
   selected_word <= p0_fifo.data(31 downto 16) when r.sel_is_high = '0' else
                    p0_fifo.data(15 downto 0);
 
   process (pipe_in)
-    variable v : reg_t;
-    variable brightness     : unsigned(7 downto 0);
+    variable v          : reg_t;
+    variable brightness : unsigned(7 downto 0);
   begin
     stage_next <= pipe_in.stage;
     v          := r;
@@ -75,8 +77,8 @@ begin
                   ("00" & unsigned(selected_word(10 downto 5))) +
                   ("00" & unsigned(selected_word(4 downto 0)) & "0");
 
-    stage_next.data_1 <= (others => '0');    
-    stage_next.data_8 <= std_logic_vector(brightness);
+    stage_next.data_1   <= (others => '0');
+    stage_next.data_8   <= std_logic_vector(brightness);
     stage_next.data_565 <= selected_word;
     stage_next.data_888 <= selected_word(15 downto 11) & "000" &
                            selected_word(10 downto 5) & "00" &
@@ -107,13 +109,13 @@ begin
 
   proc_clk : process(pipe_in)
   begin
-    if rising_edge(clk) then
+    if rising_edge(clk) and stall = '0' then
       if (pipe_in.cfg(ID).enable = '1') then
         stage <= stage_next;
       else
         stage <= pipe_in.stage;
-      end if;     
-      r     <= r_next;
+      end if;
+      r <= r_next;
     end if;
   end process;
 

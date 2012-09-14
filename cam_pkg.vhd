@@ -15,7 +15,7 @@ package cam_pkg is
   constant IDENT_HISTX   : std_logic_vector(7 downto 0) := X"05";
   constant IDENT_HISTY   : std_logic_vector(7 downto 0) := X"06";
   constant IDENT_MCBSINK : std_logic_vector(7 downto 0) := X"07";
-  constant IDENT_COLMUX : std_logic_vector(7 downto 0) := X"08";
+  constant IDENT_COLMUX  : std_logic_vector(7 downto 0) := X"08";
 
   subtype mono_t is std_logic_vector(0 downto 0);
   subtype rgb565_t is std_logic_vector(15 downto 0);
@@ -51,8 +51,10 @@ package cam_pkg is
   end record;
 
   type ctrl_t is record
-    clk : std_logic;
-    rst : std_logic;
+    clk   : std_logic;
+    rst   : std_logic;
+    issue : std_logic;
+    stall : std_logic;
   end record;
 
   type cfg_set_t is array (0 to MAX_PIPE-1) of cfg_t;
@@ -79,5 +81,22 @@ package cam_pkg is
     data  : std_logic_vector(15 downto 0);
     count : std_logic_vector(9 downto 0);
   end record;
-  
+
+  procedure connect_ctrl (
+    signal ctrl_in  : in  ctrl_t;
+    signal ctrl_out : out ctrl_t;
+    signal issue    : in  std_logic;
+    signal stall    : out std_logic)
+  is
+  begin
+    ctrl_out.clk   <= ctrl_in.clk;
+    ctrl_out.rst   <= ctrl_in.rst;
+    ctrl_out.issue <= ctrl_in.issue or issue;
+    ctrl_out.stall <= ctrl_in.stall and not issue;
+    stall          <= ctrl_in.stall and not issue;
+  end procedure connect_ctrl;
+
+
+
+
 end cam_pkg;
