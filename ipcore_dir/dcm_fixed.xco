@@ -1,7 +1,7 @@
 ##############################################################
 #
-# Xilinx Core Generator version 13.4
-# Date: Sun Jun 17 09:31:01 2012
+# Xilinx Core Generator version 14.2
+# Date: Fri Sep 14 16:11:30 2012
 #
 ##############################################################
 #
@@ -106,7 +106,7 @@ CSET clock_mgr_type=AUTO
 CSET component_name=dcm_fixed
 CSET daddr_port=DADDR
 CSET dclk_port=DCLK
-CSET dcm_clk_feedback=NONE
+CSET dcm_clk_feedback=1X
 CSET dcm_clk_out1_port=CLKFX
 CSET dcm_clk_out2_port=CLKFX180
 CSET dcm_clk_out3_port=CLK0
@@ -218,7 +218,7 @@ CSET pll_clkout4_phase=0.000
 CSET pll_clkout5_divide=1
 CSET pll_clkout5_duty_cycle=0.500
 CSET pll_clkout5_phase=0.000
-CSET pll_compensation=INTERNAL
+CSET pll_compensation=SYSTEM_SYNCHRONOUS
 CSET pll_divclk_divide=1
 CSET pll_notes=None
 CSET pll_ref_jitter=0.010
@@ -253,7 +253,7 @@ CSET use_locked=true
 CSET use_max_i_jitter=false
 CSET use_min_o_jitter=false
 CSET use_min_power=false
-CSET use_phase_alignment=false
+CSET use_phase_alignment=true
 CSET use_power_down=false
 CSET use_reset=true
 CSET use_spread_spectrum=false
@@ -263,4 +263,4 @@ CSET use_status=false
 MISC pkg_timestamp=2011-03-09T16:42:33Z
 # END Extra information
 GENERATE
-# CRC: 304151e3
+# CRC: 29a117de

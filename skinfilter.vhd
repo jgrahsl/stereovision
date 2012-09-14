@@ -19,14 +19,14 @@ architecture impl of skinfilter is
   signal rst        : std_logic;
   signal stage      : stage_t;
   signal stage_next : stage_t;
+  signal src_valid  : std_logic;
+  signal issue      : std_logic;
+  signal stall      : std_logic;
 
 begin
-  clk <= pipe_in.ctrl.clk;
-  rst <= pipe_in.ctrl.rst;
+  issue <= '0';
 
-  pipe_out.ctrl  <= pipe_in.ctrl;
-  pipe_out.cfg   <= pipe_in.cfg;
-  pipe_out.stage <= stage;
+  connect_pipe(clk, rst, pipe_in, pipe_out, stage, src_valid, issue, stall);
 
   process (pipe_in)
     variable colr : std_logic_vector(15 downto 0);

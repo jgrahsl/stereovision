@@ -87,7 +87,7 @@ end dcm_fixed;
 
 architecture xilinx of dcm_fixed is
   attribute CORE_GENERATION_INFO : string;
-  attribute CORE_GENERATION_INFO of xilinx : architecture is "dcm_fixed,clk_wiz_v3_2,{component_name=dcm_fixed,use_phase_alignment=false,use_min_o_jitter=false,use_max_i_jitter=false,use_dyn_phase_shift=false,use_inclk_switchover=false,use_dyn_reconfig=false,feedback_source=FDBK_AUTO,primtype_sel=DCM_SP,num_out_clk=2,clkin1_period=10.0,clkin2_period=10.0,use_power_down=false,use_reset=true,use_locked=true,use_inclk_stopped=false,use_status=false,use_freeze=false,use_clk_valid=false,feedback_type=SINGLE,clock_mgr_type=AUTO,manual_override=false}";
+  attribute CORE_GENERATION_INFO of xilinx : architecture is "dcm_fixed,clk_wiz_v3_2,{component_name=dcm_fixed,use_phase_alignment=true,use_min_o_jitter=false,use_max_i_jitter=false,use_dyn_phase_shift=false,use_inclk_switchover=false,use_dyn_reconfig=false,feedback_source=FDBK_AUTO,primtype_sel=DCM_SP,num_out_clk=2,clkin1_period=10.0,clkin2_period=10.0,use_power_down=false,use_reset=true,use_locked=true,use_inclk_stopped=false,use_status=false,use_freeze=false,use_clk_valid=false,feedback_type=SINGLE,clock_mgr_type=AUTO,manual_override=false}";
 	  -- Input clock buffering / unused connectors
   signal clkin1            : std_logic;
   -- Output clock buffering
@@ -120,7 +120,7 @@ begin
     CLKIN_DIVIDE_BY_2     => FALSE,
     CLKIN_PERIOD          => 10.0,
     CLKOUT_PHASE_SHIFT    => "NONE",
-    CLK_FEEDBACK          => "NONE",
+    CLK_FEEDBACK          => "1X",
     DESKEW_ADJUST         => "SYSTEM_SYNCHRONOUS",
     PHASE_SHIFT           => 0,
     STARTUP_WAIT          => FALSE)
@@ -156,8 +156,10 @@ begin
 
   -- Output buffering
   -------------------------------------
-  -- no phase alignment active, connect to ground
-  clkfb <= '0';
+  clkf_buf : BUFG
+  port map
+   (O => clkfb,
+    I => clk0);
 
 
   clkout1_buf : BUFG

@@ -21,11 +21,11 @@ architecture impl of mcb_feed is
 
   signal clk        : std_logic;
   signal rst        : std_logic;
+  signal stage      : stage_t;
+  signal stage_next : stage_t; 
   signal src_valid  : std_logic;
   signal issue      : std_logic;
   signal stall      : std_logic;
-  signal stage      : stage_t;
-  signal stage_next : stage_t;
 
   type reg_t is record
     sel_is_high : std_logic;

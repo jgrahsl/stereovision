@@ -1,6 +1,6 @@
 
 NET "CLK_I" TNM_NET = "CLK_I";
-TIMESPEC TS_CLK_I = PERIOD "CLK_I" 99.99 MHz HIGH 50 %; #ISE 13.1 bug workaround, should be 100
+TIMESPEC TS_CLK_I = PERIOD "CLK_I" 100 MHz HIGH 50 %; #ISE 13.1 bug workaround, should be 100 
 #Created by Constraints Editor (xc6slx45-csg324-3) - 2011/04/06
 NET "Inst_SysCon/ASYNC_RST" TIG;
 
@@ -15,6 +15,6 @@ TIMESPEC TS_CAMB_PCLK_I = PERIOD "CAMB_PCLK_I" 80 MHz HIGH 50 %;
 OFFSET = IN 1.25 ns VALID 7.5 ns BEFORE "CAMB_PCLK_I" RISING;
 #Created by Constraints Editor (xc6slx45-csg324-3) - 2012/07/23
 
-INST "Inst_FBCtl/inst_localrstc/RstQ*" TNM = RSTQ_SOURCE;
-INST "Inst_FBCtl/inst_localrstalg/RstQ*" TNM = RESET_SINK;
+INST "Inst_FBCtl/inst_localrstc/RstQ_*" TNM = RSTQ_SOURCE;
+INST "Inst_FBCtl/inst_localrstalg/RstQ_*" TNM = RESET_SINK;
 TIMESPEC TS_RESET = FROM "RSTQ_SOURCE" TO "RESET_SINK" TIG;

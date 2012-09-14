@@ -26,6 +26,9 @@ architecture impl of window is
   signal rst        : std_logic;
   signal stage      : stage_t;
   signal stage_next : stage_t;
+  signal src_valid  : std_logic;
+  signal issue      : std_logic;
+  signal stall      : std_logic;
 
   type reg_t is record
     cols : natural range 0 to WIDTH;
@@ -42,12 +45,9 @@ architecture impl of window is
   end init;
   
 begin
-  clk <= pipe_in.ctrl.clk;
-  rst <= pipe_in.ctrl.rst;
+  issue <= '0';
 
-  pipe_out.ctrl  <= pipe_in.ctrl;
-  pipe_out.cfg   <= pipe_in.cfg;
-  pipe_out.stage <= stage;
+  connect_pipe(clk, rst, pipe_in, pipe_out, stage, src_valid, issue, stall);
 
   process(pipe_in)
     variable v : reg_t;
@@ -59,7 +59,7 @@ begin
 -------------------------------------------------------------------------------
 -- Counters
 -------------------------------------------------------------------------------
-    if pipe_in.stage.valid = '1' then
+    if src_valid = '1' then
       for i in 0 to (NUM_COLS-2) loop
         next_q(i+1) <= q(i);
       end loop;  -- i
@@ -105,7 +105,7 @@ begin
 
   proc_clk : process(pipe_in)
   begin
-    if rising_edge(clk) then
+    if rising_edge(clk) and stall = '0' then
       if (pipe_in.cfg(ID).enable = '1') then
         stage <= stage_next;
       else

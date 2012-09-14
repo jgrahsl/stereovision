@@ -104,7 +104,7 @@ package cam_pkg is
     pipe_out.stage <= stage;
 
     stall     <= pipe_in.ctrl.stall and not issue;
-    src_valid <= pipe_in.stage.valid and not issue;
+    src_valid <= pipe_in.stage.valid and not pipe_in.ctrl.stall;
   end procedure connect_pipe;
 
 

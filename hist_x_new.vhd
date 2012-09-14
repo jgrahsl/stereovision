@@ -27,6 +27,9 @@ architecture impl of hist_x is
   signal rst        : std_logic;
   signal stage      : stage_t;
   signal stage_next : stage_t;
+  signal src_valid  : std_logic;
+  signal issue      : std_logic;
+  signal stall      : std_logic;
 
 -------------------------------------------------------------------------------
 -- Register
@@ -70,13 +73,10 @@ architecture impl of hist_x is
   end init;
   
 begin
-  
-  clk <= pipe_in.ctrl.clk;
-  rst <= pipe_in.ctrl.rst;
+  issue <= '0';
 
-  pipe_out.ctrl  <= pipe_in.ctrl;
-  pipe_out.cfg   <= pipe_in.cfg;
-  pipe_out.stage <= stage;
+  connect_pipe(clk, rst, pipe_in, pipe_out, stage, src_valid, issue, stall);
+
 
   process (pipe_in)
     variable v : reg_t;
@@ -86,7 +86,7 @@ begin
 -------------------------------------------------------------------------------
 -- Logic
 -------------------------------------------------------------------------------
-    if pipe_in.stage.valid = '1' then
+    if src_valid = '1' then
       if pipe_in.stage.data_1 = "1" then
         v.cur := v.cur + 1;
       end if;
@@ -156,7 +156,7 @@ begin
 -------------------------------------------------------------------------------
 -- Counter
 -------------------------------------------------------------------------------
-    if pipe_in.stage.valid = '1' then
+    if src_valid = '1' then
       if v.cols = (WIDTH-1) then
         v.cols := 0;
         if v.rows = (HEIGHT-1) then
@@ -188,7 +188,7 @@ begin
 
   proc_clk : process(pipe_in)
   begin
-    if rising_edge(clk) then
+    if rising_edge(clk) and stall = '0' then
       if (pipe_in.cfg(ID).enable = '1') then
         stage <= stage_next;
       else
