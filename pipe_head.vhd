@@ -25,7 +25,7 @@ begin
   pipe_out.ctrl.rst <= rst;
   pipe_out.ctrl.issue <= '0';
   pipe_out.ctrl.stall <= pipe_tail.ctrl.issue;
-  
+
   pipe_out.cfg   <= cfg;
   pipe_out.stage <= NULL_STAGE;
 

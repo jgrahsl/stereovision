@@ -25,7 +25,8 @@ architecture impl of mcb_sink is
   signal stall      : std_logic;  
   signal stage      : stage_t;
   signal stage_next : stage_t;
-
+  signal src_valid : std_logic;
+  
   type reg_t is record
     sel_is_high : std_logic;
   end record;
@@ -40,17 +41,12 @@ architecture impl of mcb_sink is
   signal selected_word : std_logic_vector(15 downto 0);
 begin
 
-  clk <= pipe_in.ctrl.clk;
-  rst <= pipe_in.ctrl.rst;
+  connect_pipe(clk, rst, pipe_in, pipe_out,stage, src_valid, issue, stall);
 
-  connect_ctrl(pipe_in.ctrl, pipe_out.ctrl, issue, stall);
-  pipe_out.cfg   <= pipe_in.cfg;
-  pipe_out.stage <= stage;
-
-  p0_fifo.en  <= pipe_in.stage.valid and not r.sel_is_high;-- and not stall;
+  p0_fifo.en  <= src_valid and not r.sel_is_high;-- and not stall;
   p0_fifo.clk <= clk;
   
-  p1_fifo.en  <= pipe_in.stage.valid;-- and not stall;
+  p1_fifo.en  <= src_valid;-- and not stall;
   p1_fifo.clk <= clk;
 
   p0_fifo.data(31 downto 16) <= pipe_in.stage.data_565;
@@ -64,7 +60,7 @@ begin
 -------------------------------------------------------------------------------
 -- Logic
 -------------------------------------------------------------------------------    
-    if pipe_in.stage.valid = '1' then
+    if src_valid = '1' then
       if v.sel_is_high = '1' then
         v.sel_is_high := '0';
       else

@@ -21,6 +21,7 @@ architecture impl of mcb_feed is
 
   signal clk        : std_logic;
   signal rst        : std_logic;
+  signal src_valid  : std_logic;
   signal issue      : std_logic;
   signal stall      : std_logic;
   signal stage      : stage_t;
@@ -40,12 +41,8 @@ architecture impl of mcb_feed is
   signal selected_word : std_logic_vector(15 downto 0);
 begin
   issue <= '0';
-  clk <= pipe_in.ctrl.clk;
-  rst <= pipe_in.ctrl.rst;
 
-  connect_ctrl(pipe_in.ctrl, pipe_out.ctrl, issue, stall);
-  pipe_out.cfg   <= pipe_in.cfg;
-  pipe_out.stage <= stage;
+  connect_pipe(clk, rst, pipe_in, pipe_out, stage, src_valid, issue, stall);
 
   avail <= '1' when p0_fifo.stall = '0' and p1_fifo.stall = '0' and pipe_in.cfg(ID).enable = '1' else '0';
 

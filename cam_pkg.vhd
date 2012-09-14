@@ -82,19 +82,30 @@ package cam_pkg is
     count : std_logic_vector(9 downto 0);
   end record;
 
-  procedure connect_ctrl (
-    signal ctrl_in  : in  ctrl_t;
-    signal ctrl_out : out ctrl_t;
-    signal issue    : in  std_logic;
-    signal stall    : out std_logic)
+  procedure connect_pipe (
+    signal clk       : out std_logic;
+    signal rst       : out std_logic;
+    signal pipe_in   : in  pipe_t;
+    signal pipe_out  : out pipe_t;
+    signal stage     : in  stage_t;
+    signal src_valid : out std_logic;
+    signal issue     : in  std_logic;
+    signal stall     : out std_logic)
   is
   begin
-    ctrl_out.clk   <= ctrl_in.clk;
-    ctrl_out.rst   <= ctrl_in.rst;
-    ctrl_out.issue <= ctrl_in.issue or issue;
-    ctrl_out.stall <= ctrl_in.stall and not issue;
-    stall          <= ctrl_in.stall and not issue;
-  end procedure connect_ctrl;
+    clk <= pipe_in.ctrl.clk;
+    rst <= pipe_in.ctrl.rst;
+
+    pipe_out.ctrl       <= pipe_in.ctrl;
+    pipe_out.ctrl.issue <= pipe_in.ctrl.issue or issue;
+    pipe_out.ctrl.stall <= pipe_in.ctrl.stall and not issue;
+
+    pipe_out.cfg   <= pipe_in.cfg;
+    pipe_out.stage <= stage;
+
+    stall     <= pipe_in.ctrl.stall and not issue;
+    src_valid <= pipe_in.stage.valid and not issue;
+  end procedure connect_pipe;
 
 
 
