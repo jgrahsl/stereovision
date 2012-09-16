@@ -1207,7 +1207,7 @@ begin
     generic map (
       ID => 19)
     port map (
-      pipe_in  => pipe(7),              -- [in]
+      pipe_in  => pipe(1),              -- [in]
       pipe_out => pipe(8),              -- [out]
       p0_fifo  => p0_wr_fifo,           -- [inout]
       p1_fifo  => p1_wr_fifo);          -- [inout]

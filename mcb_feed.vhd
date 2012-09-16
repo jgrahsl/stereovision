@@ -104,7 +104,7 @@ begin
     r_next <= v;
   end process;
 
-  proc_clk : process(pipe_in)
+  proc_clk : process(clk, stall, pipe_in, stage_next, r_next)
   begin
     if rising_edge(clk) and stall = '0' then
       if (pipe_in.cfg(ID).enable = '1') then

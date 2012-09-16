@@ -17,6 +17,9 @@ package cam_pkg is
   constant IDENT_MCBSINK : std_logic_vector(7 downto 0) := X"07";
   constant IDENT_COLMUX  : std_logic_vector(7 downto 0) := X"08";
 
+  constant IDENT_SIMFEED : std_logic_vector(7 downto 0) := X"09";
+  constant IDENT_SIMSINK : std_logic_vector(7 downto 0) := X"0A";
+
   subtype mono_t is std_logic_vector(0 downto 0);
   subtype rgb565_t is std_logic_vector(15 downto 0);
   subtype rgb888_t is std_logic_vector(23 downto 0);
@@ -74,6 +77,13 @@ package cam_pkg is
     data  : std_logic_vector(31 downto 0);
   end record;
 
+  type sim_fifo_t is record
+    clk   : std_logic;
+    en    : std_logic;
+    stall : std_logic;
+    data  : std_logic_vector((24+16+8+1)-1 downto 0);
+  end record;
+  
   type pixel_fifo_t is record
     clk   : std_logic;
     en    : std_logic;
@@ -82,6 +92,19 @@ package cam_pkg is
     count : std_logic_vector(9 downto 0);
   end record;
 
+  procedure connect_pipe (
+    signal clk       : out std_logic;
+    signal rst       : out std_logic;
+    signal pipe_in   : in  pipe_t;
+    signal pipe_out  : out pipe_t;
+    signal stage     : in  stage_t;
+    signal src_valid : out std_logic;
+    signal issue     : in  std_logic;
+    signal stall     : out std_logic);
+end cam_pkg;
+
+
+package body cam_pkg is
   procedure connect_pipe (
     signal clk       : out std_logic;
     signal rst       : out std_logic;
@@ -107,7 +130,6 @@ package cam_pkg is
     src_valid <= pipe_in.stage.valid and not pipe_in.ctrl.stall;
   end procedure connect_pipe;
 
-
-
+  
 
 end cam_pkg;

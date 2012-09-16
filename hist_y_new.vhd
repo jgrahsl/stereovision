@@ -285,9 +285,13 @@ begin
     end if;
 
     if pipe_in.cfg(ID).p(0)(0) = '1' then
-      if (v.cols = v.maxstart or v.cols = v.maxend) and v.maxarea > 0 then
+      --if (v.cols = v.maxstart or v.cols = v.maxend) and v.maxarea > 0 then
+      --  stage_next.data_565 <= "0000011111100000";
+      --  stage_next.data_1   <= (others => '1');
+      --end if;
+      if (v.rows < cur) and v.maxarea > 0 then
         stage_next.data_565 <= "0000011111100000";
-        stage_next.data_1   <= (others => '1');
+        stage_next.data_1   <= (others => '1');        
       end if;
     end if;
 -------------------------------------------------------------------------------

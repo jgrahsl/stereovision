@@ -157,7 +157,7 @@ begin
 
   proc_clk : process(pipe_in)
   begin
-    if rising_edge(clk) then
+    if rising_edge(clk) and stall = '0' then
       if (pipe_in.cfg(ID).enable = '1') then
         stage <= stage_next;
       else
