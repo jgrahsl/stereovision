@@ -1,4 +1,4 @@
-VHD="cam_pkg.vhd sim_feed.vhd sim_sink.vhd pipe_head.vhd txt_util.vhd tb_pipe.vhd hist_x_new.vhd"
+VHD="cam_pkg.vhd sim_feed.vhd sim_sink.vhd pipe_head.vhd txt_util.vhd tb_pipe.vhd hist_x_new.vhd bit_ram.vhd hist_y_new.vhd"
 
 mkdir -p simu
 rm -f sim.dat sim.out output.tiff
@@ -10,6 +10,8 @@ done
 ghdl -m --workdir=simu --work=work tb 
 
 python tiff2dat.py  > sim.dat
+cat sim.dat sim.dat>  s.dat
+cp s.dat sim.dat
 ./tb --stop-time=10us 
 cat sim.out | python dat2tiff.py
 eog output.tiff

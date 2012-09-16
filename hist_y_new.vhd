@@ -144,7 +144,7 @@ begin
   ram2_wen <= "1" when r.phase = 3 and src_valid = '1' else
               "0";
   
-  process (pipe_in)
+  process (pipe_in, r, ram0_dout, ram1_dout, ram2_dout, src_valid, rst)
     variable v   : reg_t;
     variable cur : natural range 0 to (HEIGHT-1);
   begin
@@ -325,7 +325,7 @@ begin
     r_next <= v;
   end process;
 
-  proc_clk : process(pipe_in)
+  proc_clk : process(clk, stall, stage_next, pipe_in)
   begin
     if rising_edge(clk) and stall = '0' then
       if (pipe_in.cfg(ID).enable = '1') then

@@ -10,10 +10,8 @@ use work.cam_pkg.all;
 entity tb is
   generic (
     KERNEL  : natural range 0 to 5    := 5;
-    THRESH1 : natural range 0 to 25   := 21;
-    THRESH2 : natural range 0 to 25   := 21;
-    WIDTH   : natural range 0 to 2048 := 160;
-    HEIGHT  : natural range 0 to 2048 := 160;
+    WIDTH   : natural range 0 to 2048 := 16;
+    HEIGHT  : natural range 0 to 2048 := 16;
     NUM     : natural range 0 to 4    := 4
     );
 end tb;
@@ -71,7 +69,7 @@ begin  -- impl
       pipe_out => pipe(1),              -- [out]
       p0_fifo  => p0_rd_fifo);          -- [inout]
 
-  my_hist_x : entity work.hist_x
+  my_hist_y : entity work.hist_y
     generic map (
       ID     => 3,
       WIDTH  => 16,
@@ -143,11 +141,22 @@ begin  -- impl
       for i in (WIDTH-1) downto 0 loop
         wait until p0_wr_fifo.clk = '0' and p0_wr_fifo.en = '1';
         b := p0_wr_fifo.data;
+--        write(l, str(b));
+--        writeline(f, l);
+        wait until p0_wr_fifo.clk = '1';
+      end loop;
+    end loop;  -- j
+
+    for j in (HEIGHT-1) downto 0 loop
+      for i in (WIDTH-1) downto 0 loop
+        wait until p0_wr_fifo.clk = '0' and p0_wr_fifo.en = '1';
+        b := p0_wr_fifo.data;
         write(l, str(b));
         writeline(f, l);
         wait until p0_wr_fifo.clk = '1';
       end loop;
     end loop;  -- j
+
     wait;
   end process;
   

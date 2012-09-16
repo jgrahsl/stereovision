@@ -1,7 +1,7 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 --use IEEE.STD_LOGIC_ARITH.ALL;
-use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use ieee.numeric_std.all;
 
 entity bit_ram is
 generic
@@ -27,14 +27,14 @@ begin  -- myarch
 
 
 
-	process (clka)
+	process (clka, wea,dina,addra)
 	begin
 		if (clka'event and clka = '1') then
 				if (wea(0) = '1') then
-					RAM(conv_integer(addra)) <= dina;
+					RAM(to_integer(unsigned(addra))) <= dina;
 					douta <= dina;
 				else
-					douta <= RAM(conv_integer(addra));
+					douta <= RAM(to_integer(unsigned(addra)));
 				end if;
 		end if;
 	end process;
