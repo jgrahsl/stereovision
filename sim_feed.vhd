@@ -48,7 +48,7 @@ begin
   avail <= '1' when p0_fifo.stall = '0' and pipe_in.cfg(ID).enable = '1' else '0';
   p0_fifo.en  <= avail and not stall and not rst;   -- external signal needs to be blocked
                                                     -- by stall
-  process (pipe_in)
+  process (pipe_in, r, avail, p0_fifo)
     variable v          : reg_t;
     variable brightness : unsigned(7 downto 0);
   begin

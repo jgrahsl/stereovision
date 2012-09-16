@@ -49,7 +49,10 @@ begin  -- impl
   cfg(0).enable <= '1';
   cfg(1).enable <= '1';
   cfg(2).enable <= '1';
+  cfg(3).enable <= '1';
 
+  cfg(3).p(0)(1) <= '1';  
+  
   my_pipe_head : entity work.pipe_head
     generic map (
       ID => 0)
@@ -57,7 +60,7 @@ begin  -- impl
       clk       => clk,                 -- [in]
       rst       => rst,                 -- [in]
       cfg       => cfg,                 -- [in]
-      pipe_tail => pipe(2),
+      pipe_tail => pipe(3),
       pipe_out  => pipe(0));            -- [out]
 
   my_sim_feed : entity work.sim_feed
@@ -68,12 +71,21 @@ begin  -- impl
       pipe_out => pipe(1),              -- [out]
       p0_fifo  => p0_rd_fifo);          -- [inout]
 
+  my_hist_x : entity work.hist_x
+    generic map (
+      ID     => 3,
+      WIDTH  => 16,
+      HEIGHT => 16)
+    port map (
+      pipe_in  => pipe(1),              -- [in]
+      pipe_out => pipe(2));             -- [out]
+   
   my_sim_sink : entity work.sim_sink
     generic map (
       ID => 2)
     port map (
-      pipe_in  => pipe(1),              -- [in]
-      pipe_out => pipe(2),              -- [out]
+      pipe_in  => pipe(2),              -- [in]
+      pipe_out => pipe(3),              -- [out]
       p0_fifo  => p0_wr_fifo);          -- [inout]
 
 -------------------------------------------------------------------------------  

@@ -77,8 +77,7 @@ begin
 
   connect_pipe(clk, rst, pipe_in, pipe_out, stage, src_valid, issue, stall);
 
-
-  process (pipe_in)
+  process (pipe_in, r, src_valid, rst)
     variable v : reg_t;
   begin
     stage_next <= pipe_in.stage;
@@ -186,7 +185,7 @@ begin
 
   hist_row <= r.cur;
 
-  proc_clk : process(pipe_in)
+  proc_clk : process(clk, stall, pipe_in, stage_next)
   begin
     if rising_edge(clk) and stall = '0' then
       if (pipe_in.cfg(ID).enable = '1') then
