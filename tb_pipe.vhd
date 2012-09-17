@@ -10,8 +10,8 @@ use work.cam_pkg.all;
 entity tb is
   generic (
     KERNEL : natural range 0 to 5    := 5;
-    WIDTH  : natural range 0 to 2048 := 16;
-    HEIGHT : natural range 0 to 2048 := 16;
+    WIDTH  : natural range 0 to 2048 := 32;
+    HEIGHT : natural range 0 to 2048 := 32;
     NUM    : natural range 0 to 4    := 4
     );
 end tb;
@@ -46,15 +46,14 @@ architecture impl of tb is
   signal mono_2d : mono_2d_t;
 begin  -- impl
 
-  cfg(0).enable <= '1';
-  cfg(1).enable <= '1';
-  cfg(2).enable <= '1';
-  cfg(3).enable <= '1';
-  cfg(4).enable <= '1';
-  cfg(5).enable <= '1';
-  cfg(6).enable <= '1';
-  cfg(7).enable <= '1';
+  ena : for i in 0 to 31 generate
+    cfg(i).enable <= '1';
+  end generate ena;
 
+  cfg(3+4).p(0)  <= std_logic_vector(to_unsigned(16, 8));
+  cfg(8+4).p(0)  <= std_logic_vector(to_unsigned(16, 8));
+  cfg(13+4).p(0) <= std_logic_vector(to_unsigned(16, 8));
+  cfg(18+4).p(0) <= std_logic_vector(to_unsigned(16, 8));
 
   my_pipe_head : entity work.pipe_head
     generic map (
@@ -74,68 +73,21 @@ begin  -- impl
       pipe_out => pipe(1),              -- [out]
       p0_fifo  => p0_rd_fifo);          -- [inout]
 
-  my_translate : entity work.translate
+  my_morph : entity work.morph_set
     generic map (
-      ID     => 2,
-      WIDTH  => 16,
-      HEIGHT => 16,
-      CUT    => 0,
-      APPEND => 2)
+      ID     => 4,
+      KERNEL => 5,
+      WIDTH  => WIDTH,
+      HEIGHT => HEIGHT)
     port map (
       pipe_in  => pipe(1),              -- [in]
       pipe_out => pipe(2));             -- [out]
 
-  my_filter0_buffer : entity work.line_buffer
-    generic map (
-      ID        => 3,
-      NUM_LINES => KERNEL,
-      HEIGHT    => HEIGHT+2,
-      WIDTH     => WIDTH+2)
-    port map (
-      pipe_in     => pipe(2),
-      pipe_out    => pipe(3),
-      mono_1d_out => mono_1d
-      );
-
-  my_filter0_window : entity work.window
-    generic map (
-      ID       => 4,
-      NUM_COLS => KERNEL,
-      HEIGHT   => HEIGHT+2,
-      WIDTH    => WIDTH+2)
-    port map (
-      pipe_in     => pipe(3),
-      pipe_out    => pipe(4),
-      mono_1d_in  => mono_1d,
-      mono_2d_out => mono_2d
-      );
-
-  my_filter0_kernel : entity work.win_test
-    generic map (
-      ID     => 5,
-      KERNEL => KERNEL)
-    port map (
-      pipe_in    => pipe(4),
-      pipe_out   => pipe(5),
-      mono_2d_in => mono_2d
-      );
-
-  my_translatea : entity work.translate
-    generic map (
-      ID     => 6,
-      WIDTH  => WIDTH+2,
-      HEIGHT => HEIGHT+2,
-      CUT    => 2,
-      APPEND => 0)
-    port map (
-      pipe_in  => pipe(5),              -- [in]
-      pipe_out => pipe(6));             -- [out]
-
   my_sim_sink : entity work.sim_sink
     generic map (
-      ID => 7)
+      ID => 24)
     port map (
-      pipe_in  => pipe(6),              -- [in]
+      pipe_in  => pipe(2),              -- [in]
       pipe_out => pipe(7),              -- [out]
       p0_fifo  => p0_wr_fifo);          -- [inout]
 
@@ -200,28 +152,6 @@ begin  -- impl
         wait until p0_wr_fifo.clk = '1';
       end loop;
     end loop;  -- j
-
-    for j in (HEIGHT-1) downto 0 loop
-      for i in (WIDTH-1) downto 0 loop
-        wait until p0_wr_fifo.clk = '0' and p0_wr_fifo.en = '1';
-        b := p0_wr_fifo.data;
-        write(l, str(b));
-        writeline(f, l);
-        wait until p0_wr_fifo.clk = '1';
-      end loop;
-    end loop;  -- j
-
-    --for j in (HEIGHT-1) downto 0 loop
-    --  for i in (WIDTH-1) downto 0 loop
-    --    wait until p0_wr_fifo.clk = '0' and p0_wr_fifo.en = '1';
-    --    b := p0_wr_fifo.data;
-    --    write(l, str(b));
-    --    writeline(f, l);
-    --    wait until p0_wr_fifo.clk = '1';
-    --  end loop;
-    --end loop;  -- j
-
-    wait;
   end process;
   
 end impl;

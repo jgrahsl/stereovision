@@ -99,33 +99,33 @@ begin
       ADDR_BITS  => ADDR_BITS,
       WIDTH_BITS => 10)
     port map (
-      clka  => clk,                     -- [IN]
-      wea   => ram2_wen,                -- [IN]
-      addra => ram2_adr(ADDR_BITS-1 downto 0),    -- [IN]
-      dina  => ram2_din,                -- [IN]
-      douta => ram2_dout);              -- [OUT]
+      clka  => clk,                             -- [IN]
+      wea   => ram2_wen,                        -- [IN]
+      addra => ram2_adr(ADDR_BITS-1 downto 0),  -- [IN]
+      dina  => ram2_din,                        -- [IN]
+      douta => ram2_dout);                      -- [OUT]
 
   ram0_ram : entity work.bit_ram
     generic map (
       ADDR_BITS  => ADDR_BITS,
       WIDTH_BITS => 10)
     port map (
-      clka  => clk,                     -- [IN]
-      wea   => ram0_wen,                -- [IN]
-      addra => ram0_adr(ADDR_BITS-1 downto 0),    -- [IN]
-      dina  => ram0_din,                -- [IN]
-      douta => ram0_dout);              -- [OUT]
+      clka  => clk,                             -- [IN]
+      wea   => ram0_wen,                        -- [IN]
+      addra => ram0_adr(ADDR_BITS-1 downto 0),  -- [IN]
+      dina  => ram0_din,                        -- [IN]
+      douta => ram0_dout);                      -- [OUT]
 
   ram1_ram : entity work.bit_ram
     generic map (
       ADDR_BITS  => ADDR_BITS,
       WIDTH_BITS => 10)
     port map (
-      clka  => clk,                     -- [IN]
-      wea   => ram1_wen,                -- [IN]
-      addra => ram1_adr(ADDR_BITS-1 downto 0),    -- [IN]
-      dina  => ram1_din,                -- [IN]
-      douta => ram1_dout);              -- [OUT]  
+      clka  => clk,                             -- [IN]
+      wea   => ram1_wen,                        -- [IN]
+      addra => ram1_adr(ADDR_BITS-1 downto 0),  -- [IN]
+      dina  => ram1_din,                        -- [IN]
+      douta => ram1_dout);                      -- [OUT]  
 
 
   ram0_adr <= std_logic_vector(to_unsigned(r.wr_adr, 11)) when r.phase = 0 or r.phase = 2 else

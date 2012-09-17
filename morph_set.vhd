@@ -39,7 +39,7 @@ begin  -- myrtl
       pipe_out => pipe(1));             -- [out]
   my_morph_2 : entity work.morph
     generic map (
-      ID     => (ID+3),
+      ID     => (ID+5),
       KERNEL => KERNEL,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
@@ -48,7 +48,7 @@ begin  -- myrtl
       pipe_out => pipe(2));             -- [out]
   my_morph_3 : entity work.morph
     generic map (
-      ID     => (ID+6),
+      ID     => (ID+10),
       KERNEL => KERNEL,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
@@ -57,7 +57,7 @@ begin  -- myrtl
       pipe_out => pipe(3));             -- [out]
   my_morph_4 : entity work.morph
     generic map (
-      ID     => (ID+9),
+      ID     => (ID+15),
       KERNEL => KERNEL,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)

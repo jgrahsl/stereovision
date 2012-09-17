@@ -155,20 +155,20 @@ class Morph(Ui_MorphBox):
     def en(self,v):
         self.enable.setChecked(v)
         if v:
-            for i in range(0,12):
+            for i in range(0,20):
                 set_enable(self.pid+i,1)
         else:
-            for i in range(0,12):
+            for i in range(0,20):
                 set_enable(self.pid+i,0)
 
     def th1_c(self,v):
-        set_reg(self.pid+2,0x70,v)
+        set_reg(self.pid+3,0x70,v)
     def th2_c(self,v):
-        set_reg(self.pid+5,0x70,v)
-    def th3_c(self,v):
         set_reg(self.pid+8,0x70,v)
+    def th3_c(self,v):
+        set_reg(self.pid+13,0x70,v)
     def th4_c(self,v):
-        set_reg(self.pid+11,0x70,v)
+        set_reg(self.pid+18,0x70,v)
 
 
 class Motion(Ui_MotionBox):
@@ -284,9 +284,9 @@ while True:
         print "Motion at " + str(i)
         t.append(Motion(ui.pipe,i)) 
     if v[0] == 0x04:
-        print "Morph at " + str(i-2)
-        t.append(Morph(ui.pipe,i-2))
-        i = i + 9
+        print "Morph at " + str(i-3)
+        t.append(Morph(ui.pipe,i-3))
+        i = i + 16
     if v[0] == 0x05:
         print "HistX at " + str(i)
         t.append(Hist(ui.pipe,i,"HistX")) 
@@ -301,7 +301,7 @@ while True:
         t.append(Enable(ui.pipe,i,"ColMux"))
        
     i = i + 1
-    if i > 20:
+    if i > 31:
         break
 QtCore.QObject.connect(ui.pushButton_exit, QtCore.SIGNAL("clicked()"), do_exit)
 

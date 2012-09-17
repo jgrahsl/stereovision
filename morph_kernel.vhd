@@ -32,7 +32,7 @@ begin
 
   connect_pipe(clk, rst, pipe_in, pipe_out, stage, src_valid, issue, stall);
 
-  process(pipe_in, mono_2d_in)
+  process(pipe_in, mono_2d_in, rst)
     variable win : mono_2d_t;
     variable sum : natural range 0 to (KERNEL*KERNEL);
   begin  -- process
@@ -82,12 +82,12 @@ begin
 -- Output
 -------------------------------------------------------------------------------    
     if (sum >= (to_integer(unsigned(pipe_in.cfg(ID).p(0))))) then
-      stage_next.data_1   <= (others => '1');
+      stage_next.data_1 <= (others => '1');
 --      stage_next.data_8   <= (others => '1');
 --      stage_next.data_565 <= (others => '1');
 --      stage_next.data_888 <= (others => '1');
     else
-      stage_next.data_1   <= (others => '0');
+      stage_next.data_1 <= (others => '0');
 --      stage_next.data_8   <= (others => '0');
 --      stage_next.data_565 <= (others => '0');
 --      stage_next.data_888 <= (others => '0');
@@ -100,10 +100,10 @@ begin
     end if;
     if rst = '1' then
       stage_next <= NULL_STAGE;
-    end if;    
+    end if;
   end process;
 
-  proc_clk : process(pipe_in)
+  proc_clk : process(pipe_in,clk,stall)
   begin
     if rising_edge(clk) and stall = '0' then
       if (pipe_in.cfg(ID).enable = '1') then

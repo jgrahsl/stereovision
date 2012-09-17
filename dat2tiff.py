@@ -5,8 +5,8 @@ import sys
 from PIL import Image
 
 
-width = 16
-height = 16
+width = 32
+height = 32
 im = Image.new('RGBA', (width, height), (0, 0, 0, 0))
 
 for y in range(height):

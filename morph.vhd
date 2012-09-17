@@ -29,41 +29,64 @@ architecture myrtl of morph is
 begin  -- myrtl
   
   pipe(0)  <= pipe_in;
-  pipe_out <= pipe(3);
+  pipe_out <= pipe(5);
+
+
+  my_translate : entity work.translate
+    generic map (
+      ID     => (ID+0),
+      WIDTH  => WIDTH,
+      HEIGHT => HEIGHT,
+      CUT    => 0,
+      APPEND => 2)
+    port map (
+      pipe_in  => pipe(0),              -- [in]
+      pipe_out => pipe(1));             -- [out]
 
   my_filter0_buffer : entity work.line_buffer
     generic map (
-      ID        => (ID),
+      ID        => (ID+1),
       NUM_LINES => KERNEL,
-      HEIGHT    => HEIGHT,
-      WIDTH     => WIDTH)
+      HEIGHT    => HEIGHT+2,
+      WIDTH     => WIDTH+2)
     port map (
-      pipe_in     => pipe(0),
-      pipe_out    => pipe(1),
+      pipe_in     => pipe(1),
+      pipe_out    => pipe(2),
       mono_1d_out => mono_1d
       );
 
   my_filter0_window : entity work.window
     generic map (
-      ID       => (ID+1),
+      ID       => (ID+2),
       NUM_COLS => KERNEL,
-      HEIGHT   => HEIGHT,
-      WIDTH    => WIDTH)
+      HEIGHT   => HEIGHT+2,
+      WIDTH    => WIDTH+2)
     port map (
-      pipe_in     => pipe(1),
-      pipe_out    => pipe(2),
+      pipe_in     => pipe(2),
+      pipe_out    => pipe(3),
       mono_1d_in  => mono_1d,
       mono_2d_out => mono_2d
       );
 
   my_filter0_kernel : entity work.morph_kernel
     generic map (
-      ID     => (ID+2),
+      ID     => (ID+3),
       KERNEL => KERNEL)
     port map (
-      pipe_in    => pipe(2),
-      pipe_out   => pipe(3),
+      pipe_in    => pipe(3),
+      pipe_out   => pipe(4),
       mono_2d_in => mono_2d
       );
+
+  my_translatea : entity work.translate
+    generic map (
+      ID     => (ID+4),
+      WIDTH  => WIDTH+2,
+      HEIGHT => HEIGHT+2,
+      CUT    => 2,
+      APPEND => 0)
+    port map (
+      pipe_in  => pipe(4),              -- [in]
+      pipe_out => pipe(5));             -- [out]
 
 end myrtl;

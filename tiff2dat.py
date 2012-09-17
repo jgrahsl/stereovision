@@ -4,7 +4,7 @@ import sys
 
 from PIL import Image
 
-im = Image.open("input.tiff")
+im = Image.open("input2.tiff")
 
 dat = list(im.getdata())
 

@@ -1154,87 +1154,48 @@ begin
     port map (
       pipe_in  => pipe(1),
       pipe_out => pipe(2));
-
-  my_filter0_buffer : entity work.line_buffer
+ 
+  my_motion : entity work.motion
     generic map (
-      ID        => 3,
-      NUM_LINES => 5,
-      HEIGHT    => 480,
-      WIDTH     => 640)
+      ID => 3)
     port map (
-      pipe_in     => pipe(2),
-      pipe_out    => pipe(3),
-      mono_1d_out => mono_1d
-      );
+      pipe_in  => pipe(2),              -- [in]
+      pipe_out => pipe(3));             -- [out]
 
-  my_filter0_window : entity work.window
+  my_morph : entity work.morph_set
     generic map (
-      ID       => 4,
-      NUM_COLS => 5,
-      HEIGHT   => 480,
-      WIDTH    => 640)
+      ID     => 4,
+      KERNEL => 5,
+      WIDTH  => 640,
+      HEIGHT => 480)
     port map (
-      pipe_in     => pipe(3),
-      pipe_out    => pipe(4),
-      mono_1d_in  => mono_1d,
-      mono_2d_out => mono_2d
-      );
+      pipe_in  => pipe(3),              -- [in]
+      pipe_out => pipe(4));             -- [out]
 
-  my_filter0_kernel : entity work.win_test
+  my_hist_x : entity work.hist_x
     generic map (
-      ID     => 5,
-      KERNEL => 5)
+      ID     => 24,
+      WIDTH  => 640,
+      HEIGHT => 480)
     port map (
-      pipe_in    => pipe(4),
-      pipe_out   => pipe(6),
-      mono_2d_in => mono_2d
-      );
+      pipe_in  => pipe(4),              -- [in]
+      pipe_out => pipe(5));             -- [out]
 
-
-
-  
-  --my_motion : entity work.motion
-  --  generic map (
-  --    ID => 3)
-  --  port map (
-  --    pipe_in  => pipe(2),              -- [in]
-  --    pipe_out => pipe(3));             -- [out]
-
-  --my_morph : entity work.morph_set
-  --  generic map (
-  --    ID     => 4,
-  --    KERNEL => 5,
-  --    WIDTH  => 640,
-  --    HEIGHT => 480)
-  --  port map (
-  --    pipe_in  => pipe(3),              -- [in]
-  --    pipe_out => pipe(4));             -- [out]
-
-  --my_hist_x : entity work.hist_x
-  --  generic map (
-  --    ID     => 16,
-  --    WIDTH  => 640,
-  --    HEIGHT => 480)
-  --  port map (
-  --    pipe_in  => pipe(4),              -- [in]
-  --    pipe_out => pipe(5));             -- [out]
-
-  --my_hist_y : entity work.hist_y
-  --  generic map (
-  --    ID     => 17,
-  --    WIDTH  => 640,
-  --    HEIGHT => 480)
-  --  port map (
-  --    pipe_in  => pipe(5),              -- [in]
-  --    pipe_out => pipe(6));             -- [out]
+  my_hist_y : entity work.hist_y
+    generic map (
+      ID     => 25,
+      WIDTH  => 640,
+      HEIGHT => 480)
+    port map (
+      pipe_in  => pipe(5),              -- [in]
+      pipe_out => pipe(6));             -- [out]
 
   my_col_mux : entity work.color_mux
     generic map (
-      ID => 18)
+      ID => 26)
     port map (
       pipe_in  => pipe(6),              -- [in]
       pipe_out => pipe(7));             -- [inout]
-
 
   --my_fifo_sink : entity work.fifo_sink
   --  generic map (
@@ -1246,7 +1207,7 @@ begin
 
   my_mcb_sink : entity work.mcb_sink
     generic map (
-      ID => 19)
+      ID => 27)
     port map (
       pipe_in  => pipe(7),              -- [in]
       pipe_out => pipe(8),              -- [out]

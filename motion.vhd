@@ -28,7 +28,7 @@ begin
 
   connect_pipe(clk, rst, pipe_in, pipe_out, stage, src_valid, issue, stall);
 
-  process (pipe_in)
+  process (pipe_in, src_valid, rst)
     variable diff           : unsigned(15 downto 0);
     variable diff_unshifted : unsigned(7 downto 0);
     variable m              : unsigned(7 downto 0);
@@ -122,12 +122,12 @@ begin
     stage_next.aux(D_BIT downto D_BIT)          <= std_logic_vector(d);
 
     if d = 1 then
-      stage_next.data_1   <= (others => '1');
+      stage_next.data_1 <= (others => '1');
 --      stage_next.data_8   <= (others => '1');
 --      stage_next.data_565 <= (others => '1');
 --      stage_next.data_888 <= (others => '1');
     else
-      stage_next.data_1   <= (others => '0');
+      stage_next.data_1 <= (others => '0');
 --      stage_next.data_8   <= (others => '0');
 --      stage_next.data_565 <= (others => '0');
 --      stage_next.data_888 <= (others => '0');
@@ -155,7 +155,7 @@ begin
     end if;
   end process;
 
-  proc_clk : process(pipe_in)
+  proc_clk : process(pipe_in, clk, stall)
   begin
     if rising_edge(clk) and stall = '0' then
       if (pipe_in.cfg(ID).enable = '1') then
