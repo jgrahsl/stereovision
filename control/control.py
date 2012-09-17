@@ -83,6 +83,7 @@ class Enable(Ui_EnableBox):
         self.setupUi(self.box)
         self.pipe.addWidget(self.box)
         self.enable.stateChanged.connect(self.en)
+        self.p00.stateChanged.connect(self.p)
         self.en(0)
         self.box.setTitle(name)
 #        self.box.setWindowTitle(QtGui.QApplication.translate("SkinBox", "GroupBox", None, QtGui.QApplication.UnicodeUTF8))
@@ -96,6 +97,13 @@ class Enable(Ui_EnableBox):
             set_enable(self.pid,1)
         else:
             set_enable(self.pid,0)
+
+    def p(self,v):
+        self.p00.setChecked(v)
+        if v:
+            set_reg(self.pid,0x70,1)        
+        else:
+            set_reg(self.pid,0x70,0)        
 
 class Hist(Ui_HistBox):
     def __init__(self, box,pid,name):

@@ -23,10 +23,10 @@ ghdl -m --workdir=simu --work=work tb
 python tiff2dat.py  > sim.dat
 #cat sim.dat sim.dat>  s.dat
 #cp s.dat sim.dat
-./tb --stop-time=30us 
+./tb --stop-time=8us 
 cat sim.out | python dat2tiff.py
 
-convert input2.tiff -scale 256x256 simimg/i.tiff
+convert input.tiff -scale 256x256 simimg/i.tiff
 convert output.tiff -scale 256x256 simimg/o.tiff
 eog simimg&
 

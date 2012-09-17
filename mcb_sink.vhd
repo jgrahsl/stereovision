@@ -43,16 +43,16 @@ begin
 
   connect_pipe(clk, rst, pipe_in, pipe_out,stage, src_valid, issue, stall);
 
-  p0_fifo.en  <= src_valid and not r.sel_is_high;-- and not stall;
+  p0_fifo.en  <= src_valid and not r.sel_is_high and pipe_in.cfg(ID).enable and pipe_in.cfg(ID).p(0)(0);
   p0_fifo.clk <= clk;
   
-  p1_fifo.en  <= src_valid;-- and not stall;
+  p1_fifo.en  <= src_valid and pipe_in.cfg(ID).enable;
   p1_fifo.clk <= clk;
 
   p0_fifo.data(31 downto 16) <= pipe_in.stage.data_565;
   p1_fifo.data               <= pipe_in.stage.aux;
   
-  process (pipe_in)
+  process (pipe_in, r, rst)
     variable v : reg_t;
   begin
     stage_next <= pipe_in.stage;
@@ -60,7 +60,7 @@ begin
 -------------------------------------------------------------------------------
 -- Logic
 -------------------------------------------------------------------------------    
-    if src_valid = '1' then
+    if src_valid = '1' and pipe_in.cfg(ID).p(0)(0) = '1' then
       if v.sel_is_high = '1' then
         v.sel_is_high := '0';
       else
@@ -87,18 +87,15 @@ begin
   proc_clk : process(clk, stall, pipe_in, stage_next, r_next)
   begin
     if rising_edge(clk) and stall = '0' then
---      if (pipe_in.cfg(ID).enable = '1') then
-      stage <= stage_next;
---      else
---        stage <= pipe_in.stage;
---      end if;
+      if (pipe_in.cfg(ID).enable = '1') then
+        stage <= stage_next;
+      else
+        stage <= pipe_in.stage;
+      end if;
       if r.sel_is_high = '1' then
         p0_fifo.data(15 downto 0) <= pipe_in.stage.data_565;
       end if;
       r <= r_next;
-    end if;
-    if rising_edge(clk) then
-      issue <= not issue;
     end if;
   end process;
 

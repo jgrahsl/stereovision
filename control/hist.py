@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'hist.ui'
 #
-# Created: Mon Sep 17 10:27:47 2012
+# Created: Mon Sep 17 22:15:18 2012
 #      by: PyQt4 UI code generator 4.9.3
 #
 # WARNING! All changes made in this file will be lost!

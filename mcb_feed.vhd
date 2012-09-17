@@ -44,7 +44,7 @@ begin
 
   connect_pipe(clk, rst, pipe_in, pipe_out, stage, src_valid, issue, stall);
 
-  avail <= '1' when p0_fifo.stall = '0' and p1_fifo.stall = '0' and pipe_in.cfg(ID).enable = '1' else '0';
+  avail <= '1' when p0_fifo.stall = '0' and p1_fifo.stall = '0' and pipe_in.cfg(ID).enable = '1' and pipe_in.cfg(ID).p(0)(0) = '1' else '0';
 
   p0_fifo.en  <= avail and not r.sel_is_high and not stall;
   p0_fifo.clk <= clk;

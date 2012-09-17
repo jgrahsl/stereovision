@@ -10,8 +10,8 @@ use work.cam_pkg.all;
 entity tb is
   generic (
     KERNEL : natural range 0 to 5    := 5;
-    WIDTH  : natural range 0 to 2048 := 32;
-    HEIGHT : natural range 0 to 2048 := 32;
+    WIDTH  : natural range 0 to 2048 := 16;
+    HEIGHT : natural range 0 to 2048 := 16;
     NUM    : natural range 0 to 4    := 4
     );
 end tb;
@@ -50,10 +50,10 @@ begin  -- impl
     cfg(i).enable <= '1';
   end generate ena;
 
-  cfg(3+4).p(0)  <= std_logic_vector(to_unsigned(16, 8));
-  cfg(8+4).p(0)  <= std_logic_vector(to_unsigned(16, 8));
-  cfg(13+4).p(0) <= std_logic_vector(to_unsigned(16, 8));
-  cfg(18+4).p(0) <= std_logic_vector(to_unsigned(16, 8));
+  cfg(3+4).p(0)  <= std_logic_vector(to_unsigned(10, 8));
+  cfg(8+4).p(0)  <= std_logic_vector(to_unsigned(10, 8));
+  cfg(13+4).p(0) <= std_logic_vector(to_unsigned(10, 8));
+  cfg(18+4).p(0) <= std_logic_vector(to_unsigned(10, 8));
 
   my_pipe_head : entity work.pipe_head
     generic map (
