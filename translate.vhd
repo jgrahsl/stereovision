@@ -38,8 +38,8 @@ architecture impl of translate is
 
   subtype counter_t is natural range 0 to 2047;
   type    reg_t is record
-    cols      : natural range 0 to WIDTH;
-    rows      : natural range 0 to HEIGHT;
+    cols      : natural range 0 to WIDTH*2;
+    rows      : natural range 0 to HEIGHT*2;
     pixel     : natural range 0 to (WIDTH*HEIGHT*2);
     post      : natural range 0 to (WIDTH*HEIGHT*2);
     state     : state_t;
@@ -54,47 +54,38 @@ architecture impl of translate is
     v.cols  := 0;
     v.rows  := 0;
     v.post  := 0;
-    v.pixel := 0;
     v.state := PRE_S;
   end init;
-  
+  constant T : natural := 2;
 begin
-  issue <= '0';
 
   connect_pipe(clk, rst, pipe_in, pipe_out, stage, src_valid, issue, stall);
 
   process (pipe_in, r, src_valid, rst)
     variable v : reg_t;
+    variable en : std_logic;
   begin
     stage_next  <= pipe_in.stage;
     v           := r;
 -------------------------------------------------------------------------------
 -- Logic
 -------------------------------------------------------------------------------
-    v.pixel_rst := '0';
-    case (v.state) is
-      when PRE_S =>
-        if v.pixel >= PRE_COUNT then
-          v.state := WAIT_S;
-        else
-          stage_next.valid <= '0';
-        end if;
-      when WAIT_S =>
-        if v.pixel >= (HEIGHT*WIDTH+PRE_COUNT) then
-          v.state := EMIT_S;
-          v.post  := 0;
-        end if;
-      when EMIT_S =>
-        v.post := v.post + 1;
-        if v.post >= (POST_COUNT) then
-          v.pixel_rst := '1';
-          v.state     := PRE_S;
-        else
-          stage_next.valid  <= '1';
-          stage_next.data_1 <= (others => '1');
-        end if;
-      when others => null;
-    end case;
+
+    en := '0';
+    issue <= '0';
+    if v.rows > (HEIGHT-1) and v.rows <= (HEIGHT+T-1) then
+      issue <= '1';
+      stage_next.data_1 <= (others => '0');
+      stage_next.valid <= '1';
+      en := '1';     
+    end if;
+    
+    if v.cols > (WIDTH-1) and v.cols <= (WIDTH+T-1) then
+      issue <= '1';
+      stage_next.data_1 <= (others => '0');
+      stage_next.valid <= '1';
+      en := '1';
+    end if;
 
 -------------------------------------------------------------------------------      
 --          if to_unsigned(v.val, 10) > unsigned(pipe_in.cfg(ID).p(1)) then
@@ -110,11 +101,10 @@ begin
 -------------------------------------------------------------------------------
 -- Counter
 -------------------------------------------------------------------------------
-    if src_valid = '1' then
-      v.pixel := v.pixel + 1;
-      if v.cols = (WIDTH-1) then
+    if stage_next.valid = '1' or en = '1' then
+      if v.cols = (WIDTH+T-1) then
         v.cols := 0;
-        if v.rows = (HEIGHT-1) then
+        if v.rows = (HEIGHT+T-1) then
           v.rows := 0;
         else
           v.rows := v.rows + 1;
@@ -122,10 +112,6 @@ begin
       else
         v.cols := v.cols + 1;
       end if;
-    end if;
-
-    if v.pixel_rst = '1' then
-      v.pixel := 0;
     end if;
 -------------------------------------------------------------------------------
 -- Reset

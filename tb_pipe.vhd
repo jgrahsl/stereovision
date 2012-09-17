@@ -135,7 +135,7 @@ begin  -- impl
     generic map (
       ID => 7)
     port map (
-      pipe_in  => pipe(6),              -- [in]
+      pipe_in  => pipe(2),              -- [in]
       pipe_out => pipe(7),              -- [out]
       p0_fifo  => p0_wr_fifo);          -- [inout]
 

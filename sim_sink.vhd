@@ -95,6 +95,7 @@ begin
         cnt <= 0;
       end if;
     end if;
+      issue <= '0';    
   end process;
 
 end impl;

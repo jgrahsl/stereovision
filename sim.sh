@@ -28,5 +28,6 @@ cat sim.out | python dat2tiff.py
 
 convert input.tiff -scale 256x256 simimg/i.tiff
 convert output.tiff -scale 256x256 simimg/o.tiff
-eog simimg
-rm -R simimg
+eog simimg&
+
+#rm -R simimg
