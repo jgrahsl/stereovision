@@ -62,7 +62,7 @@ architecture impl of hist_y is
     v.rows   := 0;
     v.cur    := 0;
     v.val    := 0;
-    v.rd_adr := 1;
+    v.rd_adr := 0;
     v.wr_adr := 0;
     v.phase  := 0;
 
@@ -94,45 +94,48 @@ begin
 
   swap_ram : entity work.bit_ram
     generic map (
-      ADDR_BITS  => 11,
+      ADDR_BITS  => 4,
       WIDTH_BITS => 10)
     port map (
       clka  => clk,                     -- [IN]
       wea   => ram2_wen,                -- [IN]
-      addra => ram2_adr,                -- [IN]
+      addra => ram2_adr(3 downto 0),    -- [IN]
       dina  => ram2_din,                -- [IN]
       douta => ram2_dout);              -- [OUT]
 
   ram0_ram : entity work.bit_ram
     generic map (
-      ADDR_BITS  => 11,
+      ADDR_BITS  => 4,
       WIDTH_BITS => 10)
     port map (
       clka  => clk,                     -- [IN]
       wea   => ram0_wen,                -- [IN]
-      addra => ram0_adr,                -- [IN]
+      addra => ram0_adr(3 downto 0),    -- [IN]
       dina  => ram0_din,                -- [IN]
       douta => ram0_dout);              -- [OUT]
 
   ram1_ram : entity work.bit_ram
     generic map (
-      ADDR_BITS  => 11,
+      ADDR_BITS  => 4,
       WIDTH_BITS => 10)
     port map (
       clka  => clk,                     -- [IN]
       wea   => ram1_wen,                -- [IN]
-      addra => ram1_adr,                -- [IN]
+      addra => ram1_adr(3 downto 0),    -- [IN]
       dina  => ram1_din,                -- [IN]
       douta => ram1_dout);              -- [OUT]  
 
 
   ram0_adr <= std_logic_vector(to_unsigned(r.wr_adr, 11)) when r.phase = 0 or r.phase = 2 else
+              std_logic_vector(to_unsigned(r.rd_adr+1, 11)) when src_valid = '1' else
               std_logic_vector(to_unsigned(r.rd_adr, 11));
 
   ram1_adr <= std_logic_vector(to_unsigned(r.wr_adr, 11)) when r.phase = 1 else
+              std_logic_vector(to_unsigned(r.rd_adr+1, 11)) when src_valid = '1' else
               std_logic_vector(to_unsigned(r.rd_adr, 11));
   
   ram2_adr <= std_logic_vector(to_unsigned(r.wr_adr, 11)) when r.phase = 3 else
+              std_logic_vector(to_unsigned(r.rd_adr+1, 11)) when src_valid = '1' else
               std_logic_vector(to_unsigned(r.rd_adr, 11));
 
   ram0_wen <= "1" when (r.phase = 0 or r.phase = 2) and src_valid = '1' else
@@ -291,7 +294,7 @@ begin
       --end if;
       if (v.rows < cur) and v.maxarea > 0 then
         stage_next.data_565 <= "0000011111100000";
-        stage_next.data_1   <= (others => '1');        
+        stage_next.data_1   <= (others => '1');
       end if;
     end if;
 -------------------------------------------------------------------------------

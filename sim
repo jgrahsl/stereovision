@@ -1,10 +1,14 @@
-VHD="cam_pkg.vhd sim_feed.vhd sim_sink.vhd pipe_head.vhd txt_util.vhd tb_pipe.vhd hist_x_new.vhd bit_ram.vhd hist_y_new.vhd"
+VHD="cam_pkg.vhd sim_feed.vhd sim_sink.vhd pipe_head.vhd hist_x_new.vhd bit_ram.vhd hist_y_new.vhd txt_util.vhd tb_pipe.vhd"
 
-mkdir -p simu
+export PATH=$PATH:/opt/model6.4/linux
+export LM_LICENSE_FILE=/mnt/store/model/lic.dat
+
+mkdir -p simu simimg
 rm -f sim.dat sim.out output.tiff
 
 for i in $VHD; do
     ghdl -i --workdir=simu --work=work $i
+    vcom -93 -work work $i    
 done
 
 ghdl -m --workdir=simu --work=work tb 
@@ -14,4 +18,8 @@ cat sim.dat sim.dat>  s.dat
 cp s.dat sim.dat
 ./tb --stop-time=10us 
 cat sim.out | python dat2tiff.py
-eog output.tiff
+
+convert input.tiff -scale 256x256 simimg/i.tiff
+convert output.tiff -scale 256x256 simimg/o.tiff
+eog simimg
+rm -R simimg

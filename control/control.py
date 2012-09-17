@@ -106,6 +106,7 @@ class Hist(Ui_HistBox):
         self.pipe.addWidget(self.box)
         self.enable.stateChanged.connect(self.en)
         self.show.stateChanged.connect(self.sh)
+        self.show_2.stateChanged.connect(self.sh2)
         self.verticalSlider.valueChanged.connect(self.val)
         self.en(0)
         self.box.setTitle(name)
@@ -121,8 +122,17 @@ class Hist(Ui_HistBox):
         self.show.setChecked(v)
         if v > 0:
             v = 1
-        
+       
         set_reg(self.pid,0x70,v)        
+
+    def sh2(self,v):
+        self.show_2.setChecked(v)
+        if v > 0:
+            v = 1
+        
+        set_reg(self.pid,0x70,v<<1)
+
+
 
     def val(self,v):
         set_reg(self.pid,0x71,v)        

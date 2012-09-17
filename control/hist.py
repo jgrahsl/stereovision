@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'hist.ui'
 #
-# Created: Sun Jul 29 17:18:41 2012
-#      by: PyQt4 UI code generator 4.9.1
+# Created: Mon Sep 17 10:27:47 2012
+#      by: PyQt4 UI code generator 4.9.3
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -39,8 +39,11 @@ class Ui_HistBox(object):
         self.label.setGeometry(QtCore.QRect(20, 232, 66, 20))
         self.label.setObjectName(_fromUtf8("label"))
         self.show = QtGui.QCheckBox(HistBox)
-        self.show.setGeometry(QtCore.QRect(10, 30, 93, 26))
+        self.show.setGeometry(QtCore.QRect(10, 20, 93, 26))
         self.show.setObjectName(_fromUtf8("show"))
+        self.show_2 = QtGui.QCheckBox(HistBox)
+        self.show_2.setGeometry(QtCore.QRect(10, 40, 93, 26))
+        self.show_2.setObjectName(_fromUtf8("show_2"))
 
         self.retranslateUi(HistBox)
         QtCore.QMetaObject.connectSlotsByName(HistBox)
@@ -51,4 +54,5 @@ class Ui_HistBox(object):
         self.enable.setText(QtGui.QApplication.translate("HistBox", "enable", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("HistBox", "threshold", None, QtGui.QApplication.UnicodeUTF8))
         self.show.setText(QtGui.QApplication.translate("HistBox", "show", None, QtGui.QApplication.UnicodeUTF8))
+        self.show_2.setText(QtGui.QApplication.translate("HistBox", "show2", None, QtGui.QApplication.UnicodeUTF8))
 
