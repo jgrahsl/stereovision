@@ -74,7 +74,7 @@ begin
     wren(i) <= '1' when src_valid = '1' and r.sel = i else '0';
   end generate wr_enables;
 
-  process(pipe_in)
+  process(pipe_in, stage, r, r_r, src_valid, rst, q)
     variable v : reg_t;
   begin  -- process
     stage_next <= pipe_in.stage;
@@ -190,7 +190,7 @@ begin
     r_next <= v;
   end process;
 
-  proc_clk : process(pipe_in)
+  proc_clk : process(clk, stall, stage_next, pipe_in)
   begin
     if rising_edge(clk) and stall = '0' then
       if (pipe_in.cfg(ID).enable = '1') then

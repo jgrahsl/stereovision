@@ -41,15 +41,17 @@ architecture impl of tb is
 
   signal p0_rd_fifo : sim_fifo_t;
   signal p0_wr_fifo : sim_fifo_t;
-  
+
+  signal mono_1d : mono_1d_t;
+  signal mono_2d : mono_2d_t;  
 begin  -- impl
 
   cfg(0).enable <= '1';
   cfg(1).enable <= '1';
   cfg(2).enable <= '1';
   cfg(3).enable <= '1';
-
-  cfg(3).p(0)(1) <= '1';  
+  cfg(4).enable <= '1';
+  cfg(5).enable <= '1';    
   
   my_pipe_head : entity work.pipe_head
     generic map (
@@ -58,7 +60,7 @@ begin  -- impl
       clk       => clk,                 -- [in]
       rst       => rst,                 -- [in]
       cfg       => cfg,                 -- [in]
-      pipe_tail => pipe(3),
+      pipe_tail => pipe(5),
       pipe_out  => pipe(0));            -- [out]
 
   my_sim_feed : entity work.sim_feed
@@ -69,21 +71,47 @@ begin  -- impl
       pipe_out => pipe(1),              -- [out]
       p0_fifo  => p0_rd_fifo);          -- [inout]
 
-  my_hist_y : entity work.hist_y
+  my_filter0_buffer : entity work.line_buffer
     generic map (
-      ID     => 3,
-      WIDTH  => 16,
-      HEIGHT => 16)
+      ID        => 3,
+      NUM_LINES => KERNEL,
+      HEIGHT    => HEIGHT,
+      WIDTH     => WIDTH)
     port map (
-      pipe_in  => pipe(1),              -- [in]
-      pipe_out => pipe(2));             -- [out]
+      pipe_in     => pipe(1),
+      pipe_out    => pipe(2),
+      mono_1d_out => mono_1d
+      );
+
+  my_filter0_window : entity work.window
+    generic map (
+      ID       => 4,
+      NUM_COLS => KERNEL,
+      HEIGHT   => HEIGHT,
+      WIDTH    => WIDTH)
+    port map (
+      pipe_in     => pipe(2),
+      pipe_out    => pipe(3),
+      mono_1d_in  => mono_1d,
+      mono_2d_out => mono_2d
+      );
+
+  my_filter0_kernel : entity work.win_test
+    generic map (
+      ID     => 5,
+      KERNEL => KERNEL)
+    port map (
+      pipe_in    => pipe(3),
+      pipe_out   => pipe(4),
+      mono_2d_in => mono_2d
+      );
    
   my_sim_sink : entity work.sim_sink
     generic map (
       ID => 2)
     port map (
-      pipe_in  => pipe(2),              -- [in]
-      pipe_out => pipe(3),              -- [out]
+      pipe_in  => pipe(4),              -- [in]
+      pipe_out => pipe(5),              -- [out]
       p0_fifo  => p0_wr_fifo);          -- [inout]
 
 -------------------------------------------------------------------------------  
@@ -141,21 +169,21 @@ begin  -- impl
       for i in (WIDTH-1) downto 0 loop
         wait until p0_wr_fifo.clk = '0' and p0_wr_fifo.en = '1';
         b := p0_wr_fifo.data;
---        write(l, str(b));
---        writeline(f, l);
-        wait until p0_wr_fifo.clk = '1';
-      end loop;
-    end loop;  -- j
-
-    for j in (HEIGHT-1) downto 0 loop
-      for i in (WIDTH-1) downto 0 loop
-        wait until p0_wr_fifo.clk = '0' and p0_wr_fifo.en = '1';
-        b := p0_wr_fifo.data;
         write(l, str(b));
         writeline(f, l);
         wait until p0_wr_fifo.clk = '1';
       end loop;
     end loop;  -- j
+
+    --for j in (HEIGHT-1) downto 0 loop
+    --  for i in (WIDTH-1) downto 0 loop
+    --    wait until p0_wr_fifo.clk = '0' and p0_wr_fifo.en = '1';
+    --    b := p0_wr_fifo.data;
+    --    write(l, str(b));
+    --    writeline(f, l);
+    --    wait until p0_wr_fifo.clk = '1';
+    --  end loop;
+    --end loop;  -- j
 
     wait;
   end process;

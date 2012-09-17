@@ -149,7 +149,7 @@ begin
   ram2_wen <= "1" when r.phase = 3 and src_valid = '1' else
               "0";
   
-  process (pipe_in, r, ram0_dout, ram1_dout, ram2_dout, src_valid, rst)
+  process (pipe_in, r, src_valid, rst, ram0_dout, ram1_dout, ram2_dout)
     variable v   : reg_t;
     variable cur : natural range 0 to (HEIGHT-1);
   begin

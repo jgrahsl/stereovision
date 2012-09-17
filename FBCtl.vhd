@@ -578,6 +578,9 @@ architecture Behavioral of FBCtl is
   signal p0_wr_fifo : mcb_fifo_t;
   signal p1_wr_fifo : mcb_fifo_t;
 
+  signal mono_1d : mono_1d_t;
+  signal mono_2d : mono_2d_t;
+  
 begin
 ----------------------------------------------------------------------------------
 -- mcb instantiation
@@ -1152,40 +1155,78 @@ begin
       pipe_in  => pipe(1),
       pipe_out => pipe(2));
 
-  my_motion : entity work.motion
+  my_filter0_buffer : entity work.line_buffer
     generic map (
-      ID => 3)
+      ID        => 3,
+      NUM_LINES => 5,
+      HEIGHT    => 480,
+      WIDTH     => 640)
     port map (
-      pipe_in  => pipe(2),              -- [in]
-      pipe_out => pipe(3));             -- [out]
+      pipe_in     => pipe(2),
+      pipe_out    => pipe(3),
+      mono_1d_out => mono_1d
+      );
 
-  my_morph : entity work.morph_set
+  my_filter0_window : entity work.window
     generic map (
-      ID     => 4,
-      KERNEL => 5,
-      WIDTH  => 640,
-      HEIGHT => 480)
+      ID       => 4,
+      NUM_COLS => 5,
+      HEIGHT   => 480,
+      WIDTH    => 640)
     port map (
-      pipe_in  => pipe(3),              -- [in]
-      pipe_out => pipe(4));             -- [out]
+      pipe_in     => pipe(3),
+      pipe_out    => pipe(4),
+      mono_1d_in  => mono_1d,
+      mono_2d_out => mono_2d
+      );
 
-  my_hist_x : entity work.hist_x
+  my_filter0_kernel : entity work.win_test
     generic map (
-      ID     => 16,
-      WIDTH  => 640,
-      HEIGHT => 480)
+      ID     => 5,
+      KERNEL => 5)
     port map (
-      pipe_in  => pipe(4),              -- [in]
-      pipe_out => pipe(5));             -- [out]
+      pipe_in    => pipe(4),
+      pipe_out   => pipe(6),
+      mono_2d_in => mono_2d
+      );
 
-  my_hist_y : entity work.hist_y
-    generic map (
-      ID     => 17,
-      WIDTH  => 640,
-      HEIGHT => 480)
-    port map (
-      pipe_in  => pipe(5),              -- [in]
-      pipe_out => pipe(6));             -- [out]
+
+
+  
+  --my_motion : entity work.motion
+  --  generic map (
+  --    ID => 3)
+  --  port map (
+  --    pipe_in  => pipe(2),              -- [in]
+  --    pipe_out => pipe(3));             -- [out]
+
+  --my_morph : entity work.morph_set
+  --  generic map (
+  --    ID     => 4,
+  --    KERNEL => 5,
+  --    WIDTH  => 640,
+  --    HEIGHT => 480)
+  --  port map (
+  --    pipe_in  => pipe(3),              -- [in]
+  --    pipe_out => pipe(4));             -- [out]
+
+  --my_hist_x : entity work.hist_x
+  --  generic map (
+  --    ID     => 16,
+  --    WIDTH  => 640,
+  --    HEIGHT => 480)
+  --  port map (
+  --    pipe_in  => pipe(4),              -- [in]
+  --    pipe_out => pipe(5));             -- [out]
+
+  --my_hist_y : entity work.hist_y
+  --  generic map (
+  --    ID     => 17,
+  --    WIDTH  => 640,
+  --    HEIGHT => 480)
+  --  port map (
+  --    pipe_in  => pipe(5),              -- [in]
+  --    pipe_out => pipe(6));             -- [out]
 
   my_col_mux : entity work.color_mux
     generic map (
