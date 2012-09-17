@@ -41,7 +41,7 @@ add wave -noupdate -format Literal -expand /tb/my_translate/stage_next
 add wave -noupdate -format Literal -expand /tb/my_translate/stage
 add wave -noupdate -format Logic /tb/my_translate/src_valid
 add wave -noupdate -format Logic /tb/my_translate/rst
-add wave -noupdate -format Literal /tb/my_translate/r_next
+add wave -noupdate -format Literal -expand /tb/my_translate/r_next
 add wave -noupdate -format Literal -expand /tb/my_translate/r
 add wave -noupdate -format Literal -expand /tb/my_translate/pipe_out
 add wave -noupdate -format Literal /tb/my_translate/pipe_in
@@ -84,7 +84,7 @@ add wave -noupdate -format Literal /tb/my_filter0_window/pipe_out
 add wave -noupdate -format Literal /tb/my_filter0_window/pipe_in
 add wave -noupdate -format Literal /tb/my_filter0_window/num_cols
 add wave -noupdate -format Literal /tb/my_filter0_window/next_q
-add wave -noupdate -format Literal /tb/my_filter0_window/mono_2d_out
+add wave -noupdate -format Literal -expand /tb/my_filter0_window/mono_2d_out
 add wave -noupdate -format Literal /tb/my_filter0_window/mono_1d_in
 add wave -noupdate -format Logic /tb/my_filter0_window/issue
 add wave -noupdate -format Literal /tb/my_filter0_window/id
@@ -103,6 +103,23 @@ add wave -noupdate -format Literal /tb/my_filter0_kernel/kernel
 add wave -noupdate -format Logic /tb/my_filter0_kernel/issue
 add wave -noupdate -format Literal /tb/my_filter0_kernel/id
 add wave -noupdate -format Logic /tb/my_filter0_kernel/clk
+add wave -noupdate -divider translatea
+add wave -noupdate -format Literal /tb/my_translatea/width
+add wave -noupdate -format Logic /tb/my_translatea/stall
+add wave -noupdate -format Literal /tb/my_translatea/stage_next
+add wave -noupdate -format Literal /tb/my_translatea/stage
+add wave -noupdate -format Logic /tb/my_translatea/src_valid
+add wave -noupdate -format Logic /tb/my_translatea/rst
+add wave -noupdate -format Literal /tb/my_translatea/r_next
+add wave -noupdate -format Literal -expand /tb/my_translatea/r
+add wave -noupdate -format Literal /tb/my_translatea/pre_count
+add wave -noupdate -format Literal /tb/my_translatea/post_count
+add wave -noupdate -format Literal /tb/my_translatea/pipe_out
+add wave -noupdate -format Literal /tb/my_translatea/pipe_in
+add wave -noupdate -format Logic /tb/my_translatea/issue
+add wave -noupdate -format Literal /tb/my_translatea/id
+add wave -noupdate -format Literal /tb/my_translatea/height
+add wave -noupdate -format Logic /tb/my_translatea/clk
 add wave -noupdate -divider sink
 add wave -noupdate -format Logic /tb/my_sim_sink/stall
 add wave -noupdate -format Literal /tb/my_sim_sink/stage_next
@@ -113,13 +130,13 @@ add wave -noupdate -format Literal /tb/my_sim_sink/r_next
 add wave -noupdate -format Literal /tb/my_sim_sink/r
 add wave -noupdate -format Literal /tb/my_sim_sink/pipe_out
 add wave -noupdate -format Literal /tb/my_sim_sink/pipe_in
-add wave -noupdate -format Literal /tb/my_sim_sink/p0_fifo
+add wave -noupdate -format Literal -expand /tb/my_sim_sink/p0_fifo
 add wave -noupdate -format Logic /tb/my_sim_sink/issue
 add wave -noupdate -format Literal /tb/my_sim_sink/id
 add wave -noupdate -format Logic /tb/my_sim_sink/clk
 add wave -noupdate -format Logic /tb/my_sim_sink/avail
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {5255000 ps} 0}
+WaveRestoreCursors {{Cursor 1} {5355000 ps} 0} {{Cursor 2} {5076287 ps} 0}
 configure wave -namecolwidth 150
 configure wave -valuecolwidth 100
 configure wave -justifyvalue left
@@ -134,5 +151,5 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {5012500 ps} {10262500 ps}
-bookmark add wave initial {{5012500 ps} {10262500 ps}} 12
+WaveRestoreZoom {5190937 ps} {5519063 ps}
+bookmark add wave initial {{5190937 ps} {5519063 ps}} 133

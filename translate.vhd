@@ -55,7 +55,7 @@ architecture impl of translate is
     v.rows  := 0;
     v.post  := 0;
     v.pixel := 0;
-    v.state := WAIT_S;
+    v.state := PRE_S;
   end init;
   
 begin
@@ -80,7 +80,7 @@ begin
           stage_next.valid <= '0';
         end if;
       when WAIT_S =>
-        if v.pixel >= (HEIGHT*WIDTH-PRE_COUNT) then
+        if v.pixel >= (HEIGHT*WIDTH+PRE_COUNT) then
           v.state := EMIT_S;
           v.post  := 0;
         end if;

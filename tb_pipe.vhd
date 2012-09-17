@@ -76,11 +76,11 @@ begin  -- impl
 
   my_translate : entity work.translate
     generic map (
-      ID     => 6,
+      ID     => 2,
       WIDTH  => 16,
       HEIGHT => 16,
       PRE_COUNT => 0,
-      POST_COUNT => 0)
+      POST_COUNT => 32)
     port map (
       pipe_in  => pipe(1),              -- [in]
       pipe_out => pipe(2));             -- [out]
@@ -89,7 +89,7 @@ begin  -- impl
     generic map (
       ID        => 3,
       NUM_LINES => KERNEL,
-      HEIGHT    => HEIGHT,
+      HEIGHT    => HEIGHT+2,
       WIDTH     => WIDTH)
     port map (
       pipe_in     => pipe(2),
@@ -101,7 +101,7 @@ begin  -- impl
     generic map (
       ID       => 4,
       NUM_COLS => KERNEL,
-      HEIGHT   => HEIGHT,
+      HEIGHT   => HEIGHT+2,
       WIDTH    => WIDTH)
     port map (
       pipe_in     => pipe(3),
@@ -109,20 +109,31 @@ begin  -- impl
       mono_1d_in  => mono_1d,
       mono_2d_out => mono_2d
       );
-
+ 
   my_filter0_kernel : entity work.win_test
     generic map (
       ID     => 5,
       KERNEL => KERNEL)
     port map (
       pipe_in    => pipe(4),
-      pipe_out   => pipe(6),
+      pipe_out   => pipe(5),
       mono_2d_in => mono_2d
       );
-   
+
+  my_translatea : entity work.translate
+    generic map (
+      ID     => 6,
+      WIDTH  => 16,
+      HEIGHT => 16,
+      PRE_COUNT => 32,
+      POST_COUNT => 0)
+    port map (
+      pipe_in  => pipe(5),              -- [in]
+      pipe_out => pipe(6));             -- [out]
+  
   my_sim_sink : entity work.sim_sink
     generic map (
-      ID => 2)
+      ID => 7)
     port map (
       pipe_in  => pipe(6),              -- [in]
       pipe_out => pipe(7),              -- [out]
