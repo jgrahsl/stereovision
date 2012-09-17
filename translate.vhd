@@ -7,11 +7,11 @@ use work.cam_pkg.all;
 
 entity translate is
   generic (
-    ID         : integer range 0 to 63   := 0;
-    WIDTH      : natural range 1 to 2048 := 2048;
-    HEIGHT     : natural range 1 to 2048 := 2048;
-    PRE_COUNT  : natural range 0 to 2047 := 0;
-    POST_COUNT : natural range 0 to 2047 := 0);
+    ID     : integer range 0 to 63   := 0;
+    WIDTH  : natural range 1 to 2048 := 2048;
+    HEIGHT : natural range 1 to 2048 := 2048;
+    CUT    : natural range 0 to 2047 := 0;
+    APPEND : natural range 0 to 2047 := 0);
   port (
     pipe_in  : in  pipe_t;
     pipe_out : out pipe_t);
@@ -56,35 +56,42 @@ architecture impl of translate is
     v.post  := 0;
     v.state := PRE_S;
   end init;
-  constant T : natural := 2;
 begin
 
   connect_pipe(clk, rst, pipe_in, pipe_out, stage, src_valid, issue, stall);
 
   process (pipe_in, r, src_valid, rst)
-    variable v : reg_t;
+    variable v  : reg_t;
     variable en : std_logic;
   begin
-    stage_next  <= pipe_in.stage;
-    v           := r;
+    stage_next <= pipe_in.stage;
+    v          := r;
 -------------------------------------------------------------------------------
 -- Logic
 -------------------------------------------------------------------------------
 
-    en := '0';
-    issue <= '0';
-    if v.rows > (HEIGHT-1) and v.rows <= (HEIGHT+T-1) then
-      issue <= '1';
+    en                                := '0';
+    issue                             <= '0';
+    if v.rows > (HEIGHT-1) and v.rows <= (HEIGHT+APPEND-1) then
+      issue             <= '1';
       stage_next.data_1 <= (others => '0');
-      stage_next.valid <= '1';
-      en := '1';     
+      stage_next.valid  <= '1';
+      en                := '1';
     end if;
-    
-    if v.cols > (WIDTH-1) and v.cols <= (WIDTH+T-1) then
-      issue <= '1';
+
+    if v.cols > (WIDTH-1) and v.cols <= (WIDTH+APPEND-1) then
+      issue             <= '1';
       stage_next.data_1 <= (others => '0');
-      stage_next.valid <= '1';
-      en := '1';
+      stage_next.valid  <= '1';
+      en                := '1';
+    end if;
+
+    if v.rows < (CUT) then
+      stage_next.valid <= '0';
+    end if;
+
+    if v.cols < (CUT) then
+      stage_next.valid <= '0';
     end if;
 
 -------------------------------------------------------------------------------      
@@ -101,10 +108,10 @@ begin
 -------------------------------------------------------------------------------
 -- Counter
 -------------------------------------------------------------------------------
-    if stage_next.valid = '1' or en = '1' then
-      if v.cols = (WIDTH+T-1) then
+    if pipe_in.stage.valid = '1' or en = '1' then
+      if v.cols = (WIDTH+APPEND-1) then
         v.cols := 0;
-        if v.rows = (HEIGHT+T-1) then
+        if v.rows = (HEIGHT+APPEND-1) then
           v.rows := 0;
         else
           v.rows := v.rows + 1;

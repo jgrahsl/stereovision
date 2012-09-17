@@ -136,7 +136,7 @@ add wave -noupdate -format Literal /tb/my_sim_sink/id
 add wave -noupdate -format Logic /tb/my_sim_sink/clk
 add wave -noupdate -format Logic /tb/my_sim_sink/avail
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {579046 ps} 0} {{Cursor 2} {6227960 ps} 0}
+WaveRestoreCursors {{Cursor 1} {405332 ps} 0} {{Cursor 2} {6227960 ps} 0}
 configure wave -namecolwidth 150
 configure wave -valuecolwidth 100
 configure wave -justifyvalue left
@@ -152,4 +152,4 @@ configure wave -timeline 0
 configure wave -timelineunits ps
 update
 WaveRestoreZoom {0 ps} {10500032 ps}
-bookmark add wave initial {{0 ps} {10500032 ps}} 27
+bookmark add wave initial {{0 ps} {10500032 ps}} 46

@@ -9,10 +9,10 @@ use work.cam_pkg.all;
 
 entity tb is
   generic (
-    KERNEL  : natural range 0 to 5    := 5;
-    WIDTH   : natural range 0 to 2048 := 16;
-    HEIGHT  : natural range 0 to 2048 := 16;
-    NUM     : natural range 0 to 4    := 4
+    KERNEL : natural range 0 to 5    := 5;
+    WIDTH  : natural range 0 to 2048 := 16;
+    HEIGHT : natural range 0 to 2048 := 16;
+    NUM    : natural range 0 to 4    := 4
     );
 end tb;
 
@@ -43,7 +43,7 @@ architecture impl of tb is
   signal p0_wr_fifo : sim_fifo_t;
 
   signal mono_1d : mono_1d_t;
-  signal mono_2d : mono_2d_t;  
+  signal mono_2d : mono_2d_t;
 begin  -- impl
 
   cfg(0).enable <= '1';
@@ -54,8 +54,8 @@ begin  -- impl
   cfg(5).enable <= '1';
   cfg(6).enable <= '1';
   cfg(7).enable <= '1';
-  
-  
+
+
   my_pipe_head : entity work.pipe_head
     generic map (
       ID => 0)
@@ -79,8 +79,8 @@ begin  -- impl
       ID     => 2,
       WIDTH  => 16,
       HEIGHT => 16,
-      PRE_COUNT => 0,
-      POST_COUNT => 32)
+      CUT    => 0,
+      APPEND => 2)
     port map (
       pipe_in  => pipe(1),              -- [in]
       pipe_out => pipe(2));             -- [out]
@@ -90,7 +90,7 @@ begin  -- impl
       ID        => 3,
       NUM_LINES => KERNEL,
       HEIGHT    => HEIGHT+2,
-      WIDTH     => WIDTH)
+      WIDTH     => WIDTH+2)
     port map (
       pipe_in     => pipe(2),
       pipe_out    => pipe(3),
@@ -102,14 +102,14 @@ begin  -- impl
       ID       => 4,
       NUM_COLS => KERNEL,
       HEIGHT   => HEIGHT+2,
-      WIDTH    => WIDTH)
+      WIDTH    => WIDTH+2)
     port map (
       pipe_in     => pipe(3),
       pipe_out    => pipe(4),
       mono_1d_in  => mono_1d,
       mono_2d_out => mono_2d
       );
- 
+
   my_filter0_kernel : entity work.win_test
     generic map (
       ID     => 5,
@@ -123,19 +123,19 @@ begin  -- impl
   my_translatea : entity work.translate
     generic map (
       ID     => 6,
-      WIDTH  => 16,
-      HEIGHT => 16,
-      PRE_COUNT => 32,
-      POST_COUNT => 0)
+      WIDTH  => WIDTH+2,
+      HEIGHT => HEIGHT+2,
+      CUT    => 2,
+      APPEND => 0)
     port map (
       pipe_in  => pipe(5),              -- [in]
       pipe_out => pipe(6));             -- [out]
-  
+
   my_sim_sink : entity work.sim_sink
     generic map (
       ID => 7)
     port map (
-      pipe_in  => pipe(2),              -- [in]
+      pipe_in  => pipe(6),              -- [in]
       pipe_out => pipe(7),              -- [out]
       p0_fifo  => p0_wr_fifo);          -- [inout]
 
@@ -184,7 +184,7 @@ begin  -- impl
   process
     constant stim_file : string  := "sim.out";
     file f             : text open write_mode is stim_file;
-    variable s         : string(1 to (24+16+8+1));    
+    variable s         : string(1 to (24+16+8+1));
     variable c         : integer := 0;
     variable b         : std_logic_vector((24+16+8+1)-1 downto 0);
     variable p         : integer := 0;
@@ -210,7 +210,7 @@ begin  -- impl
         wait until p0_wr_fifo.clk = '1';
       end loop;
     end loop;  -- j
-    
+
     --for j in (HEIGHT-1) downto 0 loop
     --  for i in (WIDTH-1) downto 0 loop
     --    wait until p0_wr_fifo.clk = '0' and p0_wr_fifo.en = '1';
