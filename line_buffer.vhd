@@ -11,12 +11,12 @@ entity line_buffer is
     NUM_LINES : natural range 1 to 5    := 3;
     WIDTH     : natural range 1 to 2048 := 2048;
     HEIGHT    : natural range 1 to 2048 := 2048);
-    port (
-      pipe_in  : in  pipe_t;
-      pipe_out : out pipe_t;
+  port (
+    pipe_in  : in  pipe_t;
+    pipe_out : out pipe_t;
 
-      mono_1d_out : out mono_1d_t
-      );
+    mono_1d_out : out mono_1d_t
+    );
 end line_buffer;
 
 architecture impl of line_buffer is
@@ -35,13 +35,16 @@ architecture impl of line_buffer is
     sel  : natural range 0 to (NUM_LINES-1);
   end record;
 
-  signal adr  : std_logic_vector(10 downto 0);
+  signal adr     : std_logic_vector(10 downto 0);
   type   q_t is array (0 to (NUM_LINES-1)) of mono_t;
-  signal q    : q_t;
-  signal wren : std_logic_vector((NUM_LINES-1) downto 0);
+  signal q       : q_t;
+  signal qd      : q_t;
+  signal qi      : q_t;
+  signal stalled : std_logic := '0';
+  signal wren    : std_logic_vector((NUM_LINES-1) downto 0);
 
-  signal r_r : reg_t;
-  signal r : reg_t;
+  signal r_r    : reg_t;
+  signal r      : reg_t;
   signal r_next : reg_t;
 
   procedure init (variable v : inout reg_t) is
@@ -56,7 +59,6 @@ begin
 
   connect_pipe(clk, rst, pipe_in, pipe_out, stage, src_valid, issue, stall);
 
-  adr <= std_logic_vector(to_unsigned(r.cols, 11));
   rams : for i in 0 to (NUM_LINES-1) generate
     kernel_rams : entity work.bit_ram
       generic map (
@@ -67,7 +69,7 @@ begin
         clka  => clk,                   -- [in]
         dina  => pipe_in.stage.data_1,  -- [in]
         wea   => wren(i downto i),      -- [in]
-        douta => q(i));                 -- [out]    
+        douta => qi(i));                 -- [out]    
   end generate rams;
 
   wr_enables : for i in 0 to (NUM_LINES-1) generate
@@ -166,12 +168,12 @@ begin
 
     mono_1d_out(0) <= stage.data_1;
     if pipe_in.stage.data_1 = "1" then
-      stage_next.data_1   <= (others => '1');
+      stage_next.data_1 <= (others => '1');
 --      stage_next.data_8   <= (others => '1');
 --      stage_next.data_565 <= (others => '1');
 --      stage_next.data_888 <= (others => '1');
     else
-      stage_next.data_1   <= (others => '0');
+      stage_next.data_1 <= (others => '0');
 --      stage_next.data_8   <= (others => '0');
 --      stage_next.data_565 <= (others => '0');
 --      stage_next.data_888 <= (others => '0');
@@ -190,7 +192,10 @@ begin
     r_next <= v;
   end process;
 
-  proc_clk : process(clk, stall, stage_next, pipe_in)
+  q <= qd when stalled = '1' else
+       qi;
+  
+  proc_clk : process(clk, stall, r_next, stage_next, pipe_in, qd, qi, q)
   begin
     if rising_edge(clk) and stall = '0' then
       if (pipe_in.cfg(ID).enable = '1') then
@@ -201,6 +206,15 @@ begin
       r_r <= r;
       r   <= r_next;
     end if;
-end process;
+    if rising_edge(clk) then
+      if src_valid = '0' then
+        stalled <= '1';
+        qd      <= q;
+      else
+        stalled <= '0';
+      end if;
+    end if;
+  end process;
+      adr <= std_logic_vector(to_unsigned(r.cols, 11));
 
 end impl;

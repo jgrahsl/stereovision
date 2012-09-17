@@ -49,6 +49,7 @@ begin  -- impl
   cfg(0).enable <= '1';
   cfg(1).enable <= '1';
   cfg(2).enable <= '1';
+  
   cfg(3).enable <= '1';
   cfg(4).enable <= '1';
   cfg(5).enable <= '1';    

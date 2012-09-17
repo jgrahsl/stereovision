@@ -33,14 +33,12 @@ begin
   connect_pipe(clk, rst, pipe_in, pipe_out, stage, src_valid, issue, stall);
 
   process (pipe_in, src_valid, rst, mono_2d_in)  
-    variable win : mono_2d_t;
     variable sum : natural range 0 to (KERNEL*KERNEL);
   begin  -- process
     stage_next <= pipe_in.stage;
 -------------------------------------------------------------------------------
 -- Logic
 -------------------------------------------------------------------------------
-    win        := mono_2d_in;
     sum        := 0;
     ---------------------------------------------------------------------------
     -- Square
@@ -78,7 +76,7 @@ begin
     --              to_integer(unsigned(win(4)(1))) +
     --              to_integer(unsigned(win(4)(2))) +
     --              to_integer(unsigned(win(4)(3)));
-    sum := to_integer(unsigned(win(2)(2)));
+    sum := to_integer(unsigned(mono_2d_in(4)(4)));
 -------------------------------------------------------------------------------
 -- Output
 -------------------------------------------------------------------------------    
