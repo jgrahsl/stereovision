@@ -49,10 +49,12 @@ begin  -- impl
   cfg(0).enable <= '1';
   cfg(1).enable <= '1';
   cfg(2).enable <= '1';
-  
   cfg(3).enable <= '1';
   cfg(4).enable <= '1';
-  cfg(5).enable <= '1';    
+  cfg(5).enable <= '1';
+  cfg(6).enable <= '1';
+  cfg(7).enable <= '1';
+  
   
   my_pipe_head : entity work.pipe_head
     generic map (
@@ -61,7 +63,7 @@ begin  -- impl
       clk       => clk,                 -- [in]
       rst       => rst,                 -- [in]
       cfg       => cfg,                 -- [in]
-      pipe_tail => pipe(5),
+      pipe_tail => pipe(7),
       pipe_out  => pipe(0));            -- [out]
 
   my_sim_feed : entity work.sim_feed
@@ -72,6 +74,17 @@ begin  -- impl
       pipe_out => pipe(1),              -- [out]
       p0_fifo  => p0_rd_fifo);          -- [inout]
 
+  my_translate : entity work.translate
+    generic map (
+      ID     => 6,
+      WIDTH  => 16,
+      HEIGHT => 16,
+      PRE_COUNT => 0,
+      POST_COUNT => 0)
+    port map (
+      pipe_in  => pipe(1),              -- [in]
+      pipe_out => pipe(2));             -- [out]
+
   my_filter0_buffer : entity work.line_buffer
     generic map (
       ID        => 3,
@@ -79,8 +92,8 @@ begin  -- impl
       HEIGHT    => HEIGHT,
       WIDTH     => WIDTH)
     port map (
-      pipe_in     => pipe(1),
-      pipe_out    => pipe(2),
+      pipe_in     => pipe(2),
+      pipe_out    => pipe(3),
       mono_1d_out => mono_1d
       );
 
@@ -91,8 +104,8 @@ begin  -- impl
       HEIGHT   => HEIGHT,
       WIDTH    => WIDTH)
     port map (
-      pipe_in     => pipe(2),
-      pipe_out    => pipe(3),
+      pipe_in     => pipe(3),
+      pipe_out    => pipe(4),
       mono_1d_in  => mono_1d,
       mono_2d_out => mono_2d
       );
@@ -102,8 +115,8 @@ begin  -- impl
       ID     => 5,
       KERNEL => KERNEL)
     port map (
-      pipe_in    => pipe(3),
-      pipe_out   => pipe(4),
+      pipe_in    => pipe(4),
+      pipe_out   => pipe(6),
       mono_2d_in => mono_2d
       );
    
@@ -111,8 +124,8 @@ begin  -- impl
     generic map (
       ID => 2)
     port map (
-      pipe_in  => pipe(4),              -- [in]
-      pipe_out => pipe(5),              -- [out]
+      pipe_in  => pipe(6),              -- [in]
+      pipe_out => pipe(7),              -- [out]
       p0_fifo  => p0_wr_fifo);          -- [inout]
 
 -------------------------------------------------------------------------------  
@@ -166,6 +179,7 @@ begin  -- impl
     variable p         : integer := 0;
     variable l         : line;
   begin
+    p0_wr_fifo.stall <= '0';
     for j in (HEIGHT-1) downto 0 loop
       for i in (WIDTH-1) downto 0 loop
         wait until p0_wr_fifo.clk = '0' and p0_wr_fifo.en = '1';
@@ -176,6 +190,16 @@ begin  -- impl
       end loop;
     end loop;  -- j
 
+    for j in (HEIGHT-1) downto 0 loop
+      for i in (WIDTH-1) downto 0 loop
+        wait until p0_wr_fifo.clk = '0' and p0_wr_fifo.en = '1';
+        b := p0_wr_fifo.data;
+        write(l, str(b));
+        writeline(f, l);
+        wait until p0_wr_fifo.clk = '1';
+      end loop;
+    end loop;  -- j
+    
     --for j in (HEIGHT-1) downto 0 loop
     --  for i in (WIDTH-1) downto 0 loop
     --    wait until p0_wr_fifo.clk = '0' and p0_wr_fifo.en = '1';

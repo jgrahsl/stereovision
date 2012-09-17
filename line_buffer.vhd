@@ -207,7 +207,7 @@ begin
       r   <= r_next;
     end if;
     if rising_edge(clk) then
-      if src_valid = '0' then
+      if src_valid = '0' and stalled = '0' then
         stalled <= '1';
         qd      <= q;
       else

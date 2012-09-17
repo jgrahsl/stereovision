@@ -1,4 +1,4 @@
-VHD="cam_pkg.vhd sim_feed.vhd sim_sink.vhd pipe_head.vhd hist_x_new.vhd bit_ram.vhd hist_y_new.vhd line_buffer.vhd window.vhd win_test.vhd txt_util.vhd tb_pipe.vhd"
+VHD="txt_util.vhd cam_pkg.vhd sim_feed.vhd sim_sink.vhd pipe_head.vhd hist_x_new.vhd bit_ram.vhd hist_y_new.vhd line_buffer.vhd window.vhd win_test.vhd translate.vhd tb_pipe.vhd"
 
 export PATH=$PATH:/opt/model6.4/linux
 export LM_LICENSE_FILE=/mnt/store/model/lic.dat

@@ -20,6 +20,7 @@ package cam_pkg is
   constant IDENT_SIMFEED  : std_logic_vector(7 downto 0) := X"09";
   constant IDENT_SIMSINK  : std_logic_vector(7 downto 0) := X"0A";
   constant IDENT_WIN_TEST : std_logic_vector(7 downto 0) := X"0B";
+  constant IDENT_TRANSLATE : std_logic_vector(7 downto 0) := X"0C";  
 
   subtype mono_t is std_logic_vector(0 downto 0);
   subtype rgb565_t is std_logic_vector(15 downto 0);

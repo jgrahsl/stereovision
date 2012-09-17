@@ -36,6 +36,7 @@ architecture impl of sim_sink is
   end init;
 
   signal avail : std_logic;
+  signal cnt : natural range 0 to 10 := 5;
 begin
 
   connect_pipe(clk, rst, pipe_in, pipe_out, stage, src_valid, issue, stall);
@@ -84,7 +85,15 @@ begin
       r <= r_next;
     end if;
     if rising_edge(clk) then
---       issue <= not issue;
+      issue <= '0';
+      if cnt = 0 then
+        issue <= '1';
+      end if;
+      if cnt < 1 then
+        cnt <= cnt + 1;
+      else
+        cnt <= 0;
+      end if;
     end if;
   end process;
 

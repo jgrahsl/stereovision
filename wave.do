@@ -34,6 +34,21 @@ add wave -noupdate -format Logic /tb/my_sim_feed/issue
 add wave -noupdate -format Literal /tb/my_sim_feed/id
 add wave -noupdate -format Logic /tb/my_sim_feed/avail
 add wave -noupdate -format Logic /tb/my_sim_feed/clk
+add wave -noupdate -divider Translate
+add wave -noupdate -format Literal /tb/my_translate/width
+add wave -noupdate -format Logic /tb/my_translate/stall
+add wave -noupdate -format Literal -expand /tb/my_translate/stage_next
+add wave -noupdate -format Literal -expand /tb/my_translate/stage
+add wave -noupdate -format Logic /tb/my_translate/src_valid
+add wave -noupdate -format Logic /tb/my_translate/rst
+add wave -noupdate -format Literal /tb/my_translate/r_next
+add wave -noupdate -format Literal -expand /tb/my_translate/r
+add wave -noupdate -format Literal -expand /tb/my_translate/pipe_out
+add wave -noupdate -format Literal /tb/my_translate/pipe_in
+add wave -noupdate -format Logic /tb/my_translate/issue
+add wave -noupdate -format Literal /tb/my_translate/id
+add wave -noupdate -format Literal /tb/my_translate/height
+add wave -noupdate -format Logic /tb/my_translate/clk
 add wave -noupdate -divider line
 add wave -noupdate -format Logic /tb/my_filter0_buffer/stall
 add wave -noupdate -format Literal /tb/my_filter0_buffer/wren
@@ -104,7 +119,7 @@ add wave -noupdate -format Literal /tb/my_sim_sink/id
 add wave -noupdate -format Logic /tb/my_sim_sink/clk
 add wave -noupdate -format Logic /tb/my_sim_sink/avail
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {527574 ps} 0}
+WaveRestoreCursors {{Cursor 1} {5255000 ps} 0}
 configure wave -namecolwidth 150
 configure wave -valuecolwidth 100
 configure wave -justifyvalue left
@@ -119,5 +134,5 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {0 ps} {21 us}
-bookmark add wave initial {{0 ps} {21 us}} 21
+WaveRestoreZoom {5012500 ps} {10262500 ps}
+bookmark add wave initial {{5012500 ps} {10262500 ps}} 12
