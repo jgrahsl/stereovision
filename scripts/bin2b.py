@@ -21,5 +21,4 @@ def hex2bin(hexno):
 
 
 for line in sys.stdin:
-
     print hex2bin(line.rstrip())

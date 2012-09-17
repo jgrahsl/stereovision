@@ -87,6 +87,8 @@ architecture impl of hist_y is
   signal ram1_adr  : std_logic_vector(10 downto 0);
   signal ram1_din  : std_logic_vector(9 downto 0);
   signal ram1_dout : std_logic_vector(9 downto 0);
+
+  constant ADDR_BITS : natural := 11;
 begin
   issue <= '0';
 
@@ -94,34 +96,34 @@ begin
 
   swap_ram : entity work.bit_ram
     generic map (
-      ADDR_BITS  => 4,
+      ADDR_BITS  => ADDR_BITS,
       WIDTH_BITS => 10)
     port map (
       clka  => clk,                     -- [IN]
       wea   => ram2_wen,                -- [IN]
-      addra => ram2_adr(3 downto 0),    -- [IN]
+      addra => ram2_adr(ADDR_BITS-1 downto 0),    -- [IN]
       dina  => ram2_din,                -- [IN]
       douta => ram2_dout);              -- [OUT]
 
   ram0_ram : entity work.bit_ram
     generic map (
-      ADDR_BITS  => 4,
+      ADDR_BITS  => ADDR_BITS,
       WIDTH_BITS => 10)
     port map (
       clka  => clk,                     -- [IN]
       wea   => ram0_wen,                -- [IN]
-      addra => ram0_adr(3 downto 0),    -- [IN]
+      addra => ram0_adr(ADDR_BITS-1 downto 0),    -- [IN]
       dina  => ram0_din,                -- [IN]
       douta => ram0_dout);              -- [OUT]
 
   ram1_ram : entity work.bit_ram
     generic map (
-      ADDR_BITS  => 4,
+      ADDR_BITS  => ADDR_BITS,
       WIDTH_BITS => 10)
     port map (
       clka  => clk,                     -- [IN]
       wea   => ram1_wen,                -- [IN]
-      addra => ram1_adr(3 downto 0),    -- [IN]
+      addra => ram1_adr(ADDR_BITS-1 downto 0),    -- [IN]
       dina  => ram1_din,                -- [IN]
       douta => ram1_dout);              -- [OUT]  
 
@@ -210,7 +212,6 @@ begin
 
 
     if src_valid = '1' then
-
       if v.rd_adr = (WIDTH-1) then
         v.rd_adr := 0;
       else
@@ -288,11 +289,7 @@ begin
     end if;
 
     if pipe_in.cfg(ID).p(0)(0) = '1' then
-      --if (v.cols = v.maxstart or v.cols = v.maxend) and v.maxarea > 0 then
-      --  stage_next.data_565 <= "0000011111100000";
-      --  stage_next.data_1   <= (others => '1');
-      --end if;
-      if (v.rows < cur) and v.maxarea > 0 then
+      if (v.cols = v.maxstart or v.cols = v.maxend) and v.maxarea > 0 then
         stage_next.data_565 <= "0000011111100000";
         stage_next.data_1   <= (others => '1');
       end if;

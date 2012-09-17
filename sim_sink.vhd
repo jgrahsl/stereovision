@@ -83,9 +83,9 @@ begin
       end if;
       r <= r_next;
     end if;
-    --if rising_edge(clk) then
-    --  issue <= not issue;
-    --end if;
+    if rising_edge(clk) then
+      issue <= not issue;
+    end if;
   end process;
 
 end impl;
