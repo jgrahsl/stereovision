@@ -17,4 +17,4 @@ for y in range(height):
         else:
              im.putpixel((x,y),(0,0,0,255))
     
-im.save("output.tiff")
+im.save(sys.argv[1])
