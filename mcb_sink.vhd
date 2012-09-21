@@ -42,15 +42,19 @@ architecture impl of mcb_sink is
 begin
 
   connect_pipe(clk, rst, pipe_in, pipe_out,stage, src_valid, issue, stall);
-
-  p0_fifo.en  <= src_valid and not r.sel_is_high and pipe_in.cfg(ID).enable and pipe_in.cfg(ID).p(0)(0);
+  
+  avail <= src_valid and pipe_in.cfg(ID).enable and pipe_in.cfg(ID).p(0)(0) and not p0_fifo.stall and not p1_fifo.stall and not stall;
+  
+  p0_fifo.en  <= avail and not r.sel_is_high;
   p0_fifo.clk <= clk;
   
-  p1_fifo.en  <= src_valid and pipe_in.cfg(ID).enable;
+  p1_fifo.en  <= avail;
   p1_fifo.clk <= clk;
 
   p0_fifo.data(31 downto 16) <= pipe_in.stage.data_565;
   p1_fifo.data               <= pipe_in.stage.aux;
+
+  issue <= p0_fifo.stall or p1_fifo.stall;
   
   process (pipe_in, r, rst)
     variable v : reg_t;
@@ -60,7 +64,7 @@ begin
 -------------------------------------------------------------------------------
 -- Logic
 -------------------------------------------------------------------------------    
-    if src_valid = '1' and pipe_in.cfg(ID).p(0)(0) = '1' then
+    if avail = '1' then
       if v.sel_is_high = '1' then
         v.sel_is_high := '0';
       else
@@ -98,5 +102,6 @@ begin
       r <= r_next;
     end if;
   end process;
+  
 
 end impl;

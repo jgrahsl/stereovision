@@ -44,12 +44,12 @@ begin
 
   connect_pipe(clk, rst, pipe_in, pipe_out, stage, src_valid, issue, stall);
 
-  avail <= '1' when p0_fifo.stall = '0' and p1_fifo.stall = '0' and pipe_in.cfg(ID).enable = '1' and pipe_in.cfg(ID).p(0)(0) = '1' else '0';
+  avail <= not p0_fifo.stall and not p1_fifo.stall and pipe_in.cfg(ID).enable and pipe_in.cfg(ID).p(0)(0) and not stall;
 
-  p0_fifo.en  <= avail and not r.sel_is_high and not stall;
+  p0_fifo.en  <= avail and not r.sel_is_high;
   p0_fifo.clk <= clk;
 
-  p1_fifo.en  <= avail and not stall;
+  p1_fifo.en  <= avail;
   p1_fifo.clk <= clk;
 
   selected_word <= p0_fifo.data(31 downto 16) when r.sel_is_high = '0' else

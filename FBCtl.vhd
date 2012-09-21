@@ -25,6 +25,7 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.all;
 use IEEE.std_logic_unsigned.all;
 use IEEE.std_logic_arith.all;
+use ieee.numeric_std.all;
 
 library digilent;
 -- Uncomment the following library declaration if using
@@ -546,41 +547,101 @@ architecture Behavioral of FBCtl is
   signal RstC, SRstC, SRstcam, SCalibDoneB : std_logic;
 
 
-  signal my_p0_rd_addr : natural range 0 to 2**22-1 := 0;
-  signal my_p0_wr_addr : natural range 0 to 2**22-1 := 0;
-  signal my_p1_addr    : natural range 0 to 2**22-1 := 0;
-
-  signal fill_count : natural range 0 to 32;
-  type   my_state_t is (my_idle, my_read_p0, my_read_p1, my_write_p0, my_write_p1, my_inc, my_wait, my_trans, my_trans_2, my_trans_3, my_trans_4, my_wait_l, my_wait_h, my_read_p0_wait, my_reset, my_reset_2, my_idle_2, my_idle_3);
-  signal my_state   : my_state_t;
-  signal my_nstate  : my_state_t;
-
-  constant P0_BATCH : natural := 16;
-  constant P1_BATCH : natural := 32;
 
   signal clkalg     : std_logic;
   signal rstalg     : std_logic;
   signal rstcam_int : std_logic;
 
-  signal feed_is_high : std_logic;
-  signal sink_is_high : std_logic;
-  signal avail        : std_logic;
-
-  signal cfg        : cfg_set_t;
-  signal brightness : std_logic_vector(15 downto 0);
-  signal pipe_in    : pipe_t;
-  signal pipe_out   : pipe_t;
-  signal pipe       : pipe_set_t;
-  signal hist_row   : natural range 0 to 2047;
-
-  signal p0_rd_fifo : mcb_fifo_t;
-  signal p1_rd_fifo : mcb_fifo_t;
-  signal p0_wr_fifo : mcb_fifo_t;
-  signal p1_wr_fifo : mcb_fifo_t;
+  signal cfg      : cfg_set_t;
+  signal pipe     : pipe_set_t;
+  signal hist_row : natural range 0 to 2047;
 
   signal mono_1d : mono_1d_t;
   signal mono_2d : mono_2d_t;
+
+  signal pr_fifo   : mcb_fifo_t;
+  signal pw_fifo   : mcb_fifo_t;
+  signal auxr_fifo : mcb_fifo_t;
+  signal auxw_fifo : mcb_fifo_t;
+
+  signal pr_clk   : std_logic;
+  signal pr_rst   : std_logic;
+  signal pr_in    : std_logic_vector(31 downto 0);
+  signal pr_out   : std_logic_vector(31 downto 0);
+  signal pr_rd    : std_logic;
+  signal pr_wr    : std_logic;
+  signal pr_empty : std_logic;
+  signal pr_full  : std_logic;
+  signal pr_count : std_logic_vector(4 downto 0);
+
+  signal pw_clk   : std_logic;
+  signal pw_rst   : std_logic;
+  signal pw_in    : std_logic_vector(31 downto 0);
+  signal pw_out   : std_logic_vector(31 downto 0);
+  signal pw_rd    : std_logic;
+  signal pw_wr    : std_logic;
+  signal pw_empty : std_logic;
+  signal pw_full  : std_logic;
+  signal pw_count : std_logic_vector(4 downto 0);
+
+  signal auxr_clk   : std_logic;
+  signal auxr_rst   : std_logic;
+  signal auxr_in    : std_logic_vector(31 downto 0);
+  signal auxr_out   : std_logic_vector(31 downto 0);
+  signal auxr_rd    : std_logic;
+  signal auxr_wr    : std_logic;
+  signal auxr_empty : std_logic;
+  signal auxr_full  : std_logic;
+  signal auxr_count : std_logic_vector(5 downto 0);
+
+  signal auxw_clk   : std_logic;
+  signal auxw_rst   : std_logic;
+  signal auxw_in    : std_logic_vector(31 downto 0);
+  signal auxw_out   : std_logic_vector(31 downto 0);
+  signal auxw_rd    : std_logic;
+  signal auxw_wr    : std_logic;
+  signal auxw_empty : std_logic;
+  signal auxw_full  : std_logic;
+  signal auxw_count : std_logic_vector(5 downto 0);
   
+  type my_read_state_t is (
+    my_read_reset,
+    my_read_wait,
+    my_read_p,
+    my_read_transfer_p,
+    my_read_transfer_p_1,
+    my_read_aux,
+    my_read_transfer_aux,
+    my_read_transfer_aux_1,
+    my_read_inc);
+
+  type my_write_state_t is (
+    my_write_reset,
+    my_write_wait,
+    my_write_p,
+    my_write_transfer_p,
+    my_write_transfer_p_1,
+    my_write_aux,
+    my_write_transfer_aux,
+    my_write_transfer_aux_1,
+    my_write_inc);
+
+  signal my_read_state  : my_read_state_t;
+  signal my_write_state : my_write_state_t;
+
+  signal my_read_nstate  : my_read_state_t;
+  signal my_write_nstate : my_write_state_t;
+
+  signal my_pixel_rd_addr : natural range 0 to 2**22-1 := 0;
+  signal my_aux_rd_addr   : natural range 0 to 2**22-1 := 0;
+
+  signal my_pixel_wr_addr : natural range 0 to 2**22-1 := 0;
+  signal my_aux_wr_addr   : natural range 0 to 2**22-1 := 0;
+
+  signal reg0 : std_logic_vector(7 downto 0);
+  signal reg1 : std_logic_vector(7 downto 0);
+  signal reg2 : std_logic_vector(7 downto 0);
+  signal reg3 : std_logic_vector(7 downto 0);  
 begin
 ----------------------------------------------------------------------------------
 -- mcb instantiation
@@ -981,100 +1042,356 @@ begin
   begin  -- process
     if clkalg'event and clkalg = '1' then  -- rising clock edge
       if rstalg = '1' then                 -- synchronous reset (active high)
-        my_state      <= my_reset;
-        my_p0_rd_addr <= 0;
-        my_p0_wr_addr <= 2**20;
-        my_p1_addr    <= 2**21;
+        my_read_state    <= my_read_reset;
+        my_write_state   <= my_write_reset;
+        my_pixel_rd_addr <= 0;
+        my_pixel_wr_addr <= 2**20;
+        my_aux_rd_addr   <= 2**21;
+        my_aux_wr_addr   <= 2**21;
+        reg0             <= (others => '0');
+        reg1             <= (others => '0');
+        reg2             <= (others => '0');
+        reg3             <= (others => '0');
       else
+--        reg0 <= (others => '0');
+--        reg1 <= (others => '0');
+
 -------------------------------------------------------------------------------
 -- Memory 
 -------------------------------------------------------------------------------
-        if my_state = my_inc then
-
-          if (my_p0_rd_addr = 640*2*480-P0_BATCH*4) then
-            my_p0_rd_addr <= 0;
-            my_p0_wr_addr <= 2**20;
-            my_p1_addr    <= 2**21;
+        if my_read_state = my_read_inc then
+          if (my_pixel_rd_addr = 640*2*480-16*4) then
+            my_pixel_rd_addr <= 0;
+            my_aux_rd_addr   <= 2**21;
           else
-            my_p0_rd_addr <= my_p0_rd_addr + P0_BATCH*4;
-            my_p0_wr_addr <= my_p0_wr_addr + P0_BATCH*4;
-            my_p1_addr    <= my_p1_addr + P1_BATCH*4;
+            my_pixel_rd_addr <= my_pixel_rd_addr + 16*4;
+            my_aux_rd_addr   <= my_aux_rd_addr + 32*4;
           end if;
-
+          reg2 <= reg2 + std_logic_vector(to_unsigned(1,8));          
         end if;
-        my_state <= my_nstate;
+
+        if my_write_state = my_write_inc then
+          if (my_pixel_wr_addr = 640*2*480-32*4) then
+            my_pixel_wr_addr <= 2**20;
+            my_aux_wr_addr   <= 2**21;
+          else
+            my_pixel_wr_addr <= my_pixel_wr_addr + 16*4;
+            my_aux_wr_addr   <= my_aux_wr_addr + 32*4;
+          end if;
+          reg3 <= reg3 + std_logic_vector(to_unsigned(1,8));
+        end if;
+
+        my_read_state  <= my_read_nstate;
+        my_write_state <= my_write_nstate;
+
+
+        if my_read_state = my_read_wait then
+          reg0(0) <= '1';
+        end if;
+        if my_read_state = my_read_p then
+          reg0(1) <= '1';
+        end if;
+        if my_read_state = my_read_transfer_p then
+          reg0(2) <= '1';
+        end if;
+        if my_read_state = my_read_transfer_p_1 then
+          reg0(3) <= '1';
+        end if;
+        if my_read_state = my_read_aux then
+          reg0(4) <= '1';
+        end if;
+        if my_read_state = my_read_transfer_aux then
+          reg0(5) <= '1';
+        end if;
+        if my_read_state = my_read_transfer_aux_1 then
+          reg0(6) <= '1';
+        end if;
+
+        if my_write_state = my_write_wait then
+          reg1(0) <= '1';
+        end if;
+        if my_write_state = my_write_transfer_p then
+          reg1(1) <= '1';
+        end if;
+        if my_write_state = my_write_p then
+          reg1(2) <= '1';
+        end if;
+        if my_write_state = my_write_transfer_p_1 then
+          reg1(3) <= '1';
+        end if;
+        if my_write_state = my_write_transfer_aux then
+          reg1(4) <= '1';
+        end if;
+        if my_write_state = my_write_aux then
+          reg1(5) <= '1';
+        end if;
+        if my_write_state = my_write_transfer_aux_1 then
+          reg1(6) <= '1';
+        end if;
+        
         
       end if;
     end if;
   end process;
 
+-------------------------------------------------------------------------------
+-- MCB_FIFO TO PR/AUXR_FIFO
+-------------------------------------------------------------------------------
 
-  process (my_state)
+  pr_fifo_comp : entity work.mcb_pixel_fifo
+    port map (
+      clk        => pr_clk,             -- [IN]
+      rst        => pr_rst,             -- [IN]
+      din        => pr_in,              -- [IN]
+      wr_en      => pr_wr,              -- [IN]
+      rd_en      => pr_rd,              -- [IN]
+      dout       => pr_out,
+      full       => pr_full,            -- [OUT]
+      empty      => pr_empty,
+      data_count => pr_count
+      );                                -- [OUT]
+
+  pw_fifo_comp : entity work.mcb_pixel_fifo
+    port map (
+      clk        => pw_clk,             -- [IN]
+      rst        => pw_rst,             -- [IN]
+      din        => pw_in,              -- [IN]
+      wr_en      => pw_wr,              -- [IN]
+      rd_en      => pw_rd,              -- [IN]
+      dout       => pw_out,
+      full       => pw_full,            -- [OUT]
+      empty      => pw_empty,
+      data_count => pw_count
+      );                                -- [OUT]
+
+--
+  
+  auxr_fifo_comp : entity work.mcb_aux_fifo
+    port map (
+      clk        => auxr_clk,           -- [IN]
+      rst        => auxr_rst,           -- [IN]
+      din        => auxr_in,            -- [IN]
+      wr_en      => auxr_wr,            -- [IN]
+      rd_en      => auxr_rd,            -- [IN]
+      dout       => auxr_out,           -- [OUT]
+      full       => auxr_full,          -- [OUT]
+      empty      => auxr_empty,
+      data_count => auxr_count
+      );                                -- [OUT] 
+
+  auxw_fifo_comp : entity work.mcb_aux_fifo
+    port map (
+      clk        => auxw_clk,           -- [IN]
+      rst        => auxw_rst,           -- [IN]
+      din        => auxw_in,            -- [IN]
+      wr_en      => auxw_wr,            -- [IN]
+      rd_en      => auxw_rd,            -- [IN]
+      dout       => auxw_out,           -- [OUT]
+      full       => auxw_full,          -- [OUT]
+      empty      => auxw_empty,
+      data_count => auxw_count
+      );                                -- [OUT]
+
+-------------------------------------------------------------------------------
+-- READ
+-------------------------------------------------------------------------------
+  -- mbc_fifo to p/aux_fifo
+  pr_rst        <= rstalg;
+  pr_clk        <= pr_fifo.clk;
+  pr_rd         <= pr_fifo.en;
+  pr_fifo.stall <= pr_empty;
+  pr_fifo.data  <= pr_out;
+
+  auxr_rst        <= rstalg;
+  auxr_clk        <= auxr_fifo.clk;
+  auxr_rd         <= auxr_fifo.en;
+  auxr_fifo.stall <= auxr_empty;
+  auxr_fifo.data  <= auxr_out;
+
+  -- p/aux_fifo to real mcb
+  pr_in   <= p0_rd_data;
+  auxr_in <= p0_rd_data;
+
+  p0_rd_clk <= clkalg;
+  p0_wr_clk <= clkalg;
+
+  process (my_read_state)
   begin  -- process
-    my_nstate <= my_state;
+    my_read_nstate <= my_read_state;
 
     p0_cmd_clk       <= clkalg;
     p0_cmd_en        <= '0';
     p0_cmd_instr     <= (others => '0');
-    p0_cmd_bl        <= conv_std_logic_vector(P0_BATCH-1, 6);
+    p0_cmd_bl        <= (others => '0');
     p0_cmd_byte_addr <= (others => '0');
     p0_wr_mask       <= "0000";
 
-    p1_cmd_clk       <= clkalg;
-    p1_cmd_en        <= '0';
-    p1_cmd_instr     <= (others => '0');
-    p1_cmd_bl        <= conv_std_logic_vector(P1_BATCH-1, 6);
-    p1_cmd_byte_addr <= conv_std_logic_vector(my_p1_addr, 30);
-    p1_wr_mask       <= "0000";
+    p0_rd_en <= '0';
+    pr_wr    <= '0';
+    auxr_wr  <= '0';
 
-    case my_state is
+    case my_read_state is
 
-      when my_reset =>
+      when my_read_reset =>
 
-        my_nstate <= my_read_p0;
+        my_read_nstate <= my_read_wait;
+
+      when my_read_wait =>
+        if pr_empty = '1' and auxr_empty = '1' then
+          my_read_nstate <= my_read_p;
+        end if;
         
-      when my_read_p0 =>
-
-        if p0_rd_empty = '1' and p0_wr_empty = '1' and p1_wr_empty = '1' and p0_cmd_empty = '1' then
+      when my_read_p =>
+        if p0_cmd_empty = '1' then
           p0_cmd_en        <= '1';
           p0_cmd_instr     <= MCB_CMD_RD;
-          p0_cmd_byte_addr <= conv_std_logic_vector(my_p0_rd_addr, 30);
-          my_nstate        <= my_read_p1;
-        end if;
-
-      when my_read_p1 =>
-
-        if p1_rd_empty = '1' and p1_wr_empty = '1' and p1_cmd_empty = '1' then
-          p1_cmd_en        <= '1';
-          p1_cmd_instr     <= MCB_CMD_RD;
-          p1_cmd_byte_addr <= conv_std_logic_vector(my_p1_addr, 30);
-          my_nstate        <= my_write_p0;
+          p0_cmd_bl        <= conv_std_logic_vector(15, 6);
+          p0_cmd_byte_addr <= conv_std_logic_vector(my_pixel_rd_addr, 30);
+          my_read_nstate   <= my_read_transfer_p;
         end if;
         
-      when my_write_p0 =>
+      when my_read_transfer_p =>
+        if p0_rd_count = std_logic_vector(to_unsigned(16, 6)) then
+          my_read_nstate <= my_read_transfer_p_1;
+        end if;
 
-        if p0_wr_count = P0_BATCH and p0_cmd_empty = '1' then
+      when my_read_transfer_p_1 =>
+        if p0_rd_empty = '0' then
+          p0_rd_en <= '1';
+          pr_wr    <= '1';
+        else
+          my_read_nstate <= my_read_aux;
+        end if;
+
+      when my_read_aux =>
+        if p0_cmd_empty = '1' then
           p0_cmd_en        <= '1';
-          p0_cmd_instr     <= MCB_CMD_WR;
-          p0_cmd_byte_addr <= conv_std_logic_vector(my_p0_wr_addr, 30);
-          my_nstate        <= my_write_p1;
+          p0_cmd_instr     <= MCB_CMD_RD;
+          p0_cmd_bl        <= conv_std_logic_vector(31, 6);
+          p0_cmd_byte_addr <= conv_std_logic_vector(my_aux_rd_addr, 30);
+          my_read_nstate   <= my_read_transfer_aux;
         end if;
 
-      when my_write_p1 =>
+      when my_read_transfer_aux =>
+        if p0_rd_count = std_logic_vector(to_unsigned(32, 6)) then
+          my_read_nstate <= my_read_transfer_aux_1;
+        end if;
 
-        if p1_wr_count = P1_BATCH and p1_cmd_empty = '1' then
-          p1_cmd_en        <= '1';
-          p1_cmd_instr     <= MCB_CMD_WR;
-          p1_cmd_byte_addr <= conv_std_logic_vector(my_p1_addr, 30);
-          my_nstate        <= my_inc;
+      when my_read_transfer_aux_1 =>
+        if p0_rd_empty = '0' then
+          p0_rd_en <= '1';
+          auxr_wr  <= '1';
+        else
+          my_read_nstate <= my_read_inc;
         end if;
         
-      when my_inc =>
-        my_nstate <= my_read_p0;
+      when my_read_inc =>
+        my_read_nstate <= my_read_wait;
         
       when others => null;
     end case;
   end process;
+
+-------------------------------------------------------------------------------
+-- WRITE
+-------------------------------------------------------------------------------
+  pw_rst        <= rstalg;
+  pw_clk        <= pw_fifo.clk;
+  pw_wr         <= pw_fifo.en;
+  pw_fifo.stall <= pw_full;
+  pw_in         <= pw_fifo.data;
+
+  auxw_rst        <= rstalg;
+  auxw_clk        <= auxw_fifo.clk;
+  auxw_wr         <= auxw_fifo.en;
+  auxw_fifo.stall <= auxw_full;
+  auxw_in         <= auxw_fifo.data;
+
+  p1_rd_clk <= clkalg;
+  p1_wr_clk <= clkalg;
+
+  process (my_write_state)
+  begin  -- process
+    my_write_nstate <= my_write_state;
+
+    p1_cmd_clk       <= clkalg;
+    p1_cmd_en        <= '0';
+    p1_cmd_instr     <= (others => '0');
+    p1_cmd_bl        <= (others => '0');
+    p1_cmd_byte_addr <= (others => '0');
+    p1_wr_mask       <= "0000";
+    p1_wr_data       <= (others => '0');
+
+    p1_wr_en <= '0';
+    pw_rd    <= '0';
+    auxw_rd  <= '0';
+
+    case my_write_state is
+
+      when my_write_reset =>
+
+        my_write_nstate <= my_write_wait;
+
+      when my_write_wait =>
+        if pw_count >= std_logic_vector(to_unsigned(16, 5)) and
+          auxw_count >= std_logic_vector(to_unsigned(32, 6)) then
+          my_write_nstate <= my_write_transfer_p;
+        end if;
+
+      when my_write_transfer_p =>
+        p1_wr_data <= pw_out;
+        if p1_wr_count < std_logic_vector(to_unsigned(16, 6)) then
+          p1_wr_en <= '1';
+          pw_rd    <= '1';
+        else
+          my_write_nstate <= my_write_p;
+        end if;
+        
+      when my_write_p =>
+        if p1_cmd_empty = '1' then
+          p1_cmd_en        <= '1';
+          p1_cmd_instr     <= MCB_CMD_WR;
+          p1_cmd_bl        <= conv_std_logic_vector(15, 6);
+          p1_cmd_byte_addr <= conv_std_logic_vector(my_pixel_wr_addr, 30);
+          my_write_nstate  <= my_write_transfer_p_1;
+        end if;
+
+      when my_write_transfer_p_1 =>
+        if p1_wr_empty = '1' then
+          my_write_nstate <= my_write_transfer_aux;
+        end if;
+
+        
+      when my_write_transfer_aux =>
+        p1_wr_data <= auxw_out;
+        if p1_wr_count < std_logic_vector(to_unsigned(32, 6)) then
+          p1_wr_en <= '1';
+          auxw_rd  <= '1';
+        else
+          my_write_nstate <= my_write_aux;
+        end if;
+        
+      when my_write_aux =>
+        if p1_cmd_empty = '1' then
+          p1_cmd_en        <= '1';
+          p1_cmd_instr     <= MCB_CMD_WR;
+          p1_cmd_bl        <= conv_std_logic_vector(31, 6);
+          p1_cmd_byte_addr <= conv_std_logic_vector(my_aux_wr_addr, 30);
+          my_write_nstate  <= my_write_transfer_aux_1;
+        end if;
+
+      when my_write_transfer_aux_1 =>
+        if p1_wr_empty = '1' then
+          my_write_nstate <= my_write_inc;
+        end if;
+        
+      when my_write_inc =>
+        my_write_nstate <= my_write_wait;
+        
+      when others => null;
+    end case;
+  end process;
+
 
 
   my_cfg_sync : entity work.cfg_sync
@@ -1084,43 +1401,24 @@ begin
       dout => cfg);                     -- [out] 
 
 -------------------------------------------------------------------------------
--- FROM MCB
--------------------------------------------------------------------------------
-  p0_rd_en         <= p0_rd_fifo.en;
-  p0_rd_clk        <= p0_rd_fifo.clk;
-  p0_rd_fifo.stall <= p0_rd_empty;
-  p0_rd_fifo.data  <= p0_rd_data;
-
-  p1_rd_en         <= p1_rd_fifo.en;
-  p1_rd_clk        <= p1_rd_fifo.clk;
-  p1_rd_fifo.stall <= p1_rd_empty;
-  p1_rd_fifo.data  <= p1_rd_data;
-
--------------------------------------------------------------------------------
--- TO MCB
--------------------------------------------------------------------------------  
-  p0_wr_en         <= p0_wr_fifo.en;
-  p0_wr_clk        <= p0_wr_fifo.clk;
-  p0_wr_fifo.stall <= p0_wr_full;
-  p0_wr_data       <= p0_wr_fifo.data;
-
-  p1_wr_en         <= p1_wr_fifo.en;
-  p1_wr_clk        <= p0_wr_fifo.clk;
-  p1_wr_fifo.stall <= p1_wr_full;
-  p1_wr_data       <= p1_wr_fifo.data;
-
--------------------------------------------------------------------------------
 -- LED
 -------------------------------------------------------------------------------  
-  led_o <= "1" & p0_rd_count when rd_mode(0) = '1' else
-           "1" & p1_rd_count                                                                                                                                            when rd_mode(1) = '1' else
-           "1" & p0_wr_count                                                                                                                                            when rd_mode(2) = '1' else
-           "1" & p1_wr_count                                                                                                                                            when rd_mode(3) = '1' else
-           p0_rd_fifo.en & p0_wr_fifo.en & p0_rd_fifo.stall & "00000"                                                                                                   when rd_mode(4) = '1' else
-           p1_rd_fifo.en & p1_wr_fifo.en & p1_rd_fifo.stall & "00000"                                                                                                   when rd_mode(5) = '1' else
-           pipe(0).stage.valid & pipe(1).stage.valid & pipe(2).stage.valid & pipe(3).stage.valid & pipe(4).stage.valid & pipe(5).stage.valid& pipe(6).stage.valid & "0" when rd_mode(6) = '1' else
-           pipe(1).stage.identity                                                                                                                                       when rd_mode(7) = '1' else
+  led_o <= "0" & p0_rd_count when rd_mode(3 downto 0) = "0000" else
+           "0" & p1_rd_count when rd_mode(3 downto 0) = "0001" else
+           "0" & p0_wr_count when rd_mode(3 downto 0) = "0010" else
+           "0" & p1_wr_count when rd_mode(3 downto 0) = "0011" else
 
+           "000" & pr_count  when rd_mode(3 downto 0) = "0100" else
+           "000" & pw_count  when rd_mode(3 downto 0) = "0101" else
+           "00" & auxr_count when rd_mode(3 downto 0) = "0110" else
+           "00" & auxw_count when rd_mode(3 downto 0) = "0111" else
+
+           reg0                                                                                      when rd_mode(3 downto 0) = "1000" else
+           reg1                                                                                      when rd_mode(3 downto 0) = "1001" else
+           reg2                                                                                      when rd_mode(3 downto 0) = "1010" else           
+           reg3                                                                                      when rd_mode(3 downto 0) = "1011" else
+           
+           pr_empty & pr_full & auxr_empty & auxr_full & pw_empty & pw_full & auxw_empty & auxw_full when rd_mode(3 downto 0) = "1100" else
            pipe(0).ctrl.stall & pipe(0).ctrl.issue &
            pipe(1).ctrl.stall & pipe(1).ctrl.issue &
            pipe(8).ctrl.stall & pipe(8).ctrl.issue & "11";
@@ -1145,74 +1443,74 @@ begin
     port map (
       pipe_in  => pipe(0),              -- [in]
       pipe_out => pipe(1),              -- [out]
-      p0_fifo  => p0_rd_fifo,           -- [inout]
-      p1_fifo  => p1_rd_fifo);          -- [inout]
+      p0_fifo  => pr_fifo,              -- [inout]
+      p1_fifo  => auxr_fifo);           -- [inout]
 
-  my_skinfilter : entity work.skinfilter
-    generic map (
-      ID => 2)
-    port map (
-      pipe_in  => pipe(1),
-      pipe_out => pipe(2));
- 
-  my_motion : entity work.motion
-    generic map (
-      ID => 3)
-    port map (
-      pipe_in  => pipe(2),              -- [in]
-      pipe_out => pipe(3));             -- [out]
-
-  my_morph : entity work.morph_set
-    generic map (
-      ID     => 4,
-      KERNEL => 5,
-      WIDTH  => 640,
-      HEIGHT => 480)
-    port map (
-      pipe_in  => pipe(3),              -- [in]
-      pipe_out => pipe(4));             -- [out]
-
-  my_hist_x : entity work.hist_x
-    generic map (
-      ID     => 24,
-      WIDTH  => 640,
-      HEIGHT => 480)
-    port map (
-      pipe_in  => pipe(4),              -- [in]
-      pipe_out => pipe(5));             -- [out]
-
-  my_hist_y : entity work.hist_y
-    generic map (
-      ID     => 25,
-      WIDTH  => 640,
-      HEIGHT => 480)
-    port map (
-      pipe_in  => pipe(5),              -- [in]
-      pipe_out => pipe(6));             -- [out]
-
-  my_col_mux : entity work.color_mux
-    generic map (
-      ID => 26)
-    port map (
-      pipe_in  => pipe(6),              -- [in]
-      pipe_out => pipe(7));             -- [inout]
-
-  --my_fifo_sink : entity work.fifo_sink
+  --my_skinfilter : entity work.skinfilter
   --  generic map (
-  --    ID => 18)
+  --    ID => 2)
+  --  port map (
+  --    pipe_in  => pipe(1),
+  --    pipe_out => pipe(2));
+
+  --my_motion : entity work.motion
+  --  generic map (
+  --    ID => 3)
+  --  port map (
+  --    pipe_in  => pipe(2),              -- [in]
+  --    pipe_out => pipe(3));             -- [out]
+
+  --my_morph : entity work.morph_set
+  --  generic map (
+  --    ID     => 4,
+  --    KERNEL => 5,
+  --    WIDTH  => 640,
+  --    HEIGHT => 480)
+  --  port map (
+  --    pipe_in  => pipe(3),              -- [in]
+  --    pipe_out => pipe(4));             -- [out]
+
+  --my_hist_x : entity work.hist_x
+  --  generic map (
+  --    ID     => 24,
+  --    WIDTH  => 640,
+  --    HEIGHT => 480)
+  --  port map (
+  --    pipe_in  => pipe(4),              -- [in]
+  --    pipe_out => pipe(5));             -- [out]
+
+  --my_hist_y : entity work.hist_y
+  --  generic map (
+  --    ID     => 25,
+  --    WIDTH  => 640,
+  --    HEIGHT => 480)
+  --  port map (
+  --    pipe_in  => pipe(5),              -- [in]
+  --    pipe_out => pipe(6));             -- [out]
+
+  --my_col_mux : entity work.color_mux
+  --  generic map (
+  --    ID => 26)
   --  port map (
   --    pipe_in  => pipe(6),              -- [in]
-  --    pipe_out => pipe(7),              -- [out]
-  --    fifo     => out_fifo);            -- [inout]
+  --    pipe_out => pipe(7));             -- [inout]
+
+  ----my_fifo_sink : entity work.fifo_sink
+  ----  generic map (
+  ----    ID => 18)
+  ----  port map (
+  ----    pipe_in  => pipe(6),              -- [in]
+  ----    pipe_out => pipe(7),              -- [out]
+  ----    fifo     => out_fifo);            -- [inout]
 
   my_mcb_sink : entity work.mcb_sink
     generic map (
       ID => 27)
     port map (
-      pipe_in  => pipe(7),              -- [in]
+      pipe_in  => pipe(1),              -- [in]
       pipe_out => pipe(8),              -- [out]
-      p0_fifo  => p0_wr_fifo,           -- [inout]
-      p1_fifo  => p1_wr_fifo);          -- [inout]
+      p0_fifo  => pw_fifo,              -- [inout]
+      p1_fifo  => auxw_fifo);           -- [inout]
 
 
   inspect.identity <= pipe(8).stage.identity;

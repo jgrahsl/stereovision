@@ -21,8 +21,8 @@ done
 ./tiff2dat.py input.tiff > sim.dat
 
 ghdl -m --workdir=simu --work=work tb 
-./tb --stop-time=30us 
-#vsim -c -do sim_batch.do
+./tb --stop-time=8us 
+vsim -c -do sim_batch.do
 
 cat sim.out | ./dat2tiff.py output.tiff
 

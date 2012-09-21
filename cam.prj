@@ -1,6 +1,8 @@
 vhdl work "ipcore_dir/dcm_fixed.vhd"
 vhdl work "ipcore_dir/dcm_recfg.vhd"
 vhdl work "ipcore_dir/pixel_fifo.vhd"
+vhdl work "ipcore_dir/mcb_pixel_fifo.vhd"
+vhdl work "ipcore_dir/mcb_aux_fifo.vhd"
 
 vhdl work "iodrp_mcb_controller.vhd"
 vhdl work "iodrp_controller.vhd"
