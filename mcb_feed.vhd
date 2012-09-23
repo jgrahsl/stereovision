@@ -55,7 +55,7 @@ begin
   selected_word <= p0_fifo.data(31 downto 16) when r.sel_is_high = '0' else
                    p0_fifo.data(15 downto 0);
 
-  process (pipe_in)
+  process (pipe_in, r, rst, avail, p1_fifo, selected_word)
     variable v          : reg_t;
     variable brightness : unsigned(7 downto 0);
   begin
@@ -104,9 +104,9 @@ begin
     r_next <= v;
   end process;
 
-  proc_clk : process(clk, stall, pipe_in, stage_next, r_next)
+  proc_clk : process(clk, rst, stall, pipe_in, stage_next, r_next)
   begin
-    if rising_edge(clk) and stall = '0' then
+    if rising_edge(clk) and (stall = '0' or rst = '1') then
       if (pipe_in.cfg(ID).enable = '1') then
         stage <= stage_next;
       else

@@ -56,7 +56,7 @@ begin
 
   issue <= p0_fifo.stall or p1_fifo.stall;
   
-  process (pipe_in, r, rst)
+  process (pipe_in, r, rst, avail)
     variable v : reg_t;
   begin
     stage_next <= pipe_in.stage;
@@ -88,9 +88,9 @@ begin
     r_next <= v;
   end process;
 
-  proc_clk : process(clk, stall, pipe_in, stage_next, r_next)
+  proc_clk : process(clk, rst, stall, pipe_in, stage_next, r_next)
   begin
-    if rising_edge(clk) and stall = '0' then
+    if rising_edge(clk) and (stall = '0' or rst = '1') then
       if (pipe_in.cfg(ID).enable = '1') then
         stage <= stage_next;
       else

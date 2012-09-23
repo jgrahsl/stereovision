@@ -87,6 +87,37 @@ architecture impl of tb is
   signal auxw_full  : std_logic;
   signal auxw_count : std_logic_vector(5 downto 0);
 
+  signal indata  : std_logic_vector(31 downto 0);
+  signal outdata : std_logic_vector(31 downto 0);
+
+
+  procedure pixel_pair (signal clk   : in  std_logic;
+                        signal pr_wr : out std_logic;
+                        signal data  : out  std_logic_vector(31 downto 0)
+                        ) is
+  begin
+    wait until clk = '1';
+    data <= (others => '1');    
+    pr_wr  <= '1';
+    wait until clk = '1';
+    data <= (others => '0');
+    pr_wr  <= '0';
+  end pixel_pair;
+
+
+  procedure aux (signal clk     : in  std_logic;
+                 signal auxr_wr : out std_logic;
+                 signal data    : out  std_logic_vector(31 downto 0)
+                 ) is
+  begin
+    wait until clk = '1';
+    data <= (others => '1');
+    auxr_wr <= '1';
+    wait until clk = '1';
+    data  <= (others => '0');
+    auxr_wr <= '0';
+  end aux;
+  
 begin  -- impl
 -------------------------------------------------------------------------------
 -- READ
@@ -106,40 +137,24 @@ begin  -- impl
   pr_in   <= indata;
   auxr_in <= indata;
 --
-  pr_wr    <= '0';
-  auxr_wr  <= '0';
-  
-  process
-  begin  -- process
-    clk <= '0';
-    wait for 5 ns;
-    clk <= '1';
-    wait for 5 ns;
-  end process;
-  
-  
+
+
 -------------------------------------------------------------------------------
 -- WRITE
 -------------------------------------------------------------------------------  
-  pw_rst        <= rstalg;
+  pw_rst        <= rst;
   pw_clk        <= pw_fifo.clk;
   pw_wr         <= pw_fifo.en;
   pw_fifo.stall <= pw_full;
   pw_in         <= pw_fifo.data;
 
-  auxw_rst        <= rstalg;
+  auxw_rst        <= rst;
   auxw_clk        <= auxw_fifo.clk;
   auxw_wr         <= auxw_fifo.en;
   auxw_fifo.stall <= auxw_full;
   auxw_in         <= auxw_fifo.data;
 --
-  pw_rd    <= '0';
-  auxw_rd  <= '0';
-  
-  
-  ena : for i in 0 to 31 generate
-    cfg(i).enable <= '1';
-  end generate ena;
+
 
   cfg(3+4).p(0)  <= std_logic_vector(to_unsigned(10, 8));
   cfg(8+4).p(0)  <= std_logic_vector(to_unsigned(10, 8));
@@ -205,8 +220,8 @@ begin  -- impl
     generic map (
       ID => 0)
     port map (
-      clk       => clkalg,              -- [in]
-      rst       => rstalg,              -- [in]
+      clk       => clk,                 -- [in]
+      rst       => rst,                 -- [in]
       cfg       => cfg,                 -- [in]
       pipe_tail => pipe(8),
       pipe_out  => pipe(0));            -- [out]
@@ -229,7 +244,7 @@ begin  -- impl
       p0_fifo  => pw_fifo,              -- [inout]
       p1_fifo  => auxw_fifo);           -- [inout]
 
-  
+
 -------------------------------------------------------------------------------  
 -- Clock and Rst
 -------------------------------------------------------------------------------
@@ -243,10 +258,45 @@ begin  -- impl
 
   process
   begin  -- process
+    indata  <= (others => '0');
+    pr_wr   <= '0';
+    auxr_wr <= '0';
+    pw_rd   <= '0';
+    auxw_rd <= '0';
+
+
+
+    for i in 0 to 31 loop
+      cfg(i).enable  <= '0';
+      cfg(i).p(0)(0) <= '0';
+    end loop;
+
+
     rst <= '1';
     wait for 100 ns;
     rst <= '0';
+    wait for 100 ns;
+
+    for i in 0 to 31 loop
+      cfg(i).enable  <= '1';
+      cfg(i).p(0)(0) <= '1';
+    end loop;
+
+    wait until clk = '0';
+    wait until clk = '0';
+
+    for i in 0 to 7 loop
+      pixel_pair(clk, pr_wr, indata);      
+    end loop;  -- i
+
+    for i in 0 to 15 loop
+      aux(clk, auxr_wr, indata);
+    end loop;  -- i
+
     wait;
+    
+
+    
   end process;
 
   --  print(hstr(rd_data));
