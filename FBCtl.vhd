@@ -572,7 +572,7 @@ architecture Behavioral of FBCtl is
   signal pr_wr    : std_logic;
   signal pr_empty : std_logic;
   signal pr_full  : std_logic;
-  signal pr_count : std_logic_vector(4 downto 0);
+  signal pr_count : std_logic_vector(9 downto 0);
 
   signal pw_clk   : std_logic;
   signal pw_rst   : std_logic;
@@ -582,7 +582,7 @@ architecture Behavioral of FBCtl is
   signal pw_wr    : std_logic;
   signal pw_empty : std_logic;
   signal pw_full  : std_logic;
-  signal pw_count : std_logic_vector(4 downto 0);
+  signal pw_count : std_logic_vector(9 downto 0);
 
   signal auxr_clk   : std_logic;
   signal auxr_rst   : std_logic;
@@ -592,7 +592,7 @@ architecture Behavioral of FBCtl is
   signal auxr_wr    : std_logic;
   signal auxr_empty : std_logic;
   signal auxr_full  : std_logic;
-  signal auxr_count : std_logic_vector(5 downto 0);
+  signal auxr_count : std_logic_vector(10 downto 0);
 
   signal auxw_clk   : std_logic;
   signal auxw_rst   : std_logic;
@@ -602,7 +602,7 @@ architecture Behavioral of FBCtl is
   signal auxw_wr    : std_logic;
   signal auxw_empty : std_logic;
   signal auxw_full  : std_logic;
-  signal auxw_count : std_logic_vector(5 downto 0);
+  signal auxw_count : std_logic_vector(10 downto 0);
   
   type my_read_state_t is (
     my_read_reset,
@@ -1071,7 +1071,7 @@ begin
         end if;
 
         if my_write_state = my_write_inc then
-          if (my_pixel_wr_addr = 640*2*480-32*4) then
+          if (my_pixel_wr_addr = ((2**20)+640*2*480-16*4)) then
             my_pixel_wr_addr <= 2**20;
             my_aux_wr_addr   <= 2**21;
           else
@@ -1148,7 +1148,7 @@ begin
       dout       => pr_out,
       full       => pr_full,            -- [OUT]
       empty      => pr_empty,
-      data_count => pr_count
+      data_count => pr_count(4 downto 0)
       );                                -- [OUT]
 
   pw_fifo_comp : entity work.mcb_pixel_fifo
@@ -1161,7 +1161,7 @@ begin
       dout       => pw_out,
       full       => pw_full,            -- [OUT]
       empty      => pw_empty,
-      data_count => pw_count
+      data_count => pw_count(4 downto 0)
       );                                -- [OUT]
 
 --
@@ -1176,7 +1176,7 @@ begin
       dout       => auxr_out,           -- [OUT]
       full       => auxr_full,          -- [OUT]
       empty      => auxr_empty,
-      data_count => auxr_count
+      data_count => auxr_count(5 downto 0)
       );                                -- [OUT] 
 
   auxw_fifo_comp : entity work.mcb_aux_fifo
@@ -1189,7 +1189,7 @@ begin
       dout       => auxw_out,           -- [OUT]
       full       => auxw_full,          -- [OUT]
       empty      => auxw_empty,
-      data_count => auxw_count
+      data_count => auxw_count(5 downto 0)
       );                                -- [OUT]
 
 -------------------------------------------------------------------------------
@@ -1408,17 +1408,17 @@ begin
            "0" & p0_wr_count when rd_mode(3 downto 0) = "0010" else
            "0" & p1_wr_count when rd_mode(3 downto 0) = "0011" else
 
-           "000" & pr_count  when rd_mode(3 downto 0) = "0100" else
-           "000" & pw_count  when rd_mode(3 downto 0) = "0101" else
-           "00" & auxr_count when rd_mode(3 downto 0) = "0110" else
-           "00" & auxw_count when rd_mode(3 downto 0) = "0111" else
+           pr_count(7 downto 0)  when rd_mode(3 downto 0) = "0100" else
+           auxr_count(7 downto 0)  when rd_mode(3 downto 0) = "0101" else
+           pw_count(7 downto 0) when rd_mode(3 downto 0) = "0110" else
+           auxw_count(7 downto 0) when rd_mode(3 downto 0) = "0111" else
 
            reg0                                                                                      when rd_mode(3 downto 0) = "1000" else
            reg1                                                                                      when rd_mode(3 downto 0) = "1001" else
            reg2                                                                                      when rd_mode(3 downto 0) = "1010" else           
-           reg3                                                                                      when rd_mode(3 downto 0) = "1011" else
-           
+           reg3                                                                                      when rd_mode(3 downto 0) = "1011" else           
            pr_empty & pr_full & auxr_empty & auxr_full & pw_empty & pw_full & auxw_empty & auxw_full when rd_mode(3 downto 0) = "1100" else
+           
            pipe(0).ctrl.stall & pipe(0).ctrl.issue &
            pipe(1).ctrl.stall & pipe(1).ctrl.issue &
            pipe(8).ctrl.stall & pipe(8).ctrl.issue & "11";
@@ -1446,12 +1446,12 @@ begin
       p0_fifo  => pr_fifo,              -- [inout]
       p1_fifo  => auxr_fifo);           -- [inout]
 
-  --my_skinfilter : entity work.skinfilter
-  --  generic map (
-  --    ID => 2)
-  --  port map (
-  --    pipe_in  => pipe(1),
-  --    pipe_out => pipe(2));
+  my_skinfilter : entity work.skinfilter
+    generic map (
+      ID => 2)
+    port map (
+      pipe_in  => pipe(1),
+      pipe_out => pipe(2));
 
   --my_motion : entity work.motion
   --  generic map (
@@ -1460,15 +1460,15 @@ begin
   --    pipe_in  => pipe(2),              -- [in]
   --    pipe_out => pipe(3));             -- [out]
 
-  --my_morph : entity work.morph_set
-  --  generic map (
-  --    ID     => 4,
-  --    KERNEL => 5,
-  --    WIDTH  => 640,
-  --    HEIGHT => 480)
-  --  port map (
-  --    pipe_in  => pipe(3),              -- [in]
-  --    pipe_out => pipe(4));             -- [out]
+  my_morph : entity work.morph_set
+    generic map (
+      ID     => 4,
+      KERNEL => 5,
+      WIDTH  => 640,
+      HEIGHT => 480)
+    port map (
+      pipe_in  => pipe(2),              -- [in]
+      pipe_out => pipe(4));             -- [out]
 
   --my_hist_x : entity work.hist_x
   --  generic map (
@@ -1488,26 +1488,18 @@ begin
   --    pipe_in  => pipe(5),              -- [in]
   --    pipe_out => pipe(6));             -- [out]
 
-  --my_col_mux : entity work.color_mux
-  --  generic map (
-  --    ID => 26)
-  --  port map (
-  --    pipe_in  => pipe(6),              -- [in]
-  --    pipe_out => pipe(7));             -- [inout]
-
-  ----my_fifo_sink : entity work.fifo_sink
-  ----  generic map (
-  ----    ID => 18)
-  ----  port map (
-  ----    pipe_in  => pipe(6),              -- [in]
-  ----    pipe_out => pipe(7),              -- [out]
-  ----    fifo     => out_fifo);            -- [inout]
+  my_col_mux : entity work.color_mux
+    generic map (
+      ID => 26)
+    port map (
+      pipe_in  => pipe(4),              -- [in]
+      pipe_out => pipe(7));             -- [inout]
 
   my_mcb_sink : entity work.mcb_sink
     generic map (
       ID => 27)
     port map (
-      pipe_in  => pipe(1),              -- [in]
+      pipe_in  => pipe(7),              -- [in]
       pipe_out => pipe(8),              -- [out]
       p0_fifo  => pw_fifo,              -- [inout]
       p1_fifo  => auxw_fifo);           -- [inout]
