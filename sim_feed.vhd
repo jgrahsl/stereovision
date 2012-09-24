@@ -9,8 +9,8 @@ entity sim_feed is
   generic (
     ID : integer range 0 to 63 := 0);
   port (
-    pipe_in   : inout pipe_t;
-    pipe_out  : inout pipe_t;
+    pipe_in   : in    pipe_t;
+    pipe_out  : out   pipe_t;
     stall_in  : in    std_logic;
     stall_out : out   std_logic;
     p0_fifo   : inout sim_fifo_t);
@@ -38,6 +38,7 @@ architecture impl of sim_feed is
 
   signal avail         : std_logic;
   signal selected_word : std_logic_vector(15 downto 0);
+  signal p : pipe_t;
 begin
   issue <= '0';
 

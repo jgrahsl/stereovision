@@ -22,8 +22,8 @@ done
 
 ./tiff2dat.py input.tiff > sim.dat
 
-cat sim.dat sim.dat sim.dat > sim3.dat
-cp sim3.dat sim.dat
+#cat sim.dat sim.dat sim.dat > sim3.dat
+#cp sim3.dat sim.dat
 
 ghdl -m --workdir=simu --work=work tb 
 #./tb --stop-time=8us 

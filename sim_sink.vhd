@@ -9,8 +9,8 @@ entity sim_sink is
   generic (
     ID : integer range 0 to 63 := 0);
   port (
-    pipe_in   : inout pipe_t;
-    pipe_out  : inout pipe_t;
+    pipe_in   : in    pipe_t;
+    pipe_out  : out   pipe_t;
     stall_in  : in    std_logic;
     stall_out : out   std_logic;
     p0_fifo   : inout sim_fifo_t);

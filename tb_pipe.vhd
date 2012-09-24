@@ -45,28 +45,29 @@ architecture impl of tb is
   signal mono_1d : mono_1d_t;
   signal mono_2d : mono_2d_t;
 
-  signal stall : std_logic_vector(MAX_PIPE-1 downto 0);  
+  signal stall : std_logic_vector(MAX_PIPE-1 downto 0);
 begin  -- impl
 
-  ena : for i in 0 to 31 generate
-    cfg(i).enable <= '1';
+  ena : for i in 0 to (MAX_PIPE-1) generate
+    cfg(i).enable   <= '1';
+    cfg(i).identify <= '0';
   end generate ena;
 
-  cfg(3+4).p(0)  <= std_logic_vector(to_unsigned(10, 8));
-  cfg(8+4).p(0)  <= std_logic_vector(to_unsigned(10, 8));
-  cfg(13+4).p(0) <= std_logic_vector(to_unsigned(10, 8));
-  cfg(18+4).p(0) <= std_logic_vector(to_unsigned(10, 8));
+  cfg(3+2).p(0)  <= std_logic_vector(to_unsigned(10, 8));
+  cfg(8+2).p(0)  <= std_logic_vector(to_unsigned(10, 8));
+  cfg(13+2).p(0) <= std_logic_vector(to_unsigned(10, 8));
+  cfg(18+2).p(0) <= std_logic_vector(to_unsigned(10, 8));
 
   stall(7) <= '0';
-  
+
   my_pipe_head : entity work.pipe_head
     generic map (
       ID => 0)
     port map (
-      clk       => clk,                 -- [in]
-      rst       => rst,                 -- [in]
-      cfg       => cfg,                 -- [in]
-      pipe_out  => pipe(0));                                -- [out]
+      clk      => clk,                  -- [in]
+      rst      => rst,                  -- [in]
+      cfg      => cfg,                  -- [in]
+      pipe_out => pipe(0));             -- [out]
 
   my_sim_feed : entity work.sim_feed
     generic map (
@@ -80,7 +81,7 @@ begin  -- impl
 
   my_morph : entity work.morph_set
     generic map (
-      ID     => 4,
+      ID     => 2,
       KERNEL => 5,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
@@ -93,7 +94,7 @@ begin  -- impl
 
   my_sim_sink : entity work.sim_sink
     generic map (
-      ID => 24)
+      ID => 22)
     port map (
       pipe_in   => pipe(2),             -- [in]
       pipe_out  => pipe(7),
@@ -158,32 +159,12 @@ begin  -- impl
       for i in (WIDTH-1) downto 0 loop
         wait until p0_wr_fifo.clk = '0' and p0_wr_fifo.en = '1';
         b := p0_wr_fifo.data;
---        write(l, str(b));
---        writeline(f, l);
-        wait until p0_wr_fifo.clk = '1';
-      end loop;
-    end loop;  -- j
-
-    for j in (HEIGHT-1) downto 0 loop
-      for i in (WIDTH-1) downto 0 loop
-        wait until p0_wr_fifo.clk = '0' and p0_wr_fifo.en = '1';
-        b := p0_wr_fifo.data;
---        write(l, str(b));
---        writeline(f, l);
-        wait until p0_wr_fifo.clk = '1';
-      end loop;
-    end loop;  -- j
-
-    for j in (HEIGHT-1) downto 0 loop
-      for i in (WIDTH-1) downto 0 loop
-        wait until p0_wr_fifo.clk = '0' and p0_wr_fifo.en = '1';
-        b := p0_wr_fifo.data;
         write(l, str(b));
         writeline(f, l);
         wait until p0_wr_fifo.clk = '1';
       end loop;
     end loop;  -- j
-    
+
   end process;
   
 end impl;
