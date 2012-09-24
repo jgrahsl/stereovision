@@ -40,10 +40,7 @@ architecture impl of translate is
   type    reg_t is record
     cols      : natural range 0 to WIDTH*2;
     rows      : natural range 0 to HEIGHT*2;
-    pixel     : natural range 0 to (WIDTH*HEIGHT*2);
-    post      : natural range 0 to (WIDTH*HEIGHT*2);
     state     : state_t;
-    pixel_rst : std_logic;
   end record;
 
   signal r      : reg_t;
@@ -53,7 +50,6 @@ architecture impl of translate is
   begin
     v.cols  := 0;
     v.rows  := 0;
-    v.post  := 0;
     v.state := PRE_S;
   end init;
 begin

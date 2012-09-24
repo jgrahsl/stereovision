@@ -29,12 +29,14 @@ architecture impl of mcb_feed is
 
   type reg_t is record
     sel_is_high : std_logic;
+    stop : std_logic;
   end record;
   signal r                   :       reg_t;
   signal r_next              :       reg_t;
   procedure init (variable v : inout reg_t) is
   begin
     v.sel_is_high := '1';
+    v.stop := '0';
   end init;
 
   signal avail         : std_logic;

@@ -572,7 +572,7 @@ architecture Behavioral of FBCtl is
   signal pr_wr    : std_logic;
   signal pr_empty : std_logic;
   signal pr_full  : std_logic;
-  signal pr_count : std_logic_vector(9 downto 0);
+  signal pr_count : std_logic_vector(9 downto 0) := (others => '0');
 
   signal pw_clk   : std_logic;
   signal pw_rst   : std_logic;
@@ -582,7 +582,7 @@ architecture Behavioral of FBCtl is
   signal pw_wr    : std_logic;
   signal pw_empty : std_logic;
   signal pw_full  : std_logic;
-  signal pw_count : std_logic_vector(9 downto 0);
+  signal pw_count : std_logic_vector(9 downto 0) := (others => '0');
 
   signal auxr_clk   : std_logic;
   signal auxr_rst   : std_logic;
@@ -592,7 +592,7 @@ architecture Behavioral of FBCtl is
   signal auxr_wr    : std_logic;
   signal auxr_empty : std_logic;
   signal auxr_full  : std_logic;
-  signal auxr_count : std_logic_vector(10 downto 0);
+  signal auxr_count : std_logic_vector(10 downto 0) := (others => '0');
 
   signal auxw_clk   : std_logic;
   signal auxw_rst   : std_logic;
@@ -602,7 +602,7 @@ architecture Behavioral of FBCtl is
   signal auxw_wr    : std_logic;
   signal auxw_empty : std_logic;
   signal auxw_full  : std_logic;
-  signal auxw_count : std_logic_vector(10 downto 0);
+  signal auxw_count : std_logic_vector(10 downto 0) := (others => '0');
   
   type my_read_state_t is (
     my_read_reset,
@@ -1053,8 +1053,8 @@ begin
         reg2             <= (others => '0');
         reg3             <= (others => '0');
       else
---        reg0 <= (others => '0');
---        reg1 <= (others => '0');
+        reg0 <= (others => '0');
+        reg1 <= (others => '0');
 
 -------------------------------------------------------------------------------
 -- Memory 
@@ -1237,7 +1237,7 @@ begin
         my_read_nstate <= my_read_wait;
 
       when my_read_wait =>
-        if pr_count <= std_logic_vector(to_unsigned((64-16), 6)) and
+        if pr_count <= std_logic_vector(to_unsigned((64-16), 7)) and
           auxr_count <= std_logic_vector(to_unsigned((128-32), 8)) then
           my_read_nstate <= my_read_p;
         end if;
@@ -1274,7 +1274,7 @@ begin
         end if;
 
       when my_read_transfer_aux =>
-        if p0_rd_count = std_logic_vector(to_unsigned(32, 6)) then
+        if p0_rd_count >= std_logic_vector(to_unsigned(32, 6)) then
           my_read_nstate <= my_read_transfer_aux_1;
         end if;
 
@@ -1334,7 +1334,7 @@ begin
         my_write_nstate <= my_write_wait;
 
       when my_write_wait =>
-        if pw_count >= std_logic_vector(to_unsigned(16, 6)) and
+        if pw_count >= std_logic_vector(to_unsigned(16, 7)) and
           auxw_count >= std_logic_vector(to_unsigned(32, 8)) then
           my_write_nstate <= my_write_transfer_p;
         end if;
@@ -1461,37 +1461,37 @@ begin
   --    pipe_in  => pipe(2),              -- [in]
   --    pipe_out => pipe(3));             -- [out]
 
-  my_morph : entity work.morph_set
-    generic map (
-      ID     => 4,
-      KERNEL => 5,
-      WIDTH  => 640,
-      HEIGHT => 480)
-    port map (
-      pipe_in  => pipe(2),              -- [in]
-      pipe_out => pipe(4));             -- [out]
-
-  --my_translate : entity work.translate
-  --  generic map (
-  --    ID     => 3,
-  --    WIDTH  => 640,
-  --    HEIGHT => 480,
-  --    CUT    => 0,
-  --    APPEND => 2)
-  --  port map (
-  --    pipe_in  => pipe(1),              -- [in]
-  --    pipe_out => pipe(3));             -- [out]
-
-  --amy_translate : entity work.translate
+  --my_morph : entity work.morph_set
   --  generic map (
   --    ID     => 4,
-  --    WIDTH  => 642,
-  --    HEIGHT => 482,
-  --    CUT    => 2,
-  --    APPEND => 0)
+  --    KERNEL => 5,
+  --    WIDTH  => 640,
+  --    HEIGHT => 480)
   --  port map (
-  --    pipe_in  => pipe(3),              -- [in]
+  --    pipe_in  => pipe(2),              -- [in]
   --    pipe_out => pipe(4));             -- [out]
+
+  my_translate : entity work.translate
+    generic map (
+      ID     => 3,
+      WIDTH  => 640,
+      HEIGHT => 480,
+      CUT    => 0,
+      APPEND => 2)
+    port map (
+      pipe_in  => pipe(1),              -- [in]
+      pipe_out => pipe(3));             -- [out]
+
+  amy_translate : entity work.translate
+    generic map (
+      ID     => 4,
+      WIDTH  => 642,
+      HEIGHT => 482,
+      CUT    => 2,
+      APPEND => 0)
+    port map (
+      pipe_in  => pipe(3),              -- [in]
+      pipe_out => pipe(7));             -- [out]
 
   --my_hist_x : entity work.hist_x
   --  generic map (
@@ -1511,12 +1511,12 @@ begin
   --    pipe_in  => pipe(5),              -- [in]
   --    pipe_out => pipe(6));             -- [out]
 
-  my_col_mux : entity work.color_mux
-    generic map (
-      ID => 26)
-    port map (
-      pipe_in  => pipe(4),              -- [in]
-      pipe_out => pipe(7));             -- [inout]
+  --my_col_mux : entity work.color_mux
+  --  generic map (
+  --    ID => 26)
+  --  port map (
+  --    pipe_in  => pipe(4),              -- [in]
+  --    pipe_out => pipe(7));             -- [inout]
 
   my_mcb_sink : entity work.mcb_sink
     generic map (
