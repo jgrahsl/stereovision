@@ -9,8 +9,8 @@ entity null_filter is
   generic (
     ID : integer range 0 to 63 := 0);
   port (
-    pipe_in  : in  pipe_t;
-    pipe_out : out pipe_t);
+    pipe_in  : inout  pipe_t;
+    pipe_out : inout pipe_t);
 end null_filter;
 
 architecture impl of null_filter is

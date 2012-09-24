@@ -1447,12 +1447,12 @@ begin
       p0_fifo  => pr_fifo,              -- [inout]
       p1_fifo  => auxr_fifo);           -- [inout]
 
-  my_skinfilter : entity work.skinfilter
-    generic map (
-      ID => 2)
-    port map (
-      pipe_in  => pipe(1),
-      pipe_out => pipe(2));
+  --my_skinfilter : entity work.skinfilter
+  --  generic map (
+  --    ID => 2)
+  --  port map (
+  --    pipe_in  => pipe(1),
+  --    pipe_out => pipe(2));
 
   --my_motion : entity work.motion
   --  generic map (
