@@ -15,8 +15,11 @@ entity morph is
     WIDTH  : natural range 0 to 2048 := 2048;
     HEIGHT : natural range 0 to 2048 := 2048);
   port (
-    pipe_in  : inout  pipe_t;
-    pipe_out : inout pipe_t);  
+    pipe_in   : in  pipe_t;
+    pipe_out  : out pipe_t;
+    stall_in  : in  std_logic;
+    stall_out : out std_logic
+    );  
 
 end morph;
 
@@ -25,12 +28,15 @@ architecture myrtl of morph is
   signal pipe    : pipe_set_t;
   signal mono_1d : mono_1d_t;
   signal mono_2d : mono_2d_t;
-  
+
+  signal stall : std_logic_vector(MAX_PIPE-1 downto 0);
 begin  -- myrtl
-  
---  pipe(0)  <= pipe_in;
+
+  pipe(0)  <= pipe_in;
   pipe_out <= pipe(5);
 
+  stall_out <= stall(0);
+  stall(5)  <= stall_in;
 
   my_translate : entity work.translate
     generic map (
@@ -40,8 +46,11 @@ begin  -- myrtl
       CUT    => 0,
       APPEND => 2)
     port map (
-      pipe_in  => pipe_in,              -- [in]
-      pipe_out => pipe(1));             -- [out]
+      pipe_in   => pipe(0),             -- [in]
+      pipe_out  => pipe(1),
+      stall_in  => stall(1),
+      stall_out => stall(0)
+      );                                -- [out]
 
   my_filter0_buffer : entity work.line_buffer
     generic map (
@@ -52,6 +61,8 @@ begin  -- myrtl
     port map (
       pipe_in     => pipe(1),
       pipe_out    => pipe(2),
+      stall_in    => stall(2),
+      stall_out   => stall(1),
       mono_1d_out => mono_1d
       );
 
@@ -64,6 +75,8 @@ begin  -- myrtl
     port map (
       pipe_in     => pipe(2),
       pipe_out    => pipe(3),
+      stall_in    => stall(3),
+      stall_out   => stall(2),
       mono_1d_in  => mono_1d,
       mono_2d_out => mono_2d
       );
@@ -75,6 +88,8 @@ begin  -- myrtl
     port map (
       pipe_in    => pipe(3),
       pipe_out   => pipe(4),
+      stall_in   => stall(4),
+      stall_out  => stall(3),
       mono_2d_in => mono_2d
       );
 
@@ -86,7 +101,10 @@ begin  -- myrtl
       CUT    => 2,
       APPEND => 0)
     port map (
-      pipe_in  => pipe(4),              -- [in]
-      pipe_out => pipe(5));             -- [out]
+      pipe_in   => pipe(4),             -- [in]
+      pipe_out  => pipe(5),
+      stall_in  => stall(5),
+      stall_out => stall(4)
+      );                                -- [out]
 
 end myrtl;

@@ -9,10 +9,11 @@ entity sim_sink is
   generic (
     ID : integer range 0 to 63 := 0);
   port (
-    pipe_in  : inout  pipe_t;
-    pipe_out : inout pipe_t;
-
-    p0_fifo : inout sim_fifo_t);
+    pipe_in   : inout pipe_t;
+    pipe_out  : inout pipe_t;
+    stall_in  : in    std_logic;
+    stall_out : out   std_logic;
+    p0_fifo   : inout sim_fifo_t);
 end sim_sink;
 
 architecture impl of sim_sink is
@@ -36,10 +37,10 @@ architecture impl of sim_sink is
   end init;
 
   signal avail : std_logic;
-  signal cnt : natural range 0 to 10 := 5;
+  signal cnt   : natural range 0 to 10 := 5;
 begin
 
-  connect_pipe(clk, rst, pipe_in, pipe_out, stage, src_valid, issue, stall);
+  connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);
 
   p0_fifo.clk <= clk;
 
@@ -95,7 +96,7 @@ begin
         cnt <= 0;
       end if;
     end if;
-      issue <= '0';    
+    issue <= '0';
   end process;
 
 end impl;

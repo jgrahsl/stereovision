@@ -11,9 +11,11 @@ entity morph_kernel is
     KERNEL : natural range 1 to 5  := 5
     );
   port (
-    pipe_in    : inout pipe_t;
-    pipe_out   : inout pipe_t;
-    mono_2d_in : in    mono_2d_t
+    pipe_in    : in  pipe_t;
+    pipe_out   : out pipe_t;
+    stall_in   : in  std_logic;
+    stall_out  : out std_logic;
+    mono_2d_in : in  mono_2d_t
     );
 end morph_kernel;
 
@@ -30,7 +32,7 @@ architecture impl of morph_kernel is
 begin
   issue <= '0';
 
-  connect_pipe(clk, rst, pipe_in, pipe_out, stage, src_valid, issue, stall);
+  connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);
 
   process(pipe_in, mono_2d_in, rst, src_valid)
     variable win : mono_2d_t;

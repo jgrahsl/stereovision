@@ -9,10 +9,11 @@ entity sim_feed is
   generic (
     ID : integer range 0 to 63 := 0);
   port (
-    pipe_in  : inout  pipe_t;
-    pipe_out : inout pipe_t;
-
-    p0_fifo : inout sim_fifo_t);
+    pipe_in   : inout pipe_t;
+    pipe_out  : inout pipe_t;
+    stall_in  : in    std_logic;
+    stall_out : out   std_logic;
+    p0_fifo   : inout sim_fifo_t);
 end sim_feed;
 
 architecture impl of sim_feed is
@@ -20,7 +21,7 @@ architecture impl of sim_feed is
   signal clk        : std_logic;
   signal rst        : std_logic;
   signal stage      : stage_t;
-  signal stage_next : stage_t; 
+  signal stage_next : stage_t;
   signal src_valid  : std_logic;
   signal issue      : std_logic;
   signal stall      : std_logic;
@@ -40,14 +41,14 @@ architecture impl of sim_feed is
 begin
   issue <= '0';
 
-  connect_pipe(clk, rst, pipe_in, pipe_out, stage, src_valid, issue, stall);
+  connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);
 
   p0_fifo.clk <= clk;
 
   -- Handshake loop
-  avail <= '1' when p0_fifo.stall = '0' and pipe_in.cfg(ID).enable = '1' else '0';
-  p0_fifo.en  <= avail and not stall and not rst;   -- external signal needs to be blocked
-                                                    -- by stall
+  avail      <= '1' when p0_fifo.stall = '0' and pipe_in.cfg(ID).enable = '1' else '0';
+  p0_fifo.en <= avail and not stall and not rst;  -- external signal needs to be blocked
+                                                  -- by stall
   process (pipe_in, r, avail, p0_fifo)
     variable v          : reg_t;
     variable brightness : unsigned(7 downto 0);
@@ -58,7 +59,7 @@ begin
 -- Logic
 -------------------------------------------------------------------------------    
 
-    stage_next.valid <= avail;          -- reg does not need to be blocked by stall
+    stage_next.valid <= avail;  -- reg does not need to be blocked by stall
     stage_next.init  <= '0';
     stage_next.aux   <= (others => '0');
 

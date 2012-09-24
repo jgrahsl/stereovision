@@ -44,6 +44,8 @@ architecture impl of tb is
 
   signal mono_1d : mono_1d_t;
   signal mono_2d : mono_2d_t;
+
+  signal stall : std_logic_vector(MAX_PIPE-1 downto 0);  
 begin  -- impl
 
   ena : for i in 0 to 31 generate
@@ -55,6 +57,8 @@ begin  -- impl
   cfg(13+4).p(0) <= std_logic_vector(to_unsigned(10, 8));
   cfg(18+4).p(0) <= std_logic_vector(to_unsigned(10, 8));
 
+  stall(7) <= '0';
+  
   my_pipe_head : entity work.pipe_head
     generic map (
       ID => 0)
@@ -62,16 +66,17 @@ begin  -- impl
       clk       => clk,                 -- [in]
       rst       => rst,                 -- [in]
       cfg       => cfg,                 -- [in]
-      pipe_tail => pipe(7),
-      pipe_out  => pipe(0));            -- [out]
+      pipe_out  => pipe(0));                                -- [out]
 
   my_sim_feed : entity work.sim_feed
     generic map (
       ID => 1)
     port map (
-      pipe_in  => pipe(0),              -- [in]
-      pipe_out => pipe(1),              -- [out]
-      p0_fifo  => p0_rd_fifo);          -- [inout]
+      pipe_in   => pipe(0),             -- [in]
+      pipe_out  => pipe(1),
+      stall_in  => stall(1),
+      stall_out => stall(0),
+      p0_fifo   => p0_rd_fifo);         -- [inout]
 
   my_morph : entity work.morph_set
     generic map (
@@ -80,16 +85,21 @@ begin  -- impl
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (
-      pipe_in  => pipe(1),              -- [in]
-      pipe_out => pipe(2));             -- [out]
+      pipe_in   => pipe(1),             -- [in]
+      pipe_out  => pipe(2),
+      stall_in  => stall(2),
+      stall_out => stall(1)
+      );                                -- [out]
 
   my_sim_sink : entity work.sim_sink
     generic map (
       ID => 24)
     port map (
-      pipe_in  => pipe(2),              -- [in]
-      pipe_out => pipe(7),              -- [out]
-      p0_fifo  => p0_wr_fifo);          -- [inout]
+      pipe_in   => pipe(2),             -- [in]
+      pipe_out  => pipe(7),
+      stall_in  => stall(7),
+      stall_out => stall(2),
+      p0_fifo   => p0_wr_fifo);         -- [inout]
 
 -------------------------------------------------------------------------------  
 -- Clock and Rst
@@ -143,7 +153,7 @@ begin  -- impl
     variable l         : line;
   begin
     p0_wr_fifo.stall <= '0';
-    
+
     for j in (HEIGHT-1) downto 0 loop
       for i in (WIDTH-1) downto 0 loop
         wait until p0_wr_fifo.clk = '0' and p0_wr_fifo.en = '1';

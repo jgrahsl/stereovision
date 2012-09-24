@@ -642,6 +642,8 @@ architecture Behavioral of FBCtl is
   signal reg1 : std_logic_vector(7 downto 0);
   signal reg2 : std_logic_vector(7 downto 0);
   signal reg3 : std_logic_vector(7 downto 0);
+
+  signal stall : std_logic_vector(MAX_PIPE-1 downto 0);
 begin
 ----------------------------------------------------------------------------------
 -- mcb instantiation
@@ -1238,7 +1240,7 @@ begin
 
       when my_read_wait =>
         if pr_count <= std_logic_vector(to_unsigned((64-16), 7)) and
-          auxr_count <= std_logic_vector(to_unsigned((128-32), 8)) then
+         auxr_count <= std_logic_vector(to_unsigned((128-32), 8)) then
           my_read_nstate <= my_read_p;
         end if;
         
@@ -1427,105 +1429,114 @@ begin
 -------------------------------------------------------------------------------
 -- PIPE
 -------------------------------------------------------------------------------  
-  
+
   my_pipe_head : entity work.pipe_head
     generic map (
       ID => 0)
     port map (
-      clk       => clkalg,              -- [in]
-      rst       => rstalg,              -- [in]
-      cfg       => cfg,                 -- [in]
-      pipe_tail => pipe(8),
-      pipe_out  => pipe(0));            -- [out]
+      clk      => clkalg,               -- [in]
+      rst      => rstalg,               -- [in]
+      cfg      => cfg,                  -- [in]
+      pipe_out => pipe(0));             -- [out]
 
   my_mcb_feed : entity work.mcb_feed
     generic map (
       ID => 1)
     port map (
-      pipe_in  => pipe(0),              -- [in]
-      pipe_out => pipe(1),              -- [out]
-      p0_fifo  => pr_fifo,              -- [inout]
-      p1_fifo  => auxr_fifo);           -- [inout]
+      pipe_in   => pipe(0),             -- [in]
+      pipe_out  => pipe(1),             -- [out]
+      stall_in  => stall(5),
+      stall_out => stall(0),
+      p0_fifo   => pr_fifo,             -- [inout]
+      p1_fifo   => auxr_fifo);          -- [inout]
 
-  my_skinfilter : entity work.skinfilter
-    generic map (
-      ID => 2)
-    port map (
-      pipe_in  => pipe(1),
-      pipe_out => pipe(2));
-
-  --my_motion : entity work.motion
+  --my_skinfilter : entity work.skinfilter
   --  generic map (
-  --    ID => 3)
+  --    ID => 2)
   --  port map (
-  --    pipe_in  => pipe(2),              -- [in]
-  --    pipe_out => pipe(3));             -- [out]
+  --    pipe_in  => pipe(1),
+  --    pipe_out => pipe(2));
 
-  my_morph : entity work.morph_set
-    generic map (
-      ID     => 4,
-      KERNEL => 5,
-      WIDTH  => 640,
-      HEIGHT => 480)
-    port map (
-      pipe_in  => pipe(2),              -- [in]
-      pipe_out => pipe(4));             -- [out]
+  ----my_motion : entity work.motion
+  ----  generic map (
+  ----    ID => 3)
+  ----  port map (
+  ----    pipe_in  => pipe(2),              -- [in]
+  ----    pipe_out => pipe(3));             -- [out]
 
-  --my_translate : entity work.translate
-  --  generic map (
-  --    ID     => 3,
-  --    WIDTH  => 640,
-  --    HEIGHT => 480,
-  --    CUT    => 0,
-  --    APPEND => 2)
-  --  port map (
-  --    pipe_in  => pipe(1),              -- [in]
-  --    pipe_out => pipe(3));             -- [out]
-
-  --amy_translate : entity work.translate
+  --my_morph : entity work.morph_set
   --  generic map (
   --    ID     => 4,
-  --    WIDTH  => 642,
-  --    HEIGHT => 482,
-  --    CUT    => 2,
-  --    APPEND => 0)
+  --    KERNEL => 5,
+  --    WIDTH  => 640,
+  --    HEIGHT => 480)
   --  port map (
-  --    pipe_in  => pipe(3),              -- [in]
-  --    pipe_out => pipe(7));             -- [out]
+  --    pipe_in  => pipe(2),              -- [in]
+  --    pipe_out => pipe(4));             -- [out]
 
-  my_hist_x : entity work.hist_x
+  my_translate : entity work.translate
     generic map (
-      ID     => 24,
+      ID     => 3,
       WIDTH  => 640,
-      HEIGHT => 480)
+      HEIGHT => 480,
+      CUT    => 0,
+      APPEND => 2)
     port map (
-      pipe_in  => pipe(4),              -- [in]
-      pipe_out => pipe(5));             -- [out]
+      pipe_in  => pipe(1),              -- [in]
+      pipe_out => pipe(3),
+      stall_in  => stall(6),
+      stall_out => stall(5)
+      );             -- [out]
 
-  my_hist_y : entity work.hist_y
+  amy_translate : entity work.translate
     generic map (
-      ID     => 25,
-      WIDTH  => 640,
-      HEIGHT => 480)
+      ID     => 4,
+      WIDTH  => 642,
+      HEIGHT => 482,
+      CUT    => 2,
+      APPEND => 0)
     port map (
-      pipe_in  => pipe(5),              -- [in]
-      pipe_out => pipe(6));             -- [out]
+      pipe_in  => pipe(3),              -- [in]
+      pipe_out => pipe(7),
+      stall_in  => stall(7),
+      stall_out => stall(6)
+      );             -- [out]
 
-  my_col_mux : entity work.color_mux
-    generic map (
-      ID => 26)
-    port map (
-      pipe_in  => pipe(6),              -- [in]
-      pipe_out => pipe(7));             -- [inout]
+  --my_hist_x : entity work.hist_x
+  --  generic map (
+  --    ID     => 24,
+  --    WIDTH  => 640,
+  --    HEIGHT => 480)
+  --  port map (
+  --    pipe_in  => pipe(4),              -- [in]
+  --    pipe_out => pipe(5));             -- [out]
+
+  --my_hist_y : entity work.hist_y
+  --  generic map (
+  --    ID     => 25,
+  --    WIDTH  => 640,
+  --    HEIGHT => 480)
+  --  port map (
+  --    pipe_in  => pipe(5),              -- [in]
+  --    pipe_out => pipe(6));             -- [out]
+
+  --my_col_mux : entity work.color_mux
+  --  generic map (
+  --    ID => 26)
+  --  port map (
+  --    pipe_in  => pipe(6),              -- [in]
+  --    pipe_out => pipe(7));             -- [inout]
 
   my_mcb_sink : entity work.mcb_sink
     generic map (
       ID => 27)
     port map (
-      pipe_in  => pipe(7),              -- [in]
-      pipe_out => pipe(8),              -- [out]
-      p0_fifo  => pw_fifo,              -- [inout]
-      p1_fifo  => auxw_fifo);           -- [inout]
+      pipe_in   => pipe(7),             -- [in]
+      pipe_out  => pipe(8),             -- [out]
+      stall_in  => '0',
+      stall_out => stall(7),
+      p0_fifo   => pw_fifo,             -- [inout]
+      p1_fifo   => auxw_fifo);          -- [inout]
 
 
   inspect.identity <= pipe(8).stage.identity;

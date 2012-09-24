@@ -12,9 +12,10 @@ entity line_buffer is
     WIDTH     : natural range 1 to 2048 := 2048;
     HEIGHT    : natural range 1 to 2048 := 2048);
   port (
-    pipe_in  : inout  pipe_t;
-    pipe_out : inout pipe_t;
-
+    pipe_in     : in  pipe_t;
+    pipe_out    : out pipe_t;
+    stall_in    : in  std_logic;
+    stall_out   : out std_logic;
     mono_1d_out : out mono_1d_t
     );
 end line_buffer;
@@ -57,7 +58,7 @@ architecture impl of line_buffer is
 begin
   issue <= '0';
 
-  connect_pipe(clk, rst, pipe_in, pipe_out, stage, src_valid, issue, stall);
+  connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);
 
   rams : for i in 0 to (NUM_LINES-1) generate
     kernel_rams : entity work.bit_ram
@@ -69,7 +70,7 @@ begin
         clka  => clk,                   -- [in]
         dina  => pipe_in.stage.data_1,  -- [in]
         wea   => wren(i downto i),      -- [in]
-        douta => qi(i));                 -- [out]    
+        douta => qi(i));                -- [out]    
   end generate rams;
 
   wr_enables : for i in 0 to (NUM_LINES-1) generate
@@ -215,6 +216,6 @@ begin
       end if;
     end if;
   end process;
-      adr <= std_logic_vector(to_unsigned(r.cols, 11));
+  adr <= std_logic_vector(to_unsigned(r.cols, 11));
 
 end impl;

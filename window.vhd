@@ -13,10 +13,12 @@ entity window is
     HEIGHT   : natural range 1 to 2048 := 2048
     );
   port (
-    pipe_in     : inout pipe_t;
-    pipe_out    : inout pipe_t;
-    mono_1d_in  : in    mono_1d_t;
-    mono_2d_out : out   mono_2d_t
+    pipe_in     : in  pipe_t;
+    pipe_out    : out pipe_t;
+    stall_in    : in  std_logic;
+    stall_out   : out std_logic;
+    mono_1d_in  : in  mono_1d_t;
+    mono_2d_out : out mono_2d_t
     );
 end window;
 
@@ -47,7 +49,7 @@ architecture impl of window is
 begin
   issue <= '0';
 
-  connect_pipe(clk, rst, pipe_in, pipe_out, stage, src_valid, issue, stall);
+  connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);
 
   process(pipe_in, stage, r, q, src_valid, rst, mono_1d_in)
     variable v : reg_t;

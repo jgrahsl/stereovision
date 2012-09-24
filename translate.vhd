@@ -13,8 +13,11 @@ entity translate is
     CUT    : natural range 0 to 2047 := 0;
     APPEND : natural range 0 to 2047 := 0);
   port (
-    pipe_in  : inout pipe_t;
-    pipe_out : inout pipe_t);
+    pipe_in   : inout pipe_t;
+    pipe_out  : inout pipe_t;
+    stall_in  : in    std_logic;
+    stall_out : out   std_logic
+    );
 end translate;
 
 architecture impl of translate is
@@ -38,9 +41,9 @@ architecture impl of translate is
 
   subtype counter_t is natural range 0 to 2047;
   type    reg_t is record
-    cols      : natural range 0 to WIDTH*2;
-    rows      : natural range 0 to HEIGHT*2;
-    state     : state_t;
+    cols  : natural range 0 to WIDTH*2;
+    rows  : natural range 0 to HEIGHT*2;
+    state : state_t;
   end record;
 
   signal r      : reg_t;
@@ -54,7 +57,7 @@ architecture impl of translate is
   end init;
 begin
 
-  connect_pipe(clk, rst, pipe_in, pipe_out, stage, src_valid, issue, stall);
+  connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);  
 
   process (pipe_in, r, src_valid, rst)
     variable v  : reg_t;
