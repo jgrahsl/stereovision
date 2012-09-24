@@ -55,7 +55,7 @@ architecture impl of tb is
   signal pr_wr    : std_logic;
   signal pr_empty : std_logic;
   signal pr_full  : std_logic;
-  signal pr_count : std_logic_vector(4 downto 0);
+  signal pr_count : std_logic_vector(9 downto 0) := (others => '0');
 
   signal pw_clk   : std_logic;
   signal pw_rst   : std_logic;
@@ -65,7 +65,7 @@ architecture impl of tb is
   signal pw_wr    : std_logic;
   signal pw_empty : std_logic;
   signal pw_full  : std_logic;
-  signal pw_count : std_logic_vector(4 downto 0);
+  signal pw_count : std_logic_vector(9 downto 0) := (others => '0');
 
   signal auxr_clk   : std_logic;
   signal auxr_rst   : std_logic;
@@ -75,7 +75,7 @@ architecture impl of tb is
   signal auxr_wr    : std_logic;
   signal auxr_empty : std_logic;
   signal auxr_full  : std_logic;
-  signal auxr_count : std_logic_vector(5 downto 0);
+  signal auxr_count : std_logic_vector(9 downto 0) := (others => '0');
 
   signal auxw_clk   : std_logic;
   signal auxw_rst   : std_logic;
@@ -85,7 +85,7 @@ architecture impl of tb is
   signal auxw_wr    : std_logic;
   signal auxw_empty : std_logic;
   signal auxw_full  : std_logic;
-  signal auxw_count : std_logic_vector(5 downto 0);
+  signal auxw_count : std_logic_vector(9 downto 0) := (others => '0');
 
   signal indata  : std_logic_vector(31 downto 0);
   signal outdata : std_logic_vector(31 downto 0);
@@ -96,7 +96,6 @@ architecture impl of tb is
                         signal data  : out  std_logic_vector(31 downto 0)
                         ) is
   begin
-    wait until clk = '1';
     data <= (others => '1');    
     pr_wr  <= '1';
     wait until clk = '1';
@@ -110,7 +109,6 @@ architecture impl of tb is
                  signal data    : out  std_logic_vector(31 downto 0)
                  ) is
   begin
-    wait until clk = '1';
     data <= (others => '1');
     auxr_wr <= '1';
     wait until clk = '1';
@@ -145,13 +143,13 @@ begin  -- impl
   pw_rst        <= rst;
   pw_clk        <= pw_fifo.clk;
   pw_wr         <= pw_fifo.en;
-  pw_fifo.stall <= pw_full;
+--  pw_fifo.stall <= pw_full;
   pw_in         <= pw_fifo.data;
 
   auxw_rst        <= rst;
   auxw_clk        <= auxw_fifo.clk;
   auxw_wr         <= auxw_fifo.en;
-  auxw_fifo.stall <= auxw_full;
+--  auxw_fifo.stall <= auxw_full;
   auxw_in         <= auxw_fifo.data;
 --
 
@@ -171,7 +169,7 @@ begin  -- impl
       dout       => pr_out,
       full       => pr_full,            -- [OUT]
       empty      => pr_empty,
-      data_count => pr_count
+      data_count => pr_count(6 downto 0)
       );                                -- [OUT]
 
   pw_fifo_comp : entity work.mcb_pixel_fifo
@@ -184,7 +182,7 @@ begin  -- impl
       dout       => pw_out,
       full       => pw_full,            -- [OUT]
       empty      => pw_empty,
-      data_count => pw_count
+      data_count => pw_count(6 downto 0)
       );                                -- [OUT]
 
 --
@@ -199,7 +197,7 @@ begin  -- impl
       dout       => auxr_out,           -- [OUT]
       full       => auxr_full,          -- [OUT]
       empty      => auxr_empty,
-      data_count => auxr_count
+      data_count => auxr_count(7 downto 0)
       );                                -- [OUT] 
 
   auxw_fifo_comp : entity work.mcb_aux_fifo
@@ -212,7 +210,7 @@ begin  -- impl
       dout       => auxw_out,           -- [OUT]
       full       => auxw_full,          -- [OUT]
       empty      => auxw_empty,
-      data_count => auxw_count
+      data_count => auxw_count(7 downto 0)
       );                                -- [OUT]
 
   
@@ -226,6 +224,7 @@ begin  -- impl
       pipe_tail => pipe(8),
       pipe_out  => pipe(0));            -- [out]
 
+  pipe(8).stall <= '0';
   my_mcb_feed : entity work.mcb_feed
     generic map (
       ID => 1)
@@ -235,11 +234,35 @@ begin  -- impl
       p0_fifo  => pr_fifo,              -- [inout]
       p1_fifo  => auxr_fifo);           -- [inout]
 
-  my_mcb_sink : entity work.mcb_sink
+
+  my_translate : entity work.translate
     generic map (
-      ID => 27)
+      ID     => 21,
+      WIDTH  => 8,
+      HEIGHT => 2,
+      CUT    => 0,
+      APPEND => 2)
     port map (
       pipe_in  => pipe(1),              -- [in]
+      pipe_out => pipe(3));             -- [out]
+
+  amy_translate : entity work.translate
+    generic map (
+      ID     => 22,
+      WIDTH  => 10,
+      HEIGHT => 4,
+      CUT    => 2,
+      APPEND => 0)
+    port map (
+      pipe_in  => pipe(3),              -- [in]
+      pipe_out => pipe(4));             -- [out]
+
+  
+  my_mcb_sink : entity work.mcb_sink
+    generic map (
+      ID => 2)
+    port map (
+      pipe_in  => pipe(4),              -- [in]
       pipe_out => pipe(8),              -- [out]
       p0_fifo  => pw_fifo,              -- [inout]
       p1_fifo  => auxw_fifo);           -- [inout]
@@ -261,23 +284,25 @@ begin  -- impl
     indata  <= (others => '0');
     pr_wr   <= '0';
     auxr_wr <= '0';
-    pw_rd   <= '0';
+
+    pw_rd <= '0';
     auxw_rd <= '0';
-
-
-
+    
+    auxw_fifo.stall <= '0';
+    pw_fifo.stall <= '0';
+    
     for i in 0 to 31 loop
       cfg(i).enable  <= '0';
-      cfg(i).p(0)(0) <= '0';
+      cfg(i).identify  <= '0';      
+      cfg(i).p <= (others => (others => '0'));
     end loop;
-
 
     rst <= '1';
     wait for 100 ns;
     rst <= '0';
     wait for 100 ns;
-
-    for i in 0 to 31 loop
+    
+    for i in 0 to 26 loop
       cfg(i).enable  <= '1';
       cfg(i).p(0)(0) <= '1';
     end loop;
@@ -285,20 +310,38 @@ begin  -- impl
     wait until clk = '0';
     wait until clk = '0';
 
-    for i in 0 to 7 loop
+    
+    for i in 0 to 8*4-1 loop
       pixel_pair(clk, pr_wr, indata);      
     end loop;  -- i
-
-    for i in 0 to 15 loop
+    for i in 0 to 16*4-1 loop
       aux(clk, auxr_wr, indata);
     end loop;  -- i
 
-    wait;
-    
+    wait for 100 ns;
+    assert 0 > 1 report "t" severity note;
+    auxw_fifo.stall <= '1';
+    pw_fifo.stall <= '1';
+    wait for 50 ns;
+    auxw_fifo.stall <= '0';
+    pw_fifo.stall <= '0';
 
+    wait for 100 ns;
+    auxw_fifo.stall <= '1';
+    pw_fifo.stall <= '1';
+    wait for 50 ns;
+    auxw_fifo.stall <= '0';
+    pw_fifo.stall <= '0';
     
+    
+    wait;    
   end process;
 
+
+
+  
+
+  
   --  print(hstr(rd_data));
 
   --process

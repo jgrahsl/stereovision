@@ -11,8 +11,8 @@ entity morph_kernel is
     KERNEL : natural range 1 to 5  := 5
     );
   port (
-    pipe_in    : in  pipe_t;
-    pipe_out   : out pipe_t;
+    pipe_in    : inout  pipe_t;
+    pipe_out   : inout pipe_t;
     mono_2d_in : in  mono_2d_t
     );
 end morph_kernel;

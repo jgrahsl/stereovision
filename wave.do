@@ -4,7 +4,7 @@ add wave -noupdate /tb/my_pipe_head/ID
 add wave -noupdate /tb/my_pipe_head/clk
 add wave -noupdate /tb/my_pipe_head/rst
 add wave -noupdate /tb/my_pipe_head/cfg
-add wave -noupdate /tb/my_pipe_head/pipe_tail
+add wave -noupdate -expand -subitemconfig {/tb/my_pipe_head/pipe_tail.stage -expand /tb/my_pipe_head/pipe_tail.ctrl -expand} /tb/my_pipe_head/pipe_tail
 add wave -noupdate /tb/my_pipe_head/pipe_out
 add wave -noupdate -divider FEED
 add wave -noupdate /tb/my_mcb_feed/ID
@@ -22,12 +22,45 @@ add wave -noupdate /tb/my_mcb_feed/stall
 add wave -noupdate /tb/my_mcb_feed/r
 add wave -noupdate /tb/my_mcb_feed/r_next
 add wave -noupdate /tb/my_mcb_feed/avail
-add wave -noupdate /tb/my_mcb_feed/selected_word
+add wave -noupdate -divider T1
+add wave -noupdate /tb/my_translate/ID
+add wave -noupdate /tb/my_translate/WIDTH
+add wave -noupdate /tb/my_translate/HEIGHT
+add wave -noupdate /tb/my_translate/CUT
+add wave -noupdate /tb/my_translate/APPEND
+add wave -noupdate /tb/my_translate/pipe_in
+add wave -noupdate -expand -subitemconfig {/tb/my_translate/pipe_out.stage -expand} /tb/my_translate/pipe_out
+add wave -noupdate /tb/my_translate/clk
+add wave -noupdate /tb/my_translate/rst
+add wave -noupdate /tb/my_translate/stage
+add wave -noupdate /tb/my_translate/stage_next
+add wave -noupdate /tb/my_translate/src_valid
+add wave -noupdate /tb/my_translate/issue
+add wave -noupdate /tb/my_translate/stall
+add wave -noupdate /tb/my_translate/r
+add wave -noupdate /tb/my_translate/r_next
+add wave -noupdate -divider T2
+add wave -noupdate /tb/amy_translate/ID
+add wave -noupdate /tb/amy_translate/WIDTH
+add wave -noupdate /tb/amy_translate/HEIGHT
+add wave -noupdate /tb/amy_translate/CUT
+add wave -noupdate /tb/amy_translate/APPEND
+add wave -noupdate /tb/amy_translate/pipe_in
+add wave -noupdate -expand -subitemconfig {/tb/amy_translate/pipe_out.stage -expand} /tb/amy_translate/pipe_out
+add wave -noupdate /tb/amy_translate/clk
+add wave -noupdate /tb/amy_translate/rst
+add wave -noupdate /tb/amy_translate/stage
+add wave -noupdate /tb/amy_translate/stage_next
+add wave -noupdate /tb/amy_translate/src_valid
+add wave -noupdate /tb/amy_translate/issue
+add wave -noupdate /tb/amy_translate/stall
+add wave -noupdate /tb/amy_translate/r
+add wave -noupdate /tb/amy_translate/r_next
 add wave -noupdate -divider SINK
 add wave -noupdate /tb/my_mcb_sink/ID
 add wave -noupdate -expand -subitemconfig {/tb/my_mcb_sink/pipe_in.stage -expand} /tb/my_mcb_sink/pipe_in
-add wave -noupdate /tb/my_mcb_sink/pipe_out
-add wave -noupdate /tb/my_mcb_sink/p0_fifo
+add wave -noupdate -expand -subitemconfig {/tb/my_mcb_sink/pipe_out.stage -expand} /tb/my_mcb_sink/pipe_out
+add wave -noupdate -expand /tb/my_mcb_sink/p0_fifo
 add wave -noupdate /tb/my_mcb_sink/p1_fifo
 add wave -noupdate /tb/my_mcb_sink/clk
 add wave -noupdate /tb/my_mcb_sink/rst
@@ -36,10 +69,9 @@ add wave -noupdate /tb/my_mcb_sink/stall
 add wave -noupdate /tb/my_mcb_sink/stage
 add wave -noupdate /tb/my_mcb_sink/stage_next
 add wave -noupdate /tb/my_mcb_sink/src_valid
-add wave -noupdate /tb/my_mcb_sink/r
+add wave -noupdate -expand /tb/my_mcb_sink/r
 add wave -noupdate /tb/my_mcb_sink/r_next
 add wave -noupdate /tb/my_mcb_sink/avail
-add wave -noupdate /tb/my_mcb_sink/selected_word
 add wave -noupdate -divider TB
 add wave -noupdate /tb/KERNEL
 add wave -noupdate /tb/WIDTH
@@ -102,12 +134,24 @@ add wave -noupdate -radix hexadecimal /tb/auxr_count
 add wave -noupdate -radix hexadecimal /tb/auxw_count
 add wave -noupdate /tb/indata
 add wave -noupdate /tb/outdata
+add wave -noupdate /tb/my_pipe_head/pipe_tail.ctrl.issue
+add wave -noupdate -divider Issue
+add wave -noupdate /tb/my_mcb_feed/issue
+add wave -noupdate /tb/my_translate/issue
+add wave -noupdate /tb/amy_translate/issue
+add wave -noupdate /tb/my_mcb_sink/issue
+add wave -noupdate -divider STall
+add wave -noupdate /tb/my_pipe_head/pipe_tail.stall
+add wave -noupdate /tb/my_mcb_feed/stall
+add wave -noupdate /tb/my_translate/stall
+add wave -noupdate /tb/amy_translate/stall
+add wave -noupdate /tb/my_mcb_sink/stall
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {362692 ps} 0} {{Cursor 2} {23136029 ps} 0}
+WaveRestoreCursors {{Cursor 1} {1278610 ps} 0} {{Cursor 2} {23136029 ps} 0} {{Cursor 3} {2922170 ps} 0} {{Cursor 4} {181604 ps} 0}
 configure wave -namecolwidth 256
 configure wave -valuecolwidth 100
 configure wave -justifyvalue left
-configure wave -signalnamewidth 1
+configure wave -signalnamewidth 0
 configure wave -snapdistance 10
 configure wave -datasetprefix 0
 configure wave -rowmargin 4
@@ -118,5 +162,5 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {0 ps} {655734 ps}
-bookmark add wave initial {{0 ps} {655734 ps}} 115
+WaveRestoreZoom {0 ps} {10500 ns}
+bookmark add wave initial {{0 ps} {10500 ns}} 220

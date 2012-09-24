@@ -12,8 +12,8 @@ entity pipe_head is
     clk : in std_logic;
     rst : in std_logic;
     cfg : in cfg_set_t;
-    pipe_tail : in pipe_t;
-    pipe_out : out pipe_t);
+    pipe_tail : inout pipe_t;
+    pipe_out : inout pipe_t);
 end pipe_head;
 
 architecture impl of pipe_head is
@@ -24,8 +24,9 @@ begin
   pipe_out.ctrl.clk <= clk;
   pipe_out.ctrl.rst <= rst;
   pipe_out.ctrl.issue <= '0';
-  pipe_out.ctrl.stall <= pipe_tail.ctrl.issue;
 
+  pipe_tail.stall <= '0';
+  
   pipe_out.cfg   <= cfg;
   pipe_out.stage <= NULL_STAGE;
 

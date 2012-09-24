@@ -14,8 +14,8 @@ entity morph_set is
     WIDTH  : natural range 0 to 2048         := 2048;
     HEIGHT : natural range 0 to 2048         := 2048);
   port (
-    pipe_in  : in  pipe_t;
-    pipe_out : out pipe_t);  
+    pipe_in  : inout  pipe_t;
+    pipe_out : inout pipe_t);  
 
 end morph_set;
 

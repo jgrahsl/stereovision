@@ -68,6 +68,7 @@ package cam_pkg is
     stage : stage_t;
     cfg   : cfg_set_t;
     ctrl  : ctrl_t;
+    stall : std_logic;
   end record;
 
   type pipe_set_t is array (0 to MAX_PIPE-1) of pipe_t;
@@ -97,8 +98,8 @@ package cam_pkg is
   procedure connect_pipe (
     signal clk       : out std_logic;
     signal rst       : out std_logic;
-    signal pipe_in   : in  pipe_t;
-    signal pipe_out  : out pipe_t;
+    signal pipe_in   : inout  pipe_t;
+    signal pipe_out  : inout pipe_t;
     signal stage     : in  stage_t;
     signal src_valid : out std_logic;
     signal issue     : in  std_logic;
@@ -110,8 +111,8 @@ package body cam_pkg is
   procedure connect_pipe (
     signal clk       : out std_logic;
     signal rst       : out std_logic;
-    signal pipe_in   : in  pipe_t;
-    signal pipe_out  : out pipe_t;
+    signal pipe_in   : inout  pipe_t;
+    signal pipe_out  : inout pipe_t;
     signal stage     : in  stage_t;
     signal src_valid : out std_logic;
     signal issue     : in  std_logic;
@@ -122,14 +123,13 @@ package body cam_pkg is
     rst <= pipe_in.ctrl.rst;
 
     pipe_out.ctrl       <= pipe_in.ctrl;
-    pipe_out.ctrl.issue <= pipe_in.ctrl.issue or issue;
-    pipe_out.ctrl.stall <= pipe_in.ctrl.stall and not issue;
+    pipe_in.stall <= pipe_out.stall or issue;
 
     pipe_out.cfg   <= pipe_in.cfg;
     pipe_out.stage <= stage;
 
-    stall     <= pipe_in.ctrl.stall and not issue;
-    src_valid <= pipe_in.stage.valid and not pipe_in.ctrl.stall;
+    stall     <= pipe_out.stall;
+    src_valid <= pipe_in.stage.valid and not pipe_in.stall;
   end procedure connect_pipe;
 
   

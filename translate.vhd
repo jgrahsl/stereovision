@@ -13,8 +13,8 @@ entity translate is
     CUT    : natural range 0 to 2047 := 0;
     APPEND : natural range 0 to 2047 := 0);
   port (
-    pipe_in  : in  pipe_t;
-    pipe_out : out pipe_t);
+    pipe_in  : inout pipe_t;
+    pipe_out : inout pipe_t);
 end translate;
 
 architecture impl of translate is

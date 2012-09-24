@@ -12,8 +12,8 @@ entity line_buffer is
     WIDTH     : natural range 1 to 2048 := 2048;
     HEIGHT    : natural range 1 to 2048 := 2048);
   port (
-    pipe_in  : in  pipe_t;
-    pipe_out : out pipe_t;
+    pipe_in  : inout  pipe_t;
+    pipe_out : inout pipe_t;
 
     mono_1d_out : out mono_1d_t
     );
