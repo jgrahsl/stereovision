@@ -143,6 +143,27 @@ begin  -- impl
     variable l         : line;
   begin
     p0_wr_fifo.stall <= '0';
+    
+    for j in (HEIGHT-1) downto 0 loop
+      for i in (WIDTH-1) downto 0 loop
+        wait until p0_wr_fifo.clk = '0' and p0_wr_fifo.en = '1';
+        b := p0_wr_fifo.data;
+--        write(l, str(b));
+--        writeline(f, l);
+        wait until p0_wr_fifo.clk = '1';
+      end loop;
+    end loop;  -- j
+
+    for j in (HEIGHT-1) downto 0 loop
+      for i in (WIDTH-1) downto 0 loop
+        wait until p0_wr_fifo.clk = '0' and p0_wr_fifo.en = '1';
+        b := p0_wr_fifo.data;
+--        write(l, str(b));
+--        writeline(f, l);
+        wait until p0_wr_fifo.clk = '1';
+      end loop;
+    end loop;  -- j
+
     for j in (HEIGHT-1) downto 0 loop
       for i in (WIDTH-1) downto 0 loop
         wait until p0_wr_fifo.clk = '0' and p0_wr_fifo.en = '1';
@@ -152,6 +173,7 @@ begin  -- impl
         wait until p0_wr_fifo.clk = '1';
       end loop;
     end loop;  -- j
+    
   end process;
   
 end impl;

@@ -1,4 +1,4 @@
-VHD="txt_util.vhd cam_pkg.vhd sim_feed.vhd sim_sink.vhd pipe_head.vhd hist_x_new.vhd bit_ram.vhd hist_y_new.vhd line_buffer.vhd window.vhd win_test.vhd morph_kernel.vhd morph.vhd morph_set.vhd translate.vhd tb_pipe.vhd"
+VHD="txt_util.vhd cam_pkg.vhd sim_feed.vhd sim_sink.vhd pipe_head.vhd hist_x_new.vhd bit_ram.vhd hist_y_new.vhd line_buffer.vhd window.vhd win_test.vhd morph_kernel.vhd translate.vhd morph.vhd morph_set.vhd tb_pipe.vhd"
 
 export PATH=$PATH:/opt/model6.4/linux
 export LM_LICENSE_FILE=/opt/model6.4/lic.dat
@@ -20,8 +20,11 @@ done
 
 ./tiff2dat.py input.tiff > sim.dat
 
+cat sim.dat sim.dat sim.dat > sim3.dat
+cp sim3.dat sim.dat
+
 ghdl -m --workdir=simu --work=work tb 
-./tb --stop-time=8us 
+#./tb --stop-time=8us 
 vsim -c -do sim_batch.do
 
 cat sim.out | ./dat2tiff.py output.tiff

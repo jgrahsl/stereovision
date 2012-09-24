@@ -50,7 +50,7 @@ ENTITY mcb_aux_fifo IS
     dout : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
     full : OUT STD_LOGIC;
     empty : OUT STD_LOGIC;
-    data_count : OUT STD_LOGIC_VECTOR(5 DOWNTO 0)
+    data_count : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
   );
 END mcb_aux_fifo;
 
@@ -66,7 +66,7 @@ COMPONENT wrapped_mcb_aux_fifo
     dout : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
     full : OUT STD_LOGIC;
     empty : OUT STD_LOGIC;
-    data_count : OUT STD_LOGIC_VECTOR(5 DOWNTO 0)
+    data_count : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
   );
 END COMPONENT;
 
@@ -98,7 +98,7 @@ END COMPONENT;
       c_axis_type => 0,
       c_common_clock => 1,
       c_count_type => 0,
-      c_data_count_width => 6,
+      c_data_count_width => 8,
       c_default_value => "BlankString",
       c_din_width => 32,
       c_din_width_axis => 1,
@@ -197,14 +197,14 @@ END COMPONENT;
       c_prog_empty_type_wach => 0,
       c_prog_empty_type_wdch => 0,
       c_prog_empty_type_wrch => 0,
-      c_prog_full_thresh_assert_val => 31,
+      c_prog_full_thresh_assert_val => 127,
       c_prog_full_thresh_assert_val_axis => 1023,
       c_prog_full_thresh_assert_val_rach => 1023,
       c_prog_full_thresh_assert_val_rdch => 1023,
       c_prog_full_thresh_assert_val_wach => 1023,
       c_prog_full_thresh_assert_val_wdch => 1023,
       c_prog_full_thresh_assert_val_wrch => 1023,
-      c_prog_full_thresh_negate_val => 30,
+      c_prog_full_thresh_negate_val => 126,
       c_prog_full_type => 0,
       c_prog_full_type_axis => 0,
       c_prog_full_type_rach => 0,
@@ -213,10 +213,10 @@ END COMPONENT;
       c_prog_full_type_wdch => 0,
       c_prog_full_type_wrch => 0,
       c_rach_type => 0,
-      c_rd_data_count_width => 6,
-      c_rd_depth => 32,
+      c_rd_data_count_width => 8,
+      c_rd_depth => 128,
       c_rd_freq => 1,
-      c_rd_pntr_width => 5,
+      c_rd_pntr_width => 7,
       c_rdch_type => 0,
       c_reg_slice_mode_axis => 0,
       c_reg_slice_mode_rach => 0,
@@ -244,8 +244,8 @@ END COMPONENT;
       c_wach_type => 0,
       c_wdch_type => 0,
       c_wr_ack_low => 0,
-      c_wr_data_count_width => 6,
-      c_wr_depth => 32,
+      c_wr_data_count_width => 8,
+      c_wr_depth => 128,
       c_wr_depth_axis => 1024,
       c_wr_depth_rach => 16,
       c_wr_depth_rdch => 1024,
@@ -253,7 +253,7 @@ END COMPONENT;
       c_wr_depth_wdch => 1024,
       c_wr_depth_wrch => 16,
       c_wr_freq => 1,
-      c_wr_pntr_width => 5,
+      c_wr_pntr_width => 7,
       c_wr_pntr_width_axis => 10,
       c_wr_pntr_width_rach => 4,
       c_wr_pntr_width_rdch => 10,

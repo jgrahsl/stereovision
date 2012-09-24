@@ -73,14 +73,14 @@ begin
     en                                := '0';
     issue                             <= '0';
     if v.rows > (HEIGHT-1) and v.rows <= (HEIGHT+APPEND-1) then
-      issue             <= '1';
+      issue             <= pipe_in.cfg(ID).enable;
       stage_next.data_1 <= (others => '0');
       stage_next.valid  <= '1';
       en                := '1';
     end if;
 
     if v.cols > (WIDTH-1) and v.cols <= (WIDTH+APPEND-1) then
-      issue             <= '1';
+      issue             <= pipe_in.cfg(ID).enable;
       stage_next.data_1 <= (others => '0');
       stage_next.valid  <= '1';
       en                := '1';
@@ -108,7 +108,7 @@ begin
 -------------------------------------------------------------------------------
 -- Counter
 -------------------------------------------------------------------------------
-    if pipe_in.stage.valid = '1' or en = '1' then
+    if src_valid = '1' or en = '1' then
       if v.cols = (WIDTH+APPEND-1) then
         v.cols := 0;
         if v.rows = (HEIGHT+APPEND-1) then

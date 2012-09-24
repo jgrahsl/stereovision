@@ -279,9 +279,8 @@ i = 0
 while True:
     set_reg(i,0x61,3)
     v = flReadChannel(handle, 5000, 0x62,2)
-
     set_reg(i,0x61,0)
-
+    print "rd_id = " + str(v[0])
     if v[0] == 0x01:
         print "MCBFeed at " + str(i)
         t.append(Enable(ui.pipe,i,"MCBFeed"))
@@ -307,6 +306,11 @@ while True:
     if v[0] == 0x08:
         print "ColMux at " + str(i)
         t.append(Enable(ui.pipe,i,"ColMux"))
+
+    if v[0] == 0x0C:
+        print "Translate at " + str(i)
+        t.append(Enable(ui.pipe,i,"Translate"))
+
        
     i = i + 1
     if i > 31:

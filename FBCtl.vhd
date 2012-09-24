@@ -641,7 +641,7 @@ architecture Behavioral of FBCtl is
   signal reg0 : std_logic_vector(7 downto 0);
   signal reg1 : std_logic_vector(7 downto 0);
   signal reg2 : std_logic_vector(7 downto 0);
-  signal reg3 : std_logic_vector(7 downto 0);  
+  signal reg3 : std_logic_vector(7 downto 0);
 begin
 ----------------------------------------------------------------------------------
 -- mcb instantiation
@@ -1067,7 +1067,7 @@ begin
             my_pixel_rd_addr <= my_pixel_rd_addr + 16*4;
             my_aux_rd_addr   <= my_aux_rd_addr + 32*4;
           end if;
-          reg2 <= reg2 + std_logic_vector(to_unsigned(1,8));          
+          reg2 <= reg2 + std_logic_vector(to_unsigned(1, 8));
         end if;
 
         if my_write_state = my_write_inc then
@@ -1078,7 +1078,7 @@ begin
             my_pixel_wr_addr <= my_pixel_wr_addr + 16*4;
             my_aux_wr_addr   <= my_aux_wr_addr + 32*4;
           end if;
-          reg3 <= reg3 + std_logic_vector(to_unsigned(1,8));
+          reg3 <= reg3 + std_logic_vector(to_unsigned(1, 8));
         end if;
 
         my_read_state  <= my_read_nstate;
@@ -1148,7 +1148,7 @@ begin
       dout       => pr_out,
       full       => pr_full,            -- [OUT]
       empty      => pr_empty,
-      data_count => pr_count(4 downto 0)
+      data_count => pr_count(6 downto 0)
       );                                -- [OUT]
 
   pw_fifo_comp : entity work.mcb_pixel_fifo
@@ -1161,7 +1161,7 @@ begin
       dout       => pw_out,
       full       => pw_full,            -- [OUT]
       empty      => pw_empty,
-      data_count => pw_count(4 downto 0)
+      data_count => pw_count(6 downto 0)
       );                                -- [OUT]
 
 --
@@ -1176,7 +1176,7 @@ begin
       dout       => auxr_out,           -- [OUT]
       full       => auxr_full,          -- [OUT]
       empty      => auxr_empty,
-      data_count => auxr_count(5 downto 0)
+      data_count => auxr_count(7 downto 0)
       );                                -- [OUT] 
 
   auxw_fifo_comp : entity work.mcb_aux_fifo
@@ -1189,7 +1189,7 @@ begin
       dout       => auxw_out,           -- [OUT]
       full       => auxw_full,          -- [OUT]
       empty      => auxw_empty,
-      data_count => auxw_count(5 downto 0)
+      data_count => auxw_count(7 downto 0)
       );                                -- [OUT]
 
 -------------------------------------------------------------------------------
@@ -1237,7 +1237,8 @@ begin
         my_read_nstate <= my_read_wait;
 
       when my_read_wait =>
-        if pr_empty = '1' and auxr_empty = '1' then
+        if pr_count <= std_logic_vector(to_unsigned((64-16), 6)) and
+          auxr_count <= std_logic_vector(to_unsigned((128-32), 8)) then
           my_read_nstate <= my_read_p;
         end if;
         
@@ -1251,7 +1252,7 @@ begin
         end if;
         
       when my_read_transfer_p =>
-        if p0_rd_count = std_logic_vector(to_unsigned(16, 6)) then
+        if p0_rd_count >= std_logic_vector(to_unsigned(16, 6)) then
           my_read_nstate <= my_read_transfer_p_1;
         end if;
 
@@ -1333,8 +1334,8 @@ begin
         my_write_nstate <= my_write_wait;
 
       when my_write_wait =>
-        if pw_count >= std_logic_vector(to_unsigned(16, 5)) and
-          auxw_count >= std_logic_vector(to_unsigned(32, 6)) then
+        if pw_count >= std_logic_vector(to_unsigned(16, 6)) and
+          auxw_count >= std_logic_vector(to_unsigned(32, 8)) then
           my_write_nstate <= my_write_transfer_p;
         end if;
 
@@ -1408,17 +1409,17 @@ begin
            "0" & p0_wr_count when rd_mode(3 downto 0) = "0010" else
            "0" & p1_wr_count when rd_mode(3 downto 0) = "0011" else
 
-           pr_count(7 downto 0)  when rd_mode(3 downto 0) = "0100" else
-           auxr_count(7 downto 0)  when rd_mode(3 downto 0) = "0101" else
-           pw_count(7 downto 0) when rd_mode(3 downto 0) = "0110" else
+           pr_count(7 downto 0)   when rd_mode(3 downto 0) = "0100" else
+           auxr_count(7 downto 0) when rd_mode(3 downto 0) = "0101" else
+           pw_count(7 downto 0)   when rd_mode(3 downto 0) = "0110" else
            auxw_count(7 downto 0) when rd_mode(3 downto 0) = "0111" else
 
            reg0                                                                                      when rd_mode(3 downto 0) = "1000" else
            reg1                                                                                      when rd_mode(3 downto 0) = "1001" else
-           reg2                                                                                      when rd_mode(3 downto 0) = "1010" else           
-           reg3                                                                                      when rd_mode(3 downto 0) = "1011" else           
+           reg2                                                                                      when rd_mode(3 downto 0) = "1010" else
+           reg3                                                                                      when rd_mode(3 downto 0) = "1011" else
            pr_empty & pr_full & auxr_empty & auxr_full & pw_empty & pw_full & auxw_empty & auxw_full when rd_mode(3 downto 0) = "1100" else
-           
+
            pipe(0).ctrl.stall & pipe(0).ctrl.issue &
            pipe(1).ctrl.stall & pipe(1).ctrl.issue &
            pipe(8).ctrl.stall & pipe(8).ctrl.issue & "11";
@@ -1469,6 +1470,28 @@ begin
     port map (
       pipe_in  => pipe(2),              -- [in]
       pipe_out => pipe(4));             -- [out]
+
+  --my_translate : entity work.translate
+  --  generic map (
+  --    ID     => 3,
+  --    WIDTH  => 640,
+  --    HEIGHT => 480,
+  --    CUT    => 0,
+  --    APPEND => 2)
+  --  port map (
+  --    pipe_in  => pipe(1),              -- [in]
+  --    pipe_out => pipe(3));             -- [out]
+
+  --amy_translate : entity work.translate
+  --  generic map (
+  --    ID     => 4,
+  --    WIDTH  => 642,
+  --    HEIGHT => 482,
+  --    CUT    => 2,
+  --    APPEND => 0)
+  --  port map (
+  --    pipe_in  => pipe(3),              -- [in]
+  --    pipe_out => pipe(4));             -- [out]
 
   --my_hist_x : entity work.hist_x
   --  generic map (

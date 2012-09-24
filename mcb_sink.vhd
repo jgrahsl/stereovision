@@ -54,7 +54,7 @@ begin
   p0_fifo.data(31 downto 16) <= pipe_in.stage.data_565;
   p1_fifo.data               <= pipe_in.stage.aux;
 
-  issue <= p0_fifo.stall or p1_fifo.stall;
+  issue <= (p0_fifo.stall or p1_fifo.stall) and pipe_in.cfg(ID).enable and pipe_in.cfg(ID).p(0)(0);
   
   process (pipe_in, r, rst, avail)
     variable v : reg_t;
