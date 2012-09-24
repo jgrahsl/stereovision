@@ -1,3 +1,4 @@
+ipcore_dir/*
 *.cgc
 *.tcl
 tmp

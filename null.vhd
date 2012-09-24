@@ -9,7 +9,7 @@ entity null_filter is
   generic (
     ID : integer range 0 to 63 := 0);
   port (
-    pipe_in  : inout  pipe_t;
+    pipe_in  : inout pipe_t;
     pipe_out : inout pipe_t);
 end null_filter;
 
@@ -47,8 +47,8 @@ begin
 
   proc_clk : process(pipe_in)
   begin
-    if rising_edge(clk) then
-      if (pipe_in.cfg(ID).enable = '1') then
+    if rising_edge(clk) and (stall = '0' or rst = '1') then
+      if pipe_in.cfg(ID).enable = '1' then
         stage <= stage_next;
       else
         stage <= pipe_in.stage;

@@ -25,7 +25,7 @@ architecture myrtl of morph_set is
   
 begin  -- myrtl
 
-  pipe(0)  <= pipe_in;
+--  pipe(0)  <= pipe_in;
   pipe_out <= pipe(4);
 
   my_morph_1 : entity work.morph
@@ -35,7 +35,7 @@ begin  -- myrtl
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (
-      pipe_in  => pipe(0),              -- [in]
+      pipe_in  => pipe_in,              -- [in]
       pipe_out => pipe(1));             -- [out]
   my_morph_2 : entity work.morph
     generic map (
