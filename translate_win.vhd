@@ -13,10 +13,13 @@ entity translate_win is
     CUT    : natural range 0 to 2047 := 0;
     APPEND : natural range 0 to 2047 := 0);
   port (
-    pipe_in  : inout pipe_t;
-    pipe_out : inout pipe_t;
-    mono_2d_in  : in    mono_2d_t;
-    mono_2d_out  : out   mono_2d_t);
+    pipe_in     : in  pipe_t;
+    pipe_out    : out pipe_t;
+    stall_in    : in  std_logic;
+    stall_out   : out std_logic;
+    mono_2d_in  : in  mono_2d_t;
+    mono_2d_out : out mono_2d_t
+    );
 end translate_win;
 
 architecture impl of translate_win is
@@ -40,10 +43,10 @@ architecture impl of translate_win is
 
   subtype counter_t is natural range 0 to 2047;
   type    reg_t is record
-    mono_2d : mono_2d_t;
     cols    : natural range 0 to WIDTH*2;
     rows    : natural range 0 to HEIGHT*2;
     state   : state_t;
+    mono_2d : mono_2d_t;
   end record;
 
   signal r      : reg_t;
@@ -57,7 +60,7 @@ architecture impl of translate_win is
   end init;
 begin
 
-  connect_pipe(clk, rst, pipe_in, pipe_out, stage, src_valid, issue, stall);
+  connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);
 
   process (pipe_in, r, src_valid, rst)
     variable v  : reg_t;
@@ -68,8 +71,8 @@ begin
 -------------------------------------------------------------------------------
 -- Logic
 -------------------------------------------------------------------------------
-    v.mono_2d := mono_2d_in;
-    
+    v.mono_2d  := mono_2d_in;
+
     en                                := '0';
     issue                             <= '0';
     if v.rows > (HEIGHT-1) and v.rows <= (HEIGHT+APPEND-1) then
@@ -124,7 +127,7 @@ begin
 -- Reset
 -------------------------------------------------------------------------------
     if pipe_in.cfg(ID).identify = '1' then
-      stage_next.identity <= IDENT_TRANSLATE;
+      stage_next.identity <= IDENT_TRANSLATE_WIN;
     end if;
     if rst = '1' then
       stage_next <= NULL_STAGE;
@@ -138,7 +141,7 @@ begin
 
   mono_2d_out <= r.mono_2d;
   
-  proc_clk : process(clk, stall, pipe_in, stage_next, r_next)
+  proc_clk : process(clk, rst, stall, pipe_in, stage_next, r_next)
   begin
     if rising_edge(clk) and (stall = '0' or rst = '1') then
       if (pipe_in.cfg(ID).enable = '1') then
