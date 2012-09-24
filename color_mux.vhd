@@ -36,7 +36,7 @@ begin
 
   connect_pipe(clk, rst, pipe_in, pipe_out, stage, src_valid, issue, stall);
 
-  process (pipe_in, rst)
+  process (pipe_in, rst, src_valid)
   begin
     stage_next <= pipe_in.stage;
 -------------------------------------------------------------------------------
@@ -64,7 +64,7 @@ begin
 -------------------------------------------------------------------------------    
   end process;
 
-  proc_clk : process(pipe_in, clk)
+  proc_clk : process(pipe_in, clk, rst, stall)
   begin
     if rising_edge(clk) and (stall = '0' or rst = '1') then
       if (pipe_in.cfg(ID).enable = '1') then

@@ -11,9 +11,9 @@ entity morph_kernel is
     KERNEL : natural range 1 to 5  := 5
     );
   port (
-    pipe_in    : inout  pipe_t;
+    pipe_in    : inout pipe_t;
     pipe_out   : inout pipe_t;
-    mono_2d_in : in  mono_2d_t
+    mono_2d_in : in    mono_2d_t
     );
 end morph_kernel;
 
@@ -32,7 +32,7 @@ begin
 
   connect_pipe(clk, rst, pipe_in, pipe_out, stage, src_valid, issue, stall);
 
-  process(pipe_in, mono_2d_in, rst)
+  process(pipe_in, mono_2d_in, rst, src_valid)
     variable win : mono_2d_t;
     variable sum : natural range 0 to (KERNEL*KERNEL);
   begin  -- process
@@ -103,7 +103,7 @@ begin
     end if;
   end process;
 
-  proc_clk : process(pipe_in,clk,stall)
+  proc_clk : process(pipe_in, clk, rst, stall)
   begin
     if rising_edge(clk) and (stall = '0' or rst = '1') then
       if (pipe_in.cfg(ID).enable = '1') then

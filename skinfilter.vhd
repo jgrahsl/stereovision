@@ -9,7 +9,7 @@ entity skinfilter is
   generic (
     ID : integer range 0 to 63 := 0);
   port (
-    pipe_in  : inout  pipe_t;
+    pipe_in  : inout pipe_t;
     pipe_out : inout pipe_t);
 end skinfilter;
 
@@ -58,13 +58,13 @@ begin
 -------------------------------------------------------------------------------
 -- Logic
 -------------------------------------------------------------------------------
-    colr := "00000000" & pipe_in.stage.data_888(23 downto 16);
-    colg := "00000000" & pipe_in.stage.data_888(15 downto 8);
-    colb := "00000000" & pipe_in.stage.data_888(7 downto 0);
+    colr       := "00000000" & pipe_in.stage.data_888(23 downto 16);
+    colg       := "00000000" & pipe_in.stage.data_888(15 downto 8);
+    colb       := "00000000" & pipe_in.stage.data_888(7 downto 0);
 
-    Y  := resize(COEFF_Y_R * signed(colr) + COEFF_Y_G * signed(colg) + COEFF_Y_B * signed(colb), 32);
-    Cb := resize(COEFF_CB_R * signed(colr) - COEFF_CB_G * signed(colg) + COEFF_CB_B * signed(colb), 32);
-    Cr := resize(COEFF_CR_R * signed(colr) - COEFF_CR_G * signed(colg) - COEFF_CR_B * signed(colb), 32);
+    Y                            := resize(COEFF_Y_R * signed(colr) + COEFF_Y_G * signed(colg) + COEFF_Y_B * signed(colb), 32);
+    Cb                           := resize(COEFF_CB_R * signed(colr) - COEFF_CB_G * signed(colg) + COEFF_CB_B * signed(colb), 32);
+    Cr                           := resize(COEFF_CR_R * signed(colr) - COEFF_CR_G * signed(colg) - COEFF_CR_B * signed(colb), 32);
 -------------------------------------------------------------------------------
 -- Output
 -------------------------------------------------------------------------------    
@@ -72,12 +72,12 @@ begin
       and (Cb >= COEFF_CB_LOW) and (Cb <= COEFF_CB_HIGH)
       and (Cr >= COEFF_CR_LOW) and (Cr <= COEFF_CR_HIGH) then
 
-      stage_next.data_1   <= (others => '1');
+      stage_next.data_1 <= (others => '1');
 --      stage_next.data_8   <= (others => '1');
 --      stage_next.data_565 <= (others => '1');
 --      stage_next.data_888 <= (others => '1');
     else
-      stage_next.data_1   <= (others => '0');
+      stage_next.data_1 <= (others => '0');
 --      stage_next.data_8   <= (others => '0');
 --      stage_next.data_565 <= (others => '0');
 --      stage_next.data_888 <= (others => '0');
@@ -93,7 +93,7 @@ begin
     end if;
   end process;
 
-  proc_clk : process(pipe_in,clk,stall)
+  proc_clk : process(pipe_in, clk, rst, stall)
   begin
     if rising_edge(clk) and (stall = '0' or rst = '1') then
       if (pipe_in.cfg(ID).enable = '1') then

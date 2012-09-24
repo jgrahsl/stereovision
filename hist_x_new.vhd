@@ -185,7 +185,7 @@ begin
 
   hist_row <= r.cur;
 
-  proc_clk : process(clk, stall, pipe_in, stage_next)
+  proc_clk : process(clk, rst, stall, pipe_in, stage_next)
   begin
     if rising_edge(clk) and (stall = '0' or rst = '1') then
       if (pipe_in.cfg(ID).enable = '1') then

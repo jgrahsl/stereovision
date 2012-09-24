@@ -195,7 +195,7 @@ begin
   q <= qd when stalled = '1' else
        qi;
   
-  proc_clk : process(clk, stall, r_next, stage_next, pipe_in, qd, qi, q)
+  proc_clk : process(clk, rst, stall, r_next, stage_next, pipe_in, qd, qi, q)
   begin
     if rising_edge(clk) and (stall = '0' or rst = '1') then
       if (pipe_in.cfg(ID).enable = '1') then

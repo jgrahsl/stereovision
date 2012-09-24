@@ -13,10 +13,10 @@ entity window is
     HEIGHT   : natural range 1 to 2048 := 2048
     );
   port (
-    pipe_in     : inout  pipe_t;
+    pipe_in     : inout pipe_t;
     pipe_out    : inout pipe_t;
-    mono_1d_in  : in  mono_1d_t;
-    mono_2d_out : out mono_2d_t
+    mono_1d_in  : in    mono_1d_t;
+    mono_2d_out : out   mono_2d_t
     );
 end window;
 
@@ -34,10 +34,10 @@ architecture impl of window is
     cols : natural range 0 to WIDTH;
     rows : natural range 0 to HEIGHT;
   end record;
-  signal r   : reg_t;
-  signal rin : reg_t;
-  signal q      : mono_2d_t;
-  signal next_q : mono_2d_t;
+  signal r                   :       reg_t;
+  signal rin                 :       reg_t;
+  signal q                   :       mono_2d_t;
+  signal next_q              :       mono_2d_t;
   procedure init (variable v : inout reg_t) is
   begin
     v.cols := 0;
@@ -49,7 +49,7 @@ begin
 
   connect_pipe(clk, rst, pipe_in, pipe_out, stage, src_valid, issue, stall);
 
-  process(pipe_in, stage, r, q, src_valid, rst)
+  process(pipe_in, stage, r, q, src_valid, rst, mono_1d_in)
     variable v : reg_t;
   begin  -- process
     stage_next <= pipe_in.stage;
@@ -79,12 +79,12 @@ begin
     mono_2d_out <= q;
 
     if pipe_in.stage.data_1 = "1" then
-      stage_next.data_1   <= (others => '1');
+      stage_next.data_1 <= (others => '1');
 --      stage_next.data_8   <= (others => '1');
 --      stage_next.data_565 <= (others => '1');
 --      stage_next.data_888 <= (others => '1');
     else
-      stage_next.data_1   <= (others => '0');
+      stage_next.data_1 <= (others => '0');
 --      stage_next.data_8   <= (others => '0');
 --      stage_next.data_565 <= (others => '0');
 --      stage_next.data_888 <= (others => '0');
@@ -103,7 +103,7 @@ begin
     rin <= v;
   end process;
 
-  proc_clk : process(clk, stall, stage_next, pipe_in)
+  proc_clk : process(clk, rst, stall, stage_next, pipe_in)
   begin
     if rising_edge(clk) and (stall = '0' or rst = '1') then
       if (pipe_in.cfg(ID).enable = '1') then
