@@ -1,6 +1,5 @@
 VHD="txt_util.vhd cam_pkg.vhd  sim_feed.vhd sim_sink.vhd pipe_head.vhd bit_ram.vhd line_buffer.vhd window.vhd morph_kernel.vhd translate.vhd translate_win.vhd morph_new.vhd morph_set.vhd tb_pipe.vhd"
-
- hist_x_new.vhd hist_y_new.vhd win_test.vhd morph_set.vhd
+# hist_x_new.vhd hist_y_new.vhd win_test.vhd morph_set.vhd
 
 export PATH=$PATH:/opt/model6.4/linux
 export LM_LICENSE_FILE=/opt/model6.4/lic.dat
@@ -19,9 +18,9 @@ for i in $VHD; do
     fi
 done
 
+export INP=input.tiff
 
-./tiff2dat.py input.tiff > sim.dat
-
+./tiff2dat.py $INP > sim.dat
 #cat sim.dat sim.dat sim.dat > sim3.dat
 #cp sim3.dat sim.dat
 
@@ -31,7 +30,7 @@ vsim -c -do sim_batch.do
 
 cat sim.out | ./dat2tiff.py output.tiff
 
-convert input.tiff -scale 256x256 simimg/i.tiff
+convert $INP -scale 256x256 simimg/i.tiff
 convert output.tiff -scale 256x256 simimg/o.tiff
 eog simimg&
 
