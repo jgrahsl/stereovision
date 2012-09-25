@@ -50,7 +50,7 @@ begin
   p0_fifo.data((16+8+1)-1 downto (8+1))       <= pipe_in.stage.data_565;
   p0_fifo.data((24+16+8+1)-1 downto (16+8+1)) <= pipe_in.stage.data_888;
 
-  process (pipe_in)
+  process (pipe_in, r, rst)  
     variable v : reg_t;
   begin
     stage_next <= pipe_in.stage;

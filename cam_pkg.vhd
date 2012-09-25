@@ -22,6 +22,7 @@ package cam_pkg is
   constant IDENT_WIN_TEST      : std_logic_vector(7 downto 0) := X"0B";
   constant IDENT_TRANSLATE     : std_logic_vector(7 downto 0) := X"0C";
   constant IDENT_TRANSLATE_WIN : std_logic_vector(7 downto 0) := X"0D";
+  constant IDENT_NULL          : std_logic_vector(7 downto 0) := X"0E";
 
   subtype mono_t is std_logic_vector(0 downto 0);
   subtype rgb565_t is std_logic_vector(15 downto 0);

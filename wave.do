@@ -16,25 +16,20 @@ add wave -noupdate -format Literal /tb/my_sim_feed/selected_word
 add wave -noupdate -format Logic /tb/my_sim_feed/rst
 add wave -noupdate -format Literal /tb/my_sim_feed/r_next
 add wave -noupdate -format Literal /tb/my_sim_feed/r
-add wave -noupdate -format Literal /tb/my_sim_feed/pipe_out
+add wave -noupdate -format Literal -expand /tb/my_sim_feed/pipe_out
 add wave -noupdate -format Literal /tb/my_sim_feed/pipe_in
-add wave -noupdate -format Literal /tb/my_sim_feed/p0_fifo
+add wave -noupdate -format Literal -expand /tb/my_sim_feed/p0_fifo
 add wave -noupdate -format Logic /tb/my_sim_feed/issue
 add wave -noupdate -format Literal /tb/my_sim_feed/id
 add wave -noupdate -format Logic /tb/my_sim_feed/clk
 add wave -noupdate -format Logic /tb/my_sim_feed/avail
 add wave -noupdate -divider T1
-add wave -noupdate -format Literal /tb/my_morph/width
-add wave -noupdate -format Logic /tb/my_morph/stall_out
-add wave -noupdate -format Logic /tb/my_morph/stall_in
-add wave -noupdate -format Literal /tb/my_morph/stall
-add wave -noupdate -format Literal /tb/my_morph/pipe_out
-add wave -noupdate -format Literal /tb/my_morph/pipe_in
-add wave -noupdate -format Literal /tb/my_morph/pipe
-add wave -noupdate -format Literal /tb/my_morph/kernel
-add wave -noupdate -format Literal /tb/my_morph/id
-add wave -noupdate -format Literal /tb/my_morph/height
 add wave -noupdate -divider T2
+add wave -noupdate -divider {New Divider}
+add wave -noupdate -divider {New Divider}
+add wave -noupdate -format Literal -expand /tb/my_morph/pipe
+add wave -noupdate -divider {New Divider}
+add wave -noupdate -divider {New Divider}
 add wave -noupdate -divider SINK
 add wave -noupdate -format Logic /tb/my_sim_sink/stall_out
 add wave -noupdate -format Logic /tb/my_sim_sink/stall_in
@@ -96,10 +91,25 @@ add wave -noupdate -format Logic /tb/clk
 add wave -noupdate -format Literal /tb/cfg
 add wave -noupdate -format Literal /tb/ce_count
 add wave -noupdate -format Logic /tb/ce
+add wave -noupdate -divider {New Divider}
+add wave -noupdate -format Logic /tb/my_morph/my_morph_1/my_translate/src_valid
+add wave -noupdate -format Literal /tb/my_morph/my_morph_1/my_translate/pipe_in
+add wave -noupdate -divider {New Divider}
+add wave -noupdate -format Logic /tb/my_morph/my_morph_2/my_translate/src_valid
+add wave -noupdate -format Literal /tb/my_morph/my_morph_2/my_translate/pipe_in
+add wave -noupdate -divider {New Divider}
+add wave -noupdate -format Logic /tb/my_morph/my_morph_3/my_translate/src_valid
+add wave -noupdate -format Literal /tb/my_morph/my_morph_3/my_translate/pipe_in
+add wave -noupdate -divider {New Divider}
+add wave -noupdate -format Logic /tb/my_morph/my_morph_4/my_translate/src_valid
+add wave -noupdate -format Literal /tb/my_morph/my_morph_4/my_translate/pipe_in
+add wave -noupdate -divider {New Divider}
+add wave -noupdate -format Logic /tb/my_sim_sink/src_valid
+add wave -noupdate -format Literal /tb/my_sim_sink/pipe_in
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {1278610 ps} 0} {{Cursor 2} {23136029 ps} 0} {{Cursor 3} {2922170 ps} 0} {{Cursor 4} {181604 ps} 0}
-configure wave -namecolwidth 256
-configure wave -valuecolwidth 100
+WaveRestoreCursors {{Cursor 1} {1278610 ps} 0} {{Cursor 2} {23136029 ps} 0} {{Cursor 3} {9429185 ps} 0} {{Cursor 4} {270000 ps} 0}
+configure wave -namecolwidth 478
+configure wave -valuecolwidth 185
 configure wave -justifyvalue left
 configure wave -signalnamewidth 0
 configure wave -snapdistance 10
@@ -112,5 +122,5 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {0 ps} {23421898 ps}
-bookmark add wave initial {{0 ps} {23421898 ps}} 17
+WaveRestoreZoom {0 ps} {725421 ps}
+bookmark add wave initial {{0 ps} {725421 ps}} 114

@@ -18,7 +18,7 @@ for i in $VHD; do
     fi
 done
 
-export INP=input.tiff
+export INP=input4.tiff
 
 ./tiff2dat.py $INP > sim.dat
 #cat sim.dat sim.dat sim.dat > sim3.dat
