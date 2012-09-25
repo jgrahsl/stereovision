@@ -9,8 +9,8 @@ expect.tiff
 output.tiff
 last.out
 
+cam.ngc
 iseconfig
-ipcore_dir/*
 *.asy
 *.*ise
 xst
@@ -18,7 +18,6 @@ xst
 *.log
 *.xml
 *.rpt
-*.ngc
 *.ncd
 *.syr
 *.par
