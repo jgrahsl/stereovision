@@ -68,7 +68,7 @@ begin
 
       if r.cols = (WIDTH-1) then
         v.cols := 0;
-        next_q <= (others => (others => (others => '0')));
+--        next_q <= (others => (others => (others => '0')));
       else
         v.cols := v.cols + 1;
       end if;

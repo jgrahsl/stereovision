@@ -1,11 +1,14 @@
-ipcore_dir/*
 *.cgc
 *.tcl
 tmp
-*.asy
 *.vho
+\#*
 *~
+
+
 iseconfig
+ipcore_dir/*
+*.asy
 *.*ise
 xst
 *.xdb
@@ -34,6 +37,9 @@ xst
 *.xsvf
 
 
+xilinxcorelib
+unisim
+wlft*
 *.wlf
 transcript
 work
