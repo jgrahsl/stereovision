@@ -12,7 +12,8 @@ entity tb is
     KERNEL : natural range 0 to 5    := 5;
     WIDTH  : natural range 0 to 2048 := 16;
     HEIGHT : natural range 0 to 2048 := 16;
-    NUM    : natural range 0 to 4    := 4
+    NUM    : natural range 0 to 4    := 4;
+    SKIP   : natural range 0 to 15   := 2
     );
 end tb;
 
@@ -46,6 +47,8 @@ architecture impl of tb is
   signal mono_2d : mono_2d_t;
 
   signal stall : std_logic_vector(MAX_PIPE-1 downto 0);
+
+  signal finish : std_logic := '0';
 begin  -- impl
 
   ena : for i in 0 to (MAX_PIPE-1) generate
@@ -79,105 +82,104 @@ begin  -- impl
       stall_out => stall(0),
       p0_fifo   => p0_rd_fifo);         -- [inout]
 
-  --my_morph : entity work.morph_set
+  my_morph : entity work.morph_set
+    generic map (
+      ID     => 2,
+      KERNEL => 5,
+      WIDTH  => WIDTH,
+      HEIGHT => HEIGHT)
+    port map (
+      pipe_in   => pipe(1),             -- [in]
+      pipe_out  => pipe(7),
+      stall_in  => stall(7),
+      stall_out => stall(1)
+      );                                -- [out]
+
+  --my_translate : entity work.translate
   --  generic map (
-  --    ID     => 2,
-  --    KERNEL => 5,
+  --    ID     => 20,
   --    WIDTH  => WIDTH,
-  --    HEIGHT => HEIGHT)
+  --    HEIGHT => HEIGHT,
+  --    CUT    => 0,
+  --    APPEND => 2)
   --  port map (
-  --    pipe_in   => pipe(1),             -- [in]
-  --    pipe_out  => pipe(2),
+  --    pipe_in  => pipe(1),              -- [in]
+  --    pipe_out => pipe(2),
   --    stall_in  => stall(2),
   --    stall_out => stall(1)
-  --    );                                -- [out]
+  --    );             -- [out]
+
+  --amy_translate : entity work.translate
+  --  generic map (
+  --    ID     => 21,
+  --    WIDTH  => WIDTH+2,
+  --    HEIGHT => HEIGHT+2,
+  --    CUT    => 2,
+  --    APPEND => 0)
+  --  port map (
+  --    pipe_in  => pipe(2),              -- [in]
+  --    pipe_out => pipe(7),
+  --    stall_in  => stall(7),
+  --    stall_out => stall(2)
+  --    );             -- [out]
 
 
-  my_translate : entity work.translate
-    generic map (
-      ID     => 20,
-      WIDTH  => WIDTH,
-      HEIGHT => HEIGHT,
-      CUT    => 0,
-      APPEND => 2)
-    port map (
-      pipe_in  => pipe(1),              -- [in]
-      pipe_out => pipe(2),
-      stall_in  => stall(2),
-      stall_out => stall(1)
-      );             -- [out]
+  --my_transalate : entity work.translate
+  --  generic map (
+  --    ID     => 26,
+  --    WIDTH  => WIDTH,
+  --    HEIGHT => HEIGHT,
+  --    CUT    => 0,
+  --    APPEND => 2)
+  --  port map (
+  --    pipe_in  => pipe(3),              -- [in]
+  --    pipe_out => pipe(4),
+  --    stall_in  => stall(4),
+  --    stall_out => stall(3)
+  --    );             -- [out]
 
-  amy_translate : entity work.translate
-    generic map (
-      ID     => 21,
-      WIDTH  => WIDTH+2,
-      HEIGHT => HEIGHT+2,
-      CUT    => 2,
-      APPEND => 0)
-    port map (
-      pipe_in  => pipe(2),              -- [in]
-      pipe_out => pipe(3),
-      stall_in  => stall(3),
-      stall_out => stall(2)
-      );             -- [out]
-
-
-  my_transalate : entity work.translate
-    generic map (
-      ID     => 26,
-      WIDTH  => WIDTH,
-      HEIGHT => HEIGHT,
-      CUT    => 0,
-      APPEND => 2)
-    port map (
-      pipe_in  => pipe(3),              -- [in]
-      pipe_out => pipe(4),
-      stall_in  => stall(4),
-      stall_out => stall(3)
-      );             -- [out]
-
-  amy_transalate : entity work.translate
-    generic map (
-      ID     => 27,
-      WIDTH  => WIDTH+2,
-      HEIGHT => HEIGHT+2,
-      CUT    => 2,
-      APPEND => 0)
-    port map (
-      pipe_in  => pipe(4),              -- [in]
-      pipe_out => pipe(5),
-      stall_in  => stall(5),
-      stall_out => stall(4)
-      );             -- [out]
+  --amy_transalate : entity work.translate
+  --  generic map (
+  --    ID     => 27,
+  --    WIDTH  => WIDTH+2,
+  --    HEIGHT => HEIGHT+2,
+  --    CUT    => 2,
+  --    APPEND => 0)
+  --  port map (
+  --    pipe_in  => pipe(4),              -- [in]
+  --    pipe_out => pipe(5),
+  --    stall_in  => stall(5),
+  --    stall_out => stall(4)
+  --    );             -- [out]
 
 
-  aamy_transalate : entity work.translate
-    generic map (
-      ID     => 28,
-      WIDTH  => WIDTH,
-      HEIGHT => HEIGHT,
-      CUT    => 0,
-      APPEND => 2)
-    port map (
-      pipe_in  => pipe(5),              -- [in]
-      pipe_out => pipe(6),
-      stall_in  => stall(6),
-      stall_out => stall(5)
-      );             -- [out]
+  --aamy_transalate : entity work.translate
+  --  generic map (
+  --    ID     => 28,
+  --    WIDTH  => WIDTH,
+  --    HEIGHT => HEIGHT,
+  --    CUT    => 0,
+  --    APPEND => 2)
+  --  port map (
+  --    pipe_in  => pipe(5),              -- [in]
+  --    pipe_out => pipe(6),
+  --    stall_in  => stall(6),
+  --    stall_out => stall(5)
+  --    );             -- [out]
 
-  aaamy_transalate : entity work.translate
-    generic map (
-      ID     => 29,
-      WIDTH  => WIDTH+2,
-      HEIGHT => HEIGHT+2,
-      CUT    => 2,
-      APPEND => 0)
-    port map (
-      pipe_in  => pipe(6),              -- [in]
-      pipe_out => pipe(7),
-      stall_in  => stall(7),
-      stall_out => stall(6)
-      );             -- [out]
+  --aaamy_transalate : entity work.translate
+  --  generic map (
+  --    ID     => 29,
+  --    WIDTH  => WIDTH+2,
+  --    HEIGHT => HEIGHT+2,
+  --    CUT    => 2,
+  --    APPEND => 0)
+  --  port map (
+  --    pipe_in  => pipe(6),              -- [in]
+  --    pipe_out => pipe(7),
+  --    stall_in  => stall(7),
+  --    stall_out => stall(6)
+  --    );             -- [out]
   
   
   my_sim_sink : entity work.sim_sink
@@ -242,6 +244,17 @@ begin  -- impl
     variable l         : line;
   begin
     p0_wr_fifo.stall <= '0';
+    for m in SKIP-1 downto 0 loop
+      for j in (HEIGHT-1) downto 0 loop
+        for i in (WIDTH-1) downto 0 loop
+          wait until p0_wr_fifo.clk = '0' and p0_wr_fifo.en = '1';
+          b := p0_wr_fifo.data;
+--        write(l, str(b));
+--        writeline(f, l);
+          wait until p0_wr_fifo.clk = '1';
+        end loop;
+      end loop;  -- j      
+    end loop;  -- m
 
     for j in (HEIGHT-1) downto 0 loop
       for i in (WIDTH-1) downto 0 loop
@@ -252,7 +265,10 @@ begin  -- impl
         wait until p0_wr_fifo.clk = '1';
       end loop;
     end loop;  -- j
-    
+    wait for 5 us;
+    report "Done" severity note;
+    finish <= '1';
+    wait;
   end process;
   
 end impl;
