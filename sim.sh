@@ -21,8 +21,11 @@ done
 export INP=input3.tiff
 
 ./tiff2dat.py $INP > sim.dat
+cat sim.dat sim.dat sim.dat sim.dat > sim4.dat
 cat sim.dat sim.dat sim.dat > sim3.dat
-cp sim3.dat sim.dat
+cat sim.dat sim.dat  > sim2.dat
+
+cp sim2.dat sim.dat
 
 #ghdl -m --workdir=simu --work=work tb 
 #./tb --stop-time=100us 

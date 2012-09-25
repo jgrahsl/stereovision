@@ -134,7 +134,7 @@ add wave -noupdate -format Logic /tb/my_morph/my_morph_1/my_filter0_buffer/src_v
 add wave -noupdate -format Logic /tb/my_morph/my_morph_1/my_filter0_buffer/rst
 add wave -noupdate -format Literal /tb/my_morph/my_morph_1/my_filter0_buffer/r_r
 add wave -noupdate -format Literal /tb/my_morph/my_morph_1/my_filter0_buffer/r_next
-add wave -noupdate -format Literal /tb/my_morph/my_morph_1/my_filter0_buffer/r
+add wave -noupdate -format Literal -expand /tb/my_morph/my_morph_1/my_filter0_buffer/r
 add wave -noupdate -format Literal /tb/my_morph/my_morph_1/my_filter0_buffer/qi
 add wave -noupdate -format Literal /tb/my_morph/my_morph_1/my_filter0_buffer/qd
 add wave -noupdate -format Literal /tb/my_morph/my_morph_1/my_filter0_buffer/q
@@ -148,7 +148,7 @@ add wave -noupdate -format Literal /tb/my_morph/my_morph_1/my_filter0_buffer/hei
 add wave -noupdate -format Logic /tb/my_morph/my_morph_1/my_filter0_buffer/clk
 add wave -noupdate -format Literal /tb/my_morph/my_morph_1/my_filter0_buffer/adr
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {119707 ps} 0} {{Cursor 2} {23136029 ps} 0} {{Cursor 3} {14726232 ps} 0} {{Cursor 4} {115000 ps} 0}
+WaveRestoreCursors {{Cursor 1} {14705000 ps} 0} {{Cursor 2} {23136029 ps} 0} {{Cursor 3} {18304562 ps} 0} {{Cursor 4} {125000 ps} 0}
 configure wave -namecolwidth 478
 configure wave -valuecolwidth 185
 configure wave -justifyvalue left
@@ -163,5 +163,5 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {13795755 ps} {15070195 ps}
-bookmark add wave initial {{13795755 ps} {15070195 ps}} 25
+WaveRestoreZoom {0 ps} {22202250 ps}
+bookmark add wave initial {{0 ps} {22202250 ps}} 127

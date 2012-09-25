@@ -13,7 +13,7 @@ entity tb is
     WIDTH  : natural range 0 to 2048 := 16;
     HEIGHT : natural range 0 to 2048 := 16;
     NUM    : natural range 0 to 4    := 4;
-    SKIP   : natural range 0 to 15   := 2
+    SKIP   : natural range 0 to 15   := 1
     );
 end tb;
 
@@ -82,7 +82,7 @@ begin  -- impl
       stall_out => stall(0),
       p0_fifo   => p0_rd_fifo);         -- [inout]
 
-  my_morph : entity work.morph_set
+  my_morph : entity work.morph
     generic map (
       ID     => 2,
       KERNEL => 5,
