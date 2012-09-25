@@ -26,109 +26,29 @@ add wave -noupdate -format Literal /tb/my_sim_feed/id
 add wave -noupdate -format Logic /tb/my_sim_feed/clk
 add wave -noupdate -format Logic /tb/my_sim_feed/avail
 add wave -noupdate -divider Translate
-add wave -noupdate -format Literal /tb/my_morph/my_translate/width
-add wave -noupdate -format Logic /tb/my_morph/my_translate/stall_out
-add wave -noupdate -format Logic /tb/my_morph/my_translate/stall_in
-add wave -noupdate -format Logic /tb/my_morph/my_translate/stall
-add wave -noupdate -format Literal /tb/my_morph/my_translate/stage_next
-add wave -noupdate -format Literal /tb/my_morph/my_translate/stage
-add wave -noupdate -format Logic /tb/my_morph/my_translate/src_valid
-add wave -noupdate -format Logic /tb/my_morph/my_translate/rst
-add wave -noupdate -format Literal /tb/my_morph/my_translate/r_next
-add wave -noupdate -format Literal /tb/my_morph/my_translate/r
-add wave -noupdate -format Literal /tb/my_morph/my_translate/pipe_out
-add wave -noupdate -format Literal /tb/my_morph/my_translate/pipe_in
-add wave -noupdate -format Logic /tb/my_morph/my_translate/issue
-add wave -noupdate -format Literal /tb/my_morph/my_translate/id
-add wave -noupdate -format Literal /tb/my_morph/my_translate/height
-add wave -noupdate -format Literal /tb/my_morph/my_translate/cut
-add wave -noupdate -format Logic /tb/my_morph/my_translate/clk
-add wave -noupdate -format Literal /tb/my_morph/my_translate/append
 add wave -noupdate -divider LINEBUFFER
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_buffer/wren
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_buffer/width
-add wave -noupdate -format Logic /tb/my_morph/my_filter0_buffer/stalled
-add wave -noupdate -format Logic /tb/my_morph/my_filter0_buffer/stall_out
-add wave -noupdate -format Logic /tb/my_morph/my_filter0_buffer/stall_in
-add wave -noupdate -format Logic /tb/my_morph/my_filter0_buffer/stall
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_buffer/stage_next
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_buffer/stage
-add wave -noupdate -format Logic /tb/my_morph/my_filter0_buffer/src_valid
-add wave -noupdate -format Logic /tb/my_morph/my_filter0_buffer/rst
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_buffer/r_r
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_buffer/r_next
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_buffer/r
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_buffer/qi
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_buffer/qd
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_buffer/q
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_buffer/pipe_out
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_buffer/pipe_in
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_buffer/num_lines
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_buffer/mono_1d_out
-add wave -noupdate -format Logic /tb/my_morph/my_filter0_buffer/issue
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_buffer/id
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_buffer/height
-add wave -noupdate -format Logic /tb/my_morph/my_filter0_buffer/clk
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_buffer/adr
 add wave -noupdate -divider WIN
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_window/width
-add wave -noupdate -format Logic /tb/my_morph/my_filter0_window/stall_out
-add wave -noupdate -format Logic /tb/my_morph/my_filter0_window/stall_in
-add wave -noupdate -format Logic /tb/my_morph/my_filter0_window/stall
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_window/stage_next
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_window/stage
-add wave -noupdate -format Logic /tb/my_morph/my_filter0_window/src_valid
-add wave -noupdate -format Logic /tb/my_morph/my_filter0_window/rst
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_window/rin
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_window/r
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_window/q
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_window/pipe_out
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_window/pipe_in
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_window/num_cols
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_window/next_q
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_window/mono_2d_out
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_window/mono_1d_in
-add wave -noupdate -format Logic /tb/my_morph/my_filter0_window/issue
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_window/id
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_window/height
-add wave -noupdate -format Logic /tb/my_morph/my_filter0_window/clk
+add wave -noupdate -format Literal -expand /tb/pipe
 add wave -noupdate -divider TRANSLATE
-add wave -noupdate -format Literal /tb/my_morph/my_translatea/width
-add wave -noupdate -format Logic /tb/my_morph/my_translatea/stall_out
-add wave -noupdate -format Logic /tb/my_morph/my_translatea/stall_in
-add wave -noupdate -format Logic /tb/my_morph/my_translatea/stall
-add wave -noupdate -format Literal /tb/my_morph/my_translatea/stage_next
-add wave -noupdate -format Literal /tb/my_morph/my_translatea/stage
-add wave -noupdate -format Logic /tb/my_morph/my_translatea/src_valid
-add wave -noupdate -format Logic /tb/my_morph/my_translatea/rst
-add wave -noupdate -format Literal /tb/my_morph/my_translatea/r_next
-add wave -noupdate -format Literal /tb/my_morph/my_translatea/r
-add wave -noupdate -format Literal /tb/my_morph/my_translatea/pipe_out
-add wave -noupdate -format Literal /tb/my_morph/my_translatea/pipe_in
-add wave -noupdate -format Literal /tb/my_morph/my_translatea/mono_2d_out
-add wave -noupdate -format Literal /tb/my_morph/my_translatea/mono_2d_in
-add wave -noupdate -format Logic /tb/my_morph/my_translatea/issue
-add wave -noupdate -format Literal /tb/my_morph/my_translatea/id
-add wave -noupdate -format Literal /tb/my_morph/my_translatea/height
-add wave -noupdate -format Literal /tb/my_morph/my_translatea/cut
-add wave -noupdate -format Logic /tb/my_morph/my_translatea/clk
-add wave -noupdate -format Literal /tb/my_morph/my_translatea/append
 add wave -noupdate -divider KERNEL
-add wave -noupdate -format Logic /tb/my_morph/my_filter0_kernel/stall_out
-add wave -noupdate -format Logic /tb/my_morph/my_filter0_kernel/stall_in
-add wave -noupdate -format Logic /tb/my_morph/my_filter0_kernel/stall
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_kernel/stage_next
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_kernel/stage
-add wave -noupdate -format Logic /tb/my_morph/my_filter0_kernel/src_valid
-add wave -noupdate -format Logic /tb/my_morph/my_filter0_kernel/rst
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_kernel/pipe_out
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_kernel/pipe_in
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_kernel/mono_2d_in
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_kernel/kernel
-add wave -noupdate -format Logic /tb/my_morph/my_filter0_kernel/issue
-add wave -noupdate -format Literal /tb/my_morph/my_filter0_kernel/id
-add wave -noupdate -format Logic /tb/my_morph/my_filter0_kernel/clk
-add wave -noupdate -divider {New Divider}
+add wave -noupdate -format Literal /tb/my_morph/pipe
+add wave -noupdate -divider NULL
+add wave -noupdate -format Literal /tb/nu/width
+add wave -noupdate -format Logic /tb/nu/stall_out
+add wave -noupdate -format Logic /tb/nu/stall_in
+add wave -noupdate -format Logic /tb/nu/stall
+add wave -noupdate -format Literal -expand /tb/nu/stage_next
+add wave -noupdate -format Literal -expand /tb/nu/stage
+add wave -noupdate -format Logic /tb/nu/src_valid
+add wave -noupdate -format Logic /tb/nu/rst
+add wave -noupdate -format Literal /tb/nu/r_next
+add wave -noupdate -format Literal -expand /tb/nu/r
+add wave -noupdate -format Literal -expand /tb/nu/pipe_out
+add wave -noupdate -format Literal /tb/nu/pipe_in
+add wave -noupdate -format Logic /tb/nu/issue
+add wave -noupdate -format Literal /tb/nu/id
+add wave -noupdate -format Literal /tb/nu/height
+add wave -noupdate -format Logic /tb/nu/clk
 add wave -noupdate -divider SINK
 add wave -noupdate -format Logic /tb/my_sim_sink/stall_out
 add wave -noupdate -format Logic /tb/my_sim_sink/stall_in
@@ -148,10 +68,6 @@ add wave -noupdate -format Literal /tb/my_sim_sink/cnt
 add wave -noupdate -format Logic /tb/my_sim_sink/clk
 add wave -noupdate -format Logic /tb/my_sim_sink/avail
 add wave -noupdate -divider TB
-add wave -noupdate -format Literal /tb/kernel
-add wave -noupdate -format Literal /tb/width
-add wave -noupdate -format Literal /tb/height
-add wave -noupdate -format Literal /tb/num
 add wave -noupdate -format Logic /tb/clk
 add wave -noupdate -format Logic /tb/rst
 add wave -noupdate -format Literal /tb/col
@@ -180,7 +96,7 @@ add wave -noupdate -format Logic /tb/my_sim_sink/src_valid
 add wave -noupdate -format Literal /tb/my_sim_sink/pipe_in
 add wave -noupdate -divider LineBuffer1
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {14705000 ps} 0} {{Cursor 2} {23136029 ps} 0} {{Cursor 3} {18304562 ps} 0} {{Cursor 4} {125000 ps} 0}
+WaveRestoreCursors {{Cursor 1} {22145000 ps} 0} {{Cursor 2} {2825000 ps} 0} {{Cursor 3} {940000 ps} 0} {{Cursor 4} {0 ps} 0}
 configure wave -namecolwidth 171
 configure wave -valuecolwidth 185
 configure wave -justifyvalue left
@@ -195,5 +111,5 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {0 ps} {35898798 ps}
-bookmark add wave initial {{0 ps} {35898798 ps}} 82
+WaveRestoreZoom {0 ps} {27926121 ps}
+bookmark add wave initial {{0 ps} {27926121 ps}} 45

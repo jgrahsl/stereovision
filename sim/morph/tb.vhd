@@ -81,6 +81,18 @@ begin  -- impl
       stall_out => stall(0),
       p0_fifo   => p0_rd_fifo);         -- [inout]
 
+  nu : entity work.null_filter
+    generic map (
+      ID => 25,
+      WIDTH  => WIDTH,
+      HEIGHT => HEIGHT)
+    port map (
+      pipe_in   => pipe(1),             -- [in]
+      pipe_out  => pipe(2),
+      stall_in  => stall(2),
+      stall_out => stall(1));           -- [inout]
+
+  
   my_morph : entity work.morph_set
     generic map (
       ID     => 2,
@@ -88,20 +100,20 @@ begin  -- impl
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (
-      pipe_in   => pipe(1),             -- [in]
-      pipe_out  => pipe(7),
-      stall_in  => stall(7),
-      stall_out => stall(1)
+      pipe_in   => pipe(2),             -- [in]
+      pipe_out  => pipe(3),
+      stall_in  => stall(3),
+      stall_out => stall(2)
       );                                -- [out]
-  
+
   my_sim_sink : entity work.sim_sink
     generic map (
       ID => 22)
     port map (
-      pipe_in   => pipe(7),             -- [in]
+      pipe_in   => pipe(3),             -- [in]
       pipe_out  => pipe(8),
       stall_in  => stall(8),
-      stall_out => stall(7),
+      stall_out => stall(3),
       p0_fifo   => p0_wr_fifo);         -- [inout]
 
 -------------------------------------------------------------------------------  
@@ -157,10 +169,10 @@ begin  -- impl
   begin
     p0_wr_fifo.stall <= '0';
 
-    write(l, str(WIDTH,10));
+    write(l, str(WIDTH, 10));
     writeline(f, l);
-    write(l, str(HEIGHT,10));
-    writeline(f, l);    
+    write(l, str(HEIGHT, 10));
+    writeline(f, l);
     for m in SKIP-1 downto 0 loop
       for j in (HEIGHT-1) downto 0 loop
         for i in (WIDTH-1) downto 0 loop

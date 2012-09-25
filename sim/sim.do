@@ -14,4 +14,4 @@ do wave.do
 
 run 100 us
 echo "Timeout of simulation" 
-quit -f
+

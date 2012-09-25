@@ -7,12 +7,14 @@ use work.cam_pkg.all;
 
 entity null_filter is
   generic (
-    ID : integer range 0 to 63 := 0);
+    ID     : integer range 0 to 63   := 0;
+    WIDTH  : natural range 0 to 2048 := 2048;
+    HEIGHT : natural range 0 to 2048 := 2048);
   port (
-    pipe_in   : inout pipe_t;
-    pipe_out  : inout pipe_t;
-    stall_in  : in    std_logic;
-    stall_out : out   std_logic
+    pipe_in   : in  pipe_t;
+    pipe_out  : out pipe_t;
+    stall_in  : in  std_logic;
+    stall_out : out std_logic
     );
 end null_filter;
 
@@ -26,7 +28,7 @@ architecture impl of null_filter is
   signal issue      : std_logic;
   signal stall      : std_logic;
 
-  type    reg_t is record
+  type reg_t is record
     cols : natural range 0 to WIDTH;
     rows : natural range 0 to HEIGHT;
   end record;
@@ -46,18 +48,16 @@ begin
   connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);
 
   process(pipe_in, r, rst, src_valid)
-    variable v : reg_t;    
+    variable v : reg_t;
   begin
     stage_next <= pipe_in.stage;
-    v := r;
+    v          := r;
 -------------------------------------------------------------------------------
 -- Logic
 -------------------------------------------------------------------------------    
-
 -------------------------------------------------------------------------------
 -- Output
 -------------------------------------------------------------------------------
-    if 
 -------------------------------------------------------------------------------
 -- Counter
 -------------------------------------------------------------------------------
@@ -85,7 +85,7 @@ begin
     end if;
   end process;
 
-  proc_clk : process(clk, rst, stall, pipe_in, stage_next, r_next)  
+  proc_clk : process(clk, rst, stall, pipe_in, stage_next, r_next)
   begin
     if rising_edge(clk) and (stall = '0' or rst = '1') then
       if pipe_in.cfg(ID).enable = '1' then

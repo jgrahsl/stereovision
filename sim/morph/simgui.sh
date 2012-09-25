@@ -33,7 +33,7 @@ $SIMBASEDIR/tiff2dat.py $STIM/input.tiff > sim.dat
 cat sim.dat sim.dat sim.dat sim.dat sim.dat sim.dat sim.dat sim.dat > sim8.dat
 cp sim8.dat sim.dat
 
-vsim -c -do $SIMBASEDIR/sim_batch.do
+vsim -do $SIMBASEDIR/sim.do
 
 cat sim.out | $SIMBASEDIR/dat2tiff.py $STIM/output.tiff
 cat $STIM/sim.out | $SIMBASEDIR/dat2tiff.py $STIM/expect.tiff
