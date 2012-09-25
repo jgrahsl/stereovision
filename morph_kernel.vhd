@@ -95,9 +95,11 @@ begin
 --      stage_next.data_888 <= (others => '0');
     end if;
 
-    stage_next.data_1 <= (others => '0');    
-    if win(2)(2) = "1" then
-      stage_next.data_1 <= (others => '1');      
+    if (pipe_in.cfg(ID).p(1)(0) = '1') then 
+      stage_next.data_1 <= (others => '0');    
+      if win(2)(2) = "1" then
+        stage_next.data_1 <= (others => '1');      
+      end if;
     end if;
 -------------------------------------------------------------------------------
 -- Reset

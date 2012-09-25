@@ -4,9 +4,13 @@ import sys
 
 from PIL import Image
 
-
-width = 16
-height = 16
+try:
+    width = int(sys.stdin.readline().rstrip("\n\r"))
+    height = int(sys.stdin.readline().rstrip("\n\r"))
+except Exception,e:
+    a = 0
+    width=16
+    height=16
 im = Image.new('RGBA', (width, height), (0, 0, 0, 0))
 
 for y in range(height):

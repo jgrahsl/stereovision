@@ -5,6 +5,9 @@ tmp
 \#*
 *~
 
+expect.tiff
+output.tiff
+last.out
 
 iseconfig
 ipcore_dir/*
@@ -63,9 +66,7 @@ _ngo*
 *.dat
 *.mono
 *.md5sum
-*.tiff
 
-*.out
 .\#*
 *.pyc
 

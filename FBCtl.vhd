@@ -1445,17 +1445,19 @@ begin
     port map (
       pipe_in   => pipe(0),             -- [in]
       pipe_out  => pipe(1),             -- [out]
-      stall_in  => stall(5),
+      stall_in  => stall(1),
       stall_out => stall(0),
       p0_fifo   => pr_fifo,             -- [inout]
       p1_fifo   => auxr_fifo);          -- [inout]
 
-  --my_skinfilter : entity work.skinfilter
-  --  generic map (
-  --    ID => 2)
-  --  port map (
-  --    pipe_in  => pipe(1),
-  --    pipe_out => pipe(2));
+  my_skinfilter : entity work.skinfilter
+    generic map (
+      ID => 2)
+    port map (
+      pipe_in   => pipe(1),
+      pipe_out  => pipe(2),
+      stall_in  => stall(2),
+      stall_out => stall(1));
 
   ----my_motion : entity work.motion
   ----  generic map (
@@ -1464,43 +1466,17 @@ begin
   ----    pipe_in  => pipe(2),              -- [in]
   ----    pipe_out => pipe(3));             -- [out]
 
-  --my_morph : entity work.morph_set
-  --  generic map (
-  --    ID     => 4,
-  --    KERNEL => 5,
-  --    WIDTH  => 640,
-  --    HEIGHT => 480)
-  --  port map (
-  --    pipe_in  => pipe(2),              -- [in]
-  --    pipe_out => pipe(4));             -- [out]
-
-  my_translate : entity work.translate
-    generic map (
-      ID     => 3,
-      WIDTH  => 640,
-      HEIGHT => 480,
-      CUT    => 0,
-      APPEND => 2)
-    port map (
-      pipe_in  => pipe(1),              -- [in]
-      pipe_out => pipe(3),
-      stall_in  => stall(6),
-      stall_out => stall(5)
-      );             -- [out]
-
-  amy_translate : entity work.translate
+  my_morph : entity work.morph_set
     generic map (
       ID     => 4,
-      WIDTH  => 642,
-      HEIGHT => 482,
-      CUT    => 2,
-      APPEND => 0)
+      KERNEL => 5,
+      WIDTH  => 640,
+      HEIGHT => 480)
     port map (
-      pipe_in  => pipe(3),              -- [in]
-      pipe_out => pipe(7),
-      stall_in  => stall(7),
-      stall_out => stall(6)
-      );             -- [out]
+      pipe_in   => pipe(2),             -- [in]
+      pipe_out  => pipe(3),
+      stall_in  => stall(3),
+      stall_out => stall(2));
 
   --my_hist_x : entity work.hist_x
   --  generic map (
@@ -1524,17 +1500,19 @@ begin
     generic map (
       ID => 26)
     port map (
-      pipe_in  => pipe(6),              -- [in]
-      pipe_out => pipe(7));             -- [inout]
+      pipe_in   => pipe(3),             -- [in]
+      pipe_out  => pipe(4),
+      stall_in  => stall(4),
+      stall_out => stall(3));           -- [inout]
 
   my_mcb_sink : entity work.mcb_sink
     generic map (
       ID => 27)
     port map (
-      pipe_in   => pipe(7),             -- [in]
+      pipe_in   => pipe(4),             -- [in]
       pipe_out  => pipe(8),             -- [out]
       stall_in  => '0',
-      stall_out => stall(7),
+      stall_out => stall(4),
       p0_fifo   => pw_fifo,             -- [inout]
       p1_fifo   => auxw_fifo);          -- [inout]
 

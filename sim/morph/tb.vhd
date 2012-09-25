@@ -2,19 +2,18 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-use std.textio.all;
+use std.textio.read;
+use std.textio.write;
+use std.textio.writeline;
+use std.textio.text;
+use std.textio.line;
+use std.textio.readline;
 use work.txt_util.all;
 
 use work.cam_pkg.all;
+use work.sim_pkg.all;
 
 entity tb is
-  generic (
-    KERNEL : natural range 0 to 5    := 5;
-    WIDTH  : natural range 0 to 2048 := 16;
-    HEIGHT : natural range 0 to 2048 := 16;
-    NUM    : natural range 0 to 4    := 4;
-    SKIP   : natural range 0 to 15   := 1
-    );
 end tb;
 
 architecture impl of tb is
@@ -56,10 +55,10 @@ begin  -- impl
     cfg(i).identify <= '0';
   end generate ena;
 
-  cfg(3+2).p(0)  <= std_logic_vector(to_unsigned(10, 8));
-  cfg(8+2).p(0)  <= std_logic_vector(to_unsigned(10, 8));
-  cfg(13+2).p(0) <= std_logic_vector(to_unsigned(10, 8));
-  cfg(18+2).p(0) <= std_logic_vector(to_unsigned(10, 8));
+  cfg(3+2).p(0)  <= std_logic_vector(to_unsigned(THRESH, 8));
+  cfg(8+2).p(0)  <= std_logic_vector(to_unsigned(THRESH, 8));
+  cfg(13+2).p(0) <= std_logic_vector(to_unsigned(THRESH, 8));
+  cfg(18+2).p(0) <= std_logic_vector(to_unsigned(THRESH, 8));
 
   stall(8) <= '0';
 
@@ -82,10 +81,10 @@ begin  -- impl
       stall_out => stall(0),
       p0_fifo   => p0_rd_fifo);         -- [inout]
 
-  my_morph : entity work.morph
+  my_morph : entity work.morph_set
     generic map (
       ID     => 2,
-      KERNEL => 5,
+      KERNEL => KERNEL,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (
@@ -94,93 +93,6 @@ begin  -- impl
       stall_in  => stall(7),
       stall_out => stall(1)
       );                                -- [out]
-
-  --my_translate : entity work.translate
-  --  generic map (
-  --    ID     => 20,
-  --    WIDTH  => WIDTH,
-  --    HEIGHT => HEIGHT,
-  --    CUT    => 0,
-  --    APPEND => 2)
-  --  port map (
-  --    pipe_in  => pipe(1),              -- [in]
-  --    pipe_out => pipe(2),
-  --    stall_in  => stall(2),
-  --    stall_out => stall(1)
-  --    );             -- [out]
-
-  --amy_translate : entity work.translate
-  --  generic map (
-  --    ID     => 21,
-  --    WIDTH  => WIDTH+2,
-  --    HEIGHT => HEIGHT+2,
-  --    CUT    => 2,
-  --    APPEND => 0)
-  --  port map (
-  --    pipe_in  => pipe(2),              -- [in]
-  --    pipe_out => pipe(7),
-  --    stall_in  => stall(7),
-  --    stall_out => stall(2)
-  --    );             -- [out]
-
-
-  --my_transalate : entity work.translate
-  --  generic map (
-  --    ID     => 26,
-  --    WIDTH  => WIDTH,
-  --    HEIGHT => HEIGHT,
-  --    CUT    => 0,
-  --    APPEND => 2)
-  --  port map (
-  --    pipe_in  => pipe(3),              -- [in]
-  --    pipe_out => pipe(4),
-  --    stall_in  => stall(4),
-  --    stall_out => stall(3)
-  --    );             -- [out]
-
-  --amy_transalate : entity work.translate
-  --  generic map (
-  --    ID     => 27,
-  --    WIDTH  => WIDTH+2,
-  --    HEIGHT => HEIGHT+2,
-  --    CUT    => 2,
-  --    APPEND => 0)
-  --  port map (
-  --    pipe_in  => pipe(4),              -- [in]
-  --    pipe_out => pipe(5),
-  --    stall_in  => stall(5),
-  --    stall_out => stall(4)
-  --    );             -- [out]
-
-
-  --aamy_transalate : entity work.translate
-  --  generic map (
-  --    ID     => 28,
-  --    WIDTH  => WIDTH,
-  --    HEIGHT => HEIGHT,
-  --    CUT    => 0,
-  --    APPEND => 2)
-  --  port map (
-  --    pipe_in  => pipe(5),              -- [in]
-  --    pipe_out => pipe(6),
-  --    stall_in  => stall(6),
-  --    stall_out => stall(5)
-  --    );             -- [out]
-
-  --aaamy_transalate : entity work.translate
-  --  generic map (
-  --    ID     => 29,
-  --    WIDTH  => WIDTH+2,
-  --    HEIGHT => HEIGHT+2,
-  --    CUT    => 2,
-  --    APPEND => 0)
-  --  port map (
-  --    pipe_in  => pipe(6),              -- [in]
-  --    pipe_out => pipe(7),
-  --    stall_in  => stall(7),
-  --    stall_out => stall(6)
-  --    );             -- [out]
-  
   
   my_sim_sink : entity work.sim_sink
     generic map (
@@ -244,6 +156,11 @@ begin  -- impl
     variable l         : line;
   begin
     p0_wr_fifo.stall <= '0';
+
+    write(l, str(WIDTH,10));
+    writeline(f, l);
+    write(l, str(HEIGHT,10));
+    writeline(f, l);    
     for m in SKIP-1 downto 0 loop
       for j in (HEIGHT-1) downto 0 loop
         for i in (WIDTH-1) downto 0 loop

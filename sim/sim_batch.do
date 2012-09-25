@@ -2,7 +2,7 @@ transcript off
 transcript file ""
 
 vsim -novopt -t ps tb
-
+nolog -r /*
 set NumericStdNoWarnings 1
 set StdArithNoWarnings 1
 when -label end_of_simulation {/tb/finish == '1'} {echo "End of simulation" ; stop ; quit -f }

@@ -89,17 +89,17 @@ begin
       if r.cols = (WIDTH-1) then
         v.cols := 0;
 
+        if r.sel < (NUM_LINES-1) then
+          v.sel := r.sel + 1;
+        else
+          v.sel := 0;
+        end if;
+        
         if (r.rows = (HEIGHT-1)) then
           v.rows := 0;
           v.sel  := 0;
         else
           v.rows := r.rows + 1;
-        end if;
-
-        if r.sel < (NUM_LINES-1) then
-          v.sel := r.sel + 1;
-        else
-          v.sel := 0;
         end if;
       else
         v.cols := v.cols + 1;

@@ -9,8 +9,10 @@ entity color_mux is
   generic (
     ID : integer range 0 to 63 := 0);
   port (
-    pipe_in  : inout  pipe_t;
-    pipe_out : inout pipe_t);
+    pipe_in  : in  pipe_t;
+    pipe_out : out pipe_t;
+    stall_in   : in  std_logic;
+    stall_out  : out std_logic);
 end color_mux;
 
 architecture impl of color_mux is
@@ -34,7 +36,7 @@ architecture impl of color_mux is
 begin
   issue <= '0';
 
-  connect_pipe(clk, rst, pipe_in, pipe_out, stage, src_valid, issue, stall);
+  connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);  
 
   process (pipe_in, rst, src_valid)
   begin
@@ -64,7 +66,7 @@ begin
 -------------------------------------------------------------------------------    
   end process;
 
-  proc_clk : process(pipe_in, clk, rst, stall)
+  proc_clk : process(pipe_in, clk, rst, stall, stage_next)
   begin
     if rising_edge(clk) and (stall = '0' or rst = '1') then
       if (pipe_in.cfg(ID).enable = '1') then
