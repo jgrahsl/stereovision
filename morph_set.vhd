@@ -30,10 +30,10 @@ architecture myrtl of morph_set is
 begin  -- myrtl
 
   pipe(0)  <= pipe_in;
-  pipe_out <= pipe(4);
+  pipe_out <= pipe(3);
 
   stall_out <= stall(0);
-  stall(4)  <= stall_in;
+  stall(3)  <= stall_in;
   
   my_morph_1 : entity work.morph
     generic map (
@@ -71,17 +71,17 @@ begin  -- myrtl
       stall_in  => stall(3),
       stall_out => stall(2)
       );                                -- [out]
-  my_morph_4 : entity work.morph
-    generic map (
-      ID     => (ID+15),
-      KERNEL => KERNEL,
-      WIDTH  => WIDTH,
-      HEIGHT => HEIGHT)
-    port map (
-      pipe_in   => pipe(3),             -- [in]
-      pipe_out  => pipe(4),
-      stall_in  => stall(4),
-      stall_out => stall(3)
-      );                                -- [out]
+  --my_morph_4 : entity work.morph
+  --  generic map (
+  --    ID     => (ID+15),
+  --    KERNEL => KERNEL,
+  --    WIDTH  => WIDTH,
+  --    HEIGHT => HEIGHT)
+  --  port map (
+  --    pipe_in   => pipe(3),             -- [in]
+  --    pipe_out  => pipe(4),
+  --    stall_in  => stall(4),
+  --    stall_out => stall(3)
+  --    );                                -- [out]
 
 end myrtl;

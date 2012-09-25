@@ -4,5 +4,5 @@ vsim -novopt -t ps tb
 run 10 ns
 transcript file "transcript"
 transcript file ""
-run 20 us
+run 50 us
 quit -f

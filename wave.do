@@ -93,10 +93,10 @@ add wave -noupdate -format Literal /tb/ce_count
 add wave -noupdate -format Logic /tb/ce
 add wave -noupdate -divider {New Divider}
 add wave -noupdate -format Logic /tb/my_morph/my_morph_1/my_translate/src_valid
-add wave -noupdate -format Literal /tb/my_morph/my_morph_1/my_translate/pipe_in
+add wave -noupdate -format Literal -expand /tb/my_morph/my_morph_1/my_translate/pipe_in
 add wave -noupdate -divider {New Divider}
 add wave -noupdate -format Logic /tb/my_morph/my_morph_2/my_translate/src_valid
-add wave -noupdate -format Literal /tb/my_morph/my_morph_2/my_translate/pipe_in
+add wave -noupdate -format Literal -expand /tb/my_morph/my_morph_2/my_translate/pipe_in
 add wave -noupdate -divider {New Divider}
 add wave -noupdate -format Logic /tb/my_morph/my_morph_3/my_translate/src_valid
 add wave -noupdate -format Literal /tb/my_morph/my_morph_3/my_translate/pipe_in
@@ -106,8 +106,18 @@ add wave -noupdate -format Literal /tb/my_morph/my_morph_4/my_translate/pipe_in
 add wave -noupdate -divider {New Divider}
 add wave -noupdate -format Logic /tb/my_sim_sink/src_valid
 add wave -noupdate -format Literal /tb/my_sim_sink/pipe_in
+add wave -noupdate -format Logic /tb/my_morph/my_morph_1/my_translate/stall
+add wave -noupdate -format Logic /tb/my_morph/my_morph_1/my_filter0_buffer/stall
+add wave -noupdate -format Logic /tb/my_morph/my_morph_1/my_filter0_window/stall
+add wave -noupdate -format Logic /tb/my_morph/my_morph_1/my_translatea/stall
+add wave -noupdate -format Logic /tb/my_morph/my_morph_1/my_filter0_kernel/stall
+add wave -noupdate -format Logic /tb/my_morph/my_morph_2/my_translate/stall
+add wave -noupdate -format Logic /tb/my_morph/my_morph_2/my_filter0_buffer/stall
+add wave -noupdate -format Logic /tb/my_morph/my_morph_2/my_filter0_window/stall
+add wave -noupdate -format Logic /tb/my_morph/my_morph_2/my_translatea/stall
+add wave -noupdate -format Logic /tb/my_morph/my_morph_2/my_filter0_kernel/stall
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {1278610 ps} 0} {{Cursor 2} {23136029 ps} 0} {{Cursor 3} {9429185 ps} 0} {{Cursor 4} {270000 ps} 0}
+WaveRestoreCursors {{Cursor 1} {110688 ps} 0} {{Cursor 2} {23136029 ps} 0} {{Cursor 3} {9429185 ps} 0} {{Cursor 4} {1315000 ps} 0}
 configure wave -namecolwidth 478
 configure wave -valuecolwidth 185
 configure wave -justifyvalue left
@@ -122,5 +132,5 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {0 ps} {725421 ps}
-bookmark add wave initial {{0 ps} {725421 ps}} 114
+WaveRestoreZoom {0 ps} {725424 ps}
+bookmark add wave initial {{0 ps} {725424 ps}} 0

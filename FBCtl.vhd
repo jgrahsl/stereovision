@@ -1520,12 +1520,12 @@ begin
   --    pipe_in  => pipe(5),              -- [in]
   --    pipe_out => pipe(6));             -- [out]
 
-  --my_col_mux : entity work.color_mux
-  --  generic map (
-  --    ID => 26)
-  --  port map (
-  --    pipe_in  => pipe(6),              -- [in]
-  --    pipe_out => pipe(7));             -- [inout]
+  my_col_mux : entity work.color_mux
+    generic map (
+      ID => 26)
+    port map (
+      pipe_in  => pipe(6),              -- [in]
+      pipe_out => pipe(7));             -- [inout]
 
   my_mcb_sink : entity work.mcb_sink
     generic map (

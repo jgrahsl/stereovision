@@ -58,7 +58,7 @@ begin  -- impl
   cfg(13+2).p(0) <= std_logic_vector(to_unsigned(10, 8));
   cfg(18+2).p(0) <= std_logic_vector(to_unsigned(10, 8));
 
-  stall(7) <= '0';
+  stall(8) <= '0';
 
   my_pipe_head : entity work.pipe_head
     generic map (
@@ -79,27 +79,115 @@ begin  -- impl
       stall_out => stall(0),
       p0_fifo   => p0_rd_fifo);         -- [inout]
 
-  my_morph : entity work.morph_set
+  --my_morph : entity work.morph_set
+  --  generic map (
+  --    ID     => 2,
+  --    KERNEL => 5,
+  --    WIDTH  => WIDTH,
+  --    HEIGHT => HEIGHT)
+  --  port map (
+  --    pipe_in   => pipe(1),             -- [in]
+  --    pipe_out  => pipe(2),
+  --    stall_in  => stall(2),
+  --    stall_out => stall(1)
+  --    );                                -- [out]
+
+
+  my_translate : entity work.translate
     generic map (
-      ID     => 2,
-      KERNEL => 5,
+      ID     => 20,
       WIDTH  => WIDTH,
-      HEIGHT => HEIGHT)
+      HEIGHT => HEIGHT,
+      CUT    => 0,
+      APPEND => 2)
     port map (
-      pipe_in   => pipe(1),             -- [in]
-      pipe_out  => pipe(2),
+      pipe_in  => pipe(1),              -- [in]
+      pipe_out => pipe(2),
       stall_in  => stall(2),
       stall_out => stall(1)
-      );                                -- [out]
+      );             -- [out]
 
+  amy_translate : entity work.translate
+    generic map (
+      ID     => 21,
+      WIDTH  => WIDTH+2,
+      HEIGHT => HEIGHT+2,
+      CUT    => 2,
+      APPEND => 0)
+    port map (
+      pipe_in  => pipe(2),              -- [in]
+      pipe_out => pipe(3),
+      stall_in  => stall(3),
+      stall_out => stall(2)
+      );             -- [out]
+
+
+  my_transalate : entity work.translate
+    generic map (
+      ID     => 26,
+      WIDTH  => WIDTH,
+      HEIGHT => HEIGHT,
+      CUT    => 0,
+      APPEND => 2)
+    port map (
+      pipe_in  => pipe(3),              -- [in]
+      pipe_out => pipe(4),
+      stall_in  => stall(4),
+      stall_out => stall(3)
+      );             -- [out]
+
+  amy_transalate : entity work.translate
+    generic map (
+      ID     => 27,
+      WIDTH  => WIDTH+2,
+      HEIGHT => HEIGHT+2,
+      CUT    => 2,
+      APPEND => 0)
+    port map (
+      pipe_in  => pipe(4),              -- [in]
+      pipe_out => pipe(5),
+      stall_in  => stall(5),
+      stall_out => stall(4)
+      );             -- [out]
+
+
+  aamy_transalate : entity work.translate
+    generic map (
+      ID     => 28,
+      WIDTH  => WIDTH,
+      HEIGHT => HEIGHT,
+      CUT    => 0,
+      APPEND => 2)
+    port map (
+      pipe_in  => pipe(5),              -- [in]
+      pipe_out => pipe(6),
+      stall_in  => stall(6),
+      stall_out => stall(5)
+      );             -- [out]
+
+  aaamy_transalate : entity work.translate
+    generic map (
+      ID     => 29,
+      WIDTH  => WIDTH+2,
+      HEIGHT => HEIGHT+2,
+      CUT    => 2,
+      APPEND => 0)
+    port map (
+      pipe_in  => pipe(6),              -- [in]
+      pipe_out => pipe(7),
+      stall_in  => stall(7),
+      stall_out => stall(6)
+      );             -- [out]
+  
+  
   my_sim_sink : entity work.sim_sink
     generic map (
       ID => 22)
     port map (
-      pipe_in   => pipe(2),             -- [in]
-      pipe_out  => pipe(7),
-      stall_in  => stall(7),
-      stall_out => stall(2),
+      pipe_in   => pipe(7),             -- [in]
+      pipe_out  => pipe(8),
+      stall_in  => stall(8),
+      stall_out => stall(7),
       p0_fifo   => p0_wr_fifo);         -- [inout]
 
 -------------------------------------------------------------------------------  
