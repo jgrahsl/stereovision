@@ -2,7 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 entity romdata is
-  generic (ADR_BITS  : integer := 4;
+  generic (ADR_BITS  : integer;
            DATA_BITS : integer);             -- for compatibility
   port (
     clk : in  std_logic;
@@ -24,12 +24,12 @@ begin
   process(areg)
   begin
     case areg is
-      -- GRIDX+GRIDY -- VALUE_BITS*2
-      when "0000" => q <= "0001000000";  -- TODO: comment
-      when "0010" => q <= "0001000000";  -- TODO: comment
-      when "0100" => q <= "0000110000";  -- TODO: comment
-      when "0110" => q <= "0001000000";  -- TODO: comment
-      when others => q <= "0000000000";
+      -- GRIDX+GRIDY -- ABCD_BITS
+      when "0000" => q <= "00000000";  -- TODO: comment
+      when "0010" => q <= "01000000";  -- TODO: comment
+      when "0100" => q <= "00011000";  -- TODO: comment
+      when "0110" => q <= "00010000";  -- TODO: comment
+      when others => q <= "00000000";
     end case;
   end process;
 

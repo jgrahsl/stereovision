@@ -1,3 +1,5 @@
+#!/bin/bash
+
 VHD="txt_util.vhd cam_pkg.vhd null.vhd pipe_head.vhd sim_feed.vhd sim_sink.vhd romdata.vhd rom.vhd bi.vhd"
 
 export PATH=$PATH:/opt/model6.4/linux

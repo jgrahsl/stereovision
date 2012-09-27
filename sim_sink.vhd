@@ -36,7 +36,6 @@ architecture impl of sim_sink is
     v.temp := '1';
   end init;
 
-  signal avail : std_logic;
   signal cnt   : natural range 0 to 10 := 5;
 begin
 

@@ -5,7 +5,7 @@ use ieee.numeric_std.all;
 library work;
 use work.cam_pkg.all;
 
-entity null_filter is
+entity bi is
   generic (
     ID     : integer range 0 to 63   := 0;
     WIDTH  : natural range 0 to 2048 := 2048;
@@ -17,9 +17,9 @@ entity null_filter is
     stall_out : out std_logic;
     abcd      : out abcd_t
     );
-end null_filter;
+end bi;
 
-architecture impl of null_filter is
+architecture impl of bi is
 
   signal clk        : std_logic;
   signal rst        : std_logic;
@@ -46,23 +46,26 @@ architecture impl of null_filter is
   signal x : std_logic_vector(15 downto 0);
   signal y : std_logic_vector(15 downto 0);
 
-  
+
+  constant GRIDX_BITS : natural := 2;
+  constant GRIDY_BITS : natural := 2;
+
+  constant SUBGRID_BITS : natural := 2;
 begin
 
   x <= std_logic_vector(to_unsigned(r.cols, x'length));
   y <= std_logic_vector(to_unsigned(r.rows, y'length));
 
-  my_rom: rom
+  my_rom : entity work.rom
     generic map (
-      GRID  => GRID,
-      PARAM => PARAM)
+      GRIDX_BITS => GRIDX_BITS,
+      GRIDY_BITS => GRIDY_BITS)
     port map (
-      clk => clk,                       -- [in]
-      x   => x(3 downto 2),                         -- [in]
-      y   => y(3 downto 2),                         -- [in]
+      clk  => clk,                                               -- [in]
+      x    => x(SUBGRID_BITS+GRIDX_BITS-1 downto SUBGRID_BITS),  -- [in]
+      y    => y(SUBGRID_BITS+GRIDY_BITS-1 downto SUBGRID_BITS),  -- [in]
       abcd => abcd);
-  
-  
+
   --my_bilinear : entity work.bilinear
   --  generic map (
   --    REF_BITS  => 3,

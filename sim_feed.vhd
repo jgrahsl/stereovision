@@ -37,7 +37,6 @@ architecture impl of sim_feed is
   end init;
 
   signal avail         : std_logic;
-  signal selected_word : std_logic_vector(15 downto 0);
   signal p : pipe_t;
 begin
   issue <= '0';

@@ -8,7 +8,7 @@ package cam_pkg is
   constant MAX_PIPE  : natural := 32;
   constant MAX_PARAM : natural := 6;
 
-  constant PARAM : natural := 5;
+  constant ABCD_BITS : natural := 8;
 
   constant IDENT_MCBFEED : std_logic_vector(7 downto 0) := X"01";
   constant IDENT_SKIN    : std_logic_vector(7 downto 0) := X"02";
@@ -100,14 +100,14 @@ package cam_pkg is
   end record;
 
   type abcd_t is record
-    ax : std_logic_vector(PARAM-1 downto 0);
-    ay : std_logic_vector(PARAM-1 downto 0);
-    bx : std_logic_vector(PARAM-1 downto 0);
-    by : std_logic_vector(PARAM-1 downto 0);
-    cx : std_logic_vector(PARAM-1 downto 0);
-    cy : std_logic_vector(PARAM-1 downto 0);
-    dx : std_logic_vector(PARAM-1 downto 0);
-    dy : std_logic_vector(PARAM-1 downto 0);
+    ax : std_logic_vector((ABCD_BITS/2)-1 downto 0);
+    ay : std_logic_vector((ABCD_BITS/2)-1 downto 0);
+    bx : std_logic_vector((ABCD_BITS/2)-1 downto 0);
+    by : std_logic_vector((ABCD_BITS/2)-1 downto 0);
+    cx : std_logic_vector((ABCD_BITS/2)-1 downto 0);
+    cy : std_logic_vector((ABCD_BITS/2)-1 downto 0);
+    dx : std_logic_vector((ABCD_BITS/2)-1 downto 0);
+    dy : std_logic_vector((ABCD_BITS/2)-1 downto 0);
   end record;
 
   procedure connect_pipe (
