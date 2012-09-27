@@ -17,30 +17,66 @@ end rom;
 
 architecture rtl of rom is
 
-  signal areg : std_logic_vector(10 downto 0);
-  signal data : std_logic_vector(11 downto 0);
-
+  type q_array_t is array (0 to 3) of std_logic_vector(PARAM*2-1 downto 0);
+  signal q : q_array_t;
+  
 begin
 
-  process(clk)
-  begin
-    if rising_edge(clk) then
-      areg <= adr;
-    end if;
-  end process;
+  roms: for i in 0 to 3 generate
+  romdata_1: romdata
+    generic map (
+      ADR  => (GRID*2),
+      DATA => PARAM*2)
+    port map (
+      clk => clk,
+      adr => adr(i),
+      q   => q(i));    
+  end generate roms;
 
-  q <= data;
-
-  process(areg)
-  begin
-    case areg is
-      when "0000" => data <= "000100000000";  -- TODO: comment
-      when "0001" => data <= "000100000000";  -- TODO: comment
-      when "0010" => data <= "000011000000";  -- TODO: comment
-      when "0011" => data <= "000100000000";  -- TODO: comment
-
-      when others => data <= "000000000000";
-    end case;
-  end process;
-
+  adr(0) <= y & x;
+  q00 <= q(0);
+  
+  adr(1) <= y & (UNSIGNED(x) + TO_UNSIGNED(1,GRID-1));
+  q01 <= q(1);
+  
+  adr(2) <= (UNSIGNED(y) + TO_UNSIGNED(1,GRID-1)) & x;
+  q10 <= q(2);
+  
+  adr(3) <= (UNSIGNED(y) + TO_UNSIGNED(1,GRID-1)) & (UNSIGNED(x) + TO_UNSIGNED(1,GRID-1));
+  q11 <= q(3);  
+  
 end rtl;
+
+
+--00
+  
+--00 00
+--00 01
+--00 10
+--00 11
+
+--01
+  
+--01 00
+--01 01
+--01 10
+--01 11
+
+--10
+
+--10 00
+--10 01
+--10 10
+--10 11
+
+--11
+
+--11 00
+--11 01
+--11 10
+--11 11
+
+--100
+
+
+  

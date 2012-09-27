@@ -14,7 +14,8 @@ entity null_filter is
     pipe_in   : in  pipe_t;
     pipe_out  : out pipe_t;
     stall_in  : in  std_logic;
-    stall_out : out std_logic
+    stall_out : out std_logic;
+    abcd      : out abcd_t
     );
 end null_filter;
 
@@ -43,21 +44,21 @@ architecture impl of null_filter is
   end init;
 
   signal x : std_logic_vector(15 downto 0);
-  signal y : std_logic_vector(15 downto 0);  
+  signal y : std_logic_vector(15 downto 0);
 begin
 
-  x <= to_unsigned(r.cols,15);
-  y <= to_unsigned(r.rows,15);
-  
+  x <= to_unsigned(r.cols, 15);
+  y <= to_unsigned(r.rows, 15);
+
   my_bilinear : entity work.bilinear
     generic map (
       REF_BITS  => 3,
       FRAC_BITS => 4)
     port map (
-      a  => "010",                -- [in]
-      b  => "010",                -- [in]
-      c  => "110",                -- [in]
-      d  => "110",                -- [in]
+      a  => "010",                      -- [in]
+      b  => "010",                      -- [in]
+      c  => "110",                      -- [in]
+      d  => "110",                      -- [in]
       rx => x(3 downto 0),              -- [in]
       ry => y(3 downto 0),              -- [in]
       o  => o);                         -- [out]
@@ -73,7 +74,8 @@ begin
     v          := r;
 -------------------------------------------------------------------------------
 -- Logic
--------------------------------------------------------------------------------    
+-------------------------------------------------------------------------------
+
 -------------------------------------------------------------------------------
 -- Output
 -------------------------------------------------------------------------------

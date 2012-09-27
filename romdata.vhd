@@ -27,11 +27,11 @@ begin
   process(areg)
   begin
     case areg is
-      when "00000" => data <= "000100000000";  -- TODO: comment
-      when "00010" => data <= "000100000000";  -- TODO: comment
-      when "00100" => data <= "000011000000";  -- TODO: comment
-      when "00110" => data <= "000100000000";  -- TODO: comment
-      when others  => data <= "000000000000";
+      when "0000" => data <= "0001000000";  -- TODO: comment
+      when "0010" => data <= "0001000000";  -- TODO: comment
+      when "0100" => data <= "0000110000";  -- TODO: comment
+      when "0110" => data <= "0001000000";  -- TODO: comment
+      when others => data <= "0000000000";
     end case;
   end process;
 
