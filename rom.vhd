@@ -36,20 +36,20 @@ begin
   end generate roms;
  
   a(0)    <= y & x;
-  abcd.ax <= q(0)(ABCD_BITS-1 downto (ABCD_BITS/2));
-  abcd.ay <= q(0)((ABCD_BITS/2)-1 downto 0);
+  abcd.ay <= q(0)(ABCD_BITS-1 downto (ABCD_BITS/2));
+  abcd.ax <= q(0)((ABCD_BITS/2)-1 downto 0);
 
   a(1) <= y & (std_logic_vector(unsigned(x) + 1));
-  abcd.bx <= q(1)(ABCD_BITS-1 downto (ABCD_BITS/2));
-  abcd.by <= q(1)((ABCD_BITS/2)-1 downto 0);
+  abcd.by <= q(1)(ABCD_BITS-1 downto (ABCD_BITS/2));
+  abcd.bx <= q(1)((ABCD_BITS/2)-1 downto 0);
 
   a(2) <= std_logic_vector(unsigned(y) + 1) & x;
-  abcd.cx <= q(2)(ABCD_BITS-1 downto (ABCD_BITS/2));
-  abcd.cy <= q(2)((ABCD_BITS/2)-1 downto 0);
+  abcd.cy <= q(2)(ABCD_BITS-1 downto (ABCD_BITS/2));
+  abcd.cx <= q(2)((ABCD_BITS/2)-1 downto 0);
 
   a(3) <= std_logic_vector(unsigned(y) + 1) & std_logic_vector(unsigned(x) + 1);
-  abcd.dx <= q(3)(ABCD_BITS-1 downto (ABCD_BITS/2));
-  abcd.dy <= q(3)((ABCD_BITS/2)-1 downto 0);
+  abcd.dy <= q(3)(ABCD_BITS-1 downto (ABCD_BITS/2));
+  abcd.dx <= q(3)((ABCD_BITS/2)-1 downto 0);  
 
 end rtl;
 
