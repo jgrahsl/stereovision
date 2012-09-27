@@ -30,8 +30,8 @@ architecture impl of null_filter is
   signal stall      : std_logic;
 
   type reg_t is record
-    cols : natural range 0 to WIDTH;
-    rows : natural range 0 to HEIGHT;
+    cols : natural range 0 to WIDTH-1;
+    rows : natural range 0 to HEIGHT-1;
   end record;
 
   signal r      : reg_t;
@@ -45,23 +45,36 @@ architecture impl of null_filter is
 
   signal x : std_logic_vector(15 downto 0);
   signal y : std_logic_vector(15 downto 0);
+
+  
 begin
 
-  x <= to_unsigned(r.cols, 15);
-  y <= to_unsigned(r.rows, 15);
+  x <= std_logic_vector(to_unsigned(r.cols, x'length));
+  y <= std_logic_vector(to_unsigned(r.rows, y'length));
 
-  my_bilinear : entity work.bilinear
+  my_rom: rom
     generic map (
-      REF_BITS  => 3,
-      FRAC_BITS => 4)
+      GRID  => GRID,
+      PARAM => PARAM)
     port map (
-      a  => "010",                      -- [in]
-      b  => "010",                      -- [in]
-      c  => "110",                      -- [in]
-      d  => "110",                      -- [in]
-      rx => x(3 downto 0),              -- [in]
-      ry => y(3 downto 0),              -- [in]
-      o  => o);                         -- [out]
+      clk => clk,                       -- [in]
+      x   => x(3 downto 2),                         -- [in]
+      y   => y(3 downto 2),                         -- [in]
+      abcd => abcd);
+  
+  
+  --my_bilinear : entity work.bilinear
+  --  generic map (
+  --    REF_BITS  => 3,
+  --    FRAC_BITS => 4)
+  --  port map (
+  --    a  => "010",                      -- [in]
+  --    b  => "010",                      -- [in]
+  --    c  => "110",                      -- [in]
+  --    d  => "110",                      -- [in]
+  --    rx => x(3 downto 0),              -- [in]
+  --    ry => y(3 downto 0),              -- [in]
+  --    o  => o);                         -- [out]
 
   issue <= '0';
 

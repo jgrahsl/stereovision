@@ -9,7 +9,7 @@ package cam_pkg is
   constant MAX_PARAM : natural := 6;
 
   constant PARAM : natural := 5;
-  
+
   constant IDENT_MCBFEED : std_logic_vector(7 downto 0) := X"01";
   constant IDENT_SKIN    : std_logic_vector(7 downto 0) := X"02";
   constant IDENT_MOTION  : std_logic_vector(7 downto 0) := X"03";
@@ -98,16 +98,16 @@ package cam_pkg is
     data  : std_logic_vector(15 downto 0);
     count : std_logic_vector(9 downto 0);
   end record;
-  
+
   type abcd_t is record
-    ax : out std_logic_vector(PARAM-1 downto 0);
-    ay : out std_logic_vector(PARAM-1 downto 0);
-    bx : out std_logic_vector(PARAM-1 downto 0);
-    by : out std_logic_vector(PARAM-1 downto 0);
-    cx : out std_logic_vector(PARAM-1 downto 0);
-    cy : out std_logic_vector(PARAM-1 downto 0);
-    dx : out std_logic_vector(PARAM-1 downto 0);
-    dy : out std_logic_vector(PARAM-1 downto 0);
+    ax : std_logic_vector(PARAM-1 downto 0);
+    ay : std_logic_vector(PARAM-1 downto 0);
+    bx : std_logic_vector(PARAM-1 downto 0);
+    by : std_logic_vector(PARAM-1 downto 0);
+    cx : std_logic_vector(PARAM-1 downto 0);
+    cy : std_logic_vector(PARAM-1 downto 0);
+    dx : std_logic_vector(PARAM-1 downto 0);
+    dy : std_logic_vector(PARAM-1 downto 0);
   end record;
 
   procedure connect_pipe (
