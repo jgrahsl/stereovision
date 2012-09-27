@@ -120,6 +120,7 @@ begin
       stage_next <= NULL_STAGE;
       init(v);
     end if;
+    r_next <= v;
   end process;
 
   proc_clk : process(clk, rst, stall, pipe_in, stage_next, r_next)

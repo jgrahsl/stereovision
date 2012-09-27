@@ -37,7 +37,7 @@ add wave -noupdate /tb/dut/pipe_in
 add wave -noupdate /tb/dut/pipe_out
 add wave -noupdate /tb/dut/stall_in
 add wave -noupdate /tb/dut/stall_out
-add wave -noupdate /tb/dut/abcd
+add wave -noupdate -expand /tb/dut/abcd
 add wave -noupdate /tb/dut/clk
 add wave -noupdate /tb/dut/rst
 add wave -noupdate /tb/dut/stage
@@ -49,6 +49,24 @@ add wave -noupdate /tb/dut/r
 add wave -noupdate /tb/dut/r_next
 add wave -noupdate /tb/dut/x
 add wave -noupdate /tb/dut/y
+add wave -noupdate -divider ROM
+add wave -noupdate /tb/dut/my_rom/GRIDX_BITS
+add wave -noupdate /tb/dut/my_rom/GRIDY_BITS
+add wave -noupdate /tb/dut/my_rom/clk
+add wave -noupdate /tb/dut/my_rom/x
+add wave -noupdate /tb/dut/my_rom/y
+add wave -noupdate /tb/dut/my_rom/abcd
+add wave -noupdate /tb/dut/my_rom/q
+add wave -noupdate /tb/dut/my_rom/a
+add wave -noupdate -divider ROMDATA
+add wave -noupdate /tb/dut/my_rom/GRIDX_BITS
+add wave -noupdate /tb/dut/my_rom/GRIDY_BITS
+add wave -noupdate /tb/dut/my_rom/clk
+add wave -noupdate /tb/dut/my_rom/x
+add wave -noupdate /tb/dut/my_rom/y
+add wave -noupdate /tb/dut/my_rom/abcd
+add wave -noupdate /tb/dut/my_rom/q
+add wave -noupdate /tb/dut/my_rom/a
 add wave -noupdate -divider SINK
 add wave -noupdate /tb/my_sim_sink/stall_out
 add wave -noupdate /tb/my_sim_sink/stall_in
@@ -73,8 +91,6 @@ add wave -noupdate -divider {New Divider}
 add wave -noupdate -divider {New Divider}
 add wave -noupdate -divider {New Divider}
 add wave -noupdate -divider {New Divider}
-add wave -noupdate -divider {New Divider}
-add wave -noupdate -divider LineBuffer1
 TreeUpdate [SetDefaultTree]
 WaveRestoreCursors {{Cursor 1} {22145000 ps} 0} {{Cursor 2} {5093448 ps} 0} {{Cursor 3} {0 ps} 0} {{Cursor 4} {0 ps} 0}
 configure wave -namecolwidth 171
@@ -91,5 +107,5 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {0 ps} {13963072 ps}
-bookmark add wave initial {{0 ps} {13963072 ps}} 0
+WaveRestoreZoom {0 ps} {6981536 ps}
+bookmark add wave initial {{0 ps} {6981536 ps}} 56

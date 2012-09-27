@@ -5,6 +5,8 @@ tmp
 \#*
 *~
 
+sim/*/sim.out
+*.stackdump
 expect.tiff
 output.tiff
 last.out
