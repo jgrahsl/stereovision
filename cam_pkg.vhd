@@ -1,5 +1,6 @@
 library ieee;
 use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 
 package cam_pkg is
 
@@ -8,8 +9,17 @@ package cam_pkg is
   constant MAX_PIPE  : natural := 32;
   constant MAX_PARAM : natural := 6;
 
+  -----------------------------------------------------------------------------
+  -- Bilinear
+  -----------------------------------------------------------------------------
   constant ABCD_BITS : natural := 8;
+  constant GRIDX_BITS : natural := 2;
+  constant GRIDY_BITS : natural := 2;
+  constant SUBGRID_BITS : natural := 2;
 
+  -----------------------------------------------------------------------------
+  -- Ident codes
+  -----------------------------------------------------------------------------
   constant IDENT_MCBFEED : std_logic_vector(7 downto 0) := X"01";
   constant IDENT_SKIN    : std_logic_vector(7 downto 0) := X"02";
   constant IDENT_MOTION  : std_logic_vector(7 downto 0) := X"03";
@@ -26,6 +36,9 @@ package cam_pkg is
   constant IDENT_TRANSLATE_WIN : std_logic_vector(7 downto 0) := X"0D";
   constant IDENT_NULL          : std_logic_vector(7 downto 0) := X"0E";
 
+  -----------------------------------------------------------------------------
+  -- Stage types
+  -----------------------------------------------------------------------------
   subtype mono_t is std_logic_vector(0 downto 0);
   subtype rgb565_t is std_logic_vector(15 downto 0);
   subtype rgb888_t is std_logic_vector(23 downto 0);
@@ -100,14 +113,14 @@ package cam_pkg is
   end record;
 
   type abcd_t is record
-    ax : std_logic_vector((ABCD_BITS/2)-1 downto 0);
-    ay : std_logic_vector((ABCD_BITS/2)-1 downto 0);
-    bx : std_logic_vector((ABCD_BITS/2)-1 downto 0);
-    by : std_logic_vector((ABCD_BITS/2)-1 downto 0);
-    cx : std_logic_vector((ABCD_BITS/2)-1 downto 0);
-    cy : std_logic_vector((ABCD_BITS/2)-1 downto 0);
-    dx : std_logic_vector((ABCD_BITS/2)-1 downto 0);
-    dy : std_logic_vector((ABCD_BITS/2)-1 downto 0);
+    ax : signed((ABCD_BITS/2)-1 downto 0);
+    ay : signed((ABCD_BITS/2)-1 downto 0);
+    bx : signed((ABCD_BITS/2)-1 downto 0);
+    by : signed((ABCD_BITS/2)-1 downto 0);
+    cx : signed((ABCD_BITS/2)-1 downto 0);
+    cy : signed((ABCD_BITS/2)-1 downto 0);
+    dx : signed((ABCD_BITS/2)-1 downto 0);
+    dy : signed((ABCD_BITS/2)-1 downto 0);
   end record;
 
   procedure connect_pipe (

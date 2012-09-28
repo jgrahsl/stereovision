@@ -73,14 +73,27 @@ begin  -- impl
       abcd      => abcd
       );                                -- [inout]
 
+  dut2 : entity work.bi2
+    generic map (
+      ID     => 26,
+      WIDTH  => WIDTH,
+      HEIGHT => HEIGHT)
+    port map (
+      pipe_in   => pipe(2),             -- [in]
+      pipe_out  => pipe(3),
+      stall_in  => stall(3),
+      stall_out => stall(2),
+      abcd      => abcd
+      );                                -- [inout]
+  
   my_sim_sink : entity work.sim_sink
     generic map (
       ID => 22)
     port map (
-      pipe_in   => pipe(2),             -- [in]
+      pipe_in   => pipe(3),             -- [in]
       pipe_out  => pipe(8),
       stall_in  => stall(8),
-      stall_out => stall(2),
+      stall_out => stall(3),
       p0_fifo   => p0_wr_fifo);         -- [inout]
 
 -------------------------------------------------------------------------------  

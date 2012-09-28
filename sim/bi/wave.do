@@ -67,6 +67,8 @@ add wave -noupdate /tb/dut/my_rom/y
 add wave -noupdate /tb/dut/my_rom/abcd
 add wave -noupdate /tb/dut/my_rom/q
 add wave -noupdate /tb/dut/my_rom/a
+add wave -noupdate -divider DUT2
+add wave -noupdate /tb/dut2/*
 add wave -noupdate -divider SINK
 add wave -noupdate /tb/my_sim_sink/stall_out
 add wave -noupdate /tb/my_sim_sink/stall_in

@@ -4,11 +4,11 @@ STIM=$1
 SRCDIR="../.."
 SIMBASEDIR=".."
 
-VHD="txt_util.vhd cam_pkg.vhd null.vhd pipe_head.vhd sim_feed.vhd sim_sink.vhd romdata.vhd rom.vhd bi.vhd"
+VHD="txt_util.vhd cam_pkg.vhd null.vhd pipe_head.vhd sim_feed.vhd sim_sink.vhd romdata.vhd rom.vhd bilinear.vhd bi.vhd bi2.vhd"
 TB=tb.vhd
 
 #CLEAN
-rm -f sim.dat sim.out output.tiff 
+rm -f sim.out output.tiff 
 
 #COMPILE
 rm -fR work

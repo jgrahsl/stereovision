@@ -5,7 +5,7 @@ use ieee.numeric_std.all;
 library work;
 use work.cam_pkg.all;
 
-entity null_filter is
+entity bi2 is
   generic (
     ID     : integer range 0 to 63   := 0;
     WIDTH  : natural range 0 to 2048 := 2048;
@@ -14,11 +14,12 @@ entity null_filter is
     pipe_in   : in  pipe_t;
     pipe_out  : out pipe_t;
     stall_in  : in  std_logic;
-    stall_out : out std_logic
+    stall_out : out std_logic;
+    abcd      : in abcd_t
     );
-end null_filter;
+end bi2;
 
-architecture impl of null_filter is
+architecture impl of bi2 is
 
   signal clk        : std_logic;
   signal rst        : std_logic;
@@ -42,11 +43,45 @@ architecture impl of null_filter is
     v.rows := 0;
   end init;
 
+  signal x : unsigned(15 downto 0);
+  signal y : unsigned(15 downto 0);
+  signal ox : signed((ABCD_BITS/2)+SUBGRID_BITS-1 downto 0);
+  signal oy : signed((ABCD_BITS/2)+SUBGRID_BITS-1 downto 0);  
 begin
   issue <= '0';
 
   connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);
 
+  x <= unsigned(to_unsigned(r.cols, x'length));
+  y <= unsigned(to_unsigned(r.rows, y'length));
+  
+  bilinear_1: entity work.bilinear
+    generic map (
+      REF_BITS  => ABCD_BITS/2,
+      FRAC_BITS => SUBGRID_BITS)
+    port map (
+      a  => abcd.ax,
+      b  => abcd.bx,
+      c  => abcd.cx,
+      d  => abcd.dx,
+      rx => x(SUBGRID_BITS-1 downto 0),
+      ry => y(SUBGRID_BITS-1 downto 0),
+      o  => ox);
+
+  bilinear_2: entity work.bilinear
+    generic map (
+      REF_BITS  => ABCD_BITS/2,
+      FRAC_BITS => SUBGRID_BITS)
+    port map (
+      a  => abcd.ay,
+      b  => abcd.by,
+      c  => abcd.cy,
+      d  => abcd.dy,
+      rx => x(SUBGRID_BITS-1 downto 0),
+      ry => y(SUBGRID_BITS-1 downto 0),
+      o  => oy);
+  
+  
   process(pipe_in, r, rst, src_valid)
     variable v : reg_t;
   begin

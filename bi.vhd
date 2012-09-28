@@ -45,12 +45,6 @@ architecture impl of bi is
 
   signal x : std_logic_vector(15 downto 0);
   signal y : std_logic_vector(15 downto 0);
-
-
-  constant GRIDX_BITS : natural := 2;
-  constant GRIDY_BITS : natural := 2;
-
-  constant SUBGRID_BITS : natural := 2;
 begin
 
   x <= std_logic_vector(to_unsigned(r.cols, x'length));
