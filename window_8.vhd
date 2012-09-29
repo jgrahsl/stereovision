@@ -5,7 +5,7 @@ use IEEE.NUMERIC_STD.all;
 library work;
 use work.cam_pkg.all;
 
-entity window is
+entity window_8 is
   generic (
     ID       : integer range 0 to 63   := 0;
     NUM_COLS : natural range 0 to 5    := 5;
@@ -17,12 +17,12 @@ entity window is
     pipe_out    : out pipe_t;
     stall_in    : in  std_logic;
     stall_out   : out std_logic;
-    mono_1d_in  : in  mono_1d_t;
-    mono_2d_out : out mono_2d_t
+    gray8_1d_in  : in  gray8_1d_t;
+    gray8_2d_out : out gray8_2d_t
     );
-end window;
+end window_8;
 
-architecture impl of window is
+architecture impl of window_8 is
 
   signal clk        : std_logic;
   signal rst        : std_logic;
@@ -38,8 +38,8 @@ architecture impl of window is
   end record;
   signal r                   :       reg_t;
   signal rin                 :       reg_t;
-  signal q                   :       mono_2d_t;
-  signal next_q              :       mono_2d_t;
+  signal q                   :       gray8_2d_t;
+  signal next_q              :       gray8_2d_t;
   procedure init (variable v : inout reg_t) is
   begin
     v.cols := 0;
@@ -51,7 +51,7 @@ begin
 
   connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);
 
-  process(pipe_in, stage, r, q, src_valid, rst, mono_1d_in)
+  process(pipe_in, stage, r, q, src_valid, rst, gray8_1d_in)
     variable v : reg_t;
   begin  -- process
     stage_next <= pipe_in.stage;
@@ -73,24 +73,12 @@ begin
         v.cols := v.cols + 1;
       end if;
 
-      next_q(0) <= mono_1d_in;
+      next_q(0) <= gray8_1d_in;
     end if;
 -------------------------------------------------------------------------------
 -- Output
 -------------------------------------------------------------------------------
-    mono_2d_out <= q;
-
---    if pipe_in.stage.data_1 = "1" then
---      stage_next.data_1 <= (others => '1');
-----      stage_next.data_8   <= (others => '1');
-----      stage_next.data_565 <= (others => '1');
-----      stage_next.data_888 <= (others => '1');
---    else
---      stage_next.data_1 <= (others => '0');
-----      stage_next.data_8   <= (others => '0');
-----      stage_next.data_565 <= (others => '0');
-----      stage_next.data_888 <= (others => '0');
---    end if;
+    gray8_2d_out <= q;
 -------------------------------------------------------------------------------
 -- Reset
 -------------------------------------------------------------------------------

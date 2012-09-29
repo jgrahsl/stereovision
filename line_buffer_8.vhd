@@ -5,22 +5,22 @@ use IEEE.NUMERIC_STD.all;
 library work;
 use work.cam_pkg.all;
 
-entity line_buffer is
+entity line_buffer_8 is
   generic (
     ID        : integer range 0 to 63   := 0;
     NUM_LINES : natural range 1 to 5    := 3;
     WIDTH     : natural range 1 to 2048 := 2048;
     HEIGHT    : natural range 1 to 2048 := 2048);
   port (
-    pipe_in     : in  pipe_t;
-    pipe_out    : out pipe_t;
-    stall_in    : in  std_logic;
-    stall_out   : out std_logic;
-    mono_1d_out : out mono_1d_t
+    pipe_in      : in  pipe_t;
+    pipe_out     : out pipe_t;
+    stall_in     : in  std_logic;
+    stall_out    : out std_logic;
+    gray8_1d_out : out gray8_1d_t
     );
-end line_buffer;
+end line_buffer_8;
 
-architecture impl of line_buffer is
+architecture impl of line_buffer_8 is
 
   signal clk        : std_logic;
   signal rst        : std_logic;
@@ -37,7 +37,7 @@ architecture impl of line_buffer is
   end record;
 
   signal adr     : std_logic_vector(10 downto 0);
-  type   q_t is array (0 to (NUM_LINES-1)) of mono_t;
+  type   q_t is array (0 to (NUM_LINES-1)) of gray8_t;
   signal q       : q_t;
   signal qd      : q_t;
   signal qi      : q_t;
@@ -64,11 +64,11 @@ begin
     kernel_rams : entity work.bit_ram
       generic map (
         ADDR_BITS  => 11,
-        WIDTH_BITS => 1)
+        WIDTH_BITS => gray8_t'length)
       port map (
         addra => adr,
         clka  => clk,                   -- [in]
-        dina  => pipe_in.stage.data_1,  -- [in]
+        dina  => pipe_in.stage.data_8,  -- [in]
         wea   => wren(i downto i),      -- [in]
         douta => qi(i));                -- [out]    
   end generate rams;
@@ -94,7 +94,7 @@ begin
         else
           v.sel := 0;
         end if;
-        
+
         if (r.rows = (HEIGHT-1)) then
           v.rows := 0;
           v.sel  := 0;
@@ -108,77 +108,66 @@ begin
 -------------------------------------------------------------------------------
 -- Generate data from pipeline
 -------------------------------------------------------------------------------
-    mono_1d_out <= (others => (others => '0'));
+    gray8_1d_out <= (others => (others => '0'));
 
     case NUM_LINES is
       when 3 =>
         if r_r.rows = 0 then
-          mono_1d_out(1) <= (others => '0');
-          mono_1d_out(2) <= (others => '0');
+          gray8_1d_out(1) <= (others => '0');
+          gray8_1d_out(2) <= (others => '0');
         elsif r_r.rows = 1 then
-          mono_1d_out(1) <= q(0);
-          mono_1d_out(2) <= (others => '0');
+          gray8_1d_out(1) <= q(0);
+          gray8_1d_out(2) <= (others => '0');
         elsif r_r.rows = 2 then
-          mono_1d_out(1) <= q(1);
-          mono_1d_out(2) <= q(0);
+          gray8_1d_out(1) <= q(1);
+          gray8_1d_out(2) <= q(0);
         else
           if r_r.sel = 0 then
-            mono_1d_out(1) <= q(2); mono_1d_out(2) <= q(1);
+            gray8_1d_out(1) <= q(2); gray8_1d_out(2) <= q(1);
           elsif r_r.sel = 1 then
-            mono_1d_out(1) <= q(0); mono_1d_out(2) <= q(2);
+            gray8_1d_out(1) <= q(0); gray8_1d_out(2) <= q(2);
           elsif r_r.sel = 2 then
-            mono_1d_out(1) <= q(1); mono_1d_out(2) <= q(0);
+            gray8_1d_out(1) <= q(1); gray8_1d_out(2) <= q(0);
           end if;
         end if;
       when 5 =>
         if r_r.rows = 0 then
-          mono_1d_out(1) <= (others => '0');
-          mono_1d_out(2) <= (others => '0');
-          mono_1d_out(3) <= (others => '0');
-          mono_1d_out(4) <= (others => '0');
+          gray8_1d_out(1) <= (others => '0');
+          gray8_1d_out(2) <= (others => '0');
+          gray8_1d_out(3) <= (others => '0');
+          gray8_1d_out(4) <= (others => '0');
         elsif r_r.rows = 1 then
-          mono_1d_out(1) <= q(0);
-          mono_1d_out(2) <= (others => '0');
-          mono_1d_out(3) <= (others => '0');
-          mono_1d_out(4) <= (others => '0');
+          gray8_1d_out(1) <= q(0);
+          gray8_1d_out(2) <= (others => '0');
+          gray8_1d_out(3) <= (others => '0');
+          gray8_1d_out(4) <= (others => '0');
         elsif r_r.rows = 2 then
-          mono_1d_out(1) <= q(1);
-          mono_1d_out(2) <= q(0);
-          mono_1d_out(3) <= (others => '0');
-          mono_1d_out(4) <= (others => '0');
+          gray8_1d_out(1) <= q(1);
+          gray8_1d_out(2) <= q(0);
+          gray8_1d_out(3) <= (others => '0');
+          gray8_1d_out(4) <= (others => '0');
         elsif r_r.rows = 3 then
-          mono_1d_out(1) <= q(2);
-          mono_1d_out(2) <= q(1);
-          mono_1d_out(3) <= q(0);
-          mono_1d_out(4) <= (others => '0');
+          gray8_1d_out(1) <= q(2);
+          gray8_1d_out(2) <= q(1);
+          gray8_1d_out(3) <= q(0);
+          gray8_1d_out(4) <= (others => '0');
         else
           if r_r.sel = 0 then
-            mono_1d_out(1) <= q(4); mono_1d_out(2) <= q(3); mono_1d_out(3) <= q(2); mono_1d_out(4) <= q(1);
+            gray8_1d_out(1) <= q(4); gray8_1d_out(2) <= q(3); gray8_1d_out(3) <= q(2); gray8_1d_out(4) <= q(1);
           elsif r_r.sel = 1 then
-            mono_1d_out(1) <= q(0); mono_1d_out(2) <= q(4); mono_1d_out(3) <= q(3); mono_1d_out(4) <= q(2);
+            gray8_1d_out(1) <= q(0); gray8_1d_out(2) <= q(4); gray8_1d_out(3) <= q(3); gray8_1d_out(4) <= q(2);
           elsif r_r.sel = 2 then
-            mono_1d_out(1) <= q(1); mono_1d_out(2) <= q(0); mono_1d_out(3) <= q(4); mono_1d_out(4) <= q(3);
+            gray8_1d_out(1) <= q(1); gray8_1d_out(2) <= q(0); gray8_1d_out(3) <= q(4); gray8_1d_out(4) <= q(3);
           elsif r_r.sel = 3 then
-            mono_1d_out(1) <= q(2); mono_1d_out(2) <= q(1); mono_1d_out(3) <= q(0); mono_1d_out(4) <= q(4);
+            gray8_1d_out(1) <= q(2); gray8_1d_out(2) <= q(1); gray8_1d_out(3) <= q(0); gray8_1d_out(4) <= q(4);
           elsif r_r.sel = 4 then
-            mono_1d_out(1) <= q(3); mono_1d_out(2) <= q(2); mono_1d_out(3) <= q(1); mono_1d_out(4) <= q(0);
+            gray8_1d_out(1) <= q(3); gray8_1d_out(2) <= q(2); gray8_1d_out(3) <= q(1); gray8_1d_out(4) <= q(0);
           end if;
         end if;
       when others => null;
     end case;
 
-    mono_1d_out(0) <= stage.data_1;
---    if pipe_in.stage.data_1 = "1" then
---      stage_next.data_1 <= (others => '1');
-----      stage_next.data_8   <= (others => '1');
-----      stage_next.data_565 <= (others => '1');
-----      stage_next.data_888 <= (others => '1');
---    else
---      stage_next.data_1 <= (others => '0');
-----      stage_next.data_8   <= (others => '0');
-----      stage_next.data_565 <= (others => '0');
-----      stage_next.data_888 <= (others => '0');
---    end if;
+    gray8_1d_out(0) <= stage.data_8;
 
 -------------------------------------------------------------------------------
 -- Reset
@@ -210,7 +199,7 @@ begin
     if rising_edge(clk) then
       if src_valid = '0' and stalled = '0' then
         stalled <= '1';
-        qd      <= q; 
+        qd      <= q;
       elsif src_valid = '1' and stalled = '1' then
         stalled <= '0';
       end if;

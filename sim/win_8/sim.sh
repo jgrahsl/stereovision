@@ -11,12 +11,6 @@ SIMBASEDIR=".."
 ./pre.sh $STIM
 ./compile.sh $STIM
 
-if [ "$2" == "gui" ]; then
-    vsim -do $SIMBASEDIR/sim.do
-else
-    vsim -c -do $SIMBASEDIR/sim_batch.do
-fi
-
-
+vsim -c -do $SIMBASEDIR/sim_batch.do
 
 ./post.sh $STIM

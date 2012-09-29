@@ -1498,7 +1498,8 @@ begin
 
   my_col_mux : entity work.color_mux
     generic map (
-      ID => 26)
+      ID   => 26,
+      MODE => 1)
     port map (
       pipe_in   => pipe(3),             -- [in]
       pipe_out  => pipe(4),

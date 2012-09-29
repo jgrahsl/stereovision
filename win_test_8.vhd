@@ -5,19 +5,21 @@ use IEEE.NUMERIC_STD.all;
 library work;
 use work.cam_pkg.all;
 
-entity win_test is
+entity win_test_8 is
   generic (
     ID     : integer range 0 to 63 := 0;
     KERNEL : natural range 1 to 5  := 5
     );
   port (
-    pipe_in    : in  pipe_t;
-    pipe_out   : out pipe_t;
-    mono_2d_in : in  mono_2d_t
+    pipe_in     : in  pipe_t;
+    pipe_out    : out pipe_t;
+    stall_in    : in  std_logic;
+    stall_out   : out std_logic;
+    gray8_2d_in : in  gray8_2d_t
     );
-end win_test;
+end win_test_8;
 
-architecture impl of win_test is
+architecture impl of win_test_8 is
 
   signal clk        : std_logic;
   signal rst        : std_logic;
@@ -30,10 +32,10 @@ architecture impl of win_test is
 begin
   issue <= '0';
 
-  connect_pipe(clk, rst, pipe_in, pipe_out, stage, src_valid, issue, stall);
+  connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);
 
-  process (pipe_in, src_valid, rst, mono_2d_in)
-    variable sum : natural range 0 to (KERNEL*KERNEL);
+  process (pipe_in, src_valid, rst, gray8_2d_in)
+    variable sum : natural range 0 to (KERNEL*KERNEL*(2**gray8_t'length));
   begin  -- process
     stage_next <= pipe_in.stage;
 -------------------------------------------------------------------------------
@@ -76,21 +78,22 @@ begin
     --              to_integer(unsigned(win(4)(1))) +
     --              to_integer(unsigned(win(4)(2))) +
     --              to_integer(unsigned(win(4)(3)));
-    sum := to_integer(unsigned(mono_2d_in(2)(2)));
+    sum               := to_integer(unsigned(gray8_2d_in(2)(2)));
+    stage_next.data_8 <= std_logic_vector(to_unsigned(sum, 8));
 -------------------------------------------------------------------------------
 -- Output
 -------------------------------------------------------------------------------    
-    if (sum > 0) then
-      stage_next.data_1 <= (others => '1');
+--    if (sum > 0) then
+--      stage_next.data_1 <= (others => '1');
 --      stage_next.data_8   <= (others => '1');
 --      stage_next.data_565 <= (others => '1');
 --      stage_next.data_888 <= (others => '1');
-    else
-      stage_next.data_1 <= (others => '0');
+--  else
+--      stage_next.data_1 <= (others => '0');
 --      stage_next.data_8   <= (others => '0');
 --      stage_next.data_565 <= (others => '0');
 --      stage_next.data_888 <= (others => '0');
-    end if;
+--  end if;
 -------------------------------------------------------------------------------
 -- Reset
 -------------------------------------------------------------------------------
@@ -102,7 +105,8 @@ begin
     end if;
   end process;
 
-  proc_clk : process(clk, stall, stage_next, pipe_in)
+
+  proc_clk : process(clk, rst, stall, pipe_in, stage_next)
   begin
     if rising_edge(clk) and (stall = '0' or rst = '1') then
       if (pipe_in.cfg(ID).enable = '1') then

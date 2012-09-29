@@ -9,7 +9,7 @@ when -label end_of_simulation {/tb/finish == '1'} {echo "Successfully end of sim
 when -label enable_StdWarn {/tb/rst == '0'} { set StdArithNoWarnings 0 ; set NumericStdNoWarning 0 }
 transcript file "transcript"
 
-run 100 us
+run 200 us
 echo "Timeout of simulation" 
 quit -f
 

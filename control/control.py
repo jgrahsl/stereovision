@@ -170,13 +170,13 @@ class Morph(Ui_MorphBox):
                 set_enable(self.pid+i,0)
 
     def th1_c(self,v):
-        set_reg(self.pid+3,0x70,v)
+        set_reg(self.pid+4,0x70,v)
     def th2_c(self,v):
-        set_reg(self.pid+8,0x70,v)
+        set_reg(self.pid+9,0x70,v)
     def th3_c(self,v):
-        set_reg(self.pid+13,0x70,v)
+        set_reg(self.pid+14,0x70,v)
     def th4_c(self,v):
-        set_reg(self.pid+18,0x70,v)
+        set_reg(self.pid+19,0x70,v)
 
 
 class Motion(Ui_MotionBox):
@@ -291,8 +291,8 @@ while True:
         print "Motion at " + str(i)
         t.append(Motion(ui.pipe,i)) 
     if v[0] == 0x04:
-        print "Morph at " + str(i-3)
-        t.append(Morph(ui.pipe,i-3))
+        print "Morph at " + str(i-4)
+        t.append(Morph(ui.pipe,i-4))
         i = i + 16
     if v[0] == 0x05:
         print "HistX at " + str(i)

@@ -11,8 +11,8 @@ entity win_test is
     KERNEL : natural range 1 to 5  := 5
     );
   port (
-    pipe_in    : in  pipe_t;
-    pipe_out   : out pipe_t;
+    pipe_in    : inout  pipe_t;
+    pipe_out   : inout pipe_t;
     mono_2d_in : in  mono_2d_t
     );
 end win_test;
@@ -32,7 +32,7 @@ begin
 
   connect_pipe(clk, rst, pipe_in, pipe_out, stage, src_valid, issue, stall);
 
-  process (pipe_in, src_valid, rst, mono_2d_in)
+  process (pipe_in, src_valid, rst, mono_2d_in)  
     variable sum : natural range 0 to (KERNEL*KERNEL);
   begin  -- process
     stage_next <= pipe_in.stage;
@@ -76,7 +76,7 @@ begin
     --              to_integer(unsigned(win(4)(1))) +
     --              to_integer(unsigned(win(4)(2))) +
     --              to_integer(unsigned(win(4)(3)));
-    sum := to_integer(unsigned(mono_2d_in(2)(2)));
+    sum := to_integer(unsigned(mono_2d_in(4)(4)));
 -------------------------------------------------------------------------------
 -- Output
 -------------------------------------------------------------------------------    

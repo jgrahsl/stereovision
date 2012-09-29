@@ -7,12 +7,14 @@ use work.cam_pkg.all;
 
 entity color_mux is
   generic (
-    ID : integer range 0 to 63 := 0);
+    ID   : integer range 0 to 63 := 0;
+    MODE : natural range 1 to 4  := 1
+    );
   port (
-    pipe_in  : in  pipe_t;
-    pipe_out : out pipe_t;
-    stall_in   : in  std_logic;
-    stall_out  : out std_logic);
+    pipe_in   : in  pipe_t;
+    pipe_out  : out pipe_t;
+    stall_in  : in  std_logic;
+    stall_out : out std_logic);
 end color_mux;
 
 architecture impl of color_mux is
@@ -36,7 +38,7 @@ architecture impl of color_mux is
 begin
   issue <= '0';
 
-  connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);  
+  connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);
 
   process (pipe_in, rst, src_valid)
   begin
@@ -47,11 +49,24 @@ begin
 -------------------------------------------------------------------------------
 -- Output
 -------------------------------------------------------------------------------
-    if pipe_in.stage.data_1 = "1" then
-      stage_next.data_565 <= (others => '1');
-    else
-      stage_next.data_565 <= (others => '0');
+    if MODE = 1 then
+      if pipe_in.stage.data_1 = "1" then
+        stage_next.data_8   <= (others => '1');
+        stage_next.data_565 <= (others => '1');
+        stage_next.data_888 <= (others => '1');
+      else
+        stage_next.data_8   <= (others => '0');
+        stage_next.data_565 <= (others => '0');
+        stage_next.data_888 <= (others => '0');
+      end if;
     end if;
+
+    if MODE = 2 then
+      stage_next.data_1   <= pipe_in.stage.data_8(7 downto 7);
+      stage_next.data_565 <= pipe_in.stage.data_8(7 downto 3) & pipe_in.stage.data_8(7 downto 2) & pipe_in.stage.data_8(7 downto 3);
+      stage_next.data_888 <= pipe_in.stage.data_8 & pipe_in.stage.data_8 & pipe_in.stage.data_8;
+    end if;
+
 -------------------------------------------------------------------------------
 -- Reset
 -------------------------------------------------------------------------------

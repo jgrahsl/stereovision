@@ -20,9 +20,22 @@ def hex2bin(hexno):
       base2 += bin[int(d,base=16)]
    return base2
 
+
+
+
+def rgb888(i):
+   return "{:08b}".format(i) + "{:08b}".format(i) + "{:08b}".format(i)
+
+def rgb565(i):   
+   return "{:05b}".format(i>>3) + "{:06b}".format(i>>2) + "{:05b}".format(i>>3)
+
+def gray8(i):   
+   return "{:08b}".format(i)
+
+def mono(i):   
+   return "{:01b}".format(i>>7)
+
 for i in dat:
 
-    if i == 255:
-        print "0000000000000000000000000000000000000000000000001"
-    else:
-        print "0000000000000000000000000000000000000000000000000"
+     
+   print rgb888(i) + rgb565(i) + gray8(i) + mono(i)

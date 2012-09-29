@@ -27,25 +27,29 @@ vhdl work "pipe_head.vhd"
 vhdl work "mcb_feed.vhd"
 vhdl work "mcb_sink.vhd"
 
+vhdl work "null.vhd"
+vhdl work "color_mux.vhd"
+
 vhdl work "skinfilter.vhd"
+
 vhdl work "window.vhd"
 vhdl work "bit_ram.vhd"
 vhdl work "line_buffer.vhd"
-vhdl work "morph_kernel.vhd"
-vhdl work "morph.vhd"
-vhdl work "morph_set.vhd"
-#vhdl work "win_test.vhd"
 vhdl work "translate.vhd"
 vhdl work "translate_win.vhd"
+vhdl work "win.vhd"
+
+vhdl work "morph_kernel.vhd"
+vhdl work "morph_new.vhd"
+vhdl work "morph_set.vhd"
+
 #vhdl work "hist_x_new.vhd"
 #vhdl work "hist_y_new.vhd"
-#vhdl work "null.vhd"
+
 #vhdl work "motion.vhd"
-vhdl work "color_mux.vhd"
 
 vhdl work "cfg_sync.vhd"
 vhdl work "inspect_sync.vhd"
-
 vhdl work "SysCon.vhd"
 vhdl work "FBCtl.vhd"
 vhdl work "CamCtl.vhd"
