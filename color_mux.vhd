@@ -41,6 +41,7 @@ begin
   connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);
 
   process (pipe_in, rst, src_valid)
+    variable brightness : unsigned(7 downto 0);
   begin
     stage_next <= pipe_in.stage;
 -------------------------------------------------------------------------------
@@ -67,6 +68,17 @@ begin
       stage_next.data_888 <= pipe_in.stage.data_8 & pipe_in.stage.data_8 & pipe_in.stage.data_8;
     end if;
 
+    if MODE = 3 then
+      brightness := ("00" & unsigned(pipe_in.stage.data_565(15 downto 11)) & "0") +
+                    ("00" & unsigned(pipe_in.stage.data_565(10 downto 5))) +
+                    ("00" & unsigned(pipe_in.stage.data_565(4 downto 0)) & "0");
+
+      stage_next.data_1   <= (others => '0');
+      stage_next.data_8   <= std_logic_vector(brightness);
+      stage_next.data_888 <= pipe_in.stage.data_565(15 downto 11) & "000" &
+                             pipe_in.stage.data_565(10 downto 5) & "00" &
+                             pipe_in.stage.data_565(4 downto 0) & "000";
+    end if;
 -------------------------------------------------------------------------------
 -- Reset
 -------------------------------------------------------------------------------

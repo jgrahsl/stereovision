@@ -36,6 +36,7 @@ begin
 
   process (pipe_in, src_valid, rst, gray8_2d_in)
     variable sum : natural range 0 to (KERNEL*KERNEL*(2**gray8_t'length));
+    variable u   : unsigned(23 downto 0);
   begin  -- process
     stage_next <= pipe_in.stage;
 -------------------------------------------------------------------------------
@@ -47,39 +48,42 @@ begin
     ---------------------------------------------------------------------------
     --for i in 0 to (KERNEL-1) loop
     --  for j in 0 to (KERNEL-1) loop
-    --    sum := sum + to_integer(unsigned(win(i)(j)));
+    --    sum := sum + to_integer(unsigned(gray8_2d_in(i)(j)));
     --  end loop;
     --end loop;
     -------------------------------------------------------------------------------
     -- Octagon
     -------------------------------------------------------------------------------
-    --sum        := to_integer(unsigned(win(0)(1))) +
-    --              to_integer(unsigned(win(0)(2))) +
-    --              to_integer(unsigned(win(0)(3))) +
+    sum        := to_integer(unsigned(gray8_2d_in(0)(1))) +
+                  to_integer(unsigned(gray8_2d_in(0)(2))) +
+                  to_integer(unsigned(gray8_2d_in(0)(3))) +
 
-    --              to_integer(unsigned(win(1)(0))) +
-    --              to_integer(unsigned(win(1)(1))) +
-    --              to_integer(unsigned(win(1)(2))) +
-    --              to_integer(unsigned(win(1)(3))) +
-    --              to_integer(unsigned(win(1)(4))) +
+                  to_integer(unsigned(gray8_2d_in(1)(0))) +
+                  to_integer(unsigned(gray8_2d_in(1)(1))) +
+                  to_integer(unsigned(gray8_2d_in(1)(2))) +
+                  to_integer(unsigned(gray8_2d_in(1)(3))) +
+                  to_integer(unsigned(gray8_2d_in(1)(4))) +
 
-    --              to_integer(unsigned(win(2)(0))) +
-    --              to_integer(unsigned(win(2)(1))) +
-    --              to_integer(unsigned(win(2)(2))) +
-    --              to_integer(unsigned(win(2)(3))) +
-    --              to_integer(unsigned(win(2)(4))) +
+                  --to_integer(unsigned(gray8_2d_in(2)(0))) +
+                  --to_integer(unsigned(gray8_2d_in(2)(1))) +
+                  --to_integer(unsigned(gray8_2d_in(2)(3))) +
+                  --to_integer(unsigned(gray8_2d_in(2)(4))) +
 
-    --              to_integer(unsigned(win(3)(0))) +
-    --              to_integer(unsigned(win(3)(1))) +
-    --              to_integer(unsigned(win(3)(2))) +
-    --              to_integer(unsigned(win(3)(3))) +
-    --              to_integer(unsigned(win(3)(4))) +
+                  to_integer(unsigned(gray8_2d_in(3)(0))) +
+                  to_integer(unsigned(gray8_2d_in(3)(1))) +
+                  to_integer(unsigned(gray8_2d_in(3)(2))) +
+                  to_integer(unsigned(gray8_2d_in(3)(3))) +
+                  to_integer(unsigned(gray8_2d_in(3)(4))) +
 
-    --              to_integer(unsigned(win(4)(1))) +
-    --              to_integer(unsigned(win(4)(2))) +
-    --              to_integer(unsigned(win(4)(3)));
-    sum               := to_integer(unsigned(gray8_2d_in(2)(2)));
-    stage_next.data_8 <= std_logic_vector(to_unsigned(sum, 8));
+                  to_integer(unsigned(gray8_2d_in(4)(1))) +
+                  to_integer(unsigned(gray8_2d_in(4)(2))) +
+                  to_integer(unsigned(gray8_2d_in(4)(3)));
+    
+    u := to_unsigned(sum, 24);
+
+    stage_next.data_8 <= std_logic_vector(u(7+4 downto 0+4));
+
+    stage_next.data_8 <= gray8_2d_in(2)(2);
 -------------------------------------------------------------------------------
 -- Output
 -------------------------------------------------------------------------------    
@@ -104,7 +108,6 @@ begin
       stage_next <= NULL_STAGE;
     end if;
   end process;
-
 
   proc_clk : process(clk, rst, stall, pipe_in, stage_next)
   begin

@@ -644,6 +644,8 @@ architecture Behavioral of FBCtl is
   signal reg3 : std_logic_vector(7 downto 0);
 
   signal stall : std_logic_vector(MAX_PIPE-1 downto 0);
+
+  signal gray8_2d : gray8_2d_t;
 begin
 ----------------------------------------------------------------------------------
 -- mcb instantiation
@@ -1450,14 +1452,39 @@ begin
       p0_fifo   => pr_fifo,             -- [inout]
       p1_fifo   => auxr_fifo);          -- [inout]
 
-  my_skinfilter : entity work.skinfilter
+  dut : entity work.win_gray8
     generic map (
-      ID => 2)
+      ID     => 24,
+      WIDTH  => 640,
+      HEIGHT => 480)
     port map (
-      pipe_in   => pipe(1),
-      pipe_out  => pipe(2),
-      stall_in  => stall(2),
-      stall_out => stall(1));
+      pipe_in      => pipe(1),          -- [in]
+      pipe_out     => pipe(2),
+      stall_in     => stall(2),
+      stall_out    => stall(1),
+      gray8_2d_out => gray8_2d
+      );                                -- [inout]
+
+  dut2 : entity work.win_test_8
+    generic map (
+      ID     => 29,
+      KERNEL => 5)
+    port map (
+      pipe_in     => pipe(2),           -- [in]
+      pipe_out    => pipe(3),
+      stall_in    => stall(3),
+      stall_out   => stall(2),
+      gray8_2d_in => gray8_2d
+      );                                -- [inout] 
+  
+  --my_skinfilter : entity work.skinfilter
+  --  generic map (
+  --    ID => 2)
+  --  port map (
+  --    pipe_in   => pipe(1),
+  --    pipe_out  => pipe(2),
+  --    stall_in  => stall(2),
+  --    stall_out => stall(1));
 
   ----my_motion : entity work.motion
   ----  generic map (
@@ -1466,17 +1493,17 @@ begin
   ----    pipe_in  => pipe(2),              -- [in]
   ----    pipe_out => pipe(3));             -- [out]
 
-  my_morph : entity work.morph_set
-    generic map (
-      ID     => 4,
-      KERNEL => 5,
-      WIDTH  => 640,
-      HEIGHT => 480)
-    port map (
-      pipe_in   => pipe(2),             -- [in]
-      pipe_out  => pipe(3),
-      stall_in  => stall(3),
-      stall_out => stall(2));
+  --my_morph : entity work.morph_set
+  --  generic map (
+  --    ID     => 4,
+  --    KERNEL => 5,
+  --    WIDTH  => 640,
+  --    HEIGHT => 480)
+  --  port map (
+  --    pipe_in   => pipe(2),             -- [in]
+  --    pipe_out  => pipe(3),
+  --    stall_in  => stall(3),
+  --    stall_out => stall(2));
 
   --my_hist_x : entity work.hist_x
   --  generic map (
@@ -1498,8 +1525,8 @@ begin
 
   my_col_mux : entity work.color_mux
     generic map (
-      ID   => 26,
-      MODE => 1)
+      ID   => 30,
+      MODE => 2)
     port map (
       pipe_in   => pipe(3),             -- [in]
       pipe_out  => pipe(4),
@@ -1508,7 +1535,7 @@ begin
 
   my_mcb_sink : entity work.mcb_sink
     generic map (
-      ID => 27)
+      ID => 31)
     port map (
       pipe_in   => pipe(4),             -- [in]
       pipe_out  => pipe(8),             -- [out]

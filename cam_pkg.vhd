@@ -20,6 +20,7 @@ package cam_pkg is
   -----------------------------------------------------------------------------
   -- Ident codes
   -----------------------------------------------------------------------------
+
   constant IDENT_MCBFEED : std_logic_vector(7 downto 0) := X"01";
   constant IDENT_SKIN    : std_logic_vector(7 downto 0) := X"02";
   constant IDENT_MOTION  : std_logic_vector(7 downto 0) := X"03";
@@ -29,13 +30,21 @@ package cam_pkg is
   constant IDENT_MCBSINK : std_logic_vector(7 downto 0) := X"07";
   constant IDENT_COLMUX  : std_logic_vector(7 downto 0) := X"08";
 
-  constant IDENT_SIMFEED       : std_logic_vector(7 downto 0) := X"09";
-  constant IDENT_SIMSINK       : std_logic_vector(7 downto 0) := X"0A";
-  constant IDENT_WIN_TEST      : std_logic_vector(7 downto 0) := X"0B";
-  constant IDENT_TRANSLATE     : std_logic_vector(7 downto 0) := X"0C";
-  constant IDENT_TRANSLATE_WIN : std_logic_vector(7 downto 0) := X"0D";
-  constant IDENT_NULL          : std_logic_vector(7 downto 0) := X"0E";
+  constant IDENT_SIMFEED : std_logic_vector(7 downto 0) := X"09";
+  constant IDENT_SIMSINK : std_logic_vector(7 downto 0) := X"0A";
 
+  constant IDENT_TRANSLATE       : std_logic_vector(7 downto 0) := X"10";
+  constant IDENT_TRANSLATE_WIN   : std_logic_vector(7 downto 0) := X"11";
+  constant IDENT_TRANSLATE_WIN_8 : std_logic_vector(7 downto 0) := X"12";
+  constant IDENT_LINEBUFFER      : std_logic_vector(7 downto 0) := X"13";
+  constant IDENT_LINEBUFFER_8    : std_logic_vector(7 downto 0) := X"14";
+  constant IDENT_WINDOW          : std_logic_vector(7 downto 0) := X"15";
+  constant IDENT_WINDOW_8        : std_logic_vector(7 downto 0) := X"16";
+  constant IDENT_WIN_TEST        : std_logic_vector(7 downto 0) := X"17";
+  constant IDENT_WIN_TEST_8      : std_logic_vector(7 downto 0) := X"18";
+
+
+  constant IDENT_NULL    : std_logic_vector(7 downto 0) := X"F0";
   -----------------------------------------------------------------------------
   -- Stage types
   -----------------------------------------------------------------------------

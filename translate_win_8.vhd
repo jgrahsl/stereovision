@@ -5,7 +5,7 @@ use ieee.numeric_std.all;
 library work;
 use work.cam_pkg.all;
 
-entity translate_win is
+entity translate_win_8 is
   generic (
     ID     : integer range 0 to 63   := 0;
     WIDTH  : natural range 1 to 2048 := 2048;
@@ -20,9 +20,9 @@ entity translate_win is
     gray8_2d_in  : in  gray8_2d_t;
     gray8_2d_out : out gray8_2d_t
     );
-end translate_win;
+end translate_win_8;
 
-architecture impl of translate_win is
+architecture impl of translate_win_8 is
 
 -------------------------------------------------------------------------------
 -- Pipe
@@ -127,7 +127,7 @@ begin
 -- Reset
 -------------------------------------------------------------------------------
     if pipe_in.cfg(ID).identify = '1' then
-      stage_next.identity <= IDENT_TRANSLATE_WIN;
+      stage_next.identity <= IDENT_TRANSLATE_WIN_8;
     end if;
     if rst = '1' then
       stage_next <= NULL_STAGE;

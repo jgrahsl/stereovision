@@ -307,9 +307,42 @@ while True:
         print "ColMux at " + str(i)
         t.append(Enable(ui.pipe,i,"ColMux"))
 
-    if v[0] == 0x0C:
+
+    if v[0] == 0x10:
         print "Translate at " + str(i)
         t.append(Enable(ui.pipe,i,"Translate"))
+
+    if v[0] == 0x11:
+        print "Translate Win at " + str(i)
+        t.append(Enable(ui.pipe,i,"Translate Win"))
+
+    if v[0] == 0x12:
+        print "Translate Win 8 at " + str(i)
+        t.append(Enable(ui.pipe,i,"Translate Win 8"))
+
+    if v[0] == 0x13:
+        print "Linebuffer " + str(i)
+        t.append(Enable(ui.pipe,i,"Linebuffer"))
+
+    if v[0] == 0x14:
+        print "Linebuffer 8 " + str(i)
+        t.append(Enable(ui.pipe,i,"Linebuffer 8"))
+
+    if v[0] == 0x15:
+        print "Window " + str(i)
+        t.append(Enable(ui.pipe,i,"Window"))
+
+    if v[0] == 0x16:
+        print "Window 8 " + str(i)
+        t.append(Enable(ui.pipe,i,"Window 8"))
+
+    if v[0] == 0x17:
+        print "Win Test " + str(i)
+        t.append(Enable(ui.pipe,i,"Win Test"))
+
+    if v[0] == 0x18:
+        print "Win Test 8 " + str(i)
+        t.append(Enable(ui.pipe,i,"Win Test 8"))
 
        
     i = i + 1

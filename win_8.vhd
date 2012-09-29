@@ -82,7 +82,7 @@ begin  -- myrtl
       gray8_2d_out => gray8_2d
       );
 
-  my_translatea : entity work.translate_win
+  my_translatea : entity work.translate_win_8
     generic map (
       ID     => (ID+3),
       WIDTH  => WIDTH+2,

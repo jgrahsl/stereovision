@@ -94,6 +94,9 @@ begin
 -------------------------------------------------------------------------------
 -- Reset
 -------------------------------------------------------------------------------
+    if pipe_in.cfg(ID).identify = '1' then
+      stage_next.identity <= IDENT_WINDOW;
+    end if;
     if rst = '1' then
       init(v);
       next_q     <= (others => (others => (others => '0')));

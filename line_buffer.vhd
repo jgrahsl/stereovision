@@ -183,6 +183,9 @@ begin
 -------------------------------------------------------------------------------
 -- Reset
 -------------------------------------------------------------------------------
+    if pipe_in.cfg(ID).identify = '1' then
+      stage_next.identity <= IDENT_LINEBUFFER;
+    end if;
     if rst = '1' then
       init(v);
       stage_next <= NULL_STAGE;

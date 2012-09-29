@@ -13,6 +13,8 @@ entity win_test is
   port (
     pipe_in    : in  pipe_t;
     pipe_out   : out pipe_t;
+    stall_in    : in  std_logic;
+    stall_out   : out std_logic;
     mono_2d_in : in  mono_2d_t
     );
 end win_test;
@@ -30,7 +32,7 @@ architecture impl of win_test is
 begin
   issue <= '0';
 
-  connect_pipe(clk, rst, pipe_in, pipe_out, stage, src_valid, issue, stall);
+  connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);
 
   process (pipe_in, src_valid, rst, mono_2d_in)
     variable sum : natural range 0 to (KERNEL*KERNEL);
@@ -102,7 +104,7 @@ begin
     end if;
   end process;
 
-  proc_clk : process(clk, stall, stage_next, pipe_in)
+  proc_clk : process(clk, rst, stall, pipe_in, stage_next)
   begin
     if rising_edge(clk) and (stall = '0' or rst = '1') then
       if (pipe_in.cfg(ID).enable = '1') then

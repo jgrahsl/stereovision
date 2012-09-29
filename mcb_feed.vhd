@@ -72,7 +72,6 @@ begin
     stage_next.init  <= '0';
     stage_next.aux   <= p1_fifo.data;
 
-
     brightness := ("00" & unsigned(selected_word(15 downto 11)) & "0") +
                   ("00" & unsigned(selected_word(10 downto 5))) +
                   ("00" & unsigned(selected_word(4 downto 0)) & "0");
