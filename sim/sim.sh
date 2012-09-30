@@ -19,3 +19,6 @@ else
 fi
 
 ./post.sh $MODULE $STIM
+
+RETVAL=$?
+exit $RETVAL

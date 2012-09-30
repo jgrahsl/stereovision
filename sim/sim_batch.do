@@ -2,6 +2,7 @@ transcript off
 transcript file ""
 
 vsim -novopt -t ps tb
+
 nolog -r /*
 set NumericStdNoWarnings 1
 set StdArithNoWarnings 1
