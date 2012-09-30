@@ -11,9 +11,14 @@ im = Image.new('RGBA', (width, height), (0, 0, 0, 0))
 
 for y in range(height):
     for x in range(width):
-        c = sys.stdin.read(2)
 
-        c = ord(c[1]) + ord(c[0])*255
+
+        if y == height-1 and x == width-1:
+            c = "  "
+        else:
+            c = sys.stdin.read(2)
+
+        c = ord(c[1])<<8 | ord(c[0])
         im.putpixel((x,y),(((c & 0xf800)>>11) << 3, ((c & 0x07e0)>>5) << 2 , (c & 0x001f)<<3, 255))
 
 #        off = 24+16+8

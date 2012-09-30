@@ -59,14 +59,47 @@ except FLException, ex:
     xsvfFile = "../top.xsvf"
     print "Playing \"%s\" into the JTAG chain on FPGALink device %s..." % (xsvfFile, vp)
     flPlayXSVF(handle, xsvfFile)  # Or other SVF, XSVF or CSVF
-set_reg(0,0,0)
+
+set_reg(31,0x60,1)
+set_reg(31,0x61,1)
+set_reg(31,0x70,1)        
+
+set_reg(0,0x60,1)
+set_reg(0,0x61,1)
+set_reg(0,0x70,1)        
+
+set_reg(1,0x60,0)
+set_reg(1,0x61,1)
+set_reg(1,0x70,1)        
+
+set_reg(30,0x60,1)
+set_reg(30,0x61,1)
+set_reg(30,0x70,0)     
+
+time.sleep(1)
+ba  = flReadChannel(handle, 1000, 0x22, 1)
+print ba
+
+if ba == 0:
+    set_reg(30,0x70,0) 
+    time.sleep(1)
+    ba  = flReadChannel(handle, 1000, 0x22, 1)
+
+count = 0
+f = open("a.out","w")
+while count < 614200:
+    a = flReadChannel(handle,1000, 0x20,ba)
+    f.write(a)
+    count = count + ba
+    ba = flReadChannel(handle, 1000, 0x22, 1)
+
+f.close()
+flClose(handle)
+exit()
 
 ############
 ############
 ############
-
-
-
 
 
 def do_exit():

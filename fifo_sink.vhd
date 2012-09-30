@@ -58,9 +58,9 @@ begin
   p0_fifo.clk               <= clk;
   p0_fifo.data(15 downto 0) <= pipe_in.stage.data_565;
 
-  issue <= (p0_fifo.stall) and pipe_in.cfg(ID).enable and r_next.enable;
+  issue <= (p0_fifo.stall) and pipe_in.cfg(ID).enable and r.enable;
 
-  process (pipe_in, r, rst, src_valid)
+  process (pipe_in, p0_fifo, r, rst, src_valid, issue)
     variable v : reg_t;
   begin
     stage_next <= pipe_in.stage;
