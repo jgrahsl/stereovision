@@ -74,12 +74,12 @@ entity pixel_fifo_top_wrapper is
       BACKUP                         : IN STD_LOGIC;
       BACKUP_MARKER                  : IN STD_LOGIC;
       DIN                            : IN STD_LOGIC_VECTOR(16-1 downto 0);
-      PROG_EMPTY_THRESH              : IN STD_LOGIC_VECTOR(7-1 downto 0);
-      PROG_EMPTY_THRESH_ASSERT       : IN STD_LOGIC_VECTOR(7-1 downto 0);
-      PROG_EMPTY_THRESH_NEGATE       : IN STD_LOGIC_VECTOR(7-1 downto 0);
-      PROG_FULL_THRESH               : IN STD_LOGIC_VECTOR(6-1 downto 0);
-      PROG_FULL_THRESH_ASSERT        : IN STD_LOGIC_VECTOR(6-1 downto 0);
-      PROG_FULL_THRESH_NEGATE        : IN STD_LOGIC_VECTOR(6-1 downto 0);
+      PROG_EMPTY_THRESH              : IN STD_LOGIC_VECTOR(8-1 downto 0);
+      PROG_EMPTY_THRESH_ASSERT       : IN STD_LOGIC_VECTOR(8-1 downto 0);
+      PROG_EMPTY_THRESH_NEGATE       : IN STD_LOGIC_VECTOR(8-1 downto 0);
+      PROG_FULL_THRESH               : IN STD_LOGIC_VECTOR(7-1 downto 0);
+      PROG_FULL_THRESH_ASSERT        : IN STD_LOGIC_VECTOR(7-1 downto 0);
+      PROG_FULL_THRESH_NEGATE        : IN STD_LOGIC_VECTOR(7-1 downto 0);
       RD_CLK                         : IN STD_LOGIC;
       RD_EN                          : IN STD_LOGIC;
       RD_RST                         : IN STD_LOGIC;
@@ -92,7 +92,7 @@ entity pixel_fifo_top_wrapper is
       INJECTSBITERR                  : IN STD_LOGIC;
       ALMOST_EMPTY                   : OUT STD_LOGIC;
       ALMOST_FULL                    : OUT STD_LOGIC;
-      DATA_COUNT                     : OUT STD_LOGIC_VECTOR(6-1 downto 0);
+      DATA_COUNT                     : OUT STD_LOGIC_VECTOR(7-1 downto 0);
       DOUT                           : OUT STD_LOGIC_VECTOR(8-1 downto 0);
       EMPTY                          : OUT STD_LOGIC;
       FULL                           : OUT STD_LOGIC;

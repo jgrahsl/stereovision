@@ -18,7 +18,7 @@ for y in range(height):
         else:
             c = sys.stdin.read(2)
 
-        c = ord(c[1])<<8 | ord(c[0])
+        c = ord(c[0])<<8 | ord(c[1])
         im.putpixel((x,y),(((c & 0xf800)>>11) << 3, ((c & 0x07e0)>>5) << 2 , (c & 0x001f)<<3, 255))
 
 #        off = 24+16+8

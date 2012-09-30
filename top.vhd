@@ -372,15 +372,10 @@ begin
   process(fx2Clk_in)
   begin
     if (rising_edge(fx2Clk_in)) then
-      usb_fifo.en <= '0';
 
       if f2hReady = '1' then
         if chanAddr = "0001111" then
           reg1 <= std_logic_vector(unsigned(reg1) + 1);
-        end if;
-
-        if chanAddr = "0100000" and usb_fifo.stall = '0' then
-          usb_fifo.en <= '1';
         end if;
 
         if chanAddr = "0100010" then
@@ -434,6 +429,10 @@ begin
     end if;
   end process;
 
+  usb_fifo.en <= '1' when chanAddr = "0100000" and usb_fifo.stall = '0' and  f2hReady = '1' else '0';
+
+
+  
   with chanAddr select f2hdata <=
     reg0  when "0000000",
     X"AC" when "0000001",
@@ -459,6 +458,8 @@ begin
     "0000000" & usb_fifo.stall   when "0100001",
 
     X"FF" when others;
+
+  
 
   comm : if FPGALINK = 1 generate
     h2fReady <= '1';

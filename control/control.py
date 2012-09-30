@@ -74,25 +74,28 @@ set_reg(1,0x70,1)
 
 set_reg(30,0x60,1)
 set_reg(30,0x61,1)
-set_reg(30,0x70,0)     
+set_reg(30,0x70,1)     
 
 time.sleep(1)
 ba  = flReadChannel(handle, 1000, 0x22, 1)
 print ba
 
-if ba == 0:
-    set_reg(30,0x70,0) 
-    time.sleep(1)
-    ba  = flReadChannel(handle, 1000, 0x22, 1)
-
 count = 0
 f = open("a.out","w")
-while count < 614200:
+a = flReadChannel(handle,1000, 0x20,640*480*2)
+f.write(a)
+f.close()
+flClose(handle)
+exit()
+
+
+while ba > 0:
     a = flReadChannel(handle,1000, 0x20,ba)
     f.write(a)
     count = count + ba
+    print count
     ba = flReadChannel(handle, 1000, 0x22, 1)
-
+    print ba
 f.close()
 flClose(handle)
 exit()
