@@ -27,6 +27,8 @@ vhdl work "pipe_head.vhd"
 vhdl work "mcb_feed.vhd"
 vhdl work "mcb_sink.vhd"
 
+vhdl work "fifo_sink.vhd"
+
 vhdl work "null.vhd"
 vhdl work "color_mux.vhd"
 

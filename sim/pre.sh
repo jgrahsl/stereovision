@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -e 
+set -o pipefail
+
 MODULE=$1
 STIM=$2
 

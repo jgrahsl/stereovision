@@ -33,6 +33,8 @@ package cam_pkg is
   constant IDENT_SIMFEED : std_logic_vector(7 downto 0) := X"09";
   constant IDENT_SIMSINK : std_logic_vector(7 downto 0) := X"0A";
 
+  constant IDENT_FIFOSINK : std_logic_vector(7 downto 0) := X"0B";  
+
   constant IDENT_TRANSLATE       : std_logic_vector(7 downto 0) := X"10";
   constant IDENT_TRANSLATE_WIN   : std_logic_vector(7 downto 0) := X"11";
   constant IDENT_TRANSLATE_WIN_8 : std_logic_vector(7 downto 0) := X"12";

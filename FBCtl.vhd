@@ -119,7 +119,6 @@ entity FBCtl is
     inspect          : out   inspect_t;
     LED_O            : out   std_logic_vector(7 downto 0);
 
-    out_fifo : inout pixel_fifo_t;
     usb_fifo : inout pixel_fifo_t
     );
 end FBCtl;
@@ -646,6 +645,7 @@ architecture Behavioral of FBCtl is
   signal stall : std_logic_vector(MAX_PIPE-1 downto 0);
 
   signal gray8_2d : gray8_2d_t;
+  signal out_fifo : pixel_fifo_t;
 begin
 ----------------------------------------------------------------------------------
 -- mcb instantiation
@@ -1452,31 +1452,31 @@ begin
       p0_fifo   => pr_fifo,             -- [inout]
       p1_fifo   => auxr_fifo);          -- [inout]
 
-  dut : entity work.win_gray8
-    generic map (
-      ID     => 24,
-      WIDTH  => 640,
-      HEIGHT => 480)
-    port map (
-      pipe_in      => pipe(1),          -- [in]
-      pipe_out     => pipe(2),
-      stall_in     => stall(2),
-      stall_out    => stall(1),
-      gray8_2d_out => gray8_2d
-      );                                -- [inout]
+  --dut : entity work.win_gray8
+  --  generic map (
+  --    ID     => 23,
+  --    WIDTH  => 640,
+  --    HEIGHT => 480)
+  --  port map (
+  --    pipe_in      => pipe(1),          -- [in]
+  --    pipe_out     => pipe(2),
+  --    stall_in     => stall(2),
+  --    stall_out    => stall(1),
+  --    gray8_2d_out => gray8_2d
+  --    );                                -- [inout]
 
-  dut2 : entity work.win_test_8
-    generic map (
-      ID     => 29,
-      KERNEL => 5)
-    port map (
-      pipe_in     => pipe(2),           -- [in]
-      pipe_out    => pipe(3),
-      stall_in    => stall(3),
-      stall_out   => stall(2),
-      gray8_2d_in => gray8_2d
-      );                                -- [inout] 
-  
+  --dut2 : entity work.win_test_8
+  --  generic map (
+  --    ID     => 28,
+  --    KERNEL => 5)
+  --  port map (
+  --    pipe_in     => pipe(2),           -- [in]
+  --    pipe_out    => pipe(3),
+  --    stall_in    => stall(3),
+  --    stall_out   => stall(2),
+  --    gray8_2d_in => gray8_2d
+  --    );                                -- [inout] 
+
   --my_skinfilter : entity work.skinfilter
   --  generic map (
   --    ID => 2)
@@ -1525,42 +1525,55 @@ begin
 
   my_col_mux : entity work.color_mux
     generic map (
-      ID   => 30,
+      ID   => 29,
       MODE => 2)
     port map (
-      pipe_in   => pipe(3),             -- [in]
+      pipe_in   => pipe(1),             -- [in]
       pipe_out  => pipe(4),
       stall_in  => stall(4),
-      stall_out => stall(3));           -- [inout]
+      stall_out => stall(1));           -- [inout]
+
+  my_fifo_sink : entity work.fifo_sink
+    generic map (
+      ID     => 30,
+      WIDTH  => 640,
+      HEIGHT => 480
+      )
+    port map (
+      pipe_in   => pipe(4),             -- [in]
+      pipe_out  => pipe(5),             -- [out]
+      stall_in  => stall(5),
+      stall_out => stall(4),
+      p0_fifo   => out_fifo);           -- [inout]
 
   my_mcb_sink : entity work.mcb_sink
     generic map (
       ID => 31)
     port map (
-      pipe_in   => pipe(4),             -- [in]
+      pipe_in   => pipe(5),             -- [in]
       pipe_out  => pipe(8),             -- [out]
       stall_in  => '0',
-      stall_out => stall(4),
+      stall_out => stall(5),
       p0_fifo   => pw_fifo,             -- [inout]
       p1_fifo   => auxw_fifo);          -- [inout]
 
-
   inspect.identity <= pipe(8).stage.identity;
 
-  --my_pixel_fifo : entity work.pixel_fifo
-  --  port map (
-  --    rst           => rstalg,                     -- [IN]
-  --    wr_clk        => out_fifo.clk,               -- [IN]
-  --    rd_clk        => usb_fifo.clk,               -- [IN]
-  --    din           => out_fifo.data,              -- [IN]
-  --    wr_en         => out_fifo.en,                -- [IN]
-  --    rd_en         => usb_fifo.en,                -- [IN]
-  --    dout          => usb_fifo.data(7 downto 0),  -- [OUT]
-  --    full          => out_fifo.stall,             -- [OUT]
-  --    empty         => usb_fifo.stall,
-  --    rd_data_count => usb_fifo.count);            -- [OUT]
-  usb_fifo.data  <= (others => '0');
-  usb_fifo.count <= (others => '0');
-  usb_fifo.stall <= '0';
+  my_pixel_fifo : entity work.pixel_fifo
+    port map (
+      rst           => rstalg,                       -- [IN]
+      wr_clk        => out_fifo.clk,                 -- [IN]
+      rd_clk        => usb_fifo.clk,                 -- [IN]
+      din           => out_fifo.data,                -- [IN]
+      wr_en         => out_fifo.en,                  -- [IN]
+      rd_en         => usb_fifo.en,                  -- [IN]
+      dout          => usb_fifo.data(7 downto 0),    -- [OUT]
+      full          => out_fifo.stall,               -- [OUT]
+      empty         => usb_fifo.stall,
+      rd_data_count => usb_fifo.count(7 downto 0));  -- [OUT]
+
+  --usb_fifo.data  <= (others => '0');
+  --usb_fifo.count <= (others => '0');
+  --usb_fifo.stall <= '0';
 end Behavioral;
 

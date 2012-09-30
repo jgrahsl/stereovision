@@ -29,8 +29,8 @@ architecture impl of null_filter is
   signal stall      : std_logic;
 
   type reg_t is record
-    cols : natural range 0 to WIDTH;
-    rows : natural range 0 to HEIGHT;
+    cols : natural range 0 to WIDTH-1;
+    rows : natural range 0 to HEIGHT-1;
   end record;
 
   signal r      : reg_t;

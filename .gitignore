@@ -4,7 +4,8 @@ tmp
 *.vho
 \#*
 *~
-
+/*.out
+sim/wave.do
 sim/*/sim.out
 *.stackdump
 expect.tiff

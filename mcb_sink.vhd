@@ -9,12 +9,12 @@ entity mcb_sink is
   generic (
     ID : integer range 0 to 63 := 0);
   port (
-    pipe_in  : inout  pipe_t;
-    pipe_out : inout pipe_t;
-    stall_in : in std_logic;
-    stall_out : out std_logic;
-    p0_fifo : inout mcb_fifo_t;
-    p1_fifo : inout mcb_fifo_t
+    pipe_in   : in    pipe_t;
+    pipe_out  : out   pipe_t;
+    stall_in  : in    std_logic;
+    stall_out : out   std_logic;
+    p0_fifo   : inout mcb_fifo_t;
+    p1_fifo   : inout mcb_fifo_t
     );
 end mcb_sink;
 
@@ -23,11 +23,11 @@ architecture impl of mcb_sink is
   signal clk        : std_logic;
   signal rst        : std_logic;
   signal issue      : std_logic := '0';
-  signal stall      : std_logic;  
+  signal stall      : std_logic;
   signal stage      : stage_t;
   signal stage_next : stage_t;
-  signal src_valid : std_logic;
-  
+  signal src_valid  : std_logic;
+
   type reg_t is record
     sel_is_high : std_logic;
   end record;
@@ -38,17 +38,17 @@ architecture impl of mcb_sink is
     v.sel_is_high := '1';
   end init;
 
-  signal avail         : std_logic;
+  signal avail : std_logic;
 
 begin
 
   connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);
-  
+
   avail <= src_valid and pipe_in.cfg(ID).enable and pipe_in.cfg(ID).p(0)(0) and not p0_fifo.stall and not p1_fifo.stall and not stall;
-  
+
   p0_fifo.en  <= avail and not r.sel_is_high;
   p0_fifo.clk <= clk;
-  
+
   p1_fifo.en  <= avail;
   p1_fifo.clk <= clk;
 
@@ -56,7 +56,7 @@ begin
   p1_fifo.data               <= pipe_in.stage.aux;
 
   issue <= (p0_fifo.stall or p1_fifo.stall) and pipe_in.cfg(ID).enable and pipe_in.cfg(ID).p(0)(0);
-  
+
   process (pipe_in, r, rst, avail)
     variable v : reg_t;
   begin

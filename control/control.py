@@ -308,6 +308,11 @@ while True:
         t.append(Enable(ui.pipe,i,"ColMux"))
 
 
+    if v[0] == 0x0B:
+        print "FifoSink at " + str(i)
+        t.append(Enable(ui.pipe,i,"FifoSink"))
+
+
     if v[0] == 0x10:
         print "Translate at " + str(i)
         t.append(Enable(ui.pipe,i,"Translate"))

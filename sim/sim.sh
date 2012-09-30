@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -e 
+set -o pipefail
+
 export PATH=$PATH:/opt/model6.4/linux
 export LM_LICENSE_FILE=/opt/model6.4/lic.dat
 
@@ -11,7 +14,7 @@ STIM=`echo $1|cut -d'/' -f2`
 
 vmap work $MODULE/work
 
-if [ "$2" == "gui" ]; then
+if [ "$2" == "-gui" ]; then
     cp $MODULE/wave.do .
     vsim -do sim.do
 else
@@ -20,5 +23,4 @@ fi
 
 ./post.sh $MODULE $STIM
 
-RETVAL=$?
-exit $RETVAL
+exit 0
