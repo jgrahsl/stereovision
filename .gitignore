@@ -52,7 +52,6 @@ work
 *.twr
 *.twx
 *.xst
-*.prj
 *.cmd_log
 *.xrpt
 *xdb

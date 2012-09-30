@@ -102,7 +102,7 @@ begin
 -- Reset
 -------------------------------------------------------------------------------
     if pipe_in.cfg(ID).identify = '1' then
-      stage_next.identity <= IDENT_WIN_TEST;
+      stage_next.identity <= IDENT_WIN_TEST_8;
     end if;
     if rst = '1' then
       stage_next <= NULL_STAGE;

@@ -1,12 +1,9 @@
 #!/bin/bash
 
-STIM=$1
-SRCDIR="../.."
-SIMBASEDIR=".."
+MODULE=$1
+STIM=$2
 
 #INPUT DATA
-$SIMBASEDIR/tiff2dat.py $STIM/input.tiff > sim.dat
-
+./tiff2dat.py $MODULE/$STIM/input.tiff > sim.dat
 cat sim.dat sim.dat sim.dat sim.dat sim.dat sim.dat sim.dat sim.dat > sim8.dat
-
 cp sim8.dat sim.dat
