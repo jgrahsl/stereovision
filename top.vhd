@@ -432,6 +432,11 @@ begin
   usb_fifo.en <= '1' when chanAddr = "0100000" and usb_fifo.stall = '0' and  f2hReady = '1' else '0';
 
 
+    f2hValid <= '1' when chanAddr = "0100000" and usb_fifo.stall = '0' and f2hReady = '1' else
+                '0' when chanAddr = "0100000" and usb_fifo.stall = '1'and  f2hReady = '1' else
+                '1' when f2hReady = '1' else
+                '0';
+
   
   with chanAddr select f2hdata <=
     reg0  when "0000000",
@@ -463,9 +468,6 @@ begin
 
   comm : if FPGALINK = 1 generate
     h2fReady <= '1';
-
-    f2hValid <= '0' when chanAddr = "0100000" and usb_fifo.stall = '1' else
-                '1';
 
     fx2Read_out    <= fx2Read;
     fx2OE_out      <= fx2Read;
