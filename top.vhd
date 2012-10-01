@@ -275,7 +275,7 @@ begin
 
       cfg_unsync => cfg,
       inspect    => inspect_unsync,
-      led_o      => led_o,
+      led_o      => led_o_t,
       usb_fifo   => usb_fifo
       );
 
@@ -437,6 +437,7 @@ begin
                 '1' when f2hReady = '1' else
                 '0';
 
+  led_o <= f2hReady & f2hValid & "0000" & h2fReady & h2fvalid;
   
   with chanAddr select f2hdata <=
     reg0  when "0000000",
