@@ -440,8 +440,8 @@ begin
   led_o <= f2hReady & f2hValid & "0000" & h2fReady & h2fvalid;
   
   with chanAddr select f2hdata <=
-    reg0  when "0000000",
-    X"AC" when "0000001",
+   reg0  when "0000000",
+    X"AB" when "0000001",
     reg1  when "0001111",
 
     std_logic_vector(to_unsigned(adr, 8))           when "1100000",
