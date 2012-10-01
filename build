@@ -5,4 +5,4 @@ map -intstyle ise -p xc6slx45-csg324-3 -w -logic_opt off -ol high -t 1 -xt 0 -re
 par -w -intstyle ise -ol high -mt 2 cam_map.ncd cam.ncd cam.pcf && \
 bitgen -intstyle ise -f cam.ut cam.ncd && \
 impact -batch xsvf.batch && \
-flcli --vp=1443:0007 --ivp=1443:0007 -s -x top.xsvf
+_flcli --vp=1443:0007 --ivp=1443:0007 -s -x top.xsvf

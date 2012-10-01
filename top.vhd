@@ -174,13 +174,15 @@ architecture Behavioral of top is
   signal cfg            : cfg_set_t;
   signal inspect_unsync : inspect_t;
   signal inspect        : inspect_t;
-  signal adr            : integer range 0 to 63;
+  signal adr            : integer range 0 to MAX_PIPE-1;
   signal fx2Clk_in      : std_logic;
 
 
 
   signal usb_fifo : pixel_fifo_t;
   signal count    : std_logic_vector(9 downto 0);
+  signal fifosel  : std_logic;
+  signal stallo : std_logic;
 begin
 ----------------------------------------------------------------------------------
 -- System Control Unit
@@ -276,7 +278,8 @@ begin
       cfg_unsync => cfg,
       inspect    => inspect_unsync,
       led_o      => led_o_t,
-      usb_fifo   => usb_fifo
+      usb_fifo   => usb_fifo,
+      stallo => stallo
       );
 
   FbRdEn  <= VtcVde;
@@ -416,7 +419,7 @@ begin
           when "1110011" =>
             cfg(adr).p(3) <= h2fData;
           when "1110100" =>
-             cfg(adr).p(4) <= h2fData;
+            cfg(adr).p(4) <= h2fData;
           when "1110101" =>
             cfg(adr).p(5) <= h2fData;
             --when "1110110" =>
@@ -429,24 +432,27 @@ begin
     end if;
   end process;
 
-  usb_fifo.en <= '1' when chanAddr = "0100000" and usb_fifo.stall = '0' and  f2hReady = '1' else '0';
+  usb_fifo.en <= '1' when chanAddr = "0100000" and usb_fifo.stall = '0' and f2hReady = '1' else '0';
 
 
-    f2hValid <= '1' when chanAddr = "0100000" and usb_fifo.stall = '0' and f2hReady = '1' else
-                '0' when chanAddr = "0100000" and usb_fifo.stall = '1'and  f2hReady = '1' else
-                '1' when f2hReady = '1' else
-                '0';
+  f2hValid <= '1' when fifosel = '1' and usb_fifo.stall = '0' and f2hReady = '1' else
+              '0' when fifosel = '1' and usb_fifo.stall = '1' and f2hReady = '1' else
+              '1' when f2hReady = '1'                                           else
+              '0';
 
-  led_o <= f2hReady & f2hValid & "0000" & h2fReady & h2fvalid;
+  fifosel <= '1' when chanAddr = "0100000" else '0';
+
   
+  led_o <= f2hReady & f2hValid & usb_fifo.stall & fifosel & stallo & h2fReady & h2fvalid & "0" when SW_I(1 downto 0) = "00" else  std_logic_vector(to_unsigned(adr, 8));
+
   with chanAddr select f2hdata <=
-   reg0  when "0000000",
-    X"AB" when "0000001",
+    reg0  when "0000000",
+    X"AC" when "0000001",
     reg1  when "0001111",
 
-    std_logic_vector(to_unsigned(adr, 8))           when "1100000",
+    std_logic_vector(to_unsigned(adr, 8))          when "1100000",
     "000000" & cfg(adr).identify & cfg(adr).enable when "1100001",
-    inspect.identity                                when "1100010",
+    inspect.identity                               when "1100010",
 
 
     cfg(adr).p(0)                when "1110000",

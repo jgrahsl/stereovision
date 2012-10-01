@@ -119,7 +119,9 @@ entity FBCtl is
     inspect          : out   inspect_t;
     LED_O            : out   std_logic_vector(7 downto 0);
 
-    usb_fifo : inout pixel_fifo_t
+    usb_fifo : inout pixel_fifo_t;
+
+    stallo: out std_logic
     );
 end FBCtl;
 
@@ -1441,6 +1443,7 @@ begin
       cfg      => cfg,                  -- [in]
       pipe_out => pipe(0));             -- [out]
 
+stallo <= stall(0);
   my_mcb_feed : entity work.mcb_feed
     generic map (
       ID => 1)
