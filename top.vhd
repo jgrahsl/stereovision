@@ -443,11 +443,11 @@ begin
   fifosel <= '1' when chanAddr = "0100000" else '0';
 
   
-  led_o <= f2hReady & f2hValid & usb_fifo.stall & fifosel & stallo & h2fReady & h2fvalid & "0" when SW_I(1 downto 0) = "00" else  std_logic_vector(to_unsigned(adr, 8));
+  led_o <= f2hReady & f2hValid & usb_fifo.stall & fifosel & stallo & h2fReady & h2fvalid & "1" when SW_I(1 downto 0) = "00" else  std_logic_vector(to_unsigned(adr, 8));
 
   with chanAddr select f2hdata <=
     reg0  when "0000000",
-    X"AC" when "0000001",
+    X"AB" when "0000001",
     reg1  when "0001111",
 
     std_logic_vector(to_unsigned(adr, 8))          when "1100000",
