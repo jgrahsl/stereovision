@@ -7,14 +7,20 @@ NET "Inst_SysCon/ASYNC_RST" TIG;
 #Created by Constraints Editor (xc6slx45-csg324-2) - 2011/03/22
 #NET "CAMA_PCLK_I" TNM_NET = "CAMA_PCLK_I";
 #TIMESPEC TS_CAMA_PCLK_I = PERIOD "CAMA_PCLK_I" 80 MHz HIGH 50 %;
-NET "CAMB_PCLK_I" TNM_NET = "CAMB_PCLK_I";
+NET "CAMBPCLK" TNM_NET = "CAMB_PCLK_I";
 TIMESPEC TS_CAMB_PCLK_I = PERIOD "CAMB_PCLK_I" 80 MHz HIGH 50 %;
 
 #Created by Constraints Editor (xc6slx45-csg324-2) - 2011/03/29
 #OFFSET = IN 1.25 ns VALID 7.5 ns BEFORE "CAMA_PCLK_I" RISING;
 OFFSET = IN 1.25 ns VALID 7.5 ns BEFORE "CAMB_PCLK_I" RISING;
 #Created by Constraints Editor (xc6slx45-csg324-3) - 2012/07/23
-
 INST "Inst_FBCtl/inst_localrstc/RstQ_*" TNM = RSTQ_SOURCE;
 INST "Inst_FBCtl/inst_localrstalg/RstQ_*" TNM = RESET_SINK;
 TIMESPEC TS_RESET = FROM "RSTQ_SOURCE" TO "RESET_SINK" TIG;
+#Created by Constraints Editor (xc6slx45-csg324-3) - 2012/10/01
+NET "fx2Clk_int" TNM_NET = fx2Clk_int;
+TIMESPEC TS_fx2Clk_int = PERIOD "fx2Clk_int" 20 ns HIGH 50%;
+#Created by Constraints Editor (xc6slx45-csg324-3) - 2012/10/01
+INST "fx2Read_out" TNM = fx2out;
+INST "fx2Write_out" TNM = fx2out;
+TIMEGRP "fx2out" OFFSET = OUT 5 ns AFTER "fx2Clk_int";
