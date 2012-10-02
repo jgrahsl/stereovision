@@ -1,4 +1,3 @@
----------------------------------------------------------------------------------
 -- Company: Digilent Ro
 -- Engineer: Elod Gyorgy
 -- 
@@ -605,34 +604,32 @@ architecture Behavioral of FBCtl is
   signal auxw_full  : std_logic;
   signal auxw_count : std_logic_vector(10 downto 0) := (others => '0');
   
-  type my_read_state_t is (
-    my_read_reset,
-    my_read_wait,
-    my_read_p,
-    my_read_p_inc,
-    my_read_transfer_p,
-    my_read_transfer_p_1,
-    my_read_aux,
-    my_read_aux_inc,
-    my_read_transfer_aux,
-    my_read_transfer_aux_1);
+  type move_state_t is (
+    move_reset,
+    move_wait,
 
-  type my_write_state_t is (
-    my_write_reset,
-    my_write_wait,
-    my_write_p,
-    my_write_transfer_p,
-    my_write_transfer_p_1,
-    my_write_aux,
-    my_write_transfer_aux,
-    my_write_transfer_aux_1,
-    my_write_inc);
+    move_r_p,
+    move_r_p_inc,
+    move_r_transfer_p,
+    move_r_transfer_p_1,
+    
+    move_r_aux,
+    move_r_aux_inc,
+    move_r_transfer_aux,
+    move_r_transfer_aux_1,
 
-  signal my_read_state  : my_read_state_t;
-  signal my_write_state : my_write_state_t;
+    move_w_p,
+    move_w_transfer_p,
+    move_w_transfer_p_1,
+    move_w_p_inc,
+    
+    move_w_aux,
+    move_w_transfer_aux,
+    move_w_transfer_aux_1,
+    move_w_aux_inc);
 
-  signal my_read_nstate  : my_read_state_t;
-  signal my_write_nstate : my_write_state_t;
+  signal move_state  : move_state_t;
+  signal move_nstate  : move_state_t;
 
   signal my_pixel_rd_addr : natural range 0 to 2**22-1 := 0;
   signal my_aux_rd_addr   : natural range 0 to 2**22-1 := 0;
@@ -1049,24 +1046,17 @@ begin
   begin  -- process
     if clkalg'event and clkalg = '1' then  -- rising clock edge
       if rstalg = '1' then                 -- synchronous reset (active high)
-        my_read_state    <= my_read_reset;
-        my_write_state   <= my_write_reset;
+        move_state    <= move_reset;
+
         my_pixel_rd_addr <= 0;
         my_pixel_wr_addr <= 2**20;
         my_aux_rd_addr   <= 2**21;
         my_aux_wr_addr   <= 2**21;
-        reg0             <= (others => '0');
-        reg1             <= (others => '0');
-        reg2             <= (others => '0');
-        reg3             <= (others => '0');
       else
-        reg0 <= (others => '0');
-        reg1 <= (others => '0');
-
 -------------------------------------------------------------------------------
 -- Memory 
 -------------------------------------------------------------------------------
-        if my_read_state = my_read_p_inc then
+        if move_state = move_r_p_inc then
           if (my_pixel_rd_addr = 640*2*480-16*4) then
             my_pixel_rd_addr <= 0;
           else
@@ -1074,7 +1064,7 @@ begin
           end if;
         end if;
 
-        if my_read_state = my_read_aux_inc then
+        if move_state = move_r_aux_inc then
           if (my_aux_rd_addr = 640*2*480-32*4+2**21) then
             my_aux_rd_addr   <= 2**21;
           else
@@ -1082,19 +1072,23 @@ begin
           end if;
         end if;
         
-        if my_write_state = my_write_inc then
+        if move_state = move_w_p_inc then
           if (my_pixel_wr_addr = ((2**20)+640*2*480-16*4)) then
             my_pixel_wr_addr <= 2**20;
-            my_aux_wr_addr   <= 2**21;
           else
             my_pixel_wr_addr <= my_pixel_wr_addr + 16*4;
-            my_aux_wr_addr   <= my_aux_wr_addr + 32*4;
           end if;
-          reg3 <= reg3 + std_logic_vector(to_unsigned(1, 8));
         end if;
 
-        my_read_state  <= my_read_nstate;
-        my_write_state <= my_write_nstate;
+        if move_state = move_r_p_inc then
+          if (my_aux_wr_addr = ((2**21)+640*2*480-32*4)) then
+            my_aux_wr_addr   <= 2**21;
+          else
+            my_aux_wr_addr   <= my_aux_wr_addr + 32*4;
+          end if;
+        end if;
+        
+        move_state  <= move_nstate;
       end if;
     end if;
   end process;
@@ -1173,92 +1167,6 @@ begin
   auxr_fifo.stall <= auxr_empty;
   auxr_fifo.data  <= auxr_out;
 
-  -- p/aux_fifo to real mcb
-  pr_in   <= p0_rd_data;
-  auxr_in <= p0_rd_data;
-
-  p0_rd_clk <= clkalg;
-  p0_wr_clk <= clkalg;
-
-  process (my_read_state)
-  begin  -- process
-    my_read_nstate <= my_read_state;
-
-    p0_cmd_clk       <= clkalg;
-    p0_cmd_en        <= '0';
-    p0_cmd_instr     <= (others => '0');
-    p0_cmd_bl        <= (others => '0');
-    p0_cmd_byte_addr <= (others => '0');
-    p0_wr_mask       <= "0000";
-
-    p0_rd_en <= '0';
-    pr_wr    <= '0';
-    auxr_wr  <= '0';
-
-    case my_read_state is
-
-      when my_read_reset =>
-        my_read_nstate <= my_read_wait;
-
-        
-      when my_read_wait =>
-        if pr_count <= std_logic_vector(to_unsigned((64-16), 7)) then
-          my_read_nstate <= my_read_p;
-        end if;
-        if          auxr_count <= std_logic_vector(to_unsigned((128-32), 8)) then
-          my_read_nstate <= my_read_aux;
-        end if;
-          
-        
-      when my_read_p =>
-        if p0_cmd_empty = '1' then
-          p0_cmd_en        <= '1';
-          p0_cmd_instr     <= MCB_CMD_RD;
-          p0_cmd_bl        <= conv_std_logic_vector(15, 6);
-          p0_cmd_byte_addr <= conv_std_logic_vector(my_pixel_rd_addr, 30);
-          my_read_nstate   <= my_read_transfer_p;
-        end if;        
-      when my_read_transfer_p =>
-        if p0_rd_count >= std_logic_vector(to_unsigned(16, 6)) then
-          my_read_nstate <= my_read_transfer_p_1;
-        end if;
-      when my_read_transfer_p_1 =>
-        if p0_rd_empty = '0' then
-          p0_rd_en <= '1';
-          pr_wr    <= '1';
-        else
-          my_read_nstate <= my_read_p_inc;
-        end if;
-      when my_read_p_inc =>
-        my_read_nstate <= my_read_wait;      
-
-        
-      when my_read_aux =>
-        if p0_cmd_empty = '1' then
-          p0_cmd_en        <= '1';
-          p0_cmd_instr     <= MCB_CMD_RD;
-          p0_cmd_bl        <= conv_std_logic_vector(31, 6);
-          p0_cmd_byte_addr <= conv_std_logic_vector(my_aux_rd_addr, 30);
-          my_read_nstate   <= my_read_transfer_aux;
-        end if;
-      when my_read_transfer_aux =>
-        if p0_rd_count >= std_logic_vector(to_unsigned(32, 6)) then
-          my_read_nstate <= my_read_transfer_aux_1;
-        end if;
-      when my_read_transfer_aux_1 =>
-        if p0_rd_empty = '0' then
-          p0_rd_en <= '1';
-          auxr_wr  <= '1';
-        else
-          my_read_nstate <= my_read_aux_inc;
-        end if;      
-      when my_read_aux_inc =>
-        my_read_nstate <= my_read_wait;
-        
-      when others => null;
-    end case;
-  end process;
-
 -------------------------------------------------------------------------------
 -- WRITE
 -------------------------------------------------------------------------------
@@ -1273,87 +1181,154 @@ begin
   auxw_wr         <= auxw_fifo.en;
   auxw_fifo.stall <= auxw_full;
   auxw_in         <= auxw_fifo.data;
+  
+  -- p/aux_fifo to real mcb
+  pr_in   <= p0_rd_data;
+  auxr_in <= p0_rd_data;
 
-  p1_rd_clk <= clkalg;
-  p1_wr_clk <= clkalg;
+  p0_cmd_clk <= clkalg;  
+  p0_rd_clk <= clkalg;
+  p0_wr_clk <= clkalg;
 
-  process (my_write_state)
+  p1_cmd_clk <= '0';
+  p1_rd_clk <= '0';
+  p1_wr_clk <= '0';
+  
+  process (move_state)
   begin  -- process
-    my_write_nstate <= my_write_state;
+    move_nstate <= move_state;
 
-    p1_cmd_clk       <= clkalg;
-    p1_cmd_en        <= '0';
-    p1_cmd_instr     <= (others => '0');
-    p1_cmd_bl        <= (others => '0');
-    p1_cmd_byte_addr <= (others => '0');
-    p1_wr_mask       <= "0000";
-    p1_wr_data       <= (others => '0');
+    p0_cmd_en        <= '0';
+    p0_cmd_instr     <= (others => '0');
+    p0_cmd_bl        <= (others => '0');
+    p0_cmd_byte_addr <= (others => '0');
+    p0_wr_mask       <= "0000";
 
-    p1_wr_en <= '0';
+    p0_rd_en <= '0';
+    p0_wr_en <= '0';
+    pr_wr    <= '0';
+    auxr_wr  <= '0';
     pw_rd    <= '0';
     auxw_rd  <= '0';
 
-    case my_write_state is
+    p0_wr_data       <= (others => '0');
+   
+    case move_state is
 
-      when my_write_reset =>
+      when move_reset =>
+        move_nstate <= move_wait;
 
-        my_write_nstate <= my_write_wait;
-
-      when my_write_wait =>
-        if pw_count >= std_logic_vector(to_unsigned(16, 7)) and
-          auxw_count >= std_logic_vector(to_unsigned(32, 8)) then
-          my_write_nstate <= my_write_transfer_p;
+        
+      when move_wait =>
+        if pr_count <= std_logic_vector(to_unsigned((64-16), 7)) then
+          move_nstate <= move_r_p;
         end if;
+        if auxr_count <= std_logic_vector(to_unsigned((128-32), 8)) then
+          move_nstate <= move_r_aux;
+        end if;
+        if pw_count >= std_logic_vector(to_unsigned(16, 7)) then
+          move_nstate <= move_w_transfer_p;
+        end if;
+        if auxw_count >= std_logic_vector(to_unsigned(32, 8)) then
+          move_nstate <= move_w_transfer_aux;
+        end if;
+          
+        
+      when move_r_p =>
+        if p0_cmd_empty = '1' then
+          p0_cmd_en        <= '1';
+          p0_cmd_instr     <= MCB_CMD_RD;
+          p0_cmd_bl        <= conv_std_logic_vector(15, 6);
+          p0_cmd_byte_addr <= conv_std_logic_vector(my_pixel_rd_addr, 30);
+          move_nstate   <= move_r_transfer_p;
+        end if;        
+      when move_r_transfer_p =>
+        if p0_rd_count >= std_logic_vector(to_unsigned(16, 6)) then
+          move_nstate <= move_r_transfer_p_1;
+        end if;
+      when move_r_transfer_p_1 =>
+        if p0_rd_empty = '0' then
+          p0_rd_en <= '1';
+          pr_wr    <= '1';
+        else
+          move_nstate <= move_r_p_inc;
+        end if;
+      when move_r_p_inc =>
+        move_nstate <= move_wait;      
 
-      when my_write_transfer_p =>
-        p1_wr_data <= pw_out;
-        if p1_wr_count < std_logic_vector(to_unsigned(16, 6)) then
-          p1_wr_en <= '1';
+        
+      when move_r_aux =>
+        if p0_cmd_empty = '1' then
+          p0_cmd_en        <= '1';
+          p0_cmd_instr     <= MCB_CMD_RD;
+          p0_cmd_bl        <= conv_std_logic_vector(31, 6);
+          p0_cmd_byte_addr <= conv_std_logic_vector(my_aux_rd_addr, 30);
+          move_nstate   <= move_r_transfer_aux;
+        end if;
+      when move_r_transfer_aux =>
+        if p0_rd_count >= std_logic_vector(to_unsigned(32, 6)) then
+          move_nstate <= move_r_transfer_aux_1;
+        end if;
+      when move_r_transfer_aux_1 =>
+        if p0_rd_empty = '0' then
+          p0_rd_en <= '1';
+          auxr_wr  <= '1';
+        else
+          move_nstate <= move_r_aux_inc;
+        end if;      
+      when move_r_aux_inc =>
+        move_nstate <= move_wait;
+
+-------------------------------------------------------------------------------        
+
+      when move_w_transfer_p =>
+        p0_wr_data <= pw_out;
+        if p0_wr_count < std_logic_vector(to_unsigned(16, 6)) then
+          p0_wr_en <= '1';
           pw_rd    <= '1';
         else
-          my_write_nstate <= my_write_p;
+          move_nstate <= move_w_p;
+        end if;        
+      when move_w_p =>
+        if p0_cmd_empty = '1' then
+          p0_cmd_en        <= '1';
+          p0_cmd_instr     <= MCB_CMD_WR;
+          p0_cmd_bl        <= conv_std_logic_vector(15, 6);
+          p0_cmd_byte_addr <= conv_std_logic_vector(my_pixel_wr_addr, 30);
+          move_nstate  <= move_w_transfer_p_1;
         end if;
-        
-      when my_write_p =>
-        if p1_cmd_empty = '1' then
-          p1_cmd_en        <= '1';
-          p1_cmd_instr     <= MCB_CMD_WR;
-          p1_cmd_bl        <= conv_std_logic_vector(15, 6);
-          p1_cmd_byte_addr <= conv_std_logic_vector(my_pixel_wr_addr, 30);
-          my_write_nstate  <= my_write_transfer_p_1;
+      when move_w_transfer_p_1 =>
+        if p0_wr_empty = '1' then
+          move_nstate <= move_w_p_inc;
         end if;
+      when move_w_p_inc =>
+        move_nstate <= move_wait;
 
-      when my_write_transfer_p_1 =>
-        if p1_wr_empty = '1' then
-          my_write_nstate <= my_write_transfer_aux;
-        end if;
-
         
-      when my_write_transfer_aux =>
-        p1_wr_data <= auxw_out;
-        if p1_wr_count < std_logic_vector(to_unsigned(32, 6)) then
-          p1_wr_en <= '1';
+      when move_w_transfer_aux =>
+        p0_wr_data <= auxw_out;
+        if p0_wr_count < std_logic_vector(to_unsigned(32, 6)) then
+          p0_wr_en <= '1';
           auxw_rd  <= '1';
         else
-          my_write_nstate <= my_write_aux;
+          move_nstate <= move_w_aux;
+        end if;        
+      when move_w_aux =>
+        if p0_cmd_empty = '1' then
+          p0_cmd_en        <= '1';
+          p0_cmd_instr     <= MCB_CMD_WR;
+          p0_cmd_bl        <= conv_std_logic_vector(31, 6);
+          p0_cmd_byte_addr <= conv_std_logic_vector(my_aux_wr_addr, 30);
+          move_nstate  <= move_w_transfer_aux_1;
         end if;
-        
-      when my_write_aux =>
-        if p1_cmd_empty = '1' then
-          p1_cmd_en        <= '1';
-          p1_cmd_instr     <= MCB_CMD_WR;
-          p1_cmd_bl        <= conv_std_logic_vector(31, 6);
-          p1_cmd_byte_addr <= conv_std_logic_vector(my_aux_wr_addr, 30);
-          my_write_nstate  <= my_write_transfer_aux_1;
-        end if;
+      when move_w_transfer_aux_1 =>
+        if p0_wr_empty = '1' then
+          move_nstate <= move_w_aux_inc;
+        end if;        
+      when move_w_aux_inc =>
+        move_nstate <= move_wait;
 
-      when my_write_transfer_aux_1 =>
-        if p1_wr_empty = '1' then
-          my_write_nstate <= my_write_inc;
-        end if;
-        
-      when my_write_inc =>
-        my_write_nstate <= my_write_wait;
+
         
       when others => null;
     end case;
