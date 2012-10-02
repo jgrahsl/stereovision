@@ -177,11 +177,9 @@ architecture Behavioral of top is
   signal adr            : integer range 0 to MAX_PIPE-1;
   signal fx2Clk_in      : std_logic;
 
-
-
   signal usb_fifo : pixel_fifo_t;
-  signal count    : std_logic_vector(9 downto 0);
   signal fifosel  : std_logic;
+  signal fifoen  : std_logic;  
   signal stallo : std_logic;
 begin
 ----------------------------------------------------------------------------------
@@ -375,36 +373,13 @@ begin
   process(fx2Clk_in)
   begin
     if (rising_edge(fx2Clk_in)) then
-
-      if f2hReady = '1' then
-        if chanAddr = "0001111" then
-          reg1 <= std_logic_vector(unsigned(reg1) + 1);
-        end if;
-
-        if chanAddr = "0100010" then
-          count <= usb_fifo.count;
-        end if;
-      end if;
-
+      --if f2hReady = '1' then
+      --  if chanAddr = "0001111" then
+      --    reg1 <= std_logic_vector(unsigned(reg1) + 1);
+      --  end if;
+      --end if;
       if h2fvalid = '1' then
         case chanAddr is
-          when "0000000" =>
-            reg0 <= h2fData;
-          when "0000010" =>
-            reg2 <= h2fData;
-          when "0000011" =>
-            reg3 <= h2fData;
--------------------------------------------------------------------------------
--- FIFO
--------------------------------------------------------------------------------
-            --when "0010000" =>
-            --  out_fifo.data(7 downto 0) <= h2fData;
-            --when "0010001" =>
-            --  out_fifo.data(15 downto 8) <= h2fData;
-            --  out_fifo.en                <= '1';
--------------------------------------------------------------------------------
--- 
--------------------------------------------------------------------------------            
           when "1100000" =>
             adr <= to_integer(unsigned(h2fData));
           when "1100001" =>
@@ -432,28 +407,21 @@ begin
     end if;
   end process;
 
-  usb_fifo.en <= '1' when chanAddr = "0100000" and usb_fifo.stall = '0' and f2hReady = '1' else '0';
+  fifosel <= '1' when chanAddr = "0100000" else '0';
+  fifoen <= '1' when fifosel = '1' and usb_fifo.stall = '0' and f2hReady = '1' else '0';
+  usb_fifo.en <= fifoen;
 
-
-  f2hValid <= '1' when fifosel = '1' and usb_fifo.stall = '0' and f2hReady = '1' else
+  f2hValid <= '1' when fifoen = '1' else
               '0' when fifosel = '1' and usb_fifo.stall = '1' and f2hReady = '1' else
               '1' when f2hReady = '1'                                           else
               '0';
-
-  fifosel <= '1' when chanAddr = "0100000" else '0';
-
-  
+ 
   led_o <= f2hReady & f2hValid & usb_fifo.stall & fifosel & stallo & h2fReady & h2fvalid & "1" when SW_I(1 downto 0) = "00" else  std_logic_vector(to_unsigned(adr, 8));
 
   with chanAddr select f2hdata <=
-    reg0  when "0000000",
-    X"A0" when "0000001",
-    reg1  when "0001111",
-
     std_logic_vector(to_unsigned(adr, 8))          when "1100000",
     "000000" & cfg(adr).identify & cfg(adr).enable when "1100001",
     inspect.identity                               when "1100010",
-
 
     cfg(adr).p(0)                when "1110000",
     cfg(adr).p(1)                when "1110001",
@@ -464,14 +432,10 @@ begin
     --cfg(adr).p(6)               when "1110110",
     --cfg(adr).p(7)               when "1110111",
     --
-    usb_fifo.count(7 downto 0)   when "0100010",
-    "000000" & count(9 downto 8) when "0100011",
     usb_fifo.data(7 downto 0)    when "0100000",
-    "0000000" & usb_fifo.stall   when "0100001",
-
+--    "0000000" & usb_fifo.stall   when "0100001",    
+--    usb_fifo.count(7 downto 0)   when "0100010",
     X"FF" when others;
-
-  
 
   comm : if FPGALINK = 1 generate
     h2fReady <= '1';
