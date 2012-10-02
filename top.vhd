@@ -1,40 +1,40 @@
 ----------------------------------------------------------------------------------
--- Company: Digilent Ro
--- Engineer: Elod Gyorgy
+-- company: digilent ro
+-- engineer: elod gyorgy
 -- 
--- Create Date:    12:50:18 04/06/2011 
--- Design Name:      VmodCAM Reference Design 1
--- Module Name:      VmodCAM_Ref - Behavioral
--- Project Name:     
--- Target Devices: 
--- Tool versions: 
--- Description: The design shows off the video feed from two cameras located on
--- a VmodCAM add-on board connected to an Atlys. The video feeds are displayed on
--- a DVI-capable flat panel.
+-- create date:    12:50:18 04/06/2011 
+-- design name:      vmodcam reference design 1
+-- module name:      vmodcam_ref - behavioral
+-- project name:     
+-- target devices: 
+-- tool versions: 
+-- description: the design shows off the video feed from two cameras located on
+-- a vmodcam add-on board connected to an atlys. the video feeds are displayed on
+-- a dvi-capable flat panel.
 --
--- Dependencies: 
+-- dependencies: 
 --
--- Revision: 
--- Revision 0.01 - File Created
--- Additional Comments: 
+-- revision: 
+-- revision 0.01 - file created
+-- additional comments: 
 --
 ----------------------------------------------------------------------------------
-library IEEE;
-use IEEE.STD_LOGIC_1164.all;
+library ieee;
+use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
-use IEEE.std_logic_unsigned.all;
+use ieee.std_logic_unsigned.all;
 
 
 library digilent;
-use digilent.Video.all;
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
+use digilent.video.all;
+-- uncomment the following library declaration if using
+-- arithmetic functions with signed or unsigned values
+--use ieee.numeric_std.all;
 
--- Uncomment the following library declaration if instantiating
--- any Xilinx primitives in this code.
-library UNISIM;
-use UNISIM.VComponents.all;
+-- uncomment the following library declaration if instantiating
+-- any xilinx primitives in this code.
+library unisim;
+use unisim.vcomponents.all;
 
 library work;
 use work.cam_pkg.all;
@@ -42,46 +42,46 @@ use work.cam_pkg.all;
 
 entity top is
   generic (
-    C3_NUM_DQ_PINS        : integer := 16;
-    C3_MEM_ADDR_WIDTH     : integer := 13;
-    C3_MEM_BANKADDR_WIDTH : integer := 3;
-    FPGALINK              : integer := 1
+    c3_num_dq_pins        : integer := 16;
+    c3_mem_addr_width     : integer := 13;
+    c3_mem_bankaddr_width : integer := 3;
+    fpgalink              : integer := 1
 
     );
   port (
-    TMDS_TX_2_P   : out   std_logic;
-    TMDS_TX_2_N   : out   std_logic;
-    TMDS_TX_1_P   : out   std_logic;
-    TMDS_TX_1_N   : out   std_logic;
-    TMDS_TX_0_P   : out   std_logic;
-    TMDS_TX_0_N   : out   std_logic;
-    TMDS_TX_CLK_P : out   std_logic;
-    TMDS_TX_CLK_N : out   std_logic;
-    TMDS_TX_SCL   : inout std_logic;
-    TMDS_TX_SDA   : inout std_logic;
-    SW_I          : in    std_logic_vector(7 downto 0);
-    LED_O         : out   std_logic_vector(7 downto 0);
-    CLK_I         : in    std_logic;
-    RESET_I       : in    std_logic;
+    tmds_tx_2_p   : out   std_logic;
+    tmds_tx_2_n   : out   std_logic;
+    tmds_tx_1_p   : out   std_logic;
+    tmds_tx_1_n   : out   std_logic;
+    tmds_tx_0_p   : out   std_logic;
+    tmds_tx_0_n   : out   std_logic;
+    tmds_tx_clk_p : out   std_logic;
+    tmds_tx_clk_n : out   std_logic;
+    tmds_tx_scl   : inout std_logic;
+    tmds_tx_sda   : inout std_logic;
+    sw_i          : in    std_logic_vector(7 downto 0);
+    led_o         : out   std_logic_vector(7 downto 0);
+    clk_i         : in    std_logic;
+    reset_i       : in    std_logic;
 
-    CAMX_VDDEN_O : out std_logic;  -- common power supply enable (can do power cycle)
+    camx_vdden_o : out std_logic;  -- common power supply enable (can do power cycle)
 
-    CAMB_SDA    : inout std_logic;
-    CAMB_SCL    : inout std_logic;
-    CAMB_D_I    : in    std_logic_vector (7 downto 0);
-    CAMB_PCLK_I : inout std_logic;
-    CAMB_MCLK_O : out   std_logic;
-    CAMB_LV_I   : in    std_logic;
-    CAMB_FV_I   : in    std_logic;
-    CAMB_RST_O  : out   std_logic;      --Reset active LOW
-    CAMB_PWDN_O : out   std_logic;      --Power-down active HIGH           
+    cama_sda    : inout std_logic;
+    cama_scl    : inout std_logic;
+    cama_d_i    : in    std_logic_vector (7 downto 0);
+    cama_pclk_i : inout std_logic;
+    cama_mclk_o : out   std_logic;
+    cama_lv_i   : in    std_logic;
+    cama_fv_i   : in    std_logic;
+    cama_rst_o  : out   std_logic;      --reset active low
+    cama_pwdn_o : out   std_logic;      --power-down active high           
 
 ----------------------------------------------------------------------------------
--- DDR2 Interface
+-- ddr2 interface
 ----------------------------------------------------------------------------------
-    mcb3_dram_dq     : inout std_logic_vector(C3_NUM_DQ_PINS-1 downto 0);
-    mcb3_dram_a      : out   std_logic_vector(C3_MEM_ADDR_WIDTH-1 downto 0);
-    mcb3_dram_ba     : out   std_logic_vector(C3_MEM_BANKADDR_WIDTH-1 downto 0);
+    mcb3_dram_dq     : inout std_logic_vector(c3_num_dq_pins-1 downto 0);
+    mcb3_dram_a      : out   std_logic_vector(c3_mem_addr_width-1 downto 0);
+    mcb3_dram_ba     : out   std_logic_vector(c3_mem_bankaddr_width-1 downto 0);
     mcb3_dram_ras_n  : out   std_logic;
     mcb3_dram_cas_n  : out   std_logic;
     mcb3_dram_we_n   : out   std_logic;
@@ -99,83 +99,83 @@ entity top is
     mcb3_dram_ck_n   : out   std_logic;
 
 -------------------------------------------------------------------------------
--- FPGA Link
+-- fpga link
 -------------------------------------------------------------------------------
-    -- FX2 interface -----------------------------------------------------------------------------
-    fx2Clk_int  : in    std_logic;      -- 48MHz clock from FX2
-    fx2Addr_out : out   std_logic_vector(1 downto 0);  -- select FIFO: "10" for EP6OUT, "11" for EP8IN
-    fx2Data_io  : inout std_logic_vector(7 downto 0);  -- 8-bit data to/from FX2
+    -- fx2 interface -----------------------------------------------------------------------------
+    fx2clk_int  : in    std_logic;      -- 48mhz clock from fx2
+    fx2addr_out : out   std_logic_vector(1 downto 0);  -- select fifo: "10" for ep6out, "11" for ep8in
+    fx2data_io  : inout std_logic_vector(7 downto 0);  -- 8-bit data to/from fx2
 
-    -- When EP6OUT selected:
-    fx2Read_out   : out std_logic;  -- asserted (active-low) when reading from FX2
-    fx2OE_out     : out std_logic;  -- asserted (active-low) to tell FX2 to drive bus
-    fx2GotData_in : in  std_logic;  -- asserted (active-high) when FX2 has data for us
+    -- when ep6out selected:
+    fx2read_out   : out std_logic;  -- asserted (active-low) when reading from fx2
+    fx2oe_out     : out std_logic;  -- asserted (active-low) to tell fx2 to drive bus
+    fx2gotdata_in : in  std_logic;  -- asserted (active-high) when fx2 has data for us
 
-    -- When EP8IN selected:
-    fx2Write_out  : out std_logic;  -- asserted (active-low) when writing to FX2
-    fx2GotRoom_in : in  std_logic;  -- asserted (active-high) when FX2 has room for more data from us
-    fx2PktEnd_out : out std_logic  -- asserted (active-low) when a host read needs to be committed early
+    -- when ep8in selected:
+    fx2write_out  : out std_logic;  -- asserted (active-low) when writing to fx2
+    fx2gotroom_in : in  std_logic;  -- asserted (active-high) when fx2 has room for more data from us
+    fx2pktend_out : out std_logic  -- asserted (active-low) when a host read needs to be committed early
 
     );
 end top;
 
-architecture Behavioral of top is
-  signal SysClk, PClk, PClkX2, SysRst, SerClk, SerStb : std_logic;
-  signal MSel                                         : std_logic_vector(1 downto 0);
+architecture behavioral of top is
+  signal sysclk, pclk, pclkx2, sysrst, serclk, serstb : std_logic;
+  signal msel                                         : std_logic_vector(1 downto 0);
 
-  signal VtcHs, VtcVs, VtcVde, VtcRst : std_logic;
-  signal VtcHCnt, VtcVCnt             : natural;
+  signal vtchs, vtcvs, vtcvde, vtcrst : std_logic;
+  signal vtchcnt, vtcvcnt             : natural;
 
-  signal CamClk, CamClk_180, CamBPClk, CamBDV, CamBVddEn : std_logic;
-  signal CamBD                                           : std_logic_vector(15 downto 0);
-  signal dummy_t, int_CAMB_PCLK_I                        : std_logic;
+  signal camclk, camclk_180, camapclk, camadv, camavdden : std_logic;
+  signal camad                                           : std_logic_vector(15 downto 0);
+  signal dummy_t, int_cama_pclk_i                        : std_logic;
 
-  attribute S                : string;
-  attribute S of CAMB_PCLK_I : signal is "TRUE";
-  attribute S of dummy_t     : signal is "TRUE";
+  attribute s                : string;
+  attribute s of cama_pclk_i : signal is "true";
+  attribute s of dummy_t     : signal is "true";
 
   signal ddr2clk_2x, ddr2clk_2x_180, mcb_drp_clk, pll_ce_0, pll_ce_90, pll_lock, async_rst : std_logic;
-  signal FbRdy, FbRdEn, FbRdRst, FbRdClk                                                   : std_logic;
-  signal FbRdData                                                                          : std_logic_vector(16-1 downto 0);
-  signal FbWrBRst, int_FVB                                                                 : std_logic;
+  signal fbrdy, fbrden, fbrdrst, fbrdclk                                                   : std_logic;
+  signal fbrddata                                                                          : std_logic_vector(16-1 downto 0);
+  signal fbwrarst, int_fva                                                                 : std_logic;
 
   signal counter : natural range 0 to 2**23-1;
   signal rd      : std_logic;
   signal wr      : std_logic;
   signal wr_data : std_logic_vector(7 downto 0);
   signal rd_data : std_logic_vector(7 downto 0);
-  signal LED_O_T : std_logic_vector(7 downto 0);
+  signal led_o_t : std_logic_vector(7 downto 0);
 
 -------------------------------------------------------------------------------
--- FPGA Link
+-- fpga link
 -------------------------------------------------------------------------------
-  signal fx2Clk_buffered : std_logic;
+  signal fx2clk_buffered : std_logic;
 
-  signal chanAddr : std_logic_vector(6 downto 0);  -- the selected channel (0-127)
-  signal h2fData  : std_logic_vector(7 downto 0);  -- data lines used when the host writes to a channel
-  signal h2fValid : std_logic;  -- '1' means "on the next clock rising edge, please accept the data on h2fData"
-  signal h2fReady : std_logic;  -- channel logic can drive this low to say "I'm not ready for more data yet"
-  signal f2hData  : std_logic_vector(7 downto 0);  -- data lines used when the host reads from a channel
-  signal f2hValid : std_logic;  -- channel logic can drive this low to say "I don't have data ready for you"
-  signal f2hReady : std_logic;  -- '1' means "on the next clock rising edge, put your next byte of data on f2hData"
-  signal fx2Read  : std_logic;
+  signal chanaddr : std_logic_vector(6 downto 0);  -- the selected channel (0-127)
+  signal h2fdata  : std_logic_vector(7 downto 0);  -- data lines used when the host writes to a channel
+  signal h2fvalid : std_logic;  -- '1' means "on the next clock rising edge, please accept the data on h2fdata"
+  signal h2fready : std_logic;  -- channel logic can drive this low to say "i'm not ready for more data yet"
+  signal f2hdata  : std_logic_vector(7 downto 0);  -- data lines used when the host reads from a channel
+  signal f2hvalid : std_logic;  -- channel logic can drive this low to say "i don't have data ready for you"
+  signal f2hready : std_logic;  -- '1' means "on the next clock rising edge, put your next byte of data on f2hdata"
+  signal fx2read  : std_logic;
 
 ------------------------------------------------------------------------------------------------
--- Registers implementing the channels
+-- registers implementing the channels
 -------------------------------------------------------------------------------
   signal reg0, reg0_next : std_logic_vector(7 downto 0) := x"00";
   signal reg1, reg1_next : std_logic_vector(7 downto 0) := x"00";
   signal reg2, reg2_next : std_logic_vector(7 downto 0) := x"00";
   signal reg3, reg3_next : std_logic_vector(7 downto 0) := x"00";
 -------------------------------------------------------------------------------
--- User
+-- user
 -------------------------------------------------------------------------------
 
   signal cfg            : cfg_set_t;
   signal inspect_unsync : inspect_t;
   signal inspect        : inspect_t;
-  signal adr            : integer range 0 to MAX_PIPE-1;
-  signal fx2Clk_in      : std_logic;
+  signal adr            : integer range 0 to max_pipe-1;
+  signal fx2clk_in      : std_logic;
 
   signal usb_fifo : pixel_fifo_t;
   signal fifosel  : std_logic;
@@ -183,72 +183,74 @@ architecture Behavioral of top is
   signal stallo : std_logic;
 begin
 ----------------------------------------------------------------------------------
--- System Control Unit
--- This component provides a System Clock, a Synchronous Reset and other signals
+-- system control unit
+-- this component provides a system clock, a synchronous reset and other signals
 -- needed for the 40:4 serialization:
--- - Serialization clock (5x System Clock)
--- - Serialization strobe
--- - 2x Pixel Clock
+-- - serialization clock (5x system clock)
+-- - serialization strobe
+-- - 2x pixel clock
 ----------------------------------------------------------------------------------
-  Inst_SysCon : entity work.SysCon port map(
-    CLK_I          => CLK_I,
-    CLK_O          => open,
-    RSTN_I         => reset_i,
-    RSEL_O         => open,  --resolution selector synchronized with PClk
-    CAMCLK_O       => CamClk,
-    CAMCLK_180_O   => CamClk_180,
-    PCLK_O         => PClk,
-    PCLK_X2_O      => PClkX2,
-    PCLK_X10_O     => SerClk,
-    SERDESSTROBE_O => SerStb,
+  inst_syscon : entity work.syscon port map(
+    clk_i          => clk_i,
+    clk_o          => open,
+    rstn_i         => reset_i,
+    rsel_o         => open,  --resolution selector synchronized with pclk
+    camclk_o       => camclk,
+    camclk_180_o   => camclk_180,
+    pclk_o         => pclk,
+    pclk_x2_o      => pclkx2,
+    pclk_x10_o     => serclk,
+    serdesstrobe_o => serstb,
 
-    DDR2CLK_2X_O     => DDR2Clk_2x,
-    DDR2CLK_2X_180_O => DDR2Clk_2x_180,
-    MCB_DRP_CLK_O    => mcb_drp_clk,
-    PLL_CE_0_O       => pll_ce_0,
-    PLL_CE_90_O      => pll_ce_90,
-    PLL_LOCK         => pll_lock,
-    ASYNC_RST        => async_rst
+    ddr2clk_2x_o     => ddr2clk_2x,
+    ddr2clk_2x_180_o => ddr2clk_2x_180,
+    mcb_drp_clk_o    => mcb_drp_clk,
+    pll_ce_0_o       => pll_ce_0,
+    pll_ce_90_o      => pll_ce_90,
+    pll_lock         => pll_lock,
+    async_rst        => async_rst
     );
 
 ----------------------------------------------------------------------------------
--- Video Timing Controller
--- Generates horizontal and vertical sync and video data enable signals.
+-- video timing controller
+-- generates horizontal and vertical sync and video data enable signals.
 ----------------------------------------------------------------------------------
-  Inst_VideoTimingCtl : entity digilent.VideoTimingCtl port map (
-    PCLK_I => PClk,
-    RSEL_I => R640_480P,                --this project supports only VGA
-    RST_I  => VtcRst,
-    VDE_O  => VtcVde,
-    HS_O   => VtcHs,
-    VS_O   => VtcVs,
-    HCNT_O => VtcHCnt,
-    VCNT_O => VtcVCnt
+  inst_videotimingctl : entity digilent.videotimingctl port map (
+    pclk_i => pclk,
+    rsel_i => r640_480p,                --this project supports only vga
+    rst_i  => vtcrst,
+    vde_o  => vtcvde,
+    hs_o   => vtchs,
+    vs_o   => vtcvs,
+    hcnt_o => vtchcnt,
+    vcnt_o => vtcvcnt
     );
-  VtcRst <= async_rst or not FbRdy;
+  vtcrst <= async_rst or not fbrdy;
 ----------------------------------------------------------------------------------
--- Frame Buffer
+-- frame buffer
 ----------------------------------------------------------------------------------
-  Inst_FBCtl : entity work.FBCtl
+  inst_fbctl : entity work.fbctl
     generic map (
-      DEBUG_EN   => 0,
-      COLORDEPTH => 16
+      debug_en   => 0,
+      colordepth => 16
       )
     port map(
-      RDY_O   => FbRdy,
-      ENC     => FbRdEn,
-      RSTC_I  => FbRdRst,
-      DOC     => FbRdData,
-      CLKC    => FbRdClk,
-      RD_MODE => SW_I,
-      ENCAM   => CamBDV,
-      RSTCAM  => FbWrBRst,
-      DCAM    => CamBD,
-      CLKCAM  => CamBPClk,
-      CLK24   => CAMCLK,
+      rdy_o   => fbrdy,
+      enc     => fbrden,
+      rstc_i  => fbrdrst,
+      doc     => fbrddata,
+      clkc    => fbrdclk,
+      rd_mode => sw_i,
 
-      ddr2clk_2x       => DDR2Clk_2x,
-      ddr2clk_2x_180   => DDR2Clk_2x_180,
+      encam_a   => camadv,
+      rstcam_a  => fbwrarst,
+      dcam_a    => camad,
+      clkcam_a  => camapclk,
+      
+      clk24   => camclk,
+
+      ddr2clk_2x       => ddr2clk_2x,
+      ddr2clk_2x_180   => ddr2clk_2x_180,
       pll_ce_0         => pll_ce_0,
       pll_ce_90        => pll_ce_90,
       pll_lock         => pll_lock,
@@ -280,145 +282,145 @@ begin
       stallo => stallo
       );
 
-  FbRdEn  <= VtcVde;
-  FbRdRst <= async_rst;
-  FbRdClk <= PClk;
-  Inst_InputSync_FVB : entity digilent.InputSync port map(
-    D_I   => CAMB_FV_I,
-    D_O   => int_FVB,
-    CLK_I => CamBPClk
+  fbrden  <= vtcvde;
+  fbrdrst <= async_rst;
+  fbrdclk <= pclk;
+  
+  inst_inputsync_fvb : entity digilent.inputsync port map(
+    d_i   => cama_fv_i,
+    d_o   => int_fva,
+    clk_i => camapclk
+    );
+  fbwrarst <= async_rst or not int_fva;
+
+----------------------------------------------------------------------------------
+-- dvi transmitter
+----------------------------------------------------------------------------------
+  inst_dvitransmitter : entity digilent.dvitransmitter port map(
+    red_i         => fbrddata(15 downto 11) & "000",
+    green_i       => fbrddata(10 downto 5) & "00",
+    blue_i        => fbrddata(4 downto 0) & "000",
+    hs_i          => vtchs,
+    vs_i          => vtcvs,
+    vde_i         => vtcvde,
+    pclk_i        => pclk,
+    pclk_x2_i     => pclkx2,
+    serclk_i      => serclk,
+    serstb_i      => serstb,
+    tmds_tx_2_p   => tmds_tx_2_p,
+    tmds_tx_2_n   => tmds_tx_2_n,
+    tmds_tx_1_p   => tmds_tx_1_p,
+    tmds_tx_1_n   => tmds_tx_1_n,
+    tmds_tx_0_p   => tmds_tx_0_p,
+    tmds_tx_0_n   => tmds_tx_0_n,
+    tmds_tx_clk_p => tmds_tx_clk_p,
+    tmds_tx_clk_n => tmds_tx_clk_n
     );
 
-  FbWrBRst <= async_rst or not int_FVB;
-
 ----------------------------------------------------------------------------------
--- DVI Transmitter
+-- camera a controller
 ----------------------------------------------------------------------------------
-  Inst_DVITransmitter : entity digilent.DVITransmitter port map(
-    RED_I         => FbRdData(15 downto 11) & "000",
-    GREEN_I       => FbRdData(10 downto 5) & "00",
-    BLUE_I        => FbRdData(4 downto 0) & "000",
-    HS_I          => VtcHs,
-    VS_I          => VtcVs,
-    VDE_I         => VtcVde,
-    PCLK_I        => PClk,
-    PCLK_X2_I     => PClkX2,
-    SERCLK_I      => SerClk,
-    SERSTB_I      => SerStb,
-    TMDS_TX_2_P   => TMDS_TX_2_P,
-    TMDS_TX_2_N   => TMDS_TX_2_N,
-    TMDS_TX_1_P   => TMDS_TX_1_P,
-    TMDS_TX_1_N   => TMDS_TX_1_N,
-    TMDS_TX_0_P   => TMDS_TX_0_P,
-    TMDS_TX_0_N   => TMDS_TX_0_N,
-    TMDS_TX_CLK_P => TMDS_TX_CLK_P,
-    TMDS_TX_CLK_N => TMDS_TX_CLK_N
-    );
-
-----------------------------------------------------------------------------------
--- Camera B Controller
-----------------------------------------------------------------------------------
-  Inst_camctlB : entity work.camctl
+  inst_camctla : entity work.camctl
     port map (
-      D_O     => CamBD,
-      PCLK_O  => CamBPClk,
-      DV_O    => CamBDV,
-      RST_I   => async_rst,
-      CLK     => CamClk,
-      CLK_180 => CamClk_180,
-      SDA     => CAMB_SDA,
-      SCL     => CAMB_SCL,
-      D_I     => CAMB_D_I,
-      PCLK_I  => int_CAMB_PCLK_I,
-      MCLK_O  => CAMB_MCLK_O,
-      LV_I    => CAMB_LV_I,
-      FV_I    => CAMB_FV_I,
-      RST_O   => CAMB_RST_O,
-      PWDN_O  => CAMB_PWDN_O,
-      VDDEN_O => CamBVddEn
+      d_o     => camad,
+      pclk_o  => camapclk,
+      dv_o    => camadv,
+      rst_i   => async_rst,
+      clk     => camclk,
+      clk_180 => camclk_180,
+      sda     => cama_sda,
+      scl     => cama_scl,
+      d_i     => cama_d_i,
+      pclk_i  => int_cama_pclk_i,
+      mclk_o  => cama_mclk_o,
+      lv_i    => cama_lv_i,
+      fv_i    => cama_fv_i,
+      rst_o   => cama_rst_o,
+      pwdn_o  => cama_pwdn_o,
+      vdden_o => camavdden
       );
-  CAMX_VDDEN_O <= CamBVddEn;
+  camx_vdden_o <= camavdden;
 
 ----------------------------------------------------------------------------------
--- Workaround for IN_TERM bug AR#   40818
+-- workaround for in_term bug ar#   40818
 ----------------------------------------------------------------------------------
-  Inst_IOBUF_CAMB_PCLK : IOBUF
+  inst_iobuf_cama_pclk : iobuf
     generic map (
-      DRIVE      => 12,
-      IOSTANDARD => "DEFAULT",
-      SLEW       => "SLOW")
+      drive      => 12,
+      iostandard => "default",
+      slew       => "slow")
     port map (
-      O  => int_CAMB_PCLK_I,            -- Buffer output
-      IO => CAMB_PCLK_I,  -- Buffer inout port (connect directly to top-level port)
-      I  => '0',                        -- Buffer input
-      T  => dummy_t       -- 3-state enable input, high=input, low=output 
+      o  => int_cama_pclk_i,            -- buffer output
+      io => cama_pclk_i,  -- buffer inout port (connect directly to top-level port)
+      i  => '0',                        -- buffer input
+      t  => dummy_t       -- 3-state enable input, high=input, low=output 
       ); 
   dummy_t <= '1';
 
   rd <= '0';
 
-  IBUFG_inst : IBUFG generic map (IOSTANDARD => "DEFAULT")port map (O => fx2Clk_in, I => fx2Clk_int);
---  fx2Clk_in <= fx2Clk_in;
+  ibufg_inst : ibufg generic map (iostandard => "default")port map (o => fx2clk_in, i => fx2clk_int);
+--  fx2clk_in <= fx2clk_in;
 -------------------------------------------------------------------------------
--- FPGA Link
+-- fpga link
 -------------------------------------------------------------------------------
 
   my_inspect_sync : entity work.inspect_sync
     port map (
-      clk  => fx2Clk_in,                -- [in]
+      clk  => fx2clk_in,                -- [in]
       din  => inspect_unsync,           -- [in]
       dout => inspect);                 -- [out] 
 
-  usb_fifo.clk <= fx2Clk_in;
-  process(fx2Clk_in)
+  usb_fifo.clk <= fx2clk_in;
+  process(fx2clk_in)
   begin
-    if (rising_edge(fx2Clk_in)) then
-      --if f2hReady = '1' then
-      --  if chanAddr = "0001111" then
+    if (rising_edge(fx2clk_in)) then
+      --if f2hready = '1' then
+      --  if chanaddr = "0001111" then
       --    reg1 <= std_logic_vector(unsigned(reg1) + 1);
       --  end if;
       --end if;
       if h2fvalid = '1' then
-        case chanAddr is
+        case chanaddr is
           when "1100000" =>
-            adr <= to_integer(unsigned(h2fData));
+            adr <= to_integer(unsigned(h2fdata));
           when "1100001" =>
-            cfg(adr).enable   <= h2fData(0);
-            cfg(adr).identify <= h2fData(1);
+            cfg(adr).enable   <= h2fdata(0);
+            cfg(adr).identify <= h2fdata(1);
           when "1110000" =>
-            cfg(adr).p(0) <= h2fData;
+            cfg(adr).p(0) <= h2fdata;
           when "1110001" =>
-            cfg(adr).p(1) <= h2fData;
+            cfg(adr).p(1) <= h2fdata;
           when "1110010" =>
-            cfg(adr).p(2) <= h2fData;
+            cfg(adr).p(2) <= h2fdata;
           when "1110011" =>
-            cfg(adr).p(3) <= h2fData;
+            cfg(adr).p(3) <= h2fdata;
           when "1110100" =>
-            cfg(adr).p(4) <= h2fData;
+            cfg(adr).p(4) <= h2fdata;
           when "1110101" =>
-            cfg(adr).p(5) <= h2fData;
+            cfg(adr).p(5) <= h2fdata;
             --when "1110110" =>
-            --  cfg(adr).p(6) <= h2fData;
+            --  cfg(adr).p(6) <= h2fdata;
             --when "1110111" =>
-            --  cfg(adr).p(7) <= h2fData;
+            --  cfg(adr).p(7) <= h2fdata;
           when others => null;
         end case;
       end if;
     end if;
   end process;
 
-  fifosel <= '1' when chanAddr = "0100000" else '0';
-  fifoen <= '1' when fifosel = '1' and usb_fifo.stall = '0' and f2hReady = '1' else '0';
+  fifosel <= '1' when chanaddr = "0100000" else '0';
+  fifoen <= '1' when fifosel = '1' and usb_fifo.stall = '0' and f2hready = '1' else '0';
   usb_fifo.en <= fifoen;
 
-  f2hValid <= '1' when fifoen = '1' else
-              '0' when fifosel = '1' and usb_fifo.stall = '1' and f2hReady = '1' else
-              '1' when f2hReady = '1'                                           else
+  f2hvalid <= '1' when fifoen = '1' else
+              '0' when fifosel = '1' and usb_fifo.stall = '1' and f2hready = '1' else
+              '1' when f2hready = '1'                                           else
               '0';
  
-  led_o <= f2hReady & f2hValid & usb_fifo.stall & fifosel & stallo & h2fReady & h2fvalid & "1" when SW_I(1 downto 0) = "00" else  std_logic_vector(to_unsigned(adr, 8));
+  led_o <= f2hready & f2hvalid & usb_fifo.stall & fifosel & stallo & h2fready & h2fvalid & "1" when sw_i(1 downto 0) = "00" else  std_logic_vector(to_unsigned(adr, 8));
 
-  with chanAddr select f2hdata <=
+  with chanaddr select f2hdata <=
     std_logic_vector(to_unsigned(adr, 8))          when "1100000",
     "000000" & cfg(adr).identify & cfg(adr).enable when "1100001",
     inspect.identity                               when "1100010",
@@ -435,48 +437,48 @@ begin
     usb_fifo.data(7 downto 0)    when "0100000",
 --    "0000000" & usb_fifo.stall   when "0100001",    
 --    usb_fifo.count(7 downto 0)   when "0100010",
-    X"AA" when others;
+    x"aa" when others;
 
-  comm : if FPGALINK = 1 generate
-    h2fReady <= '1';
+  comm : if fpgalink = 1 generate
+    h2fready <= '1';
 
-    fx2Read_out    <= fx2Read;
-    fx2OE_out      <= fx2Read;
-    fx2Addr_out(1) <= '1';              -- Use EP6OUT/EP8IN, not EP2OUT/EP4IN.
+    fx2read_out    <= fx2read;
+    fx2oe_out      <= fx2read;
+    fx2addr_out(1) <= '1';              -- use ep6out/ep8in, not ep2out/ep4in.
 
     comm_fpga_fx2 : entity work.comm_fpga_fx2
       port map(
-        -- FX2 interface
-        fx2Clk_in      => fx2Clk_in,
-        fx2FifoSel_out => fx2Addr_out(0),
-        fx2Data_io     => fx2Data_io,
-        fx2Read_out    => fx2Read,
-        fx2GotData_in  => fx2GotData_in,
-        fx2Write_out   => fx2Write_out,
-        fx2GotRoom_in  => fx2GotRoom_in,
-        fx2PktEnd_out  => fx2PktEnd_out,
+        -- fx2 interface
+        fx2clk_in      => fx2clk_in,
+        fx2fifosel_out => fx2addr_out(0),
+        fx2data_io     => fx2data_io,
+        fx2read_out    => fx2read,
+        fx2gotdata_in  => fx2gotdata_in,
+        fx2write_out   => fx2write_out,
+        fx2gotroom_in  => fx2gotroom_in,
+        fx2pktend_out  => fx2pktend_out,
 
-        -- Channel read/write interface
-        chanAddr_out => chanAddr,
-        h2fData_out  => h2fData,
-        h2fValid_out => h2fValid,
-        h2fReady_in  => h2fReady,
-        f2hData_in   => f2hData,
-        f2hValid_in  => f2hValid,
-        f2hReady_out => f2hReady
+        -- channel read/write interface
+        chanaddr_out => chanaddr,
+        h2fdata_out  => h2fdata,
+        h2fvalid_out => h2fvalid,
+        h2fready_in  => h2fready,
+        f2hdata_in   => f2hdata,
+        f2hvalid_in  => f2hvalid,
+        f2hready_out => f2hready
         );
 
   end generate comm;
-  comm_else : if FPGALINK = 0 generate
-    h2fReady <= '1';
-    f2hValid <= '1';
+  comm_else : if fpgalink = 0 generate
+    h2fready <= '1';
+    f2hvalid <= '1';
 
-    fx2Read_out   <= '0';
-    fx2OE_out     <= '0';
-    fx2Addr_out   <= (others => '0');
-    fx2PktEnd_out <= '0';
-    fx2Write_out  <= '0';
+    fx2read_out   <= '0';
+    fx2oe_out     <= '0';
+    fx2addr_out   <= (others => '0');
+    fx2pktend_out <= '0';
+    fx2write_out  <= '0';
   end generate comm_else;
 
-end Behavioral;
+end behavioral;
 

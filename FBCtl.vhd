@@ -76,13 +76,21 @@ entity FBCtl is
     CLKC             : in    std_logic;  --port clock
     RD_MODE          : in    std_logic_vector(7 downto 0);
 ------------------------------------------------------------------------------------
--- Title : Port B - write only
+-- CAM A
 ------------------------------------------------------------------------------------
-    ENCAM            : in    std_logic;  --port enable
-    RSTCAM           : in    std_logic;  --asynchronous port reset
-    DCAM             : in    std_logic_vector (COLORDEPTH - 1 downto 0);  --data output
-    CLKCAM           : in    std_logic;  --port clock
-    CLK24            : in    std_logic;  --port clock
+    encam_a            : in    std_logic;  --port enable
+    rstcam_a           : in    std_logic;  --asynchronous port reset
+    dcam_a             : in    std_logic_vector (colordepth - 1 downto 0);  --data output
+    clkcam_a           : in    std_logic;  --port clock
+------------------------------------------------------------------------------------
+-- CAM B
+------------------------------------------------------------------------------------
+--    encam_b            : in    std_logic;  --port enable
+--    rstcam_b           : in    std_logic;  --asynchronous port reset
+--    dcam_b             : in    std_logic_vector (colordepth - 1 downto 0);  --data output
+--    clkcam_b           : in    std_logic;  --port clock
+-------------------------------------------------------------------------------    
+    clk24            : in    std_logic;  --port clock
 ---------------------------------------------------------------------------------      
 -- High-speed PLL clock interface/reset
 ----------------------------------------------------------------------------------  
@@ -539,18 +547,23 @@ architecture Behavioral of FBCtl is
   signal pb_wr_addr                 : natural range 0 to VMEM_SIZE-1 := 0;
   signal pb_wr_data_sel, pb_int_rst : std_logic;
 
+
+  signal pa_wr_cnt                  : natural                        := 0;
+  signal pa_wr_addr                 : natural range 0 to VMEM_SIZE-1 := 0;
+  signal pa_wr_data_sel, pa_int_rst : std_logic;
+  
   signal pc_rd_addr1, pc_rd_addr2 : natural   := 0;
   signal fVMemSource              : std_logic := '0';
   signal rd_data_sel              : std_logic;
   signal int_rd_mode              : std_logic_vector(1 downto 0);
 
-  signal RstC, SRstC, SRstcam, SCalibDoneB : std_logic;
+  signal RstC, SRstC : std_logic;
 
-
+signal SRstcam_A, SCalibDoneA : std_logic;
 
   signal clkalg     : std_logic;
   signal rstalg     : std_logic;
-  signal rstcam_int : std_logic;
+  signal rstcam_a_int : std_logic;
 
   signal cfg      : cfg_set_t;
   signal pipe     : pipe_set_t;
@@ -922,60 +935,60 @@ begin
   end process;
 
 -----------------------------------------------------------------------------
--- CAMERA
+-- CAMERA A
 -----------------------------------------------------------------------------
-  inst_localrstb1 : entity digilent.localrst port map(
-    rst_i  => rstcam_int,
-    clk_i  => clkcam,
-    srst_o => srstcam
+  inst_localrstb1_a : entity digilent.localrst port map(
+    rst_i  => rstcam_a_int,
+    clk_i  => clkcam_a,
+    srst_o => srstcam_a
     );
-  rstcam_int <= rstcam or not calib_done;
+  rstcam_a_int <= rstcam_a or not calib_done;
   
-  inst_localrstb2 : entity digilent.localrst port map(
+  inst_localrstb2_a : entity digilent.localrst port map(
     rst_i  => calib_done,
-    clk_i  => clkcam,
-    srst_o => scalibdoneb
+    clk_i  => clkcam_a,
+    srst_o => scalibdonea
     );
 
-  portarst_proc_b : process(clkcam)
+  portarst_proc_aa : process(clkcam_a)
   begin
-    if rising_edge(clkcam) then
-      if (srstcam = '1') then
-        pb_int_rst <= '1';
+    if rising_edge(clkcam_a) then
+      if (srstcam_a = '1') then
+        pa_int_rst <= '1';
       elsif (p2_wr_empty = '1') then
-        pb_int_rst <= '0';
+        pa_int_rst <= '0';
       end if;
 
 -------------------------------------------------------------------------------
 -- SELECTOR
 -------------------------------------------------------------------------------
-      if (srstcam = '1') then
-        pb_wr_data_sel <= '0';
-      elsif (encam = '1') then
-        pb_wr_data_sel <= not pb_wr_data_sel;
+      if (srstcam_a = '1') then
+        pa_wr_data_sel <= '0';
+      elsif (encam_a = '1') then
+        pa_wr_data_sel <= not pa_wr_data_sel;
       end if;
 
-      if (encam = '1') then
-        if (pb_wr_data_sel = '0') then
-          p2_wr_data(15 downto 0) <= dcam;
+      if (encam_a = '1') then
+        if (pa_wr_data_sel = '0') then
+          p2_wr_data(15 downto 0) <= dcam_a;
         end if;
       end if;
 -------------------------------------------------------------------------------
 -- ADR COUNT
 -------------------------------------------------------------------------------      
-      if (pb_int_rst = '1' and p2_wr_empty = '1') then
-        pb_wr_addr <= 0;
+      if (pa_int_rst = '1' and p2_wr_empty = '1') then
+        pa_wr_addr <= 0;
       elsif (statewrb = stwrcmd) then
-        if (pb_wr_addr = 640*480*2/(wr_batch*4)-1) then
-          pb_wr_addr <= 0;
+        if (pa_wr_addr = 640*480*2/(wr_batch*4)-1) then
+          pa_wr_addr <= 0;
         else
-          pb_wr_addr <= pb_wr_addr + 1;
+          pa_wr_addr <= pa_wr_addr + 1;
         end if;
       end if;
 -------------------------------------------------------------------------------
 -- STATE
 -------------------------------------------------------------------------------
-      if (scalibdoneb = '0' or p2_wr_empty = '1') then
+      if (scalibdonea = '0' or p2_wr_empty = '1') then
         statewrb <= stwridle;
       else
         statewrb <= nstatewrb;
@@ -984,36 +997,36 @@ begin
 -- WR COUNT
 -------------------------------------------------------------------------------
       if (statewrb = stwrcmd) then
-        if (p2_wr_en = '1' and pb_int_rst = '0') then
-          pb_wr_cnt <= 1;
+        if (p2_wr_en = '1' and pa_int_rst = '0') then
+          pa_wr_cnt <= 1;
         else
-          pb_wr_cnt <= 0;
+          pa_wr_cnt <= 0;
         end if;
-      elsif (p2_wr_en = '1' and pb_int_rst = '0') then
-        pb_wr_cnt <= pb_wr_cnt + 1;
+      elsif (p2_wr_en = '1' and pa_int_rst = '0') then
+        pa_wr_cnt <= pa_wr_cnt + 1;
       end if;
       
     end if;
   end process;
 
-  p2_wr_clk                <= clkcam;
-  p2_wr_en                 <= pb_wr_data_sel and encam;
-  p2_wr_data(31 downto 16) <= dcam;
+  p2_wr_clk                <= clkcam_a;
+  p2_wr_en                 <= pa_wr_data_sel and encam_a;
+  p2_wr_data(31 downto 16) <= dcam_a;
   p2_wr_mask               <= "0000";
 
-  p2_cmd_clk       <= clkcam;
+  p2_cmd_clk       <= clkcam_a;
   p2_cmd_instr     <= mcb_cmd_wr;       -- port 1 write-only
-  p2_cmd_byte_addr <= conv_std_logic_vector(pb_wr_addr * (wr_batch*4), 30);
-  p2_cmd_bl        <= conv_std_logic_vector(pb_wr_cnt-1, 6) when pb_int_rst = '1' else
+  p2_cmd_byte_addr <= conv_std_logic_vector(pa_wr_addr * (wr_batch*4), 30);
+  p2_cmd_bl        <= conv_std_logic_vector(pa_wr_cnt-1, 6) when pa_int_rst = '1' else
                       conv_std_logic_vector(wr_batch-1, 6);
 
-  wrnext_state_decode_b : process (statewrb, p2_wr_count, p2_wr_error, pb_int_rst, p2_wr_empty, pb_wr_cnt)
+  wrnext_state_decode_aa : process (statewrb, p2_wr_count, p2_wr_error, pa_int_rst, p2_wr_empty, pa_wr_cnt)
   begin
     nstatewrb <= statewrb;              --default is to stay in current state
     p2_cmd_en <= '0';
     case (statewrb) is
       when stwridle =>
-        if (pb_wr_cnt >= wr_batch or pb_int_rst = '1') then
+        if (pa_wr_cnt >= wr_batch or pa_int_rst = '1') then
           nstatewrb <= stwrcmd;
         end if;
       when stwrcmd =>
@@ -1022,8 +1035,8 @@ begin
       when stwrcmdwait =>
         if (p2_wr_error = '1') then
           nstatewrb <= stwrerr;         --the write fifo got empty
-        elsif ((pb_int_rst = '0' and p2_wr_count < wr_batch) or
-               (pb_int_rst = '1' and p2_wr_empty = '1')) then  -- data got transferred from the fifo
+        elsif ((pa_int_rst = '0' and p2_wr_count < wr_batch) or
+               (pa_int_rst = '1' and p2_wr_empty = '1')) then  -- data got transferred from the fifo
           nstatewrb <= stwridle;
         end if;
       when stwrerr =>
@@ -1031,6 +1044,116 @@ begin
     end case;
   end process;
 
+-----------------------------------------------------------------------------
+-- CAMERA B
+-----------------------------------------------------------------------------
+--  inst_localrstb1_b : entity digilent.localrst port map(
+--    rst_i  => rstcam_b_int,
+--    clk_i  => clkcam_b,
+--    srst_o => srstcam_b
+--    );
+--  rstcam_b_int <= rstcam_b or not calib_done;
+  
+--  inst_localrstb2_b : entity digilent.localrst port map(
+--    rst_i  => calib_done,
+--    clk_i  => clkcam_b,
+--    srst_o => scalibdoneb
+--    );
+
+--  portarst_proc_b : process(clkcam_b)
+--  begin
+--    if rising_edge(clkcam_b) then
+--      if (srstcam_b = '1') then
+--        pb_int_rst <= '1';
+--      elsif (p1_wr_empty = '1') then
+--        pb_int_rst <= '0';
+--      end if;
+
+---------------------------------------------------------------------------------
+---- SELECTOR
+---------------------------------------------------------------------------------
+--      if (srstcam_a = '1') then
+--        pb_wr_data_sel <= '0';
+--      elsif (encam_b = '1') then
+--        pb_wr_data_sel <= not pb_wr_data_sel;
+--      end if;
+
+--      if (encam_b = '1') then
+--        if (pb_wr_data_sel = '0') then
+--          p1_wr_data(15 downto 0) <= dcam_b;
+--        end if;
+--      end if;
+---------------------------------------------------------------------------------
+---- ADR COUNT
+---------------------------------------------------------------------------------      
+--      if (pb_int_rst = '1' and p1_wr_empty = '1') then
+--        pb_wr_addr <= 0;
+--      elsif (statewrb = stwrcmd) then
+--        if (pb_wr_addr = 640*480*2/(wr_batch*4)-1) then
+--          pb_wr_addr <= 0;
+--        else
+--          pb_wr_addr <= pb_wr_addr + 1;
+--        end if;
+--      end if;
+---------------------------------------------------------------------------------
+---- STATE
+---------------------------------------------------------------------------------
+--      if (scalibdoneb = '0' or p1_wr_empty = '1') then
+--        statewrb <= stwridle;
+--      else
+--        statewrb <= nstatewrb;
+--      end if;
+---------------------------------------------------------------------------------
+---- WR COUNT
+---------------------------------------------------------------------------------
+--      if (statewrb = stwrcmd) then
+--        if (p1_wr_en = '1' and pb_int_rst = '0') then
+--          pb_wr_cnt <= 1;
+--        else
+--          pb_wr_cnt <= 0;
+--        end if;
+--      elsif (p1_wr_en = '1' and pb_int_rst = '0') then
+--        pb_wr_cnt <= pb_wr_cnt + 1;
+--      end if;
+      
+--    end if;
+--  end process;
+
+--  p1_wr_clk                <= clkcam_b;
+--  p1_wr_en                 <= pb_wr_data_sel and encam_b;
+--  p1_wr_data(31 downto 16) <= dcam_b;
+--  p1_wr_mask               <= "0000";
+
+--  p1_cmd_clk       <= clkcam_b;
+--  p1_cmd_instr     <= mcb_cmd_wr;       -- port 1 write-only
+--  p1_cmd_byte_addr <= conv_std_logic_vector(pb_wr_addr * (wr_batch*4), 30);
+--  p1_cmd_bl        <= conv_std_logic_vector(pb_wr_cnt-1, 6) when pb_int_rst = '1' else
+--                      conv_std_logic_vector(wr_batch-1, 6);
+
+--  wrnext_state_decode_b : process (statewrb, p1_wr_count, p1_wr_error, pb_int_rst, p1_wr_empty, pb_wr_cnt)
+--  begin
+--    nstatewrb <= statewrb;              --default is to stay in current state
+--    p1_cmd_en <= '0';
+--    case (statewrb) is
+--      when stwridle =>
+--        if (pb_wr_cnt >= wr_batch or pb_int_rst = '1') then
+--          nstatewrb <= stwrcmd;
+--        end if;
+--      when stwrcmd =>
+--        p1_cmd_en <= '1';
+--        nstatewrb <= stwrcmdwait;
+--      when stwrcmdwait =>
+--        if (p1_wr_error = '1') then
+--          nstatewrb <= stwrerr;         --the write fifo got empty
+--        elsif ((pb_int_rst = '0' and p1_wr_count < wr_batch) or
+--               (pb_int_rst = '1' and p1_wr_empty = '1')) then  -- data got transferred from the fifo
+--          nstatewrb <= stwridle;
+--        end if;
+--      when stwrerr =>
+--        null;
+--    end case;
+--  end process;
+  
 
 -------------------------------------------------------------------------------
 -- ALGO on P0 and P1

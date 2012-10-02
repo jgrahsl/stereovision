@@ -99,6 +99,8 @@ def readpic():
 
     f = open("a.out","w")
     a = flReadChannel(handle,2000, 0x20,640*480*2)
+#    a = " " * 614400
+    print len(a)
     f.write(a)
     f.close()
 
