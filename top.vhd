@@ -76,6 +76,16 @@ entity top is
     cama_rst_o  : out   std_logic;      --reset active low
     cama_pwdn_o : out   std_logic;      --power-down active high           
 
+    camb_sda    : inout std_logic;
+    camb_scl    : inout std_logic;
+    camb_d_i    : in    std_logic_vector (7 downto 0);
+    camb_pclk_i : inout std_logic;
+    camb_mclk_o : out   std_logic;
+    camb_lv_i   : in    std_logic;
+    camb_fv_i   : in    std_logic;
+    camb_rst_o  : out   std_logic;      --reset active low
+    camb_pwdn_o : out   std_logic;      --power-down active high           
+    
 ----------------------------------------------------------------------------------
 -- ddr2 interface
 ----------------------------------------------------------------------------------
@@ -126,18 +136,25 @@ architecture behavioral of top is
   signal vtchs, vtcvs, vtcvde, vtcrst : std_logic;
   signal vtchcnt, vtcvcnt             : natural;
 
-  signal camclk, camclk_180, camapclk, camadv, camavdden : std_logic;
+  signal camclk, camclk_180 : std_logic;
+  --
+  signal camapclk, camadv, camavdden,fbwrarst, int_fva : std_logic;
   signal camad                                           : std_logic_vector(15 downto 0);
   signal dummy_t, int_cama_pclk_i                        : std_logic;
-
   attribute s                : string;
   attribute s of cama_pclk_i : signal is "true";
   attribute s of dummy_t     : signal is "true";
-
+  --
+  signal cambpclk, cambdv, cambvdden,fbwrbrst, int_fvb : std_logic;
+  signal cambd                                           : std_logic_vector(15 downto 0);
+  signal int_camb_pclk_i                        : std_logic;
+  attribute s of camb_pclk_i : signal is "true";
+  --
+  
   signal ddr2clk_2x, ddr2clk_2x_180, mcb_drp_clk, pll_ce_0, pll_ce_90, pll_lock, async_rst : std_logic;
   signal fbrdy, fbrden, fbrdrst, fbrdclk                                                   : std_logic;
   signal fbrddata                                                                          : std_logic_vector(16-1 downto 0);
-  signal fbwrarst, int_fva                                                                 : std_logic;
+
 
   signal counter : natural range 0 to 2**23-1;
   signal rd      : std_logic;
@@ -246,6 +263,11 @@ begin
       rstcam_a  => fbwrarst,
       dcam_a    => camad,
       clkcam_a  => camapclk,
+
+      encam_b   => cambdv,
+      rstcam_b  => fbwrbrst,
+      dcam_b    => cambd,
+      clkcam_b  => cambpclk,
       
       clk24   => camclk,
 
@@ -286,13 +308,20 @@ begin
   fbrdrst <= async_rst;
   fbrdclk <= pclk;
   
-  inst_inputsync_fvb : entity digilent.inputsync port map(
+  inst_inputsync_fva : entity digilent.inputsync port map(
     d_i   => cama_fv_i,
     d_o   => int_fva,
     clk_i => camapclk
     );
   fbwrarst <= async_rst or not int_fva;
 
+  inst_inputsync_fvb : entity digilent.inputsync port map(
+    d_i   => camb_fv_i,
+    d_o   => int_fvb,
+    clk_i => cambpclk
+    );
+  fbwrbrst <= async_rst or not int_fvb;
+  
 ----------------------------------------------------------------------------------
 -- dvi transmitter
 ----------------------------------------------------------------------------------
@@ -340,7 +369,30 @@ begin
       vdden_o => camavdden
       );
   camx_vdden_o <= camavdden;
+----------------------------------------------------------------------------------
+-- camera b controller
+----------------------------------------------------------------------------------
+  inst_camctlb : entity work.camctl
+    port map (
+      d_o     => cambd,
+      pclk_o  => cambpclk,
+      dv_o    => cambdv,
+      rst_i   => async_rst,
+      clk     => camclk,
+      clk_180 => camclk_180,
+      sda     => camb_sda,
+      scl     => camb_scl,
+      d_i     => camb_d_i,
+      pclk_i  => int_camb_pclk_i,
+      mclk_o  => camb_mclk_o,
+      lv_i    => camb_lv_i,
+      fv_i    => camb_fv_i,
+      rst_o   => camb_rst_o,
+      pwdn_o  => camb_pwdn_o,
+      vdden_o => cambvdden
+      );
 
+  
 ----------------------------------------------------------------------------------
 -- workaround for in_term bug ar#   40818
 ----------------------------------------------------------------------------------
@@ -355,6 +407,18 @@ begin
       i  => '0',                        -- buffer input
       t  => dummy_t       -- 3-state enable input, high=input, low=output 
       ); 
+  inst_iobuf_camb_pclk : iobuf
+    generic map (
+      drive      => 12,
+      iostandard => "default",
+      slew       => "slow")
+    port map (
+      o  => int_camb_pclk_i,            -- buffer output
+      io => camb_pclk_i,  -- buffer inout port (connect directly to top-level port)
+      i  => '0',                        -- buffer input
+      t  => dummy_t       -- 3-state enable input, high=input, low=output 
+      ); 
+
   dummy_t <= '1';
 
   rd <= '0';
