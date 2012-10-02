@@ -54,6 +54,7 @@ except FLException, ex:
     xsvfFile = "../top.xsvf"
     print "Playing \"%s\" into the JTAG chain on FPGALink device %s..." % (xsvfFile, vp)
     flPlayXSVF(handle, xsvfFile)  # Or other SVF, XSVF or CSVF
+    time.sleep(2)
 
 def stream():
 
