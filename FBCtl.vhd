@@ -609,12 +609,13 @@ architecture Behavioral of FBCtl is
     my_read_reset,
     my_read_wait,
     my_read_p,
+    my_read_p_inc,
     my_read_transfer_p,
     my_read_transfer_p_1,
     my_read_aux,
+    my_read_aux_inc,
     my_read_transfer_aux,
-    my_read_transfer_aux_1,
-    my_read_inc);
+    my_read_transfer_aux_1);
 
   type my_write_state_t is (
     my_write_reset,
@@ -1065,17 +1066,22 @@ begin
 -------------------------------------------------------------------------------
 -- Memory 
 -------------------------------------------------------------------------------
-        if my_read_state = my_read_inc then
+        if my_read_state = my_read_p_inc then
           if (my_pixel_rd_addr = 640*2*480-16*4) then
             my_pixel_rd_addr <= 0;
-            my_aux_rd_addr   <= 2**21;
           else
             my_pixel_rd_addr <= my_pixel_rd_addr + 16*4;
-            my_aux_rd_addr   <= my_aux_rd_addr + 32*4;
           end if;
-          reg2 <= reg2 + std_logic_vector(to_unsigned(1, 8));
         end if;
 
+        if my_read_state = my_read_aux_inc then
+          if (my_aux_rd_addr = 640*2*480-32*4+2**21) then
+            my_aux_rd_addr   <= 2**21;
+          else
+            my_aux_rd_addr   <= my_aux_rd_addr + 32*4;
+          end if;
+        end if;
+        
         if my_write_state = my_write_inc then
           if (my_pixel_wr_addr = ((2**20)+640*2*480-16*4)) then
             my_pixel_wr_addr <= 2**20;
@@ -1089,53 +1095,6 @@ begin
 
         my_read_state  <= my_read_nstate;
         my_write_state <= my_write_nstate;
-
-
-        if my_read_state = my_read_wait then
-          reg0(0) <= '1';
-        end if;
-        if my_read_state = my_read_p then
-          reg0(1) <= '1';
-        end if;
-        if my_read_state = my_read_transfer_p then
-          reg0(2) <= '1';
-        end if;
-        if my_read_state = my_read_transfer_p_1 then
-          reg0(3) <= '1';
-        end if;
-        if my_read_state = my_read_aux then
-          reg0(4) <= '1';
-        end if;
-        if my_read_state = my_read_transfer_aux then
-          reg0(5) <= '1';
-        end if;
-        if my_read_state = my_read_transfer_aux_1 then
-          reg0(6) <= '1';
-        end if;
-
-        if my_write_state = my_write_wait then
-          reg1(0) <= '1';
-        end if;
-        if my_write_state = my_write_transfer_p then
-          reg1(1) <= '1';
-        end if;
-        if my_write_state = my_write_p then
-          reg1(2) <= '1';
-        end if;
-        if my_write_state = my_write_transfer_p_1 then
-          reg1(3) <= '1';
-        end if;
-        if my_write_state = my_write_transfer_aux then
-          reg1(4) <= '1';
-        end if;
-        if my_write_state = my_write_aux then
-          reg1(5) <= '1';
-        end if;
-        if my_write_state = my_write_transfer_aux_1 then
-          reg1(6) <= '1';
-        end if;
-        
-        
       end if;
     end if;
   end process;
@@ -1239,14 +1198,17 @@ begin
     case my_read_state is
 
       when my_read_reset =>
-
         my_read_nstate <= my_read_wait;
 
+        
       when my_read_wait =>
-        if pr_count <= std_logic_vector(to_unsigned((64-16), 7)) and
-         auxr_count <= std_logic_vector(to_unsigned((128-32), 8)) then
+        if pr_count <= std_logic_vector(to_unsigned((64-16), 7)) then
           my_read_nstate <= my_read_p;
         end if;
+        if          auxr_count <= std_logic_vector(to_unsigned((128-32), 8)) then
+          my_read_nstate <= my_read_aux;
+        end if;
+          
         
       when my_read_p =>
         if p0_cmd_empty = '1' then
@@ -1255,21 +1217,22 @@ begin
           p0_cmd_bl        <= conv_std_logic_vector(15, 6);
           p0_cmd_byte_addr <= conv_std_logic_vector(my_pixel_rd_addr, 30);
           my_read_nstate   <= my_read_transfer_p;
-        end if;
-        
+        end if;        
       when my_read_transfer_p =>
         if p0_rd_count >= std_logic_vector(to_unsigned(16, 6)) then
           my_read_nstate <= my_read_transfer_p_1;
         end if;
-
       when my_read_transfer_p_1 =>
         if p0_rd_empty = '0' then
           p0_rd_en <= '1';
           pr_wr    <= '1';
         else
-          my_read_nstate <= my_read_aux;
+          my_read_nstate <= my_read_p_inc;
         end if;
+      when my_read_p_inc =>
+        my_read_nstate <= my_read_wait;      
 
+        
       when my_read_aux =>
         if p0_cmd_empty = '1' then
           p0_cmd_en        <= '1';
@@ -1278,21 +1241,18 @@ begin
           p0_cmd_byte_addr <= conv_std_logic_vector(my_aux_rd_addr, 30);
           my_read_nstate   <= my_read_transfer_aux;
         end if;
-
       when my_read_transfer_aux =>
         if p0_rd_count >= std_logic_vector(to_unsigned(32, 6)) then
           my_read_nstate <= my_read_transfer_aux_1;
         end if;
-
       when my_read_transfer_aux_1 =>
         if p0_rd_empty = '0' then
           p0_rd_en <= '1';
           auxr_wr  <= '1';
         else
-          my_read_nstate <= my_read_inc;
-        end if;
-        
-      when my_read_inc =>
+          my_read_nstate <= my_read_aux_inc;
+        end if;      
+      when my_read_aux_inc =>
         my_read_nstate <= my_read_wait;
         
       when others => null;
