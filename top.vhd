@@ -447,7 +447,7 @@ begin
 
   with chanAddr select f2hdata <=
     reg0  when "0000000",
-    X"AE" when "0000001",
+    X"A0" when "0000001",
     reg1  when "0001111",
 
     std_logic_vector(to_unsigned(adr, 8))          when "1100000",
