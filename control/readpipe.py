@@ -8,9 +8,8 @@ handle = None
 
 def send_byte(chan,val):
     global handle
-    ba = bytearray(2)
+    ba = bytearray(1)
     ba[0] = val
-    ba[1] = val
     flWriteChannel(handle, 1000, chan,ba)
 
 def recv_byte(chan):
@@ -54,31 +53,21 @@ except FLException, ex:
     xsvfFile = "../top.xsvf"
     print "Playing \"%s\" into the JTAG chain on FPGALink device %s..." % (xsvfFile, vp)
     flPlayXSVF(handle, xsvfFile)  # Or other SVF, XSVF or CSVF
-    time.sleep(2)
 
+ 
 def stream():
-
-    set_reg(31,0x60,1)
     set_reg(31,0x61,1)
     set_reg(31,0x70,1)        
 
-    set_reg(0,0x60,1)
     set_reg(0,0x61,1)
     set_reg(0,0x70,1)        
 
-    set_reg(1,0x60,0)
     set_reg(1,0x61,1)
     set_reg(1,0x70,1)        
-
-    set_reg(30,0x60,1)
-    set_reg(30,0x61,0)
-    set_reg(30,0x70,0)
-
 
 def reqpic():
     stream()
 
-    set_reg(30,0x60,1)
     set_reg(30,0x61,1)
     if (get_reg(30,0x70) & 1): 
         set_reg(30,0x70,0)
@@ -130,6 +119,7 @@ def scan():
 
 #reqpic()
 readpic()
+
 #stream()
 #scan()
 

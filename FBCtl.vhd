@@ -544,14 +544,14 @@ architecture Behavioral of FBCtl is
   signal p1_wr_error      : std_logic;
 
   -- CAMA
-  signal pa_wr_cnt                  : natural                        := 0;
+  signal pa_wr_cnt                  : natural range 0 to 2**6-1      := 0;
   signal pa_wr_addr                 : natural range 0 to VMEM_SIZE-1 := 0;
   signal pa_wr_data_sel, pa_int_rst : std_logic;
   signal SRstcam_A, SCalibDoneA : std_logic;
   signal rstcam_a_int : std_logic;
 
   -- CAMB
-  signal pb_wr_cnt                  : natural                        := 0;
+  signal pa_wr_cnt                  : natural range 0 to 2**6-1      := 0;  
   signal pb_wr_addr                 : natural range 0 to VMEM_SIZE-1 := 0;
   signal pb_wr_data_sel, pb_int_rst : std_logic;
   signal SRstcam_B, SCalibDoneB : std_logic;

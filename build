@@ -1,6 +1,6 @@
-. /opt/env.sh
-#export PATH=$PATH:/cygdrive/c/Xilinx/14.2/ISE_DS/ISE/bin/nt
-#export XILINX=C:\\Xilinx\\14.2
+#. /opt/env.sh
+export PATH=$PATH:/cygdrive/c/Xilinx/14.2/ISE_DS/ISE/bin/nt
+export XILINX=C:\\Xilinx\\14.2
 
 xst -intstyle ise -ifn cam.xst -ofn cam.syr  && \
 ngdbuild -intstyle ise -dd _ngo -sd ipcore_dir -nt timestamp -uc atlys.ucf -uc timing.ucf -uc cam_atlys.ucf -uc fpgalink_atlys.ucf -p xc6slx45-csg324-3 cam.ngc cam.ngd   && \

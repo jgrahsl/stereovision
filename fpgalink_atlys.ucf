@@ -34,7 +34,6 @@ NET "fx2GotData_in" LOC = C15 | IOSTANDARD = "LVTTL";   # CTL2/FLAGC
 NET "fx2Write_out" LOC = E13 | IOSTANDARD = "LVTTL";   # RDY1/SLWR
 NET "fx2GotRoom_in" LOC = A9 | IOSTANDARD = "LVTTL";   # CTL1/FLAGB
 NET "fx2PktEnd_out" LOC = C4 | IOSTANDARD = "LVTTL";   # PA6/PKTEND
-
 #Created by Constraints Editor (xc6slx45-csg324-3) - 2012/10/01
 INST "fx2Read_out" TNM = fx2out;
 INST "fx2Write_out" TNM = fx2out;
@@ -48,6 +47,7 @@ NET "fx2clk_in" TNM_NET = fx2clk_in;
 TIMESPEC TS_fx2clk_in = PERIOD "fx2clk_in" 20 ns HIGH 50%;
 TIMEGRP "fx2out" OFFSET = OUT 10.471 ns AFTER "fx2clk_in";
 #Created by Constraints Editor (xc6slx45-csg324-3) - 2012/10/03
+#Created by Constraints Editor (xc6slx45-csg324-3) - 2012/10/03
 INST "fx2data_io<0>" TNM = fx2data_in;
 INST "fx2data_io<1>" TNM = fx2data_in;
 INST "fx2data_io<2>" TNM = fx2data_in;
@@ -56,4 +56,16 @@ INST "fx2data_io<4>" TNM = fx2data_in;
 INST "fx2data_io<5>" TNM = fx2data_in;
 INST "fx2data_io<6>" TNM = fx2data_in;
 INST "fx2data_io<7>" TNM = fx2data_in;
+INST "fx2gotdata_in" TNM = fx2data_in;
+INST "fx2gotroom_in" TNM = fx2data_in;
 TIMEGRP "fx2data_in" OFFSET = IN 7 ns VALID 20 ns BEFORE "fx2clk_in" RISING;
+#Created by Constraints Editor (xc6slx45-csg324-3) - 2012/10/03
+INST "fx2data_io<0>" TNM = fx2out_data;
+INST "fx2data_io<1>" TNM = fx2out_data;
+INST "fx2data_io<2>" TNM = fx2out_data;
+INST "fx2data_io<3>" TNM = fx2out_data;
+INST "fx2data_io<4>" TNM = fx2out_data;
+INST "fx2data_io<5>" TNM = fx2out_data;
+INST "fx2data_io<6>" TNM = fx2out_data;
+INST "fx2data_io<7>" TNM = fx2out_data;
+TIMEGRP "fx2out_data" OFFSET = OUT 10 ns AFTER "fx2clk_in";
