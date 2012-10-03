@@ -8,9 +8,9 @@ handle = None
 
 def send_byte(chan,val):
     global handle
-    ba = bytearray(1)
+    ba = bytearray(2)
     ba[0] = val
-#    ba[1] = val
+    ba[1] = val
     flWriteChannel(handle, 1000, chan,ba)
 
 def recv_byte(chan):
@@ -75,18 +75,8 @@ def stream():
     set_reg(30,0x70,0)
 
 
-def readpic():
-    set_reg(31,0x60,1)
-    set_reg(31,0x61,1)
-    set_reg(31,0x70,1)        
-
-    set_reg(0,0x60,1)
-    set_reg(0,0x61,1)
-    set_reg(0,0x70,1)        
-
-    set_reg(1,0x60,0)
-    set_reg(1,0x61,1)
-    set_reg(1,0x70,1)        
+def reqpic():
+    stream()
 
     set_reg(30,0x60,1)
     set_reg(30,0x61,1)
@@ -94,6 +84,9 @@ def readpic():
         set_reg(30,0x70,0)
     else:
         set_reg(30,0x70,1)
+
+def readpic():
+    reqpic()
 
 #    time.sleep(1)
 
@@ -103,6 +96,7 @@ def readpic():
     print len(a)
     f.write(a)
     f.close()
+
 
 def scan():
     i = 0
@@ -134,6 +128,7 @@ def scan():
 #           a  = 0
         i = i + 1
 
+#reqpic()
 readpic()
 #stream()
 #scan()
