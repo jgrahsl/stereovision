@@ -56,19 +56,15 @@ except FLException, ex:
 
 
 def readpic():
-#    set_reg(31,0x60,1)
     set_reg(31,0x61,1)
     set_reg(31,0x70,1)        
 
-#    set_reg(0,0x60,1)
     set_reg(0,0x61,1)
     set_reg(0,0x70,1)        
 
-#    set_reg(1,0x60,1)
     set_reg(1,0x61,1)
     set_reg(1,0x70,1)        
 
-#    set_reg(30,0x60,1)
     set_reg(30,0x61,1)
     if (get_reg(30,0x70) & 1): 
         set_reg(30,0x70,0)
