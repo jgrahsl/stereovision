@@ -25,8 +25,8 @@ INST "Inst_FBCtl/inst_localrstc/RstQ_*" TNM = RSTQ_SOURCE;
 INST "Inst_FBCtl/inst_localrstalg/RstQ_*" TNM = RESET_SINK;
 TIMESPEC TS_RESET = FROM "RSTQ_SOURCE" TO "RESET_SINK" TIG;
 #Created by Constraints Editor (xc6slx45-csg324-3) - 2012/10/01
-NET "fx2Clk_int" TNM_NET = fx2Clk_int;
-TIMESPEC TS_fx2Clk_int = PERIOD "fx2Clk_int" 20 ns HIGH 50%;
+NET "fx2Clk_in" TNM_NET = fx2Clk_in;
+TIMESPEC TS_fx2Clk_in = PERIOD "fx2Clk_in" 20 ns HIGH 50%;
 #Created by Constraints Editor (xc6slx45-csg324-3) - 2012/10/01
 
 INST "fx2Read_out" TNM = fx2out;
@@ -35,4 +35,4 @@ INST "fx2OE_out" TNM = fx2out;
 INST "fx2PktEnd_out" TNM = fx2out;
 INST "fx2Addr_out[0]" TNM = fx2out;
 INST "fx2Addr_out[1]" TNM = fx2out;
-TIMEGRP "fx2out" OFFSET = OUT 10.471 ns AFTER "fx2Clk_int";
+TIMEGRP "fx2out" OFFSET = OUT 10.471 ns AFTER "fx2Clk_in";

@@ -112,7 +112,7 @@ entity top is
 -- fpga link
 -------------------------------------------------------------------------------
     -- fx2 interface -----------------------------------------------------------------------------
-    fx2clk_int  : in    std_logic;      -- 48mhz clock from fx2
+    fx2clk_in  : in    std_logic;      -- 48mhz clock from fx2
     fx2addr_out : out   std_logic_vector(1 downto 0);  -- select fifo: "10" for ep6out, "11" for ep8in
     fx2data_io  : inout std_logic_vector(7 downto 0);  -- 8-bit data to/from fx2
 
@@ -192,7 +192,7 @@ architecture behavioral of top is
   signal inspect_unsync : inspect_t;
   signal inspect        : inspect_t;
   signal adr            : integer range 0 to max_pipe-1;
-  signal fx2clk_in      : std_logic;
+  signal fx2clk_int      : std_logic;
 
   signal usb_fifo : pixel_fifo_t;
   signal fifosel  : std_logic;
@@ -423,8 +423,8 @@ begin
 
   rd <= '0';
 
-  ibufg_inst : ibufg generic map (iostandard => "default")port map (o => fx2clk_in, i => fx2clk_int);
---  fx2clk_in <= fx2clk_in;
+--  ibufg_inst : ibufg generic map (iostandard => "default")port map (o => fx2clk_in, i => fx2clk_int);
+--  fx2clk_in <= fx2clk_int;
 -------------------------------------------------------------------------------
 -- fpga link
 -------------------------------------------------------------------------------

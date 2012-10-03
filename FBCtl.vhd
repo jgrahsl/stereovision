@@ -646,11 +646,11 @@ architecture Behavioral of FBCtl is
   signal move_state  : move_state_t;
   signal move_nstate  : move_state_t;
 
-  signal my_pixel_rd_addr : natural range 0 to 2**22-1 := 0;
-  signal my_aux_rd_addr   : natural range 0 to 2**22-1 := 0;
+  signal my_pixel_rd_addr : natural range 0 to 2**24-1 := 0;
+  signal my_aux_rd_addr   : natural range 0 to 2**24-1 := 0;
 
-  signal my_pixel_wr_addr : natural range 0 to 2**22-1 := 0;
-  signal my_aux_wr_addr   : natural range 0 to 2**22-1 := 0;
+  signal my_pixel_wr_addr : natural range 0 to 2**24-1 := 0;
+  signal my_aux_wr_addr   : natural range 0 to 2**24-1 := 0;
 
   signal reg0 : std_logic_vector(7 downto 0);
   signal reg1 : std_logic_vector(7 downto 0);
@@ -661,6 +661,12 @@ architecture Behavioral of FBCtl is
 
   signal gray8_2d : gray8_2d_t;
   signal out_fifo : pixel_fifo_t;
+
+
+  constant AUX_OFFSET : natural := 2**24;
+  constant CAMB_OFFSET : natural := 2**23;
+  constant CAMA_OFFSET : natural := 2**22;
+  constant DVI_OFFSET : natural := 0;  
 begin
 ----------------------------------------------------------------------------------
 -- mcb instantiation
@@ -911,7 +917,7 @@ begin
     p3_cmd_clk   <= clkc;
 
     p3_cmd_en        <= '0';
-    p3_cmd_byte_addr <= conv_std_logic_vector(pc_rd_addr1 * (rd_batch*4)+(2**20), 30);
+    p3_cmd_byte_addr <= conv_std_logic_vector(pc_rd_addr1 * (rd_batch*4)+(DVI_OFFSET), 30);
 
     p3_rd_en  <= rd_data_sel and enc;
     p3_rd_clk <= clkc;
@@ -1018,7 +1024,7 @@ begin
 
   p2_cmd_clk       <= clkcam_a;
   p2_cmd_instr     <= mcb_cmd_wr;       -- port 1 write-only
-  p2_cmd_byte_addr <= conv_std_logic_vector(pa_wr_addr * (wr_batch*4), 30);
+  p2_cmd_byte_addr <= conv_std_logic_vector(pa_wr_addr * (wr_batch*4)+CAMA_OFFSET, 30);
   p2_cmd_bl        <= conv_std_logic_vector(pa_wr_cnt-1, 6) when pa_int_rst = '1' else
                       conv_std_logic_vector(wr_batch-1, 6);
 
@@ -1128,7 +1134,7 @@ begin
 
   p1_cmd_clk       <= clkcam_b;
   p1_cmd_instr     <= mcb_cmd_wr;       -- port 1 write-only
-  p1_cmd_byte_addr <= conv_std_logic_vector(pb_wr_addr * (wr_batch*4), 30);
+  p1_cmd_byte_addr <= conv_std_logic_vector(pb_wr_addr * (wr_batch*4)+CAMB_OFFSET, 30);
   p1_cmd_bl        <= conv_std_logic_vector(pb_wr_cnt-1, 6) when pb_int_rst = '1' else
                       conv_std_logic_vector(wr_batch-1, 6);
 
@@ -1174,15 +1180,15 @@ begin
         move_state    <= move_reset;
 
         my_pixel_rd_addr <= 0;
-        my_pixel_wr_addr <= 2**20;
-        my_aux_rd_addr   <= 2**21;
-        my_aux_wr_addr   <= 2**21;
+        my_pixel_wr_addr <= 0;
+        my_aux_rd_addr   <= 0;
+        my_aux_wr_addr   <= 0;
       else
 -------------------------------------------------------------------------------
 -- Memory 
 -------------------------------------------------------------------------------
         if move_state = move_r_p_inc then
-          if (my_pixel_rd_addr = 640*2*480-16*4) then
+          if (my_pixel_rd_addr = (640*2*480-16*4)) then
             my_pixel_rd_addr <= 0;
           else
             my_pixel_rd_addr <= my_pixel_rd_addr + 16*4;
@@ -1190,24 +1196,24 @@ begin
         end if;
 
         if move_state = move_r_aux_inc then
-          if (my_aux_rd_addr = 640*2*480-32*4+2**21) then
-            my_aux_rd_addr   <= 2**21;
+          if (my_aux_rd_addr = (640*2*480-32*4)) then
+            my_aux_rd_addr   <= 0;
           else
             my_aux_rd_addr   <= my_aux_rd_addr + 32*4;
           end if;
         end if;
         
         if move_state = move_w_p_inc then
-          if (my_pixel_wr_addr = ((2**20)+640*2*480-16*4)) then
-            my_pixel_wr_addr <= 2**20;
+          if (my_pixel_wr_addr = (640*2*480-16*4)) then
+            my_pixel_wr_addr <= 0;
           else
             my_pixel_wr_addr <= my_pixel_wr_addr + 16*4;
           end if;
         end if;
 
-        if move_state = move_r_p_inc then
-          if (my_aux_wr_addr = ((2**21)+640*2*480-32*4)) then
-            my_aux_wr_addr   <= 2**21;
+        if move_state = move_w_aux_inc then
+          if (my_aux_wr_addr = (640*2*480-32*4)) then
+            my_aux_wr_addr   <= 0;
           else
             my_aux_wr_addr   <= my_aux_wr_addr + 32*4;
           end if;
@@ -1360,7 +1366,7 @@ begin
           p0_cmd_en        <= '1';
           p0_cmd_instr     <= MCB_CMD_RD;
           p0_cmd_bl        <= conv_std_logic_vector(15, 6);
-          p0_cmd_byte_addr <= conv_std_logic_vector(my_pixel_rd_addr, 30);
+          p0_cmd_byte_addr <= conv_std_logic_vector(my_pixel_rd_addr+CAMB_OFFSET, 30);
           move_nstate   <= move_r_transfer_p;
         end if;        
       when move_r_transfer_p =>
@@ -1383,7 +1389,7 @@ begin
           p0_cmd_en        <= '1';
           p0_cmd_instr     <= MCB_CMD_RD;
           p0_cmd_bl        <= conv_std_logic_vector(31, 6);
-          p0_cmd_byte_addr <= conv_std_logic_vector(my_aux_rd_addr, 30);
+          p0_cmd_byte_addr <= conv_std_logic_vector(my_aux_rd_addr+AUX_OFFSET, 30);
           move_nstate   <= move_r_transfer_aux;
         end if;
       when move_r_transfer_aux =>
@@ -1415,7 +1421,7 @@ begin
           p0_cmd_en        <= '1';
           p0_cmd_instr     <= MCB_CMD_WR;
           p0_cmd_bl        <= conv_std_logic_vector(15, 6);
-          p0_cmd_byte_addr <= conv_std_logic_vector(my_pixel_wr_addr, 30);
+          p0_cmd_byte_addr <= conv_std_logic_vector(my_pixel_wr_addr+DVI_OFFSET, 30);
           move_nstate  <= move_w_transfer_p_1;
         end if;
       when move_w_transfer_p_1 =>
@@ -1439,7 +1445,7 @@ begin
           p0_cmd_en        <= '1';
           p0_cmd_instr     <= MCB_CMD_WR;
           p0_cmd_bl        <= conv_std_logic_vector(31, 6);
-          p0_cmd_byte_addr <= conv_std_logic_vector(my_aux_wr_addr, 30);
+          p0_cmd_byte_addr <= conv_std_logic_vector(my_aux_wr_addr+AUX_OFFSET, 30);
           move_nstate  <= move_w_transfer_aux_1;
         end if;
       when move_w_transfer_aux_1 =>
