@@ -1,0 +1,5 @@
+OFFSET IN BEFORE VALID:
+Min 7ns vor dem anliegen der clock am input pin sind die daten am
+datapin stabil. (Entspricht worstcase data delay zwischen ic und
+fpga). Fuer 20 ns VALID entspricht der bestcase data delay. Wie
+schnell werden die daten bei guenstigen Bedingungen ueberschrieben.
