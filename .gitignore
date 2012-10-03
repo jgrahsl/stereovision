@@ -11,7 +11,8 @@ sim/*/sim.out
 expect.tiff
 output.tiff
 last.out
-
+control/a.out
+control/t.tiff
 cam.ngc
 iseconfig
 *.asy
