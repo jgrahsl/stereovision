@@ -128,7 +128,8 @@ entity FBCtl is
 
     usb_fifo : inout pixel_fifo_t;
 
-    stallo: out std_logic
+    stallo: out std_logic;
+    d : out d0_t
     );
 end FBCtl;
 
@@ -587,7 +588,7 @@ architecture Behavioral of FBCtl is
   signal pr_wr    : std_logic;
   signal pr_empty : std_logic;
   signal pr_full  : std_logic;
-  signal pr_count : std_logic_vector(9 downto 0) := (others => '0');
+  signal pr_count : std_logic_vector(6 downto 0) := (others => '0');
 
   signal pw_clk   : std_logic;
   signal pw_rst   : std_logic;
@@ -597,7 +598,7 @@ architecture Behavioral of FBCtl is
   signal pw_wr    : std_logic;
   signal pw_empty : std_logic;
   signal pw_full  : std_logic;
-  signal pw_count : std_logic_vector(9 downto 0) := (others => '0');
+  signal pw_count : std_logic_vector(6 downto 0) := (others => '0');
 
   signal auxr_clk   : std_logic;
   signal auxr_rst   : std_logic;
@@ -607,7 +608,7 @@ architecture Behavioral of FBCtl is
   signal auxr_wr    : std_logic;
   signal auxr_empty : std_logic;
   signal auxr_full  : std_logic;
-  signal auxr_count : std_logic_vector(10 downto 0) := (others => '0');
+  signal auxr_count : std_logic_vector(7 downto 0) := (others => '0');
 
   signal auxw_clk   : std_logic;
   signal auxw_rst   : std_logic;
@@ -617,7 +618,7 @@ architecture Behavioral of FBCtl is
   signal auxw_wr    : std_logic;
   signal auxw_empty : std_logic;
   signal auxw_full  : std_logic;
-  signal auxw_count : std_logic_vector(10 downto 0) := (others => '0');
+  signal auxw_count : std_logic_vector(7 downto 0) := (others => '0');
   
   type move_state_t is (
     move_reset,
@@ -922,25 +923,32 @@ begin
     p3_rd_en  <= rd_data_sel and enc;
     p3_rd_clk <= clkc;
 
-
+    d.dvistate <= (others => '0');
     case (staterd) is
       when strdidle =>
+        d.dvistate(0)         <= '1';
         if (p3_rd_count < 16) then
           nstaterd <= strdcmd;
         end if;
       when strdcmd =>
+        d.dvistate(1)         <= '1';        
         p3_cmd_en <= '1';
         nstaterd  <= strdcmdwait;
       when strdcmdwait =>
+        d.dvistate(2)         <= '1';                
         if (p3_rd_error = '1') then
+          d.dvistate(3)         <= '1';                  
           nstaterd <= strderr;             --the read fifo got empty
         elsif not (p3_rd_count < 16) then  -- data is present in the fifo
           nstaterd <= strdidle;
         end if;
       when strderr =>
+        d.dvistate(4)         <= '1';                
         null;
     end case;
   end process;
+  
+  d.p3 <= p3_rd_empty  & p3_rd_full & p3_rd_overflow & p3_rd_error & "0000";
 
 -----------------------------------------------------------------------------
 -- CAMERA A
@@ -1339,7 +1347,7 @@ begin
     auxw_rd  <= '0';
 
     p0_wr_data       <= (others => '0');
-   
+    d.state <=  (others => '0');
     case move_state is
 
       when move_reset =>
@@ -1359,9 +1367,10 @@ begin
         if auxw_count >= std_logic_vector(to_unsigned(32, 8)) then
           move_nstate <= move_w_transfer_aux;
         end if;
-          
+        d.state(0) <= '1';                        
         
       when move_r_p =>
+        d.state(1) <= '1';                        
         if p0_cmd_empty = '1' then
           p0_cmd_en        <= '1';
           p0_cmd_instr     <= MCB_CMD_RD;
@@ -1370,10 +1379,12 @@ begin
           move_nstate   <= move_r_transfer_p;
         end if;        
       when move_r_transfer_p =>
+        d.state(2) <= '1';                
         if p0_rd_count >= std_logic_vector(to_unsigned(16, 6)) then
           move_nstate <= move_r_transfer_p_1;
         end if;
       when move_r_transfer_p_1 =>
+        d.state(3) <= '1';                
         if p0_rd_empty = '0' then
           p0_rd_en <= '1';
           pr_wr    <= '1';
@@ -1385,6 +1396,7 @@ begin
 
         
       when move_r_aux =>
+        d.state(4) <= '1';                        
         if p0_cmd_empty = '1' then
           p0_cmd_en        <= '1';
           p0_cmd_instr     <= MCB_CMD_RD;
@@ -1393,10 +1405,12 @@ begin
           move_nstate   <= move_r_transfer_aux;
         end if;
       when move_r_transfer_aux =>
+        d.state(5) <= '1';                        
         if p0_rd_count >= std_logic_vector(to_unsigned(32, 6)) then
           move_nstate <= move_r_transfer_aux_1;
         end if;
       when move_r_transfer_aux_1 =>
+        d.state(6) <= '1';                        
         if p0_rd_empty = '0' then
           p0_rd_en <= '1';
           auxr_wr  <= '1';
@@ -1409,6 +1423,7 @@ begin
 -------------------------------------------------------------------------------        
 
       when move_w_transfer_p =>
+        d.state(7) <= '1';                        
         p0_wr_data <= pw_out;
         if p0_wr_count < std_logic_vector(to_unsigned(16, 6)) then
           p0_wr_en <= '1';
@@ -1417,6 +1432,7 @@ begin
           move_nstate <= move_w_p;
         end if;        
       when move_w_p =>
+        d.state(8) <= '1';                        
         if p0_cmd_empty = '1' then
           p0_cmd_en        <= '1';
           p0_cmd_instr     <= MCB_CMD_WR;
@@ -1425,6 +1441,7 @@ begin
           move_nstate  <= move_w_transfer_p_1;
         end if;
       when move_w_transfer_p_1 =>
+        d.state(9) <= '1';                        
         if p0_wr_empty = '1' then
           move_nstate <= move_w_p_inc;
         end if;
@@ -1433,6 +1450,7 @@ begin
 
         
       when move_w_transfer_aux =>
+        d.state(10) <= '1';                        
         p0_wr_data <= auxw_out;
         if p0_wr_count < std_logic_vector(to_unsigned(32, 6)) then
           p0_wr_en <= '1';
@@ -1441,6 +1459,7 @@ begin
           move_nstate <= move_w_aux;
         end if;        
       when move_w_aux =>
+        d.state(11) <= '1';                        
         if p0_cmd_empty = '1' then
           p0_cmd_en        <= '1';
           p0_cmd_instr     <= MCB_CMD_WR;
@@ -1449,6 +1468,7 @@ begin
           move_nstate  <= move_w_transfer_aux_1;
         end if;
       when move_w_transfer_aux_1 =>
+        d.state(12) <= '1';                        
         if p0_wr_empty = '1' then
           move_nstate <= move_w_aux_inc;
         end if;        
@@ -1640,5 +1660,20 @@ stallo <= stall(0);
   --usb_fifo.data  <= (others => '0');
   --usb_fifo.count <= (others => '0');
   --usb_fifo.stall <= '0';
+
+
+  d.pr_count <= "0" & pr_count;
+  d.pw_count <= "0" & pw_count;
+  d.auxr_count <= auxr_count;
+  d.auxw_count <= auxw_count;  
+
+d.fe(0) <= pr_empty;
+d.fe(1) <= pr_full;
+d.fe(2) <= pw_empty;
+d.fe(3) <= pw_full;
+d.fe(4) <= auxr_empty;
+d.fe(5) <= auxr_full;
+d.fe(6) <= auxw_empty;
+d.fe(7) <= auxw_full;  
 end Behavioral;
 

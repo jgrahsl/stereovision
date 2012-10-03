@@ -85,7 +85,7 @@ entity top is
     camb_fv_i   : in    std_logic;
     camb_rst_o  : out   std_logic;      --reset active low
     camb_pwdn_o : out   std_logic;      --power-down active high           
-    
+
 ----------------------------------------------------------------------------------
 -- ddr2 interface
 ----------------------------------------------------------------------------------
@@ -112,7 +112,7 @@ entity top is
 -- fpga link
 -------------------------------------------------------------------------------
     -- fx2 interface -----------------------------------------------------------------------------
-    fx2clk_in  : in    std_logic;      -- 48mhz clock from fx2
+    fx2clk_in   : in    std_logic;      -- 48mhz clock from fx2
     fx2addr_out : out   std_logic_vector(1 downto 0);  -- select fifo: "10" for ep6out, "11" for ep8in
     fx2data_io  : inout std_logic_vector(7 downto 0);  -- 8-bit data to/from fx2
 
@@ -136,21 +136,21 @@ architecture behavioral of top is
   signal vtchs, vtcvs, vtcvde, vtcrst : std_logic;
   signal vtchcnt, vtcvcnt             : natural;
 
-  signal camclk, camclk_180 : std_logic;
+  signal camclk, camclk_180                             : std_logic;
   --
-  signal camapclk, camadv, camavdden,fbwrarst, int_fva : std_logic;
-  signal camad                                           : std_logic_vector(15 downto 0);
-  signal dummy_t, int_cama_pclk_i                        : std_logic;
-  attribute s                : string;
-  attribute s of cama_pclk_i : signal is "true";
-  attribute s of dummy_t     : signal is "true";
+  signal camapclk, camadv, camavdden, fbwrarst, int_fva : std_logic;
+  signal camad                                          : std_logic_vector(15 downto 0);
+  signal dummy_t, int_cama_pclk_i                       : std_logic;
+  attribute s                                           : string;
+  attribute s of cama_pclk_i                            : signal is "true";
+  attribute s of dummy_t                                : signal is "true";
   --
-  signal cambpclk, cambdv, cambvdden,fbwrbrst, int_fvb : std_logic;
-  signal cambd                                           : std_logic_vector(15 downto 0);
-  signal int_camb_pclk_i                        : std_logic;
-  attribute s of camb_pclk_i : signal is "true";
+  signal cambpclk, cambdv, cambvdden, fbwrbrst, int_fvb : std_logic;
+  signal cambd                                          : std_logic_vector(15 downto 0);
+  signal int_camb_pclk_i                                : std_logic;
+  attribute s of camb_pclk_i                            : signal is "true";
   --
-  
+
   signal ddr2clk_2x, ddr2clk_2x_180, mcb_drp_clk, pll_ce_0, pll_ce_90, pll_lock, async_rst : std_logic;
   signal fbrdy, fbrden, fbrdrst, fbrdclk                                                   : std_logic;
   signal fbrddata                                                                          : std_logic_vector(16-1 downto 0);
@@ -192,12 +192,13 @@ architecture behavioral of top is
   signal inspect_unsync : inspect_t;
   signal inspect        : inspect_t;
   signal adr            : integer range 0 to max_pipe-1;
-  signal fx2clk_int      : std_logic;
+  signal fx2clk_int     : std_logic;
 
   signal usb_fifo : pixel_fifo_t;
   signal fifosel  : std_logic;
-  signal fifoen  : std_logic;  
-  signal stallo : std_logic;
+  signal fifoen   : std_logic;
+  signal d        : d0_t;               --   
+  signal stallo   : std_logic;
 begin
 ----------------------------------------------------------------------------------
 -- system control unit
@@ -259,17 +260,17 @@ begin
       clkc    => fbrdclk,
       rd_mode => sw_i,
 
-      encam_a   => camadv,
-      rstcam_a  => fbwrarst,
-      dcam_a    => camad,
-      clkcam_a  => camapclk,
+      encam_a  => camadv,
+      rstcam_a => fbwrarst,
+      dcam_a   => camad,
+      clkcam_a => camapclk,
 
-      encam_b   => cambdv,
-      rstcam_b  => fbwrbrst,
-      dcam_b    => cambd,
-      clkcam_b  => cambpclk,
-      
-      clk24   => camclk,
+      encam_b  => cambdv,
+      rstcam_b => fbwrbrst,
+      dcam_b   => cambd,
+      clkcam_b => cambpclk,
+
+      clk24 => camclk,
 
       ddr2clk_2x       => ddr2clk_2x,
       ddr2clk_2x_180   => ddr2clk_2x_180,
@@ -282,7 +283,7 @@ begin
       mcb3_dram_a      => mcb3_dram_a,
       mcb3_dram_ba     => mcb3_dram_ba,
       mcb3_dram_ras_n  => mcb3_dram_ras_n,
-     mcb3_dram_cas_n  => mcb3_dram_cas_n,
+      mcb3_dram_cas_n  => mcb3_dram_cas_n,
       mcb3_dram_we_n   => mcb3_dram_we_n,
       mcb3_dram_odt    => mcb3_dram_odt,
       mcb3_dram_cke    => mcb3_dram_cke,
@@ -301,7 +302,8 @@ begin
       inspect    => inspect_unsync,
       led_o      => led_o_t,
       usb_fifo   => usb_fifo,
-      stallo => stallo
+      stallo     => stallo,
+      d          => d
       );
 
   fbrden  <= vtcvde;
@@ -321,7 +323,7 @@ begin
     clk_i => cambpclk
     );
   fbwrbrst <= async_rst or not int_fvb;
-  
+
 ----------------------------------------------------------------------------------
 -- dvi transmitter
 ----------------------------------------------------------------------------------
@@ -368,7 +370,7 @@ begin
       pwdn_o  => cama_pwdn_o,
       vdden_o => camavdden
       );
-  camx_vdden_o <= camavdden;
+  camx_vdden_o <= cambvdden;
 ----------------------------------------------------------------------------------
 -- camera b controller
 ----------------------------------------------------------------------------------
@@ -392,7 +394,7 @@ begin
       vdden_o => cambvdden
       );
 
-  
+
 ----------------------------------------------------------------------------------
 -- workaround for in_term bug ar#   40818
 ----------------------------------------------------------------------------------
@@ -431,7 +433,7 @@ begin
 
   my_inspect_sync : entity work.inspect_sync
     port map (
-      clk  => fx2clk_int,                -- [in]
+      clk  => fx2clk_int,               -- [in]
       din  => inspect_unsync,           -- [in]
       dout => inspect);                 -- [out] 
 
@@ -455,14 +457,14 @@ begin
             cfg(adr).p(0) <= h2fdata;
           when "1110001" =>
             cfg(adr).p(1) <= h2fdata;
-          when "1110010" =>
-            cfg(adr).p(2) <= h2fdata;
-          when "1110011" =>
-            cfg(adr).p(3) <= h2fdata;
-          when "1110100" =>
-            cfg(adr).p(4) <= h2fdata;
-          when "1110101" =>
-            cfg(adr).p(5) <= h2fdata;
+            --when "1110010" =>
+            --  cfg(adr).p(2) <= h2fdata;
+            --when "1110011" =>
+            --  cfg(adr).p(3) <= h2fdata;
+            --when "1110100" =>
+            --  cfg(adr).p(4) <= h2fdata;
+            --when "1110101" =>
+            --  cfg(adr).p(5) <= h2fdata;
             --when "1110110" =>
             --  cfg(adr).p(6) <= h2fdata;
             --when "1110111" =>
@@ -473,35 +475,49 @@ begin
     end if;
   end process;
 
-  fifosel <= '1' when chanaddr = "0100000" else '0';
-  fifoen <= '1' when fifosel = '1' and usb_fifo.stall = '0' and f2hready = '1' else '0';
+  fifosel     <= '1' when chanaddr = "0100000"                                      else '0';
+  fifoen      <= '1' when fifosel = '1' and usb_fifo.stall = '0' and f2hready = '1' else '0';
   usb_fifo.en <= fifoen;
 
   f2hvalid <= '1' when fifoen = '1' else
               '0' when fifosel = '1' and usb_fifo.stall = '1' and f2hready = '1' else
-              '1' when f2hready = '1'                                           else
+              '1' when f2hready = '1'                                            else
               '0';
- 
-  led_o <= f2hready & f2hvalid & usb_fifo.stall & fifosel & stallo & h2fready & h2fvalid & "1" when sw_i(1 downto 0) = "00" else  std_logic_vector(to_unsigned(adr, 8));
+  
+  led_o <= d.pr_count when sw_i(3 downto 0) = "0000" else
+           d.pw_count                                                                          when sw_i(3 downto 0) = "0001" else
+           d.auxr_count                                                                        when sw_i(3 downto 0) = "0010" else
+           d.auxw_count                                                                        when sw_i(3 downto 0) = "0011" else
+           d.state(7 downto 0)                                                                 when sw_i(3 downto 0) = "0100" else
+           d.state(15 downto 8)                                                                when sw_i(3 downto 0) = "0101" else
+           f2hready & f2hvalid & usb_fifo.stall & fifosel & stallo & h2fready & h2fvalid & "1" when sw_i(3 downto 0) = "0110" else
+           std_logic_vector(to_unsigned(adr, 8))                                               when sw_i(3 downto 0) = "0111" else
+           d.fe                                                                                when sw_i(3 downto 0) = "1000" else
+           d.dvistate                                                                                when sw_i(3 downto 0) = "1001" else
+           d.p3                                                                                when sw_i(3 downto 0) = "1010" else           
+
+
+           (others => '0');
+  
 
   with chanaddr select f2hdata <=
     std_logic_vector(to_unsigned(adr, 8))          when "1100000",
     "000000" & cfg(adr).identify & cfg(adr).enable when "1100001",
     inspect.identity                               when "1100010",
 
-    cfg(adr).p(0)                when "1110000",
-    cfg(adr).p(1)                when "1110001",
-    cfg(adr).p(2)                when "1110010",
-    cfg(adr).p(3)                when "1110011",
-    cfg(adr).p(4)                when "1110100",
-    cfg(adr).p(5)                when "1110101",
+    cfg(adr).p(0)             when "1110000",
+    cfg(adr).p(1)             when "1110001",
+--    cfg(adr).p(2)             when "1110010",
+--    cfg(adr).p(3)             when "1110011",
+--    cfg(adr).p(4)             when "1110100",
+--    cfg(adr).p(5)             when "1110101",
     --cfg(adr).p(6)               when "1110110",
     --cfg(adr).p(7)               when "1110111",
     --
-    usb_fifo.data(7 downto 0)    when "0100000",
+    usb_fifo.data(7 downto 0) when "0100000",
 --    "0000000" & usb_fifo.stall   when "0100001",    
 --    usb_fifo.count(7 downto 0)   when "0100010",
-    x"aa" when others;
+    x"aa"                     when others;
 
   comm : if fpgalink = 1 generate
     h2fready <= '1';

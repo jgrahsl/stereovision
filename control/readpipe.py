@@ -10,6 +10,7 @@ def send_byte(chan,val):
     global handle
     ba = bytearray(1)
     ba[0] = val
+#    ba[1] = val
     flWriteChannel(handle, 1000, chan,ba)
 
 def recv_byte(chan):

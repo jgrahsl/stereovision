@@ -137,6 +137,18 @@ package cam_pkg is
     dy : signed((ABCD_BITS/2)-1 downto 0);
   end record;
 
+
+  type d0_t is record
+                 pr_count : std_logic_vector(7 downto 0);
+                 pw_count : std_logic_vector(7 downto 0);
+                 auxr_count : std_logic_vector(7 downto 0);
+                 auxw_count : std_logic_vector(7 downto 0);
+                 state : std_logic_vector(15 downto 0);
+                 fe : std_logic_vector(7 downto 0);
+                 p3 : std_logic_vector(7 downto 0);
+                 dvistate : std_logic_vector(7 downto 0);
+               end record; 
+  
   procedure connect_pipe (
     signal clk       : out std_logic;
     signal rst       : out std_logic;

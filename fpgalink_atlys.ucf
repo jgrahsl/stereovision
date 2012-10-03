@@ -1,4 +1,4 @@
-#
+
 # Copyright (C) 2009-2012 Chris McClelland
 #
 # This program is free software: you can redistribute it and/or modify
@@ -45,7 +45,7 @@ INST "fx2Addr_out[1]" TNM = fx2out;
 #Created by Constraints Editor (xc6slx45-csg324-3) - 2012/10/03
 NET "fx2clk_in" TNM_NET = fx2clk_in;
 TIMESPEC TS_fx2clk_in = PERIOD "fx2clk_in" 20 ns HIGH 50%;
-TIMEGRP "fx2out" OFFSET = OUT 10.471 ns AFTER "fx2clk_in";
+
 #Created by Constraints Editor (xc6slx45-csg324-3) - 2012/10/03
 #Created by Constraints Editor (xc6slx45-csg324-3) - 2012/10/03
 INST "fx2data_io<0>" TNM = fx2data_in;
@@ -58,7 +58,7 @@ INST "fx2data_io<6>" TNM = fx2data_in;
 INST "fx2data_io<7>" TNM = fx2data_in;
 INST "fx2gotdata_in" TNM = fx2data_in;
 INST "fx2gotroom_in" TNM = fx2data_in;
-TIMEGRP "fx2data_in" OFFSET = IN 7 ns VALID 20 ns BEFORE "fx2clk_in" RISING;
+
 #Created by Constraints Editor (xc6slx45-csg324-3) - 2012/10/03
 INST "fx2data_io<0>" TNM = fx2out_data;
 INST "fx2data_io<1>" TNM = fx2out_data;
@@ -68,4 +68,10 @@ INST "fx2data_io<4>" TNM = fx2out_data;
 INST "fx2data_io<5>" TNM = fx2out_data;
 INST "fx2data_io<6>" TNM = fx2out_data;
 INST "fx2data_io<7>" TNM = fx2out_data;
-TIMEGRP "fx2out_data" OFFSET = OUT 10 ns AFTER "fx2clk_in";
+
+
+
+
+#TIMEGRP "fx2out" OFFSET = OUT 14 ns AFTER "fx2clk_in";
+#TIMEGRP "fx2out_data" OFFSET = OUT 10 ns AFTER "fx2clk_in";
+#TIMEGRP "fx2data_in" OFFSET = IN 10 ns VALID 20 ns BEFORE "fx2clk_in" RISING;
