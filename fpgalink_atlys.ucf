@@ -14,29 +14,46 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 #===============================================================================
 # USB interface
 #===============================================================================
-NET "fx2Clk_in"       LOC="C10"  | IOSTANDARD=LVTTL;   # IFCLK
-NET "fx2Addr_out<0>"  LOC="A14"  | IOSTANDARD=LVTTL;   # PA4/FIFOADR0
-NET "fx2Addr_out<1>"  LOC="B14"  | IOSTANDARD=LVTTL;   # PA5/FIFOADR1
+NET "fx2Clk_in" LOC = C10 | IOSTANDARD = "LVTTL";   # IFCLK
+NET "fx2Addr_out<0>" LOC = A14 | IOSTANDARD = "LVTTL";   # PA4/FIFOADR0
+NET "fx2Addr_out<1>" LOC = B14 | IOSTANDARD = "LVTTL";   # PA5/FIFOADR1
+NET "fx2Data_io<0>" LOC = A2 | IOSTANDARD = "LVTTL";   # PB0/FD0
+NET "fx2Data_io<1>" LOC = D6 | IOSTANDARD = "LVTTL";   # PB1/FD1
+NET "fx2Data_io<2>" LOC = C6 | IOSTANDARD = "LVTTL";   # PB2/FD2
+NET "fx2Data_io<3>" LOC = B3 | IOSTANDARD = "LVTTL";   # PB3/FD3
+NET "fx2Data_io<4>" LOC = A3 | IOSTANDARD = "LVTTL";   # PB4/FD4
+NET "fx2Data_io<5>" LOC = B4 | IOSTANDARD = "LVTTL";   # PB5/FD5
+NET "fx2Data_io<6>" LOC = A4 | IOSTANDARD = "LVTTL";   # PB6/FD6
+NET "fx2Data_io<7>" LOC = C5 | IOSTANDARD = "LVTTL";   # PB7/FD7
+NET "fx2Read_out" LOC = F13 | IOSTANDARD = "LVTTL";   # RDY0/SLRD
+NET "fx2OE_out" LOC = A15 | IOSTANDARD = "LVTTL";   # PA2/SLOE
+NET "fx2GotData_in" LOC = C15 | IOSTANDARD = "LVTTL";   # CTL2/FLAGC
+NET "fx2Write_out" LOC = E13 | IOSTANDARD = "LVTTL";   # RDY1/SLWR
+NET "fx2GotRoom_in" LOC = A9 | IOSTANDARD = "LVTTL";   # CTL1/FLAGB
+NET "fx2PktEnd_out" LOC = C4 | IOSTANDARD = "LVTTL";   # PA6/PKTEND
 
-NET "fx2Data_io<0>"   LOC="A2"   | IOSTANDARD=LVTTL;   # PB0/FD0
-NET "fx2Data_io<1>"   LOC="D6"   | IOSTANDARD=LVTTL;   # PB1/FD1
-NET "fx2Data_io<2>"   LOC="C6"   | IOSTANDARD=LVTTL;   # PB2/FD2
-NET "fx2Data_io<3>"   LOC="B3"   | IOSTANDARD=LVTTL;   # PB3/FD3
-NET "fx2Data_io<4>"   LOC="A3"   | IOSTANDARD=LVTTL;   # PB4/FD4
-NET "fx2Data_io<5>"   LOC="B4"   | IOSTANDARD=LVTTL;   # PB5/FD5
-NET "fx2Data_io<6>"   LOC="A4"   | IOSTANDARD=LVTTL;   # PB6/FD6
-NET "fx2Data_io<7>"   LOC="C5"   | IOSTANDARD=LVTTL;   # PB7/FD7
+#Created by Constraints Editor (xc6slx45-csg324-3) - 2012/10/01
+INST "fx2Read_out" TNM = fx2out;
+INST "fx2Write_out" TNM = fx2out;
+INST "fx2OE_out" TNM = fx2out;
+INST "fx2PktEnd_out" TNM = fx2out;
+INST "fx2Addr_out[0]" TNM = fx2out;
+INST "fx2Addr_out[1]" TNM = fx2out;
 
-NET "fx2Read_out"     LOC="F13"  | IOSTANDARD=LVTTL;   # RDY0/SLRD
-NET "fx2OE_out"       LOC="A15"  | IOSTANDARD=LVTTL;   # PA2/SLOE
-NET "fx2GotData_in"   LOC="C15"  | IOSTANDARD=LVTTL;   # CTL2/FLAGC
-
-NET "fx2Write_out"    LOC="E13"  | IOSTANDARD=LVTTL;   # RDY1/SLWR
-NET "fx2GotRoom_in"   LOC="A9"   | IOSTANDARD=LVTTL;   # CTL1/FLAGB
-NET "fx2PktEnd_out"   LOC="C4"   | IOSTANDARD=LVTTL;   # PA6/PKTEND
-NET "fx2Clk_in" TNM_NET = "fx2Clk_in";
-TIMESPEC "TS_clk" = PERIOD "fx2Clk_in" 20 ns HIGH 50 %;
+#Created by Constraints Editor (xc6slx45-csg324-3) - 2012/10/03
+NET "fx2clk_in" TNM_NET = fx2clk_in;
+TIMESPEC TS_fx2clk_in = PERIOD "fx2clk_in" 20 ns HIGH 50%;
+TIMEGRP "fx2out" OFFSET = OUT 10.471 ns AFTER "fx2clk_in";
+#Created by Constraints Editor (xc6slx45-csg324-3) - 2012/10/03
+INST "fx2data_io<0>" TNM = fx2data_in;
+INST "fx2data_io<1>" TNM = fx2data_in;
+INST "fx2data_io<2>" TNM = fx2data_in;
+INST "fx2data_io<3>" TNM = fx2data_in;
+INST "fx2data_io<4>" TNM = fx2data_in;
+INST "fx2data_io<5>" TNM = fx2data_in;
+INST "fx2data_io<6>" TNM = fx2data_in;
+INST "fx2data_io<7>" TNM = fx2data_in;
+TIMEGRP "fx2data_in" OFFSET = IN 7 ns VALID 20 ns BEFORE "fx2clk_in" RISING;

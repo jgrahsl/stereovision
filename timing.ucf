@@ -1,23 +1,16 @@
 
-NET "CLK_I" TNM_NET = "CLK_I";
+NET "clk_i" TNM_NET = "CLK_I";
 TIMESPEC TS_CLK_I = PERIOD "CLK_I" 100 MHz HIGH 50 %; #ISE 13.1 bug workaround, should be 100 
 #Created by Constraints Editor (xc6slx45-csg324-3) - 2011/04/06
 NET "Inst_SysCon/ASYNC_RST" TIG;
 
+NET "camapclk" TNM_NET = "camapclk";
+TIMESPEC TS_camapclk = PERIOD "camapclk" 80 MHz HIGH 50 %;
+OFFSET = IN 1.25 ns VALID 7.5 ns BEFORE "cama_pclk_i" RISING;
 
-
-#Created by Constraints Editor (xc6slx45-csg324-2) - 2011/03/22
-#Created by Constraints Editor (xc6slx45-csg324-2) - 2011/03/29
-
-
-NET "CAMAPCLK" TNM_NET = "CAMA_PCLK_I";
-TIMESPEC TS_CAMA_PCLK_I = PERIOD "CAMA_PCLK_I" 80 MHz HIGH 50 %;
-OFFSET = IN 1.25 ns VALID 7.5 ns BEFORE "CAMA_PCLK_I" RISING;
-
-NET "CAMBPCLK" TNM_NET = "CAMB_PCLK_I";
-TIMESPEC TS_CAMB_PCLK_I = PERIOD "CAMB_PCLK_I" 80 MHz HIGH 50 %;
-OFFSET = IN 1.25 ns VALID 7.5 ns BEFORE "CAMB_PCLK_I" RISING;
-
+NET "cambpclk" TNM_NET = "cambpclk";
+TIMESPEC TS_cambpclk = PERIOD "cambpclk" 80 MHz HIGH 50 %;
+OFFSET = IN 1.25 ns VALID 7.5 ns BEFORE "camb_pclk_i" RISING;
 
 
 #Created by Constraints Editor (xc6slx45-csg324-3) - 2012/07/23
@@ -25,14 +18,3 @@ INST "Inst_FBCtl/inst_localrstc/RstQ_*" TNM = RSTQ_SOURCE;
 INST "Inst_FBCtl/inst_localrstalg/RstQ_*" TNM = RESET_SINK;
 TIMESPEC TS_RESET = FROM "RSTQ_SOURCE" TO "RESET_SINK" TIG;
 #Created by Constraints Editor (xc6slx45-csg324-3) - 2012/10/01
-NET "fx2Clk_in" TNM_NET = fx2Clk_in;
-TIMESPEC TS_fx2Clk_in = PERIOD "fx2Clk_in" 20 ns HIGH 50%;
-#Created by Constraints Editor (xc6slx45-csg324-3) - 2012/10/01
-
-INST "fx2Read_out" TNM = fx2out;
-INST "fx2Write_out" TNM = fx2out;
-INST "fx2OE_out" TNM = fx2out;
-INST "fx2PktEnd_out" TNM = fx2out;
-INST "fx2Addr_out[0]" TNM = fx2out;
-INST "fx2Addr_out[1]" TNM = fx2out;
-TIMEGRP "fx2out" OFFSET = OUT 10.471 ns AFTER "fx2Clk_in";

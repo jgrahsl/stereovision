@@ -282,7 +282,7 @@ begin
       mcb3_dram_a      => mcb3_dram_a,
       mcb3_dram_ba     => mcb3_dram_ba,
       mcb3_dram_ras_n  => mcb3_dram_ras_n,
-      mcb3_dram_cas_n  => mcb3_dram_cas_n,
+     mcb3_dram_cas_n  => mcb3_dram_cas_n,
       mcb3_dram_we_n   => mcb3_dram_we_n,
       mcb3_dram_odt    => mcb3_dram_odt,
       mcb3_dram_cke    => mcb3_dram_cke,
@@ -423,7 +423,7 @@ begin
 
   rd <= '0';
 
---  ibufg_inst : ibufg generic map (iostandard => "default")port map (o => fx2clk_in, i => fx2clk_int);
+  ibufg_inst : ibufg generic map (iostandard => "default")port map (o => fx2clk_int, i => fx2clk_in);
 --  fx2clk_in <= fx2clk_int;
 -------------------------------------------------------------------------------
 -- fpga link
@@ -431,14 +431,14 @@ begin
 
   my_inspect_sync : entity work.inspect_sync
     port map (
-      clk  => fx2clk_in,                -- [in]
+      clk  => fx2clk_int,                -- [in]
       din  => inspect_unsync,           -- [in]
       dout => inspect);                 -- [out] 
 
-  usb_fifo.clk <= fx2clk_in;
-  process(fx2clk_in)
+  usb_fifo.clk <= fx2clk_int;
+  process(fx2clk_int)
   begin
-    if (rising_edge(fx2clk_in)) then
+    if (rising_edge(fx2clk_int)) then
       --if f2hready = '1' then
       --  if chanaddr = "0001111" then
       --    reg1 <= std_logic_vector(unsigned(reg1) + 1);
@@ -513,7 +513,7 @@ begin
     comm_fpga_fx2 : entity work.comm_fpga_fx2
       port map(
         -- fx2 interface
-        fx2clk_in      => fx2clk_in,
+        fx2clk_in      => fx2clk_int,
         fx2fifosel_out => fx2addr_out(0),
         fx2data_io     => fx2data_io,
         fx2read_out    => fx2read,
