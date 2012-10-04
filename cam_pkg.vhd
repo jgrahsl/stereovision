@@ -145,7 +145,11 @@ package cam_pkg is
                  auxw_count : std_logic_vector(7 downto 0);
                  state : std_logic_vector(15 downto 0);
                  fe : std_logic_vector(7 downto 0);
+                 p1 : std_logic_vector(7 downto 0);
+                 p2 : std_logic_vector(7 downto 0);                 
                  p3 : std_logic_vector(7 downto 0);
+                 p1state : std_logic_vector(7 downto 0);
+                 p2state : std_logic_vector(7 downto 0);                 
                  dvistate : std_logic_vector(7 downto 0);
                end record; 
   

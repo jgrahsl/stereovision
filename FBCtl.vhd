@@ -937,13 +937,12 @@ begin
       when strdcmdwait =>
         d.dvistate(2)         <= '1';                
         if (p3_rd_error = '1') then
-          d.dvistate(3)         <= '1';                  
           nstaterd <= strderr;             --the read fifo got empty
         elsif not (p3_rd_count < 16) then  -- data is present in the fifo
           nstaterd <= strdidle;
         end if;
       when strderr =>
-        d.dvistate(4)         <= '1';                
+        d.dvistate(3)         <= '1';                
         null;
     end case;
   end process;
@@ -1040,15 +1039,19 @@ begin
   begin
     nstatewra <= statewra;              --default is to stay in current state
     p2_cmd_en <= '0';
+    d.p2state <= (others => '0');    
     case (statewra) is
       when stwridle =>
+        d.p2state(0) <= '1';
         if (pa_wr_cnt >= wr_batch or pa_int_rst = '1') then
           nstatewra <= stwrcmd;
         end if;
       when stwrcmd =>
+        d.p2state(1) <= '1';        
         p2_cmd_en <= '1';
         nstatewra <= stwrcmdwait;
       when stwrcmdwait =>
+        d.p2state(2) <= '1';        
         if (p2_wr_error = '1') then
           nstatewra <= stwrerr;         --the write fifo got empty
         elsif ((pa_int_rst = '0' and p2_wr_count < wr_batch) or
@@ -1056,10 +1059,11 @@ begin
           nstatewra <= stwridle;
         end if;
       when stwrerr =>
+        d.p2state(3) <= '1';      
         null;
     end case;
   end process;
-
+  d.p2 <= p2_wr_empty  & p2_wr_full & p2_wr_underrun & p2_wr_error & p2_wr_en & p2_cmd_en & "00";
 -----------------------------------------------------------------------------
 -- CAMERA B
 -----------------------------------------------------------------------------
@@ -1088,7 +1092,7 @@ begin
 -------------------------------------------------------------------------------
 -- SELECTOR
 -------------------------------------------------------------------------------
-      if (srstcam_a = '1') then
+      if (srstcam_b = '1') then
         pb_wr_data_sel <= '0';
       elsif (encam_b = '1') then
         pb_wr_data_sel <= not pb_wr_data_sel;
@@ -1150,15 +1154,19 @@ begin
   begin
     nstatewrb <= statewrb;              --default is to stay in current state
     p1_cmd_en <= '0';
+    d.p1state <= (others => '0');    
     case (statewrb) is
       when stwridle =>
+        d.p1state(0)         <= '1';                             
         if (pb_wr_cnt >= wr_batch or pb_int_rst = '1') then
           nstatewrb <= stwrcmd;
         end if;
       when stwrcmd =>
+        d.p1state(1)         <= '1';                                     
         p1_cmd_en <= '1';
         nstatewrb <= stwrcmdwait;
       when stwrcmdwait =>
+        d.p1state(2)         <= '1';                                     
         if (p1_wr_error = '1') then
           nstatewrb <= stwrerr;         --the write fifo got empty
         elsif ((pb_int_rst = '0' and p1_wr_count < wr_batch) or
@@ -1166,10 +1174,11 @@ begin
           nstatewrb <= stwridle;
         end if;
       when stwrerr =>
+        d.p1state(3)         <= '1';                                     
         null;
     end case;
   end process;
- 
+  d.p1 <= p1_wr_empty  & p1_wr_full & p1_wr_underrun & p1_wr_error & p1_wr_en & p1_cmd_en & "00"; 
 
 -------------------------------------------------------------------------------
 -- ALGO on P0 and P1
@@ -1375,7 +1384,7 @@ begin
           p0_cmd_en        <= '1';
           p0_cmd_instr     <= MCB_CMD_RD;
           p0_cmd_bl        <= conv_std_logic_vector(15, 6);
-          p0_cmd_byte_addr <= conv_std_logic_vector(my_pixel_rd_addr+CAMB_OFFSET, 30);
+          p0_cmd_byte_addr <= conv_std_logic_vector(my_pixel_rd_addr+CAMA_OFFSET, 30);
           move_nstate   <= move_r_transfer_p;
         end if;        
       when move_r_transfer_p =>

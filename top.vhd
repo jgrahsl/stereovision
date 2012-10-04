@@ -63,8 +63,8 @@ entity top is
     led_o         : out   std_logic_vector(7 downto 0);
     clk_i         : in    std_logic;
     reset_i       : in    std_logic;
-
-    camx_vdden_o : out std_logic;  -- common power supply enable (can do power cycle)
+    sup_rst       : in    std_logic;
+    camx_vdden_o  : out   std_logic;  -- common power supply enable (can do power cycle)
 
     cama_sda    : inout std_logic;
     cama_scl    : inout std_logic;
@@ -140,15 +140,17 @@ architecture behavioral of top is
   --
   signal camapclk, camadv, camavdden, fbwrarst, int_fva : std_logic;
   signal camad                                          : std_logic_vector(15 downto 0);
-  signal dummy_t, int_cama_pclk_i                       : std_logic;
+  signal dummya_t, int_cama_pclk_i                      : std_logic;
   attribute s                                           : string;
   attribute s of cama_pclk_i                            : signal is "true";
-  attribute s of dummy_t                                : signal is "true";
+  attribute s of dummya_t                               : signal is "true";
   --
   signal cambpclk, cambdv, cambvdden, fbwrbrst, int_fvb : std_logic;
   signal cambd                                          : std_logic_vector(15 downto 0);
-  signal int_camb_pclk_i                                : std_logic;
+  signal dummyb_t, int_camb_pclk_i                      : std_logic;
   attribute s of camb_pclk_i                            : signal is "true";
+  attribute s of dummyb_t                               : signal is "true";
+
   --
 
   signal ddr2clk_2x, ddr2clk_2x_180, mcb_drp_clk, pll_ce_0, pll_ce_90, pll_lock, async_rst : std_logic;
@@ -199,6 +201,7 @@ architecture behavioral of top is
   signal fifoen   : std_logic;
   signal d        : d0_t;               --   
   signal stallo   : std_logic;
+  signal cam_rst  : std_logic;
 begin
 ----------------------------------------------------------------------------------
 -- system control unit
@@ -356,7 +359,7 @@ begin
       d_o     => camad,
       pclk_o  => camapclk,
       dv_o    => camadv,
-      rst_i   => async_rst,
+      rst_i   => cam_rst,
       clk     => camclk,
       clk_180 => camclk_180,
       sda     => cama_sda,
@@ -379,7 +382,7 @@ begin
       d_o     => cambd,
       pclk_o  => cambpclk,
       dv_o    => cambdv,
-      rst_i   => async_rst,
+      rst_i   => cam_rst,
       clk     => camclk,
       clk_180 => camclk_180,
       sda     => camb_sda,
@@ -395,6 +398,7 @@ begin
       );
 
 
+  cam_rst <= async_rst or sup_rst;
 ----------------------------------------------------------------------------------
 -- workaround for in_term bug ar#   40818
 ----------------------------------------------------------------------------------
@@ -407,7 +411,7 @@ begin
       o  => int_cama_pclk_i,            -- buffer output
       io => cama_pclk_i,  -- buffer inout port (connect directly to top-level port)
       i  => '0',                        -- buffer input
-      t  => dummy_t       -- 3-state enable input, high=input, low=output 
+      t  => dummya_t      -- 3-state enable input, high=input, low=output 
       ); 
   inst_iobuf_camb_pclk : iobuf
     generic map (
@@ -418,10 +422,11 @@ begin
       o  => int_camb_pclk_i,            -- buffer output
       io => camb_pclk_i,  -- buffer inout port (connect directly to top-level port)
       i  => '0',                        -- buffer input
-      t  => dummy_t       -- 3-state enable input, high=input, low=output 
+      t  => dummyb_t      -- 3-state enable input, high=input, low=output 
       ); 
 
-  dummy_t <= '1';
+  dummya_t <= '1';
+  dummyb_t <= '1';
 
   rd <= '0';
 
@@ -493,8 +498,12 @@ begin
            f2hready & f2hvalid & usb_fifo.stall & fifosel & stallo & h2fready & h2fvalid & "1" when sw_i(3 downto 0) = "0110" else
            std_logic_vector(to_unsigned(adr, 8))                                               when sw_i(3 downto 0) = "0111" else
            d.fe                                                                                when sw_i(3 downto 0) = "1000" else
-           d.dvistate                                                                                when sw_i(3 downto 0) = "1001" else
-           d.p3                                                                                when sw_i(3 downto 0) = "1010" else           
+           d.dvistate                                                                          when sw_i(3 downto 0) = "1001" else
+           d.p3                                                                                when sw_i(3 downto 0) = "1010" else
+           d.p2state                                                                           when sw_i(3 downto 0) = "1011" else
+           d.p2                                                                                when sw_i(3 downto 0) = "1100" else
+           d.p1state                                                                           when sw_i(3 downto 0) = "1101" else
+           d.p1                                                                                when sw_i(3 downto 0) = "1110" else
 
 
            (others => '0');
