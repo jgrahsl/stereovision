@@ -30,9 +30,18 @@ vhdl work "mcb_sink.vhd"
 vhdl work "fifo_sink.vhd"
 
 vhdl work "null.vhd"
+vhdl work "testpic.vhd"
 vhdl work "color_mux.vhd"
 
 vhdl work "skinfilter.vhd"
+
+vhdl work "romdata.vhd"
+vhdl work "rom.vhd"
+vhdl work "bilinear.vhd"
+vhdl work "bi.vhd"
+vhdl work "bi2.vhd"
+vhdl work "bi3.vhd"
+
 
 vhdl work "window.vhd"
 vhdl work "window_8.vhd"

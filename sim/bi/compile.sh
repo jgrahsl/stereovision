@@ -14,6 +14,7 @@ rm -f sim.out output.tiff
 rm -fR work
 vlib work
 for i in $VHD; do
+echo $i
     vcom -93 -work work $SRCDIR/$i  
     if [ $? -ne 0 ]; then
         exit;

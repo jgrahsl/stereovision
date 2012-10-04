@@ -383,6 +383,10 @@ while True:
         print "Win Test 8 " + str(i)
         t.append(Enable(ui.pipe,i,"Win Test 8"))
 
+    if v[0] == 0x19:
+        print "Testpic" + str(i)
+        t.append(Enable(ui.pipe,i,"Testpic"))
+
        
     i = i + 1
     if i > 31:

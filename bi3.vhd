@@ -5,23 +5,23 @@ use ieee.numeric_std.all;
 library work;
 use work.cam_pkg.all;
 
-entity bi is
+entity bi3 is
   generic (
     ID     : integer range 0 to 63   := 0;
     WIDTH  : natural range 0 to 2048 := 2048;
     HEIGHT : natural range 0 to 2048 := 2048);
   port (
-    pipe_in      : in  pipe_t;
-    pipe_out     : out pipe_t;
-    stall_in     : in  std_logic;
-    stall_out    : out std_logic;
-    abcd         : out abcd_t;
-    gray8_2d_in  : in  gray8_2d_t;
-    gray8_2d_out : out gray8_2d_t
+    pipe_in     : in  pipe_t;
+    pipe_out    : out pipe_t;
+    stall_in    : in  std_logic;
+    stall_out   : out std_logic;
+    gray8_2d_in : in  gray8_2d_t;
+    disx : in unsigned(2 downto 0);
+    disy : in unsigned(2 downto 0)
     );
-end bi;
+end bi3;
 
-architecture impl of bi is
+architecture impl of bi3 is
 
   signal clk        : std_logic;
   signal rst        : std_logic;
@@ -44,41 +44,11 @@ architecture impl of bi is
     v.cols := 0;
     v.rows := 0;
   end init;
-
-  signal x : std_logic_vector(15 downto 0);
-  signal y : std_logic_vector(15 downto 0);
-begin
-
-  x <= std_logic_vector(to_unsigned(r.cols, x'length));
-  y <= std_logic_vector(to_unsigned(r.rows, y'length));
-
-  my_rom : entity work.rom
-    generic map (
-      GRIDX_BITS => GRIDX_BITS,
-      GRIDY_BITS => GRIDY_BITS)
-    port map (
-      clk  => clk,                                               -- [in]
-      x    => x(SUBGRID_BITS+GRIDX_BITS-1 downto SUBGRID_BITS),  -- [in]
-      y    => y(SUBGRID_BITS+GRIDY_BITS-1 downto SUBGRID_BITS),  -- [in]
-      abcd => abcd);
-
-  --my_bilinear : entity work.bilinear
-  --  generic map (
-  --    REF_BITS  => 3,
-  --    FRAC_BITS => 4)
-  --  port map (
-  --    a  => "010",                      -- [in]
-  --    b  => "010",                      -- [in]
-  --    c  => "110",                      -- [in]
-  --    d  => "110",                      -- [in]
-  --    rx => x(3 downto 0),              -- [in]
-  --    ry => y(3 downto 0),              -- [in]
-  --    o  => o);                         -- [out]
-
+begin 
   issue <= '0';
 
   connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);
-
+  
   process(pipe_in, r, rst, src_valid)
     variable v : reg_t;
   begin
@@ -86,11 +56,11 @@ begin
     v          := r;
 -------------------------------------------------------------------------------
 -- Logic
--------------------------------------------------------------------------------
-
+-------------------------------------------------------------------------------    
 -------------------------------------------------------------------------------
 -- Output
 -------------------------------------------------------------------------------
+    stage_next.data_8 <= gray8_2d_in(TO_INTEGER(disx))(TO_INTEGER(disy));
 -------------------------------------------------------------------------------
 -- Counter
 -------------------------------------------------------------------------------
@@ -128,7 +98,6 @@ begin
         stage <= pipe_in.stage;
       end if;
       r <= r_next;
-      gray8_2d_out <= gray8_2d_in;
     end if;
   end process;
 

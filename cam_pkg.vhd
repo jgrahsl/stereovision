@@ -14,9 +14,10 @@ package cam_pkg is
   -----------------------------------------------------------------------------
   constant ABCD_BITS    : natural := 8;
   constant GRIDX_BITS   : natural := 2;
-  constant GRIDY_BITS   : natural := 2;
-  constant SUBGRID_BITS : natural := 2;
-
+  constant GRIDY_BITS   : natural := 2;  -- MS bits taken from pixel counter
+                                         -- for rom adr
+  constant SUBGRID_BITS : natural := 2;  -- LS bits taken from pixel counter
+                                         -- for interpolation
   -----------------------------------------------------------------------------
   -- Ident codes
   -----------------------------------------------------------------------------
@@ -44,6 +45,7 @@ package cam_pkg is
   constant IDENT_WINDOW_8        : std_logic_vector(7 downto 0) := X"16";
   constant IDENT_WIN_TEST        : std_logic_vector(7 downto 0) := X"17";
   constant IDENT_WIN_TEST_8      : std_logic_vector(7 downto 0) := X"18";
+  constant IDENT_TESTPIC      : std_logic_vector(7 downto 0) := X"19";  
 
 
   constant IDENT_NULL    : std_logic_vector(7 downto 0) := X"F0";

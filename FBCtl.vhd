@@ -23,7 +23,6 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.all;
 use IEEE.std_logic_unsigned.all;
-use IEEE.std_logic_arith.all;
 use ieee.numeric_std.all;
 
 library digilent;
@@ -78,17 +77,17 @@ entity FBCtl is
 ------------------------------------------------------------------------------------
 -- CAM A
 ------------------------------------------------------------------------------------
-    encam_a            : in    std_logic;  --port enable
-    rstcam_a           : in    std_logic;  --asynchronous port reset
-    dcam_a             : in    std_logic_vector (colordepth - 1 downto 0);  --data output
-    clkcam_a           : in    std_logic;  --port clock
+    encam_a          : in    std_logic;  --port enable
+    rstcam_a         : in    std_logic;  --asynchronous port reset
+    dcam_a           : in    std_logic_vector (colordepth - 1 downto 0);  --data output
+    clkcam_a         : in    std_logic;  --port clock
 ------------------------------------------------------------------------------------
 -- CAM B
 ------------------------------------------------------------------------------------
-    encam_b            : in    std_logic;  --port enable
-    rstcam_b           : in    std_logic;  --asynchronous port reset
-    dcam_b             : in    std_logic_vector (colordepth - 1 downto 0);  --data output
-    clkcam_b           : in    std_logic;  --port clock
+    encam_b          : in    std_logic;  --port enable
+    rstcam_b         : in    std_logic;  --asynchronous port reset
+    dcam_b           : in    std_logic_vector (colordepth - 1 downto 0);  --data output
+    clkcam_b         : in    std_logic;  --port clock
 -------------------------------------------------------------------------------    
     clk24            : in    std_logic;  --port clock
 ---------------------------------------------------------------------------------      
@@ -128,8 +127,8 @@ entity FBCtl is
 
     usb_fifo : inout pixel_fifo_t;
 
-    stallo: out std_logic;
-    d : out d0_t
+    stallo : out std_logic;
+    d      : out d0_t
     );
 end FBCtl;
 
@@ -548,26 +547,26 @@ architecture Behavioral of FBCtl is
   signal pa_wr_cnt                  : natural range 0 to 2**6-1      := 0;
   signal pa_wr_addr                 : natural range 0 to VMEM_SIZE-1 := 0;
   signal pa_wr_data_sel, pa_int_rst : std_logic;
-  signal SRstcam_A, SCalibDoneA : std_logic;
-  signal rstcam_a_int : std_logic;
+  signal SRstcam_A, SCalibDoneA     : std_logic;
+  signal rstcam_a_int               : std_logic;
 
   -- CAMB
-  signal pb_wr_cnt                  : natural range 0 to 2**6-1      := 0;  
+  signal pb_wr_cnt                  : natural range 0 to 2**6-1      := 0;
   signal pb_wr_addr                 : natural range 0 to VMEM_SIZE-1 := 0;
   signal pb_wr_data_sel, pb_int_rst : std_logic;
-  signal SRstcam_B, SCalibDoneB : std_logic;
-  signal rstcam_b_int : std_logic;
-  
+  signal SRstcam_B, SCalibDoneB     : std_logic;
+  signal rstcam_b_int               : std_logic;
+
   -- VGA
   signal pc_rd_addr1, pc_rd_addr2 : natural   := 0;
   signal fVMemSource              : std_logic := '0';
   signal rd_data_sel              : std_logic;
   signal int_rd_mode              : std_logic_vector(1 downto 0);
-  signal RstC, SRstC : std_logic;
+  signal RstC, SRstC              : std_logic;
 
   -- ALG
-  signal clkalg     : std_logic;
-  signal rstalg     : std_logic;
+  signal clkalg   : std_logic;
+  signal rstalg   : std_logic;
   signal cfg      : cfg_set_t;
   signal pipe     : pipe_set_t;
   signal hist_row : natural range 0 to 2047;
@@ -628,7 +627,7 @@ architecture Behavioral of FBCtl is
     move_r_p_inc,
     move_r_transfer_p,
     move_r_transfer_p_1,
-    
+
     move_r_aux,
     move_r_aux_inc,
     move_r_transfer_aux,
@@ -638,14 +637,14 @@ architecture Behavioral of FBCtl is
     move_w_transfer_p,
     move_w_transfer_p_1,
     move_w_p_inc,
-    
+
     move_w_aux,
     move_w_transfer_aux,
     move_w_transfer_aux_1,
     move_w_aux_inc);
 
   signal move_state  : move_state_t;
-  signal move_nstate  : move_state_t;
+  signal move_nstate : move_state_t;
 
   signal my_pixel_rd_addr : natural range 0 to 2**24-1 := 0;
   signal my_aux_rd_addr   : natural range 0 to 2**24-1 := 0;
@@ -664,10 +663,22 @@ architecture Behavioral of FBCtl is
   signal out_fifo : pixel_fifo_t;
 
 
-  constant AUX_OFFSET : natural := 2**24;
+  constant AUX_OFFSET  : natural := 2**24;
   constant CAMB_OFFSET : natural := 2**23;
   constant CAMA_OFFSET : natural := 2**22;
-  constant DVI_OFFSET : natural := 0;  
+  constant DVI_OFFSET  : natural := 0;
+
+
+  constant WIDTH  : natural := 640;
+  constant HEIGHT : natural := 480;
+
+  signal abcd       : abcd_t;
+  signal gray8_2d_1 : gray8_2d_t;
+  signal gray8_2d_2 : gray8_2d_t;
+
+  signal disx : unsigned(2 downto 0);
+  signal disy : unsigned(2 downto 0);
+  
 begin
 ----------------------------------------------------------------------------------
 -- mcb instantiation
@@ -914,11 +925,11 @@ begin
     nstaterd <= staterd;                --default is to stay in current state
 
     p3_cmd_instr <= mcb_cmd_rd;         -- port 3 read-only
-    p3_cmd_bl    <= conv_std_logic_vector(rd_batch-1, 6);  -- we read 32 dwords (32-bit) at a time
+    p3_cmd_bl    <= std_logic_vector(to_unsigned(rd_batch-1, 6));  -- we read 32 dwords (32-bit) at a time
     p3_cmd_clk   <= clkc;
 
     p3_cmd_en        <= '0';
-    p3_cmd_byte_addr <= conv_std_logic_vector(pc_rd_addr1 * (rd_batch*4)+(DVI_OFFSET), 30);
+    p3_cmd_byte_addr <= std_logic_vector(to_unsigned(pc_rd_addr1 * (rd_batch*4)+(DVI_OFFSET), 30));
 
     p3_rd_en  <= rd_data_sel and enc;
     p3_rd_clk <= clkc;
@@ -926,28 +937,28 @@ begin
     d.dvistate <= (others => '0');
     case (staterd) is
       when strdidle =>
-        d.dvistate(0)         <= '1';
+        d.dvistate(0) <= '1';
         if (p3_rd_count < 16) then
           nstaterd <= strdcmd;
         end if;
       when strdcmd =>
-        d.dvistate(1)         <= '1';        
-        p3_cmd_en <= '1';
-        nstaterd  <= strdcmdwait;
+        d.dvistate(1) <= '1';
+        p3_cmd_en     <= '1';
+        nstaterd      <= strdcmdwait;
       when strdcmdwait =>
-        d.dvistate(2)         <= '1';                
+        d.dvistate(2) <= '1';
         if (p3_rd_error = '1') then
           nstaterd <= strderr;             --the read fifo got empty
         elsif not (p3_rd_count < 16) then  -- data is present in the fifo
           nstaterd <= strdidle;
         end if;
       when strderr =>
-        d.dvistate(3)         <= '1';                
+        d.dvistate(3) <= '1';
         null;
     end case;
   end process;
-  
-  d.p3 <= p3_rd_empty  & p3_rd_full & p3_rd_overflow & p3_rd_error & "0000";
+
+  d.p3 <= p3_rd_empty & p3_rd_full & p3_rd_overflow & p3_rd_error & "0000";
 
 -----------------------------------------------------------------------------
 -- CAMERA A
@@ -1031,15 +1042,15 @@ begin
 
   p2_cmd_clk       <= clkcam_a;
   p2_cmd_instr     <= mcb_cmd_wr;       -- port 1 write-only
-  p2_cmd_byte_addr <= conv_std_logic_vector(pa_wr_addr * (wr_batch*4)+CAMA_OFFSET, 30);
-  p2_cmd_bl        <= conv_std_logic_vector(pa_wr_cnt-1, 6) when pa_int_rst = '1' else
-                      conv_std_logic_vector(wr_batch-1, 6);
+  p2_cmd_byte_addr <= std_logic_vector(to_unsigned(pa_wr_addr * (wr_batch*4)+CAMA_OFFSET, 30));
+  p2_cmd_bl        <= std_logic_vector(to_unsigned(pa_wr_cnt-1, 6)) when pa_int_rst = '1' else
+                      std_logic_vector(to_unsigned(wr_batch-1, 6));
 
   wrnext_state_decode_aa : process (statewra, p2_wr_count, p2_wr_error, pa_int_rst, p2_wr_empty, pa_wr_cnt)
   begin
     nstatewra <= statewra;              --default is to stay in current state
     p2_cmd_en <= '0';
-    d.p2state <= (others => '0');    
+    d.p2state <= (others => '0');
     case (statewra) is
       when stwridle =>
         d.p2state(0) <= '1';
@@ -1047,11 +1058,11 @@ begin
           nstatewra <= stwrcmd;
         end if;
       when stwrcmd =>
-        d.p2state(1) <= '1';        
-        p2_cmd_en <= '1';
-        nstatewra <= stwrcmdwait;
+        d.p2state(1) <= '1';
+        p2_cmd_en    <= '1';
+        nstatewra    <= stwrcmdwait;
       when stwrcmdwait =>
-        d.p2state(2) <= '1';        
+        d.p2state(2) <= '1';
         if (p2_wr_error = '1') then
           nstatewra <= stwrerr;         --the write fifo got empty
         elsif ((pa_int_rst = '0' and p2_wr_count < wr_batch) or
@@ -1059,11 +1070,11 @@ begin
           nstatewra <= stwridle;
         end if;
       when stwrerr =>
-        d.p2state(3) <= '1';      
+        d.p2state(3) <= '1';
         null;
     end case;
   end process;
-  d.p2 <= p2_wr_empty  & p2_wr_full & p2_wr_underrun & p2_wr_error & p2_wr_en & p2_cmd_en & "00";
+  d.p2 <= p2_wr_empty & p2_wr_full & p2_wr_underrun & p2_wr_error & p2_wr_en & p2_cmd_en & "00";
 -----------------------------------------------------------------------------
 -- CAMERA B
 -----------------------------------------------------------------------------
@@ -1146,27 +1157,27 @@ begin
 
   p1_cmd_clk       <= clkcam_b;
   p1_cmd_instr     <= mcb_cmd_wr;       -- port 1 write-only
-  p1_cmd_byte_addr <= conv_std_logic_vector(pb_wr_addr * (wr_batch*4)+CAMB_OFFSET, 30);
-  p1_cmd_bl        <= conv_std_logic_vector(pb_wr_cnt-1, 6) when pb_int_rst = '1' else
-                      conv_std_logic_vector(wr_batch-1, 6);
+  p1_cmd_byte_addr <= std_logic_vector(to_unsigned(pb_wr_addr * (wr_batch*4)+CAMB_OFFSET, 30));
+  p1_cmd_bl        <= std_logic_vector(to_unsigned(pb_wr_cnt-1, 6)) when pb_int_rst = '1' else
+                      std_logic_vector(to_unsigned(wr_batch-1, 6));
 
   wrnext_state_decode_b : process (statewrb, p1_wr_count, p1_wr_error, pb_int_rst, p1_wr_empty, pb_wr_cnt)
   begin
     nstatewrb <= statewrb;              --default is to stay in current state
     p1_cmd_en <= '0';
-    d.p1state <= (others => '0');    
+    d.p1state <= (others => '0');
     case (statewrb) is
       when stwridle =>
-        d.p1state(0)         <= '1';                             
+        d.p1state(0) <= '1';
         if (pb_wr_cnt >= wr_batch or pb_int_rst = '1') then
           nstatewrb <= stwrcmd;
         end if;
       when stwrcmd =>
-        d.p1state(1)         <= '1';                                     
-        p1_cmd_en <= '1';
-        nstatewrb <= stwrcmdwait;
+        d.p1state(1) <= '1';
+        p1_cmd_en    <= '1';
+        nstatewrb    <= stwrcmdwait;
       when stwrcmdwait =>
-        d.p1state(2)         <= '1';                                     
+        d.p1state(2) <= '1';
         if (p1_wr_error = '1') then
           nstatewrb <= stwrerr;         --the write fifo got empty
         elsif ((pb_int_rst = '0' and p1_wr_count < wr_batch) or
@@ -1174,11 +1185,11 @@ begin
           nstatewrb <= stwridle;
         end if;
       when stwrerr =>
-        d.p1state(3)         <= '1';                                     
+        d.p1state(3) <= '1';
         null;
     end case;
   end process;
-  d.p1 <= p1_wr_empty  & p1_wr_full & p1_wr_underrun & p1_wr_error & p1_wr_en & p1_cmd_en & "00"; 
+  d.p1 <= p1_wr_empty & p1_wr_full & p1_wr_underrun & p1_wr_error & p1_wr_en & p1_cmd_en & "00";
 
 -------------------------------------------------------------------------------
 -- ALGO on P0 and P1
@@ -1194,7 +1205,7 @@ begin
   begin  -- process
     if clkalg'event and clkalg = '1' then  -- rising clock edge
       if rstalg = '1' then                 -- synchronous reset (active high)
-        move_state    <= move_reset;
+        move_state <= move_reset;
 
         my_pixel_rd_addr <= 0;
         my_pixel_wr_addr <= 0;
@@ -1214,12 +1225,12 @@ begin
 
         if move_state = move_r_aux_inc then
           if (my_aux_rd_addr = (640*2*480-32*4)) then
-            my_aux_rd_addr   <= 0;
+            my_aux_rd_addr <= 0;
           else
-            my_aux_rd_addr   <= my_aux_rd_addr + 32*4;
+            my_aux_rd_addr <= my_aux_rd_addr + 32*4;
           end if;
         end if;
-        
+
         if move_state = move_w_p_inc then
           if (my_pixel_wr_addr = (640*2*480-16*4)) then
             my_pixel_wr_addr <= 0;
@@ -1230,13 +1241,13 @@ begin
 
         if move_state = move_w_aux_inc then
           if (my_aux_wr_addr = (640*2*480-32*4)) then
-            my_aux_wr_addr   <= 0;
+            my_aux_wr_addr <= 0;
           else
-            my_aux_wr_addr   <= my_aux_wr_addr + 32*4;
+            my_aux_wr_addr <= my_aux_wr_addr + 32*4;
           end if;
         end if;
-        
-        move_state  <= move_nstate;
+
+        move_state <= move_nstate;
       end if;
     end if;
   end process;
@@ -1329,14 +1340,14 @@ begin
   auxw_wr         <= auxw_fifo.en;
   auxw_fifo.stall <= auxw_full;
   auxw_in         <= auxw_fifo.data;
-  
+
   -- p/aux_fifo to real mcb
   pr_in   <= p0_rd_data;
   auxr_in <= p0_rd_data;
 
-  p0_cmd_clk <= clkalg;  
-  p0_rd_clk <= clkalg;
-  p0_wr_clk <= clkalg;
+  p0_cmd_clk <= clkalg;
+  p0_rd_clk  <= clkalg;
+  p0_wr_clk  <= clkalg;
 
   process (move_state)
   begin  -- process
@@ -1355,8 +1366,8 @@ begin
     pw_rd    <= '0';
     auxw_rd  <= '0';
 
-    p0_wr_data       <= (others => '0');
-    d.state <=  (others => '0');
+    p0_wr_data <= (others => '0');
+    d.state    <= (others => '0');
     case move_state is
 
       when move_reset =>
@@ -1376,24 +1387,24 @@ begin
         if auxw_count >= std_logic_vector(to_unsigned(32, 8)) then
           move_nstate <= move_w_transfer_aux;
         end if;
-        d.state(0) <= '1';                        
+        d.state(0) <= '1';
         
       when move_r_p =>
-        d.state(1) <= '1';                        
+        d.state(1) <= '1';
         if p0_cmd_empty = '1' then
           p0_cmd_en        <= '1';
           p0_cmd_instr     <= MCB_CMD_RD;
-          p0_cmd_bl        <= conv_std_logic_vector(15, 6);
-          p0_cmd_byte_addr <= conv_std_logic_vector(my_pixel_rd_addr+CAMA_OFFSET, 30);
-          move_nstate   <= move_r_transfer_p;
-        end if;        
+          p0_cmd_bl        <= std_logic_vector(to_unsigned(15, 6));
+          p0_cmd_byte_addr <= std_logic_vector(to_unsigned(my_pixel_rd_addr+CAMB_OFFSET, 30));
+          move_nstate      <= move_r_transfer_p;
+        end if;
       when move_r_transfer_p =>
-        d.state(2) <= '1';                
+        d.state(2) <= '1';
         if p0_rd_count >= std_logic_vector(to_unsigned(16, 6)) then
           move_nstate <= move_r_transfer_p_1;
         end if;
       when move_r_transfer_p_1 =>
-        d.state(3) <= '1';                
+        d.state(3) <= '1';
         if p0_rd_empty = '0' then
           p0_rd_en <= '1';
           pr_wr    <= '1';
@@ -1401,56 +1412,56 @@ begin
           move_nstate <= move_r_p_inc;
         end if;
       when move_r_p_inc =>
-        move_nstate <= move_wait;      
+        move_nstate <= move_wait;
 
         
       when move_r_aux =>
-        d.state(4) <= '1';                        
+        d.state(4) <= '1';
         if p0_cmd_empty = '1' then
           p0_cmd_en        <= '1';
           p0_cmd_instr     <= MCB_CMD_RD;
-          p0_cmd_bl        <= conv_std_logic_vector(31, 6);
-          p0_cmd_byte_addr <= conv_std_logic_vector(my_aux_rd_addr+AUX_OFFSET, 30);
-          move_nstate   <= move_r_transfer_aux;
+          p0_cmd_bl        <= std_logic_vector(to_unsigned(31, 6));
+          p0_cmd_byte_addr <= std_logic_vector(to_unsigned(my_aux_rd_addr+AUX_OFFSET, 30));
+          move_nstate      <= move_r_transfer_aux;
         end if;
       when move_r_transfer_aux =>
-        d.state(5) <= '1';                        
+        d.state(5) <= '1';
         if p0_rd_count >= std_logic_vector(to_unsigned(32, 6)) then
           move_nstate <= move_r_transfer_aux_1;
         end if;
       when move_r_transfer_aux_1 =>
-        d.state(6) <= '1';                        
+        d.state(6) <= '1';
         if p0_rd_empty = '0' then
           p0_rd_en <= '1';
           auxr_wr  <= '1';
         else
           move_nstate <= move_r_aux_inc;
-        end if;      
+        end if;
       when move_r_aux_inc =>
         move_nstate <= move_wait;
 
 -------------------------------------------------------------------------------        
 
       when move_w_transfer_p =>
-        d.state(7) <= '1';                        
+        d.state(7) <= '1';
         p0_wr_data <= pw_out;
         if p0_wr_count < std_logic_vector(to_unsigned(16, 6)) then
           p0_wr_en <= '1';
           pw_rd    <= '1';
         else
           move_nstate <= move_w_p;
-        end if;        
+        end if;
       when move_w_p =>
-        d.state(8) <= '1';                        
+        d.state(8) <= '1';
         if p0_cmd_empty = '1' then
           p0_cmd_en        <= '1';
           p0_cmd_instr     <= MCB_CMD_WR;
-          p0_cmd_bl        <= conv_std_logic_vector(15, 6);
-          p0_cmd_byte_addr <= conv_std_logic_vector(my_pixel_wr_addr+DVI_OFFSET, 30);
-          move_nstate  <= move_w_transfer_p_1;
+          p0_cmd_bl        <= std_logic_vector(to_unsigned(15, 6));
+          p0_cmd_byte_addr <= std_logic_vector(to_unsigned(my_pixel_wr_addr+DVI_OFFSET, 30));
+          move_nstate      <= move_w_transfer_p_1;
         end if;
       when move_w_transfer_p_1 =>
-        d.state(9) <= '1';                        
+        d.state(9) <= '1';
         if p0_wr_empty = '1' then
           move_nstate <= move_w_p_inc;
         end if;
@@ -1459,28 +1470,28 @@ begin
 
         
       when move_w_transfer_aux =>
-        d.state(10) <= '1';                        
-        p0_wr_data <= auxw_out;
+        d.state(10) <= '1';
+        p0_wr_data  <= auxw_out;
         if p0_wr_count < std_logic_vector(to_unsigned(32, 6)) then
           p0_wr_en <= '1';
           auxw_rd  <= '1';
         else
           move_nstate <= move_w_aux;
-        end if;        
+        end if;
       when move_w_aux =>
-        d.state(11) <= '1';                        
+        d.state(11) <= '1';
         if p0_cmd_empty = '1' then
           p0_cmd_en        <= '1';
           p0_cmd_instr     <= MCB_CMD_WR;
-          p0_cmd_bl        <= conv_std_logic_vector(31, 6);
-          p0_cmd_byte_addr <= conv_std_logic_vector(my_aux_wr_addr+AUX_OFFSET, 30);
-          move_nstate  <= move_w_transfer_aux_1;
+          p0_cmd_bl        <= std_logic_vector(to_unsigned(31, 6));
+          p0_cmd_byte_addr <= std_logic_vector(to_unsigned(my_aux_wr_addr+AUX_OFFSET, 30));
+          move_nstate      <= move_w_transfer_aux_1;
         end if;
       when move_w_transfer_aux_1 =>
-        d.state(12) <= '1';                        
+        d.state(12) <= '1';
         if p0_wr_empty = '1' then
           move_nstate <= move_w_aux_inc;
-        end if;        
+        end if;
       when move_w_aux_inc =>
         move_nstate <= move_wait;
 
@@ -1534,7 +1545,7 @@ begin
       cfg      => cfg,                  -- [in]
       pipe_out => pipe(0));             -- [out]
 
-stallo <= stall(0);
+  stallo <= stall(0);
   my_mcb_feed : entity work.mcb_feed
     generic map (
       ID => 1)
@@ -1546,18 +1557,6 @@ stallo <= stall(0);
       p0_fifo   => pr_fifo,             -- [inout]
       p1_fifo   => auxr_fifo);          -- [inout]
 
-  --dut : entity work.win_gray8
-  --  generic map (
-  --    ID     => 23,
-  --    WIDTH  => 640,
-  --    HEIGHT => 480)
-  --  port map (
-  --    pipe_in      => pipe(1),          -- [in]
-  --    pipe_out     => pipe(2),
-  --    stall_in     => stall(2),
-  --    stall_out    => stall(1),
-  --    gray8_2d_out => gray8_2d
-  --    );                                -- [inout]
 
   --dut2 : entity work.win_test_8
   --  generic map (
@@ -1571,14 +1570,6 @@ stallo <= stall(0);
   --    gray8_2d_in => gray8_2d
   --    );                                -- [inout] 
 
-  --my_skinfilter : entity work.skinfilter
-  --  generic map (
-  --    ID => 2)
-  --  port map (
-  --    pipe_in   => pipe(1),
-  --    pipe_out  => pipe(2),
-  --    stall_in  => stall(2),
-  --    stall_out => stall(1));
 
   ----my_motion : entity work.motion
   ----  generic map (
@@ -1617,37 +1608,110 @@ stallo <= stall(0);
   --    pipe_in  => pipe(5),              -- [in]
   --    pipe_out => pipe(6));             -- [out]
 
+
+  testpic : entity work.testpic
+    generic map (
+      ID     => 2,
+      WIDTH  => WIDTH,
+      HEIGHT => HEIGHT)
+    port map (
+      pipe_in   => pipe(1),
+      pipe_out  => pipe(2),
+      stall_in  => stall(2),
+      stall_out => stall(1));
+
+  dut : entity work.win_gray8
+    generic map (
+      ID     => 3,
+      WIDTH  => WIDTH,
+      HEIGHT => HEIGHT)
+    port map (
+      pipe_in      => pipe(2),          -- [in]
+      pipe_out     => pipe(3),
+      stall_in     => stall(3),
+      stall_out    => stall(2),
+      gray8_2d_out => gray8_2d_1
+      );                                -- [inout]
+
+  
+  bitest : entity work.bi
+    generic map (
+      ID     => 25,
+      WIDTH  => WIDTH,
+      HEIGHT => HEIGHT)
+    port map (
+      pipe_in      => pipe(3),          -- [in]
+      pipe_out     => pipe(4),
+      stall_in     => stall(4),
+      stall_out    => stall(3),
+      abcd         => abcd,
+      gray8_2d_in  => gray8_2d_1,
+      gray8_2d_out => gray8_2d_2
+      );                                -- [inout]
+
+  bitest2 : entity work.bi2
+    generic map (
+      ID     => 26,
+      WIDTH  => WIDTH,
+      HEIGHT => HEIGHT)
+    port map (
+      pipe_in     => pipe(4),           -- [in]
+      pipe_out    => pipe(5),
+      stall_in    => stall(5),
+      stall_out   => stall(4),
+      abcd        => abcd,
+      gray8_2d_in => gray8_2d_2,
+      disx => disx,
+      disy => disy
+      );                                -- [inout]
+
+  bitest3 : entity work.bi3
+    generic map (
+      ID     => 27,
+      WIDTH  => WIDTH,
+      HEIGHT => HEIGHT)
+    port map (
+      pipe_in     => pipe(5),           -- [in]
+      pipe_out    => pipe(6),
+      stall_in    => stall(6),
+      stall_out   => stall(5),
+      gray8_2d_in => gray8_2d_2,
+      disx => disx,
+      disy => disy
+      
+      );                                -- [inout]
+  
   my_col_mux : entity work.color_mux
     generic map (
       ID   => 29,
       MODE => 2)
     port map (
-      pipe_in   => pipe(1),             -- [in]
-      pipe_out  => pipe(4),
-      stall_in  => stall(4),
-      stall_out => stall(1));           -- [inout]
+      pipe_in   => pipe(6),             -- [in]
+      pipe_out  => pipe(7),
+      stall_in  => stall(7),
+      stall_out => stall(6));           -- [inout]
 
   my_fifo_sink : entity work.fifo_sink
     generic map (
       ID     => 30,
-      WIDTH  => 640,
-      HEIGHT => 480
+      WIDTH  => WIDTH,
+      HEIGHT => HEIGHT
       )
     port map (
-      pipe_in   => pipe(4),             -- [in]
-      pipe_out  => pipe(5),             -- [out]
-      stall_in  => stall(5),
-      stall_out => stall(4),
+      pipe_in   => pipe(7),             -- [in]
+      pipe_out  => pipe(8),             -- [out]
+      stall_in  => stall(8),
+      stall_out => stall(7),
       p0_fifo   => out_fifo);           -- [inout]
 
   my_mcb_sink : entity work.mcb_sink
     generic map (
       ID => 31)
     port map (
-      pipe_in   => pipe(5),             -- [in]
-      pipe_out  => pipe(8),             -- [out]
+      pipe_in   => pipe(8),             -- [in]
+      pipe_out  => pipe(9),             -- [out]
       stall_in  => '0',
-      stall_out => stall(5),
+      stall_out => stall(8),
       p0_fifo   => pw_fifo,             -- [inout]
       p1_fifo   => auxw_fifo);          -- [inout]
 
@@ -1671,18 +1735,18 @@ stallo <= stall(0);
   --usb_fifo.stall <= '0';
 
 
-  d.pr_count <= "0" & pr_count;
-  d.pw_count <= "0" & pw_count;
+  d.pr_count   <= "0" & pr_count;
+  d.pw_count   <= "0" & pw_count;
   d.auxr_count <= auxr_count;
-  d.auxw_count <= auxw_count;  
+  d.auxw_count <= auxw_count;
 
-d.fe(0) <= pr_empty;
-d.fe(1) <= pr_full;
-d.fe(2) <= pw_empty;
-d.fe(3) <= pw_full;
-d.fe(4) <= auxr_empty;
-d.fe(5) <= auxr_full;
-d.fe(6) <= auxw_empty;
-d.fe(7) <= auxw_full;  
+  d.fe(0) <= pr_empty;
+  d.fe(1) <= pr_full;
+  d.fe(2) <= pw_empty;
+  d.fe(3) <= pw_full;
+  d.fe(4) <= auxr_empty;
+  d.fe(5) <= auxr_full;
+  d.fe(6) <= auxw_empty;
+  d.fe(7) <= auxw_full;
 end Behavioral;
 
