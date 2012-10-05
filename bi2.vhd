@@ -16,10 +16,10 @@ entity bi2 is
     stall_in    : in  std_logic;
     stall_out   : out std_logic;
     abcd        : in  abcd_t;
-    gray8_2d_in : in  gray8_2d_t;
-    gray8_2d_out : out  gray8_2d_t;
-    disx : out unsigned(5 downto 0);
-    disy : out unsigned(5 downto 0)
+    gray8_2d_in : in  gray8_2d_t
+--    gray8_2d_out : out  gray8_2d_t
+--    disx : out unsigned(5 downto 0);
+--    disy : out unsigned(5 downto 0)
     );
 end bi2;
 
@@ -56,8 +56,11 @@ architecture impl of bi2 is
   signal ox : signed((ABCD_BITS/2)+SUBGRID_BITS-1 downto 0);
   signal oy : signed((ABCD_BITS/2)+SUBGRID_BITS-1 downto 0);
 
-  signal shifted_x : signed((ABCD_BITS/2)-1 downto 0);
-  signal shifted_y : signed((ABCD_BITS/2)-1 downto 0);
+  signal x_pixel : unsigned((ABCD_BITS/2)-1 downto 0);
+  signal y_pixel : unsigned((ABCD_BITS/2)-1 downto 0);
+  
+  signal x_frac : unsigned(SUBGRID_BITS-1 downto 0);
+  signal y_frac : unsigned(SUBGRID_BITS-1 downto 0);
 
   signal shifted_x2 : signed((ABCD_BITS/2)-1 downto 0);
   signal shifted_y2 : signed((ABCD_BITS/2)-1 downto 0);  
@@ -110,24 +113,11 @@ begin
       ry => y(SUBGRID_BITS-1 downto 0),
       o  => oy);
 
-  shifted_x <= ox(ox'high downto ox'high-(ABCD_BITS/2)+1);
-  shifted_y <= oy(oy'high downto oy'high-(ABCD_BITS/2)+1);
-
-  shifted_x2 <= shifted_x + 2;
-  shifted_y2 <= shifted_y + 2;  
-
-  ux <= STD_LOGIC_VECTOR(shifted_x2);
-  uy <= STD_LOGIC_VECTOR(shifted_y2);
-
-  usx <= unsigned(ux);
-  usy <= unsigned(uy);  
-
---  off <= unsigned(pipe_in.cfg(ID).p(0)(3 downto 0))*5; --"0000" & usy;-- + usy*5;
---  off2 <= unsigned(pipe_in.cfg(ID).p(1)); 
-
-  off <= usy(3 downto 0)*5; --"0000" & usy;-- + usy*5;
-  off2 <= usx(3 downto 0)*1; 
-    
+  x_pixel <= unsigned(std_logic_vector(ox(ox'high downto ox'high-(ABCD_BITS/2)+1)));
+  y_pixel <= unsigned(std_logic_vector(oy(oy'high downto oy'high-(ABCD_BITS/2)+1)));
+  x_frac <= unsigned(std_logic_vector(ox(SUBGRID_BITS-1 downto 0)));
+  y_frac <= unsigned(std_logic_vector(oy(SUBGRID_BITS-1 downto 0)));
+   
   process(pipe_in, r, rst, src_valid, off, off2)
     variable v : reg_t;
   begin
@@ -144,9 +134,7 @@ begin
     --v.disx := unsigned(ctx);
     --v.disy := unsigned(cty);
 
-    
-    v.disx := off(5 downto 0);
-    v.disy := off2(5 downto 0);
+    stage_next.data_8 <= gray8_2d_in(to_integer(x_pixel*5 + y_pixel));    
 -------------------------------------------------------------------------------
 -- Counter
 -------------------------------------------------------------------------------
@@ -175,8 +163,6 @@ begin
     r_next <= v;
   end process;
 
-  disx <= r.disx;
-  disy <= r.disy;
   proc_clk : process(clk, rst, stall, pipe_in, stage_next, r_next, gray8_2d_in)
   begin
     if rising_edge(clk) and (stall = '0' or rst = '1') then
@@ -186,9 +172,9 @@ begin
         stage <= pipe_in.stage;
       end if;
       r <= r_next;
-      gray8_2d <=  gray8_2d_next; 
+--      gray8_2d <=  gray8_2d_next; 
     end if;
   end process;
-  gray8_2d_out <= gray8_2d;
-  gray8_2d_next <= gray8_2d_in;
+--  gray8_2d_out <= gray8_2d;
+--  gray8_2d_next <= gray8_2d_in;
 end impl;

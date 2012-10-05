@@ -118,37 +118,17 @@ begin  -- impl
       stall_in    => stall(4),
       stall_out   => stall(3),
       abcd        => abcd,
-      gray8_2d_in => gray8_2d_2,
-      gray8_2d_out => gray8_2d_3,      
-      disx => disx,
-      disy => disy
+      gray8_2d_in => gray8_2d_2
       );                                -- [inout]
-
-  bitest3 : entity work.bi3
-    generic map (
-      ID     => 27,
-      WIDTH  => WIDTH,
-      HEIGHT => HEIGHT)
-    port map (
-      pipe_in     => pipe(4),           -- [in]
-      pipe_out    => pipe(5),
-      stall_in    => stall(5),
-      stall_out   => stall(4),
-      gray8_2d_in => gray8_2d_3,
-      disx => disx,
-      disy => disy
-      
-      );                                -- [inout]
-
   colmux : entity work.color_mux
     generic map (
       ID   => 3,
       MODE => 2)      
     port map (
-      pipe_in   => pipe(5),             -- [in]
+      pipe_in   => pipe(4),             -- [in]
       pipe_out  => pipe(6),
       stall_in  => stall(6),
-      stall_out => stall(5));           -- [inout]
+      stall_out => stall(4));           -- [inout]
   
   my_sim_sink : entity work.sim_sink
     generic map (
