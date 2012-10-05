@@ -675,9 +675,10 @@ architecture Behavioral of FBCtl is
   signal abcd       : abcd_t;
   signal gray8_2d_1 : gray8_2d_t;
   signal gray8_2d_2 : gray8_2d_t;
+  signal gray8_2d_3 : gray8_2d_t;  
 
-  signal disx : unsigned(2 downto 0);
-  signal disy : unsigned(2 downto 0);
+  signal disx : unsigned(5 downto 0);
+  signal disy : unsigned(5 downto 0);
   
 begin
 ----------------------------------------------------------------------------------
@@ -1633,6 +1634,17 @@ begin
       gray8_2d_out => gray8_2d_1
       );                                -- [inout]
 
+  --dut2 : entity work.win_test_8
+  --  generic map (
+  --    ID     => 25)
+  --  port map (
+  --    pipe_in      => pipe(3),          -- [in]
+  --    pipe_out     => pipe(4),
+  --    stall_in     => stall(4),
+  --    stall_out    => stall(3),
+  --    gray8_2d_in => gray8_2d_1      
+  --    );                                -- [inout]
+  
   
   bitest : entity work.bi
     generic map (
@@ -1661,6 +1673,7 @@ begin
       stall_out   => stall(4),
       abcd        => abcd,
       gray8_2d_in => gray8_2d_2,
+      gray8_2d_out => gray8_2d_3,      
       disx => disx,
       disy => disy
       );                                -- [inout]
@@ -1675,7 +1688,7 @@ begin
       pipe_out    => pipe(6),
       stall_in    => stall(6),
       stall_out   => stall(5),
-      gray8_2d_in => gray8_2d_2,
+      gray8_2d_in => gray8_2d_3,
       disx => disx,
       disy => disy
       
@@ -1715,7 +1728,7 @@ begin
       p0_fifo   => pw_fifo,             -- [inout]
       p1_fifo   => auxw_fifo);          -- [inout]
 
-  inspect.identity <= pipe(8).stage.identity;
+  inspect.identity <= pipe(9).stage.identity;
 
   my_pixel_fifo : entity work.pixel_fifo
     port map (
@@ -1748,5 +1761,8 @@ begin
   d.fe(5) <= auxr_full;
   d.fe(6) <= auxw_empty;
   d.fe(7) <= auxw_full;
+
+
 end Behavioral;
+
 

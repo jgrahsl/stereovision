@@ -18,8 +18,8 @@ entity bi2 is
     abcd        : in  abcd_t;
     gray8_2d_in : in  gray8_2d_t;
     gray8_2d_out : out  gray8_2d_t;
-    disx : out unsigned(2 downto 0);
-    disy : out unsigned(2 downto 0)
+    disx : out unsigned(5 downto 0);
+    disy : out unsigned(5 downto 0)
     );
 end bi2;
 
@@ -36,8 +36,8 @@ architecture impl of bi2 is
   type reg_t is record
     cols : natural range 0 to WIDTH-1;
     rows : natural range 0 to HEIGHT-1;
-    disx : unsigned(2 downto 0);
-    disy : unsigned(2 downto 0);
+    disx : unsigned(5 downto 0);
+    disy : unsigned(5 downto 0);
   end record;
 
   signal r      : reg_t;
@@ -58,6 +58,21 @@ architecture impl of bi2 is
 
   signal shifted_x : signed((ABCD_BITS/2)-1 downto 0);
   signal shifted_y : signed((ABCD_BITS/2)-1 downto 0);
+
+  signal shifted_x2 : signed((ABCD_BITS/2)-1 downto 0);
+  signal shifted_y2 : signed((ABCD_BITS/2)-1 downto 0);  
+
+  signal ux : STD_LOGIC_VECTOR((ABCD_BITS/2)-1 downto 0);
+  signal uy : STD_LOGIC_VECTOR((ABCD_BITS/2)-1 downto 0);  
+
+  signal usx : unsigned((ABCD_BITS/2)-1 downto 0);
+  signal usy : unsigned((ABCD_BITS/2)-1 downto 0);    
+
+  signal ctx : STD_LOGIC_VECTOR((ABCD_BITS/2)-2 downto 0);    
+  signal cty : STD_LOGIC_VECTOR((ABCD_BITS/2)-2 downto 0);    
+
+  signal off : unsigned(7 downto 0);
+  signal off2 : unsigned(7 downto 0);  
 begin 
   issue <= '0';
 
@@ -93,16 +108,22 @@ begin
       o  => oy);
 
   shifted_x <= ox(ox'high downto ox'high-(ABCD_BITS/2)+1);
-  shifted_y <= oy(oy'high downto oy'high-(ABCD_BITS/2)+1);  
-  
+  shifted_y <= oy(oy'high downto oy'high-(ABCD_BITS/2)+1);
+
+  shifted_x2 <= shifted_x + 2;
+  shifted_y2 <= shifted_y + 2;  
+
+  ux <= STD_LOGIC_VECTOR(shifted_x2);
+  uy <= STD_LOGIC_VECTOR(shifted_y2);
+
+  usx <= unsigned(ux);
+  usy <= unsigned(uy);  
+
+  off <= unsigned(pipe_in.cfg(ID).p(0)); --"0000" & usy;-- + usy*5;
+  off2 <= unsigned(pipe_in.cfg(ID).p(1)); 
+
   process(pipe_in, r, rst, src_valid)
     variable v : reg_t;
-
-    variable tx : STD_LOGIC_VECTOR((ABCD_BITS/2)-1 downto 0);
-    variable ctx : STD_LOGIC_VECTOR((ABCD_BITS/2)-2 downto 0);
-    
-    variable ty : STD_LOGIC_VECTOR((ABCD_BITS/2)-1 downto 0);    
-    variable cty : STD_LOGIC_VECTOR((ABCD_BITS/2)-2 downto 0);    
   begin
     stage_next <= pipe_in.stage;
     v          := r;
@@ -112,15 +133,14 @@ begin
 -------------------------------------------------------------------------------
 -- Output
 -------------------------------------------------------------------------------
-    tx := STD_LOGIC_VECTOR(shifted_x + 2);
-    ty := STD_LOGIC_VECTOR(shifted_y + 2);
-    ctx := tx(tx'high-1 downto 0);
-    cty := ty(ty'high-1 downto 0);    
-    v.disx := --unsigned(ctx);
-    v.disy := --unsigned(cty);
+    --ctx := tx(tx'high-1 downto 0);
+    --cty := ty(ty'high-1 downto 0);    
+    --v.disx := unsigned(ctx);
+    --v.disy := unsigned(cty);
 
---    v.disx := to_unsigned(shifted_x + 2,3);
---    v.disy := to_unsigned(shifted_y + 2,3);  
+    
+    v.disx := off(5 downto 0);
+    v.disy := off2(5 downto 0);
 -------------------------------------------------------------------------------
 -- Counter
 -------------------------------------------------------------------------------
@@ -136,11 +156,11 @@ begin
         v.cols := v.cols + 1;
       end if;
     end if;
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 -- Reset
 -------------------------------------------------------------------------------
     if pipe_in.cfg(ID).identify = '1' then
-      stage_next.identity <= IDENT_NULL;
+      stage_next.identity <= IDENT_BI2;
     end if;
     if rst = '1' then
       stage_next <= NULL_STAGE;
@@ -151,7 +171,6 @@ begin
 
   disx <= r.disx;
   disy <= r.disy;
-  
   proc_clk : process(clk, rst, stall, pipe_in, stage_next, r_next)
   begin
     if rising_edge(clk) and (stall = '0' or rst = '1') then

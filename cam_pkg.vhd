@@ -16,7 +16,7 @@ package cam_pkg is
   constant GRIDX_BITS   : natural := 2;
   constant GRIDY_BITS   : natural := 2;  -- MS bits taken from pixel counter
                                          -- for rom adr
-  constant SUBGRID_BITS : natural := 2;  -- LS bits taken from pixel counter
+  constant SUBGRID_BITS : natural := 6;  -- LS bits taken from pixel counter
                                          -- for interpolation
   -----------------------------------------------------------------------------
   -- Ident codes
@@ -45,7 +45,11 @@ package cam_pkg is
   constant IDENT_WINDOW_8        : std_logic_vector(7 downto 0) := X"16";
   constant IDENT_WIN_TEST        : std_logic_vector(7 downto 0) := X"17";
   constant IDENT_WIN_TEST_8      : std_logic_vector(7 downto 0) := X"18";
-  constant IDENT_TESTPIC      : std_logic_vector(7 downto 0) := X"19";  
+  constant IDENT_TESTPIC      : std_logic_vector(7 downto 0) := X"19";
+
+  constant IDENT_BI1      : std_logic_vector(7 downto 0) := X"1A";
+  constant IDENT_BI2      : std_logic_vector(7 downto 0) := X"1B";  
+  constant IDENT_BI3      : std_logic_vector(7 downto 0) := X"1C";    
 
 
   constant IDENT_NULL    : std_logic_vector(7 downto 0) := X"F0";
@@ -61,7 +65,7 @@ package cam_pkg is
   type mono_2d_t is array (0 to 4) of mono_1d_t;
 
   type gray8_1d_t is array (0 to 4) of gray8_t;
-  type gray8_2d_t is array (0 to 4) of gray8_1d_t;
+  type gray8_2d_t is array (0 to 24) of gray8_t;
 
   subtype byte_t is std_logic_vector(7 downto 0);
   type    param_t is array (0 to MAX_PARAM-1) of byte_t;
@@ -153,7 +157,8 @@ package cam_pkg is
                  p1state : std_logic_vector(7 downto 0);
                  p2state : std_logic_vector(7 downto 0);                 
                  dvistate : std_logic_vector(7 downto 0);
-               end record; 
+               off : std_logic_vector(7 downto 0);
+  end record; 
   
   procedure connect_pipe (
     signal clk       : out std_logic;

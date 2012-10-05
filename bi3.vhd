@@ -16,8 +16,8 @@ entity bi3 is
     stall_in    : in  std_logic;
     stall_out   : out std_logic;
     gray8_2d_in : in  gray8_2d_t;
-    disx : in unsigned(2 downto 0);
-    disy : in unsigned(2 downto 0)
+    disx : in unsigned(5 downto 0);
+    disy : in unsigned(5 downto 0)
     );
 end bi3;
 
@@ -60,7 +60,7 @@ begin
 -------------------------------------------------------------------------------
 -- Output
 -------------------------------------------------------------------------------
-    stage_next.data_8 <= gray8_2d_in(TO_INTEGER(disx))(TO_INTEGER(disy));
+    stage_next.data_8 <= gray8_2d_in(to_integer(unsigned(pipe_in.cfg(ID).p(0))+5*unsigned(pipe_in.cfg(ID).p(1))));
 -------------------------------------------------------------------------------
 -- Counter
 -------------------------------------------------------------------------------
@@ -80,7 +80,7 @@ begin
 -- Reset
 -------------------------------------------------------------------------------
     if pipe_in.cfg(ID).identify = '1' then
-      stage_next.identity <= IDENT_NULL;
+      stage_next.identity <= IDENT_BI3; -- "00" & STD_LOGIC_VECTOR(disx);  --INDENT_BI3; --
     end if;
     if rst = '1' then
       stage_next <= NULL_STAGE;

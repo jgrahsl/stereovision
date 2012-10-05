@@ -77,7 +77,8 @@ begin  -- impl
   dut2 : entity work.win_test_8
     generic map (
       ID     => 26,
-      KERNEL => KERNEL)
+      KERNEL => KERNEL,
+      OFFSET =>  OFFSET)
     port map (
       pipe_in     => pipe(2),           -- [in]
       pipe_out    => pipe(3),

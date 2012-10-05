@@ -506,8 +506,10 @@ begin
            d.p1                                                                                when sw_i(3 downto 0) = "1110" else
 
 
-           (others => '0');
-  
+           d.off;
+
+
+--  d.off <= "00" & STD_LOGIC_VECTOR(disx+disy);  
 
   with chanaddr select f2hdata <=
     std_logic_vector(to_unsigned(adr, 8))          when "1100000",

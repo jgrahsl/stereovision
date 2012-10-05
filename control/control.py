@@ -312,80 +312,90 @@ t = []
 i = 0
 while True:
     set_reg(i,0x61,3)
-    v = flReadChannel(handle, 5000, 0x62,2)
+    v = flReadChannel(handle, 5000, 0x62,1)
     set_reg(i,0x61,0)
-    print "rd_id = " + str(v[0])
-    if v[0] == 0x01:
+    print "rd_id = " + str(v)
+    if v == 0x01:
         print "MCBFeed at " + str(i)
         t.append(Enable(ui.pipe,i,"MCBFeed"))
-    if v[0] == 0x02:
+    if v == 0x02:
         print "Skin at " + str(i)
         t.append(Enable(ui.pipe,i,"Skin")) 
-    if v[0] == 0x03:
+    if v == 0x03:
         print "Motion at " + str(i)
         t.append(Motion(ui.pipe,i)) 
-    if v[0] == 0x04:
+    if v == 0x04:
         print "Morph at " + str(i-4)
         t.append(Morph(ui.pipe,i-4))
         i = i + 16
-    if v[0] == 0x05:
+    if v == 0x05:
         print "HistX at " + str(i)
         t.append(Hist(ui.pipe,i,"HistX")) 
-    if v[0] == 0x06:
+    if v == 0x06:
         print "HistY at " + str(i)
         t.append(Hist(ui.pipe,i,"HistY")) 
-    if v[0] == 0x07:
+    if v == 0x07:
         print "MCBSink at " + str(i)
         t.append(Enable(ui.pipe,i,"MCBSink"))
-    if v[0] == 0x08:
+    if v == 0x08:
         print "ColMux at " + str(i)
         t.append(Enable(ui.pipe,i,"ColMux"))
 
 
-    if v[0] == 0x0B:
+    if v == 0x0B:
         print "FifoSink at " + str(i)
         t.append(Enable(ui.pipe,i,"FifoSink"))
 
 
-    if v[0] == 0x10:
+    if v == 0x10:
         print "Translate at " + str(i)
         t.append(Enable(ui.pipe,i,"Translate"))
 
-    if v[0] == 0x11:
+    if v == 0x11:
         print "Translate Win at " + str(i)
         t.append(Enable(ui.pipe,i,"Translate Win"))
 
-    if v[0] == 0x12:
+    if v == 0x12:
         print "Translate Win 8 at " + str(i)
         t.append(Enable(ui.pipe,i,"Translate Win 8"))
 
-    if v[0] == 0x13:
+    if v == 0x13:
         print "Linebuffer " + str(i)
         t.append(Enable(ui.pipe,i,"Linebuffer"))
 
-    if v[0] == 0x14:
+    if v == 0x14:
         print "Linebuffer 8 " + str(i)
         t.append(Enable(ui.pipe,i,"Linebuffer 8"))
 
-    if v[0] == 0x15:
+    if v == 0x15:
         print "Window " + str(i)
         t.append(Enable(ui.pipe,i,"Window"))
 
-    if v[0] == 0x16:
+    if v == 0x16:
         print "Window 8 " + str(i)
         t.append(Enable(ui.pipe,i,"Window 8"))
 
-    if v[0] == 0x17:
+    if v == 0x17:
         print "Win Test " + str(i)
         t.append(Enable(ui.pipe,i,"Win Test"))
 
-    if v[0] == 0x18:
+    if v == 0x18:
         print "Win Test 8 " + str(i)
         t.append(Enable(ui.pipe,i,"Win Test 8"))
 
-    if v[0] == 0x19:
+    if v == 0x19:
         print "Testpic" + str(i)
         t.append(Enable(ui.pipe,i,"Testpic"))
+
+    if v == 0x1A:
+        print "BI1" + str(i)
+        t.append(Enable(ui.pipe,i,"BI1"))
+    if v == 0x1B:
+        print "BI2" + str(i)
+        t.append(Enable(ui.pipe,i,"BI2"))
+    if v == 0x1C:
+        print "BI3" + str(i)
+        t.append(Enable(ui.pipe,i,"BI3"))
 
        
     i = i + 1
@@ -393,7 +403,8 @@ while True:
         break
 QtCore.QObject.connect(ui.pushButton_exit, QtCore.SIGNAL("clicked()"), do_exit)
 
-
+set_reg(31,0x61,1)
+set_reg(31,0x70,1)
 MainWindow.show()
 r = app.exec_()
 sys.exit(r)

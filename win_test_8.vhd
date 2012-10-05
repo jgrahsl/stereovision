@@ -8,7 +8,8 @@ use work.cam_pkg.all;
 entity win_test_8 is
   generic (
     ID     : integer range 0 to 63 := 0;
-    KERNEL : natural range 1 to 5  := 5
+    KERNEL : natural range 1 to 5  := 5;
+    OFFSET : natural range 0 to 24 := 0
     );
   port (
     pipe_in     : in  pipe_t;
@@ -54,36 +55,36 @@ begin
     -------------------------------------------------------------------------------
     -- Octagon
     -------------------------------------------------------------------------------
-    sum        := to_integer(unsigned(gray8_2d_in(0)(1))) +
-                  to_integer(unsigned(gray8_2d_in(0)(2))) +
-                  to_integer(unsigned(gray8_2d_in(0)(3))) +
+    --sum        := to_integer(unsigned(gray8_2d_in(0)(1))) +
+    --              to_integer(unsigned(gray8_2d_in(0)(2))) +
+    --              to_integer(unsigned(gray8_2d_in(0)(3))) +
 
-                  to_integer(unsigned(gray8_2d_in(1)(0))) +
-                  to_integer(unsigned(gray8_2d_in(1)(1))) +
-                  to_integer(unsigned(gray8_2d_in(1)(2))) +
-                  to_integer(unsigned(gray8_2d_in(1)(3))) +
-                  to_integer(unsigned(gray8_2d_in(1)(4))) +
+    --              to_integer(unsigned(gray8_2d_in(1)(0))) +
+    --              to_integer(unsigned(gray8_2d_in(1)(1))) +
+    --              to_integer(unsigned(gray8_2d_in(1)(2))) +
+    --              to_integer(unsigned(gray8_2d_in(1)(3))) +
+    --              to_integer(unsigned(gray8_2d_in(1)(4))) +
 
-                  --to_integer(unsigned(gray8_2d_in(2)(0))) +
-                  --to_integer(unsigned(gray8_2d_in(2)(1))) +
-                  --to_integer(unsigned(gray8_2d_in(2)(3))) +
-                  --to_integer(unsigned(gray8_2d_in(2)(4))) +
+    --              --to_integer(unsigned(gray8_2d_in(2)(0))) +
+    --              --to_integer(unsigned(gray8_2d_in(2)(1))) +
+    --              --to_integer(unsigned(gray8_2d_in(2)(3))) +
+    --              --to_integer(unsigned(gray8_2d_in(2)(4))) +
 
-                  to_integer(unsigned(gray8_2d_in(3)(0))) +
-                  to_integer(unsigned(gray8_2d_in(3)(1))) +
-                  to_integer(unsigned(gray8_2d_in(3)(2))) +
-                  to_integer(unsigned(gray8_2d_in(3)(3))) +
-                  to_integer(unsigned(gray8_2d_in(3)(4))) +
+    --              to_integer(unsigned(gray8_2d_in(3)(0))) +
+    --              to_integer(unsigned(gray8_2d_in(3)(1))) +
+    --              to_integer(unsigned(gray8_2d_in(3)(2))) +
+    --              to_integer(unsigned(gray8_2d_in(3)(3))) +
+    --              to_integer(unsigned(gray8_2d_in(3)(4))) +
 
-                  to_integer(unsigned(gray8_2d_in(4)(1))) +
-                  to_integer(unsigned(gray8_2d_in(4)(2))) +
-                  to_integer(unsigned(gray8_2d_in(4)(3)));
+    --              to_integer(unsigned(gray8_2d_in(4)(1))) +
+    --              to_integer(unsigned(gray8_2d_in(4)(2))) +
+    --              to_integer(unsigned(gray8_2d_in(4)(3)));
     
     u := to_unsigned(sum, 24);
 
     stage_next.data_8 <= std_logic_vector(u(7+4 downto 0+4));
 
-    stage_next.data_8 <= gray8_2d_in(2)(2);
+    stage_next.data_8 <= gray8_2d_in(OFFSET);
 -------------------------------------------------------------------------------
 -- Output
 -------------------------------------------------------------------------------    

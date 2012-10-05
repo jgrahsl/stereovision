@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'control.ui'
 #
-# Created: Mon Sep 17 22:15:18 2012
+# Created: Thu Oct  4 16:58:06 2012
 #      by: PyQt4 UI code generator 4.9.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,22 +17,22 @@ except AttributeError:
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
-        MainWindow.resize(1312, 424)
+        MainWindow.resize(1745, 428)
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
         self.pushButton_exit = QtGui.QPushButton(self.centralwidget)
-        self.pushButton_exit.setGeometry(QtCore.QRect(400, 340, 140, 31))
+        self.pushButton_exit.setGeometry(QtCore.QRect(20, 340, 140, 31))
         self.pushButton_exit.setFlat(False)
         self.pushButton_exit.setObjectName(_fromUtf8("pushButton_exit"))
         self.horizontalLayoutWidget = QtGui.QWidget(self.centralwidget)
-        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(0, 0, 1311, 341))
+        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(0, 0, 1581, 341))
         self.horizontalLayoutWidget.setObjectName(_fromUtf8("horizontalLayoutWidget"))
         self.pipe = QtGui.QHBoxLayout(self.horizontalLayoutWidget)
         self.pipe.setMargin(0)
         self.pipe.setObjectName(_fromUtf8("pipe"))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1312, 29))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1745, 29))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtGui.QStatusBar(MainWindow)
