@@ -134,7 +134,7 @@ begin
     --v.disx := unsigned(ctx);
     --v.disy := unsigned(cty);
 
-    stage_next.data_8 <= gray8_2d_in(to_integer(x_pixel*5 + y_pixel));    
+    stage_next.data_8 <= gray8_2d_in(to_integer(y_pixel*5 + x_pixel));    
 -------------------------------------------------------------------------------
 -- Counter
 -------------------------------------------------------------------------------

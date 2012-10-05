@@ -31,13 +31,13 @@ begin
       when "0011" => q <= "00100010";  -- TODO: comment                     
 
       when "0100" => q <= "00100010";  -- TODO: comment
-      when "0101" => q <= "00100010";  -- TODO: comment                     
-      when "0110" => q <= "00100010";  -- TODO: comment
+      when "0101" => q <= "01000100";  -- TODO: comment                     
+      when "0110" => q <= "01000000";  -- TODO: comment
       when "0111" => q <= "00100010";  -- TODO: comment                     
 
       when "1000" => q <= "00100010";  -- TODO: comment
-      when "1001" => q <= "00100010";  -- TODO: comment                     
-      when "1010" => q <= "00100010";  -- TODO: comment
+      when "1001" => q <= "00000100";  -- TODO: comment                     
+      when "1010" => q <= "00000000";  -- TODO: comment
       when "1011" => q <= "00100010";  -- TODO: comment                     
 
       when "1100" => q <= "00100010";  -- TODO: comment
