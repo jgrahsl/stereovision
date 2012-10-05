@@ -158,6 +158,7 @@ package cam_pkg is
                  p2state : std_logic_vector(7 downto 0);                 
                  dvistate : std_logic_vector(7 downto 0);
                off : std_logic_vector(7 downto 0);
+               off2 : std_logic_vector(7 downto 0);                 
   end record; 
   
   procedure connect_pipe (

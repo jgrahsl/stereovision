@@ -1762,7 +1762,8 @@ begin
   d.fe(6) <= auxw_empty;
   d.fe(7) <= auxw_full;
 
-
+  d.off <= "00" & std_logic_vector(disx);
+  d.off2 <= "00" & std_logic_vector(disy);
 end Behavioral;
 
 
