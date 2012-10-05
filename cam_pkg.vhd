@@ -16,7 +16,7 @@ package cam_pkg is
   constant GRIDX_BITS   : natural := 2;
   constant GRIDY_BITS   : natural := 2;  -- MS bits taken from pixel counter
                                          -- for rom adr
-  constant SUBGRID_BITS : natural := 2;  -- LS bits taken from pixel counter
+  constant SUBGRID_BITS : natural := 4;  -- LS bits taken from pixel counter
                                          -- for interpolation
   -----------------------------------------------------------------------------
   -- Ident codes

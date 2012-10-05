@@ -126,7 +126,7 @@ begin
 --  off2 <= unsigned(pipe_in.cfg(ID).p(1)); 
 
   off <= usy(3 downto 0)*5; --"0000" & usy;-- + usy*5;
-  off2 <= "0000" & usx; 
+  off2 <= usx(3 downto 0)*1; 
     
   process(pipe_in, r, rst, src_valid, off, off2)
     variable v : reg_t;
