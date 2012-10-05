@@ -119,8 +119,8 @@ def scan():
         i = i + 1
 
 #reqpic()
-#readpic()
-scan()
+readpic()
+#scan()
 #stream()
 #scan()
 

@@ -69,17 +69,16 @@ begin
         end loop;  -- i                
       end loop;  -- b
      
-      for b in 0 to (NUM_COLS-1) loop      
-        next_q(b*NUM_COLS) <= gray8_1d_in(b);
-      end loop;
-
       if r.cols = (WIDTH-1) then
         v.cols := 0;
-        next_q <= (others => (others => '0'));
+--        next_q <= (others => (others => '0'));
       else
         v.cols := v.cols + 1;
       end if;
 
+      for b in 0 to (NUM_COLS-1) loop      
+        next_q(b*NUM_COLS) <= gray8_1d_in(b);
+      end loop;     
     end if;
 -------------------------------------------------------------------------------
 -- Output

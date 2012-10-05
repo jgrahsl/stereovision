@@ -74,7 +74,7 @@ begin
     if v.rows > (HEIGHT-1) and v.rows <= (HEIGHT+APPEND-1) then
       issue             <= pipe_in.cfg(ID).enable;
       stage_next.data_1 <= (others => '0');
-      stage_next.data_8 <= (others => '0');      
+      stage_next.data_8 <= (others => '0');
       stage_next.valid  <= '1';
       en                := '1';
     end if;
@@ -82,7 +82,7 @@ begin
     if v.cols > (WIDTH-1) and v.cols <= (WIDTH+APPEND-1) then
       issue             <= pipe_in.cfg(ID).enable;
       stage_next.data_1 <= (others => '0');
-      stage_next.data_8 <= (others => '0');      
+      stage_next.data_8 <= (others => '0');
       stage_next.valid  <= '1';
       en                := '1';
     end if;

@@ -60,7 +60,8 @@ begin
 -------------------------------------------------------------------------------
 -- Output
 -------------------------------------------------------------------------------
-    stage_next.data_8 <= gray8_2d_in(to_integer(unsigned(pipe_in.cfg(ID).p(0))+5*unsigned(pipe_in.cfg(ID).p(1))));
+--    stage_next.data_8 <= gray8_2d_in(to_integer(unsigned(pipe_in.cfg(ID).p(0))+5*unsigned(pipe_in.cfg(ID).p(1))));
+    stage_next.data_8 <= gray8_2d_in(to_integer(disx+disy));    
 -------------------------------------------------------------------------------
 -- Counter
 -------------------------------------------------------------------------------

@@ -32,14 +32,18 @@ architecture impl of tb is
   signal finish : std_logic := '0';
 
   signal abcd : abcd_t;
+  signal disx : unsigned(5 downto 0);
+  signal disy : unsigned(5 downto 0);
+  signal gray8_2d_1 : gray8_2d_t;
+  signal gray8_2d_2 : gray8_2d_t;
+  signal gray8_2d_3 : gray8_2d_t;  
+  
 begin  -- impl
 
   ena : for i in 0 to (MAX_PIPE-1) generate
     cfg(i).enable   <= '1';
     cfg(i).identify <= '0';
   end generate ena;
-
-  stall(8) <= '0';
 
   my_pipe_head : entity work.pipe_head
     generic map (
@@ -60,40 +64,100 @@ begin  -- impl
       stall_out => stall(0),
       p0_fifo   => p0_rd_fifo);         -- [inout]
 
-  dut : entity work.bi
+
+
+  dut : entity work.win_gray8
     generic map (
-      ID     => 25,
+      ID     => 4,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (
-      pipe_in   => pipe(1),             -- [in]
-      pipe_out  => pipe(2),
-      stall_in  => stall(2),
-      stall_out => stall(1),
-      abcd      => abcd
+      pipe_in      => pipe(1),          -- [in]
+      pipe_out     => pipe(2),
+      stall_in     => stall(2),
+      stall_out    => stall(1),
+      gray8_2d_out => gray8_2d_1
       );                                -- [inout]
 
-  dut2 : entity work.bi2
+  dut2 : entity work.win_test_8
     generic map (
-      ID     => 26,
-      WIDTH  => WIDTH,
-      HEIGHT => HEIGHT)
+      ID     => 25,
+      OFFSET => 24)
     port map (
-      pipe_in   => pipe(2),             -- [in]
-      pipe_out  => pipe(3),
-      stall_in  => stall(3),
-      stall_out => stall(2),
-      abcd      => abcd
+      pipe_in      => pipe(2),          -- [in]
+      pipe_out     => pipe(3),
+      stall_in     => stall(3),
+      stall_out    => stall(2),
+      gray8_2d_in => gray8_2d_1      
       );                                -- [inout]
+  
+  
+  --bitest : entity work.bi
+  --  generic map (
+  --    ID     => 25,
+  --    WIDTH  => WIDTH,
+  --    HEIGHT => HEIGHT)
+  --  port map (
+  --    pipe_in      => pipe(2),          -- [in]
+  --    pipe_out     => pipe(3),
+  --    stall_in     => stall(3),
+  --    stall_out    => stall(2),
+  --    abcd         => abcd,
+  --    gray8_2d_in  => gray8_2d_1,
+  --    gray8_2d_out => gray8_2d_2
+  --    );                                -- [inout]
+
+  --bitest2 : entity work.bi2
+  --  generic map (
+  --    ID     => 26,
+  --    WIDTH  => WIDTH,
+  --    HEIGHT => HEIGHT)
+  --  port map (
+  --    pipe_in     => pipe(3),           -- [in]
+  --    pipe_out    => pipe(4),
+  --    stall_in    => stall(4),
+  --    stall_out   => stall(3),
+  --    abcd        => abcd,
+  --    gray8_2d_in => gray8_2d_2,
+  --    gray8_2d_out => gray8_2d_3,      
+  --    disx => disx,
+  --    disy => disy
+  --    );                                -- [inout]
+
+  --bitest3 : entity work.bi3
+  --  generic map (
+  --    ID     => 27,
+  --    WIDTH  => WIDTH,
+  --    HEIGHT => HEIGHT)
+  --  port map (
+  --    pipe_in     => pipe(4),           -- [in]
+  --    pipe_out    => pipe(5),
+  --    stall_in    => stall(5),
+  --    stall_out   => stall(4),
+  --    gray8_2d_in => gray8_2d_3,
+  --    disx => disx,
+  --    disy => disy
+      
+  --    );                                -- [inout]
+
+  colmux : entity work.color_mux
+    generic map (
+      ID   => 3,
+      MODE => 2)      
+    port map (
+      pipe_in   => pipe(3),             -- [in]
+      pipe_out  => pipe(4),
+      stall_in  => stall(4),
+      stall_out => stall(3));           -- [inout]
   
   my_sim_sink : entity work.sim_sink
     generic map (
-      ID => 22)
+      ID => 2)
     port map (
-      pipe_in   => pipe(3),             -- [in]
+      pipe_in   => pipe(4),             -- [in]
       pipe_out  => pipe(8),
-      stall_in  => stall(8),
-      stall_out => stall(3),
+      stall_in  => '0',
+      stall_out => stall(4),
       p0_fifo   => p0_wr_fifo);         -- [inout]
 
 -------------------------------------------------------------------------------  
