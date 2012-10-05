@@ -12,7 +12,7 @@ cat sim.out | ./dat2tiff.py $MODULE/$STIM/output.tiff
 echo "Difference:"
 
 diff $MODULE/$STIM/sim.out sim.out
-
+RETVAL=$?
 
 #CLEANUP
 mv transcript $MODULE/$STIM

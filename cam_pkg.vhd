@@ -62,7 +62,7 @@ package cam_pkg is
   subtype gray8_t is std_logic_vector(7 downto 0);
 
   type mono_1d_t is array (0 to 4) of mono_t;
-  type mono_2d_t is array (0 to 4) of mono_1d_t;
+  type mono_2d_t is array (0 to 24) of mono_t;
 
   type gray8_1d_t is array (0 to 4) of gray8_t;
   type gray8_2d_t is array (0 to 24) of gray8_t;

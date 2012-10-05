@@ -55,31 +55,31 @@ begin
     -------------------------------------------------------------------------------
     -- Octagon
     -------------------------------------------------------------------------------
-    sum        := to_integer(unsigned(win(0)(1))) +
-                  to_integer(unsigned(win(0)(2))) +
-                  to_integer(unsigned(win(0)(3))) +
+    sum        := to_integer(unsigned(win(0*5+1))) +
+                  to_integer(unsigned(win(0*5+2))) +
+                  to_integer(unsigned(win(0*5+3))) +
 
-                  to_integer(unsigned(win(1)(0))) +
-                  to_integer(unsigned(win(1)(1))) +
-                  to_integer(unsigned(win(1)(2))) +
-                  to_integer(unsigned(win(1)(3))) +
-                  to_integer(unsigned(win(1)(4))) +
+                  to_integer(unsigned(win(1*5+0))) +
+                  to_integer(unsigned(win(1*5+1))) +
+                  to_integer(unsigned(win(1*5+2))) +
+                  to_integer(unsigned(win(1*5+3))) +
+                  to_integer(unsigned(win(1*5+4))) +
 
-                  to_integer(unsigned(win(2)(0))) +
-                  to_integer(unsigned(win(2)(1))) +
-                  to_integer(unsigned(win(2)(2))) +
-                  to_integer(unsigned(win(2)(3))) +
-                  to_integer(unsigned(win(2)(4))) +
+                  to_integer(unsigned(win(2*5+0))) +
+                  to_integer(unsigned(win(2*5+1))) +
+                  to_integer(unsigned(win(2*5+2))) +
+                  to_integer(unsigned(win(2*5+3))) +
+                  to_integer(unsigned(win(2*5+4))) +
 
-                  to_integer(unsigned(win(3)(0))) +
-                  to_integer(unsigned(win(3)(1))) +
-                  to_integer(unsigned(win(3)(2))) +
-                  to_integer(unsigned(win(3)(3))) +
-                  to_integer(unsigned(win(3)(4))) +
+                  to_integer(unsigned(win(3*5+0))) +
+                  to_integer(unsigned(win(3*5+1))) +
+                  to_integer(unsigned(win(3*5+2))) +
+                  to_integer(unsigned(win(3*5+3))) +
+                  to_integer(unsigned(win(3*5+4))) +
 
-                  to_integer(unsigned(win(4)(1))) +
-                  to_integer(unsigned(win(4)(2))) +
-                  to_integer(unsigned(win(4)(3)));
+                  to_integer(unsigned(win(4*5+1))) +
+                  to_integer(unsigned(win(4*5+2))) +
+                  to_integer(unsigned(win(4*5+3)));
 -------------------------------------------------------------------------------
 -- Output
 -------------------------------------------------------------------------------    
@@ -97,7 +97,7 @@ begin
 
     if (pipe_in.cfg(ID).p(1)(0) = '1') then 
       stage_next.data_1 <= (others => '0');    
-      if win(2)(2) = "1" then
+      if win(2*5+2) = "1" then
         stage_next.data_1 <= (others => '1');      
       end if;
     end if;

@@ -22,5 +22,3 @@ else
 fi
 
 ./post.sh $MODULE $STIM
-
-exit 0

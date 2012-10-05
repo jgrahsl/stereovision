@@ -62,18 +62,22 @@ begin
 -- Counters
 -------------------------------------------------------------------------------
     if src_valid = '1' then
-      for i in 0 to (NUM_COLS-2) loop
-        next_q(i+1) <= q(i);
-      end loop;  -- i
-
+      for b in 0 to (NUM_COLS-1) loop
+        for i in 0 to (NUM_COLS-2) loop
+          next_q(i+b*NUM_COLS+1) <= q(i+b*NUM_COLS);
+        end loop;  -- i                
+      end loop;  -- b
+     
       if r.cols = (WIDTH-1) then
         v.cols := 0;
---        next_q <= (others => (others => (others => '0')));
+--        next_q <= (others => (others => '0'));
       else
         v.cols := v.cols + 1;
       end if;
 
-      next_q(0) <= mono_1d_in;
+      for b in 0 to (NUM_COLS-1) loop      
+        next_q(b*NUM_COLS) <= mono_1d_in(b);
+      end loop;     
     end if;
 -------------------------------------------------------------------------------
 -- Output
@@ -99,7 +103,7 @@ begin
     end if;
     if rst = '1' then
       init(v);
-      next_q     <= (others => (others => (others => '0')));
+      next_q     <= (others => (others => '0'));
       stage_next <= NULL_STAGE;
     end if;
 -------------------------------------------------------------------------------
