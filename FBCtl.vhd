@@ -676,10 +676,6 @@ architecture Behavioral of FBCtl is
   signal gray8_2d_1 : gray8_2d_t;
   signal gray8_2d_2 : gray8_2d_t;
   signal gray8_2d_3 : gray8_2d_t;  
-
-  signal disx : unsigned(5 downto 0);
-  signal disy : unsigned(5 downto 0);
-  
 begin
 ----------------------------------------------------------------------------------
 -- mcb instantiation
@@ -1672,27 +1668,24 @@ begin
       stall_in    => stall(5),
       stall_out   => stall(4),
       abcd        => abcd,
-      gray8_2d_in => gray8_2d_2,
-      gray8_2d_out => gray8_2d_3,      
-      disx => disx,
-      disy => disy
+      gray8_2d_in => gray8_2d_2
       );                                -- [inout]
 
-  bitest3 : entity work.bi3
-    generic map (
-      ID     => 27,
-      WIDTH  => WIDTH,
-      HEIGHT => HEIGHT)
-    port map (
-      pipe_in     => pipe(5),           -- [in]
-      pipe_out    => pipe(6),
-      stall_in    => stall(6),
-      stall_out   => stall(5),
-      gray8_2d_in => gray8_2d_3,
-      disx => disx,
-      disy => disy
+  --bitest3 : entity work.bi3
+  --  generic map (
+  --    ID     => 27,
+  --    WIDTH  => WIDTH,
+  --    HEIGHT => HEIGHT)
+  --  port map (
+  --    pipe_in     => pipe(5),           -- [in]
+  --    pipe_out    => pipe(6),
+  --    stall_in    => stall(6),
+  --    stall_out   => stall(5),
+  --    gray8_2d_in => gray8_2d_3,
+  --    disx => disx,
+  --    disy => disy
       
-      );                                -- [inout]
+  --    );                                -- [inout]
   
   my_col_mux : entity work.color_mux
     generic map (
@@ -1762,8 +1755,6 @@ begin
   d.fe(6) <= auxw_empty;
   d.fe(7) <= auxw_full;
 
-  d.off <= "00" & std_logic_vector(disx);
-  d.off2 <= "00" & std_logic_vector(disy);
 end Behavioral;
 
 

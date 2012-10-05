@@ -16,10 +16,8 @@ entity bi2 is
     stall_in    : in  std_logic;
     stall_out   : out std_logic;
     abcd        : in  abcd_t;
-    gray8_2d_in : in  gray8_2d_t
---    gray8_2d_out : out  gray8_2d_t
---    disx : out unsigned(5 downto 0);
---    disy : out unsigned(5 downto 0)
+    gray8_2d_in : in  gray8_2d_t;
+    abcd2     : out abcd2_t
     );
 end bi2;
 
@@ -57,35 +55,18 @@ architecture impl of bi2 is
   signal oy : signed((ABCD_BITS/2)+SUBGRID_BITS-1 downto 0);
 
   signal x_pixel : unsigned((ABCD_BITS/2)-1 downto 0);
-  signal y_pixel : unsigned((ABCD_BITS/2)-1 downto 0);
-  
+  signal y_pixel : unsigned((ABCD_BITS/2)-1 downto 0);  
   signal x_frac : unsigned(SUBGRID_BITS-1 downto 0);
   signal y_frac : unsigned(SUBGRID_BITS-1 downto 0);
 
-  signal shifted_x2 : signed((ABCD_BITS/2)-1 downto 0);
-  signal shifted_y2 : signed((ABCD_BITS/2)-1 downto 0);  
-
-  signal ux : STD_LOGIC_VECTOR((ABCD_BITS/2)-1 downto 0);
-  signal uy : STD_LOGIC_VECTOR((ABCD_BITS/2)-1 downto 0);  
-
-  signal usx : unsigned((ABCD_BITS/2)-1 downto 0);
-  signal usy : unsigned((ABCD_BITS/2)-1 downto 0);    
-
-  signal ctx : STD_LOGIC_VECTOR((ABCD_BITS/2)-2 downto 0);    
-  signal cty : STD_LOGIC_VECTOR((ABCD_BITS/2)-2 downto 0);    
-
-  signal off : unsigned(7 downto 0);
-  signal off2 : unsigned(7 downto 0);  
-
-  signal gray8_2d : gray8_2d_t;
-  signal gray8_2d_next : gray8_2d_t;  
+  signal abcd2_next : abcd2_t;
 begin 
   issue <= '0';
 
   connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);
 
   x <= unsigned(to_unsigned(r.cols, x'length));
-  y <= unsigned(to_unsigned(r.rows, y'length));
+ y <= unsigned(to_unsigned(r.rows, y'length));
 
   bilinear_1 : entity work.bilinear
     generic map (
@@ -118,7 +99,7 @@ begin
   x_frac <= unsigned(std_logic_vector(ox(SUBGRID_BITS-1 downto 0)));
   y_frac <= unsigned(std_logic_vector(oy(SUBGRID_BITS-1 downto 0)));
    
-  process(pipe_in, r, rst, src_valid, off, off2)
+  process(pipe_in, r, rst, src_valid)
     variable v : reg_t;
   begin
     stage_next <= pipe_in.stage;
@@ -129,12 +110,24 @@ begin
 -------------------------------------------------------------------------------
 -- Output
 -------------------------------------------------------------------------------
-    --ctx := tx(tx'high-1 downto 0);
-    --cty := ty(ty'high-1 downto 0);    
-    --v.disx := unsigned(ctx);
-    --v.disy := unsigned(cty);
-
-    stage_next.data_8 <= gray8_2d_in(to_integer(y_pixel*5 + x_pixel));    
+    abcd2_next.a <= "0" & gray8_2d_in(to_integer(y_pixel*5 + x_pixel));
+    if to_integer(y_pixel*5 + x_pixel+1) < 25 then
+      abcd2_next.b <= "0" & gray8_2d_in(to_integer(y_pixel*5 + x_pixel+1));
+    else
+      abcd2_next.b <= (others => '0');
+    end if;
+    if to_integer((y_pixel+1)*5 + x_pixel) < 25 then    
+      abcd2_next.c <= "0" & gray8_2d_in(to_integer((y_pixel+1)*5 + x_pixel));
+    else
+      abcd2_next.c <= (others => '0');
+    end if;
+    if to_integer((y_pixel+1)*5 + x_pixel+1) < 25 then
+      abcd2_next.d <= "0" & gray8_2d_in(to_integer((y_pixel+1)*5 + x_pixel+1));
+    else
+      abcd2_next.d <= (others => '0');      
+    end if;
+    abcd2_next.x_frac <= x_frac;
+    abcd2_next.y_frac <= y_frac;    
 -------------------------------------------------------------------------------
 -- Counter
 -------------------------------------------------------------------------------
@@ -172,9 +165,7 @@ begin
         stage <= pipe_in.stage;
       end if;
       r <= r_next;
---      gray8_2d <=  gray8_2d_next; 
+      abcd2 <= abcd2_next;
     end if;
   end process;
---  gray8_2d_out <= gray8_2d;
---  gray8_2d_next <= gray8_2d_in;
 end impl;

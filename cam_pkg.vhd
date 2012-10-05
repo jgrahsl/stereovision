@@ -143,6 +143,15 @@ package cam_pkg is
     dy : signed((ABCD_BITS/2)-1 downto 0);
   end record;
 
+  type abcd2_t is record
+    a : std_logic_vector(8 downto 0);
+    b : std_logic_vector(8 downto 0);
+    c : std_logic_vector(8 downto 0);
+    d : std_logic_vector(8 downto 0);
+    x_frac : unsigned(SUBGRID_BITS-1 downto 0);
+    y_frac : unsigned(SUBGRID_BITS-1 downto 0);    
+  end record;
+  
 
   type d0_t is record
                  pr_count : std_logic_vector(7 downto 0);

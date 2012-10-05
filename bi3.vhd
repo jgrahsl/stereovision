@@ -15,9 +15,7 @@ entity bi3 is
     pipe_out    : out pipe_t;
     stall_in    : in  std_logic;
     stall_out   : out std_logic;
-    gray8_2d_in : in  gray8_2d_t;
-    disx : in unsigned(5 downto 0);
-    disy : in unsigned(5 downto 0)
+    abcd2     : in abcd2_t
     );
 end bi3;
 
@@ -44,12 +42,28 @@ architecture impl of bi3 is
     v.cols := 0;
     v.rows := 0;
   end init;
+
+  signal o : signed(gray8_t'length+1+SUBGRID_BITS-1 downto 0);
+  signal x : gray8_t;
 begin 
   issue <= '0';
 
   connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);
   
-  process(pipe_in, r, rst, src_valid, gray8_2d_in)
+  bilinear_1 : entity work.bilinear
+    generic map (
+      REF_BITS  => (gray8_t'length+1),
+      FRAC_BITS => SUBGRID_BITS)
+    port map (
+      a  => signed(abcd2.a),
+      b  => signed(abcd2.b),
+      c  => signed(abcd2.c),
+      d  => signed(abcd2.d),
+      rx => abcd2.x_frac,
+      ry => abcd2.y_frac,
+      o  => o);
+  
+  process(pipe_in, r, rst, src_valid,o)
     variable v : reg_t;
   begin
     stage_next <= pipe_in.stage;
@@ -60,9 +74,7 @@ begin
 -------------------------------------------------------------------------------
 -- Output
 -------------------------------------------------------------------------------
---    stage_next.data_8 <= gray8_2d_in(to_integer(unsigned(pipe_in.cfg(ID).p(0))+5*unsigned(pipe_in.cfg(ID).p(1))));
-    stage_next.data_8 <= gray8_2d_in(to_integer(disx+disy));
---    stage_next.data_8 <= gray8_2d_in(12);
+    stage_next.data_8 <= std_logic_vector(o(o'high-1 downto o'high-(gray8_t'length)+1-1));
 -------------------------------------------------------------------------------
 -- Counter
 -------------------------------------------------------------------------------
@@ -78,11 +90,11 @@ begin
         v.cols := v.cols + 1;
       end if;
     end if;
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 -- Reset
 -------------------------------------------------------------------------------
     if pipe_in.cfg(ID).identify = '1' then
-      stage_next.identity <= IDENT_BI3; -- "00" & STD_LOGIC_VECTOR(disx);  --INDENT_BI3; --
+      stage_next.identity <= IDENT_BI2;
     end if;
     if rst = '1' then
       stage_next <= NULL_STAGE;
@@ -91,7 +103,7 @@ begin
     r_next <= v;
   end process;
 
-  proc_clk : process(clk, rst, stall, pipe_in, stage_next, r_next)
+  proc_clk : process(clk, rst, stall, pipe_in, stage_next, r_next,abcd2)
   begin
     if rising_edge(clk) and (stall = '0' or rst = '1') then
       if pipe_in.cfg(ID).enable = '1' then
@@ -102,5 +114,4 @@ begin
       r <= r_next;
     end if;
   end process;
-
 end impl;

@@ -78,7 +78,7 @@ begin
     --              to_integer(unsigned(win(4)(1))) +
     --              to_integer(unsigned(win(4)(2))) +
     --              to_integer(unsigned(win(4)(3)));
-    sum := to_integer(unsigned(mono_2d_in(2)(2)));
+    sum := to_integer(unsigned(mono_2d_in(2*5+2)));
 -------------------------------------------------------------------------------
 -- Output
 -------------------------------------------------------------------------------    
