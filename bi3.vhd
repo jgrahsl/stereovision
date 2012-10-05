@@ -49,7 +49,7 @@ begin
 
   connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);
   
-  process(pipe_in, r, rst, src_valid)
+  process(pipe_in, r, rst, src_valid, gray8_2d_in)
     variable v : reg_t;
   begin
     stage_next <= pipe_in.stage;
@@ -61,7 +61,8 @@ begin
 -- Output
 -------------------------------------------------------------------------------
 --    stage_next.data_8 <= gray8_2d_in(to_integer(unsigned(pipe_in.cfg(ID).p(0))+5*unsigned(pipe_in.cfg(ID).p(1))));
-    stage_next.data_8 <= gray8_2d_in(to_integer(disx+disy));    
+    stage_next.data_8 <= gray8_2d_in(to_integer(disx+disy));
+--    stage_next.data_8 <= gray8_2d_in(12);
 -------------------------------------------------------------------------------
 -- Counter
 -------------------------------------------------------------------------------

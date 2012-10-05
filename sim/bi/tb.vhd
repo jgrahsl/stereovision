@@ -79,85 +79,85 @@ begin  -- impl
       gray8_2d_out => gray8_2d_1
       );                                -- [inout]
 
-  dut2 : entity work.win_test_8
-    generic map (
-      ID     => 25,
-      OFFSET => 24)
-    port map (
-      pipe_in      => pipe(2),          -- [in]
-      pipe_out     => pipe(3),
-      stall_in     => stall(3),
-      stall_out    => stall(2),
-      gray8_2d_in => gray8_2d_1      
-      );                                -- [inout]
-  
-  
-  --bitest : entity work.bi
+  --dut2 : entity work.win_test_8
   --  generic map (
   --    ID     => 25,
-  --    WIDTH  => WIDTH,
-  --    HEIGHT => HEIGHT)
+  --    OFFSET => 12)
   --  port map (
   --    pipe_in      => pipe(2),          -- [in]
   --    pipe_out     => pipe(3),
   --    stall_in     => stall(3),
   --    stall_out    => stall(2),
-  --    abcd         => abcd,
-  --    gray8_2d_in  => gray8_2d_1,
-  --    gray8_2d_out => gray8_2d_2
+  --    gray8_2d_in => gray8_2d_1      
   --    );                                -- [inout]
+  
+  
+  bitest : entity work.bi
+    generic map (
+      ID     => 25,
+      WIDTH  => WIDTH,
+      HEIGHT => HEIGHT)
+    port map (
+      pipe_in      => pipe(2),          -- [in]
+      pipe_out     => pipe(3),
+      stall_in     => stall(3),
+      stall_out    => stall(2),
+      abcd         => abcd,
+      gray8_2d_in  => gray8_2d_1,
+      gray8_2d_out => gray8_2d_2
+      );                                -- [inout]
 
-  --bitest2 : entity work.bi2
-  --  generic map (
-  --    ID     => 26,
-  --    WIDTH  => WIDTH,
-  --    HEIGHT => HEIGHT)
-  --  port map (
-  --    pipe_in     => pipe(3),           -- [in]
-  --    pipe_out    => pipe(4),
-  --    stall_in    => stall(4),
-  --    stall_out   => stall(3),
-  --    abcd        => abcd,
-  --    gray8_2d_in => gray8_2d_2,
-  --    gray8_2d_out => gray8_2d_3,      
-  --    disx => disx,
-  --    disy => disy
-  --    );                                -- [inout]
+  bitest2 : entity work.bi2
+    generic map (
+      ID     => 26,
+      WIDTH  => WIDTH,
+      HEIGHT => HEIGHT)
+    port map (
+      pipe_in     => pipe(3),           -- [in]
+      pipe_out    => pipe(4),
+      stall_in    => stall(4),
+      stall_out   => stall(3),
+      abcd        => abcd,
+      gray8_2d_in => gray8_2d_2,
+      gray8_2d_out => gray8_2d_3,      
+      disx => disx,
+      disy => disy
+      );                                -- [inout]
 
-  --bitest3 : entity work.bi3
-  --  generic map (
-  --    ID     => 27,
-  --    WIDTH  => WIDTH,
-  --    HEIGHT => HEIGHT)
-  --  port map (
-  --    pipe_in     => pipe(4),           -- [in]
-  --    pipe_out    => pipe(5),
-  --    stall_in    => stall(5),
-  --    stall_out   => stall(4),
-  --    gray8_2d_in => gray8_2d_3,
-  --    disx => disx,
-  --    disy => disy
+  bitest3 : entity work.bi3
+    generic map (
+      ID     => 27,
+      WIDTH  => WIDTH,
+      HEIGHT => HEIGHT)
+    port map (
+      pipe_in     => pipe(4),           -- [in]
+      pipe_out    => pipe(5),
+      stall_in    => stall(5),
+      stall_out   => stall(4),
+      gray8_2d_in => gray8_2d_3,
+      disx => disx,
+      disy => disy
       
-  --    );                                -- [inout]
+      );                                -- [inout]
 
   colmux : entity work.color_mux
     generic map (
       ID   => 3,
       MODE => 2)      
     port map (
-      pipe_in   => pipe(3),             -- [in]
-      pipe_out  => pipe(4),
-      stall_in  => stall(4),
-      stall_out => stall(3));           -- [inout]
+      pipe_in   => pipe(5),             -- [in]
+      pipe_out  => pipe(6),
+      stall_in  => stall(6),
+      stall_out => stall(5));           -- [inout]
   
   my_sim_sink : entity work.sim_sink
     generic map (
       ID => 2)
     port map (
-      pipe_in   => pipe(4),             -- [in]
+      pipe_in   => pipe(6),             -- [in]
       pipe_out  => pipe(8),
       stall_in  => '0',
-      stall_out => stall(4),
+      stall_out => stall(6),
       p0_fifo   => p0_wr_fifo);         -- [inout]
 
 -------------------------------------------------------------------------------  

@@ -47,6 +47,9 @@ architecture impl of bi is
 
   signal x : std_logic_vector(15 downto 0);
   signal y : std_logic_vector(15 downto 0);
+
+  signal gray8_2d : gray8_2d_t;
+  signal gray8_2d_next : gray8_2d_t;  
 begin
 
   x <= std_logic_vector(to_unsigned(r.cols, x'length));
@@ -119,7 +122,7 @@ begin
     r_next <= v;
   end process;
 
-  proc_clk : process(clk, rst, stall, pipe_in, stage_next, r_next)
+  proc_clk : process(clk, rst, stall, pipe_in, stage_next, r_next, gray8_2d_in)
   begin
     if rising_edge(clk) and (stall = '0' or rst = '1') then
       if pipe_in.cfg(ID).enable = '1' then
@@ -127,9 +130,10 @@ begin
       else
         stage <= pipe_in.stage;
       end if;
+      gray8_2d <=  gray8_2d_next; 
       r <= r_next;
-      gray8_2d_out <= gray8_2d_in;
     end if;
   end process;
-
+  gray8_2d_out <= gray8_2d;
+  gray8_2d_next <= gray8_2d_in;
 end impl;

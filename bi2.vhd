@@ -73,6 +73,9 @@ architecture impl of bi2 is
 
   signal off : unsigned(7 downto 0);
   signal off2 : unsigned(7 downto 0);  
+
+  signal gray8_2d : gray8_2d_t;
+  signal gray8_2d_next : gray8_2d_t;  
 begin 
   issue <= '0';
 
@@ -119,13 +122,13 @@ begin
   usx <= unsigned(ux);
   usy <= unsigned(uy);  
 
-  off <= unsigned(pipe_in.cfg(ID).p(0)(3 downto 0))*5; --"0000" & usy;-- + usy*5;
-  off2 <= unsigned(pipe_in.cfg(ID).p(1)); 
+--  off <= unsigned(pipe_in.cfg(ID).p(0)(3 downto 0))*5; --"0000" & usy;-- + usy*5;
+--  off2 <= unsigned(pipe_in.cfg(ID).p(1)); 
 
---  off <= usx(3 downto 0)*5; --"0000" & usy;-- + usy*5;
---  off2 <= usy*16; 
+  off <= usy(3 downto 0)*5; --"0000" & usy;-- + usy*5;
+  off2 <= "0000" & usx; 
     
-  process(pipe_in, r, rst, src_valid)
+  process(pipe_in, r, rst, src_valid, off, off2)
     variable v : reg_t;
   begin
     stage_next <= pipe_in.stage;
@@ -174,7 +177,7 @@ begin
 
   disx <= r.disx;
   disy <= r.disy;
-  proc_clk : process(clk, rst, stall, pipe_in, stage_next, r_next)
+  proc_clk : process(clk, rst, stall, pipe_in, stage_next, r_next, gray8_2d_in)
   begin
     if rising_edge(clk) and (stall = '0' or rst = '1') then
       if pipe_in.cfg(ID).enable = '1' then
@@ -183,8 +186,9 @@ begin
         stage <= pipe_in.stage;
       end if;
       r <= r_next;
-      gray8_2d_out <=  gray8_2d_in;
+      gray8_2d <=  gray8_2d_next; 
     end if;
   end process;
-
+  gray8_2d_out <= gray8_2d;
+  gray8_2d_next <= gray8_2d_in;
 end impl;

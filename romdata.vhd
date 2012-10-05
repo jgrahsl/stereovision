@@ -25,20 +25,20 @@ begin
   begin
     case areg is
       -- GRIDX+GRIDY -- ABCD_BITS
-      when "0000" => q <= "11100000";  -- TODO: comment
-      when "0001" => q <= "11100000";  -- TODO: comment                     
-      when "0010" => q <= "11100000";  -- TODO: comment
-      when "0011" => q <= "11100000";  -- TODO: comment                     
+      when "0000" => q <= "00000000";  -- TODO: comment
+      when "0001" => q <= "00000000";  -- TODO: comment                     
+      when "0010" => q <= "00000000";  -- TODO: comment
+      when "0011" => q <= "00000000";  -- TODO: comment                     
 
-      when "0100" => q <= "00100000";  -- TODO: comment
-      when "0101" => q <= "00100000";  -- TODO: comment                     
-      when "0110" => q <= "00100000";  -- TODO: comment
-      when "0111" => q <= "00100000";  -- TODO: comment                     
+      when "0100" => q <= "00000000";  -- TODO: comment
+      when "0101" => q <= "00000000";  -- TODO: comment                     
+      when "0110" => q <= "00000000";  -- TODO: comment
+      when "0111" => q <= "00000000";  -- TODO: comment                     
 
-      when "1000" => q <= "00100000";  -- TODO: comment
-      when "1001" => q <= "00100000";  -- TODO: comment                     
-      when "1010" => q <= "00100000";  -- TODO: comment
-      when "1011" => q <= "00100000";  -- TODO: comment                     
+      when "1000" => q <= "00000000";  -- TODO: comment
+      when "1001" => q <= "00000000";  -- TODO: comment                     
+      when "1010" => q <= "00000000";  -- TODO: comment
+      when "1011" => q <= "00000000";  -- TODO: comment                     
 
       when "1100" => q <= "00000000";  -- TODO: comment
       when "1101" => q <= "00000000";  -- TODO: comment                     
