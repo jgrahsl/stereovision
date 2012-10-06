@@ -8,13 +8,14 @@ use work.cam_pkg.all;
 entity win_test is
   generic (
     ID     : integer range 0 to 63 := 0;
-    KERNEL : natural range 1 to 5  := 5
+    KERNEL : natural range 1 to 5  := 5;
+    OFFSET : natural range 0 to 24 := 0
     );
   port (
     pipe_in    : in  pipe_t;
     pipe_out   : out pipe_t;
-    stall_in    : in  std_logic;
-    stall_out   : out std_logic;
+    stall_in   : in  std_logic;
+    stall_out  : out std_logic;
     mono_2d_in : in  mono_2d_t
     );
 end win_test;
@@ -35,7 +36,8 @@ begin
   connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);
 
   process (pipe_in, src_valid, rst, mono_2d_in)
-    variable sum : natural range 0 to (KERNEL*KERNEL);
+    variable sum : natural range 0 to (KERNEL*KERNEL*(2**mono_t'length));
+    variable u   : unsigned(23 downto 0);
   begin  -- process
     stage_next <= pipe_in.stage;
 -------------------------------------------------------------------------------
@@ -47,57 +49,61 @@ begin
     ---------------------------------------------------------------------------
     --for i in 0 to (KERNEL-1) loop
     --  for j in 0 to (KERNEL-1) loop
-    --    sum := sum + to_integer(unsigned(win(i)(j)));
+    --    sum := sum + to_integer(unsigned(gray8_2d_in(i)(j)));
     --  end loop;
     --end loop;
     -------------------------------------------------------------------------------
     -- Octagon
     -------------------------------------------------------------------------------
-    --sum        := to_integer(unsigned(win(0)(1))) +
-    --              to_integer(unsigned(win(0)(2))) +
-    --              to_integer(unsigned(win(0)(3))) +
+    --sum        := to_integer(unsigned(gray8_2d_in(0)(1))) +
+    --              to_integer(unsigned(gray8_2d_in(0)(2))) +
+    --              to_integer(unsigned(gray8_2d_in(0)(3))) +
 
-    --              to_integer(unsigned(win(1)(0))) +
-    --              to_integer(unsigned(win(1)(1))) +
-    --              to_integer(unsigned(win(1)(2))) +
-    --              to_integer(unsigned(win(1)(3))) +
-    --              to_integer(unsigned(win(1)(4))) +
+    --              to_integer(unsigned(gray8_2d_in(1)(0))) +
+    --              to_integer(unsigned(gray8_2d_in(1)(1))) +
+    --              to_integer(unsigned(gray8_2d_in(1)(2))) +
+    --              to_integer(unsigned(gray8_2d_in(1)(3))) +
+    --              to_integer(unsigned(gray8_2d_in(1)(4))) +
 
-    --              to_integer(unsigned(win(2)(0))) +
-    --              to_integer(unsigned(win(2)(1))) +
-    --              to_integer(unsigned(win(2)(2))) +
-    --              to_integer(unsigned(win(2)(3))) +
-    --              to_integer(unsigned(win(2)(4))) +
+    --              --to_integer(unsigned(gray8_2d_in(2)(0))) +
+    --              --to_integer(unsigned(gray8_2d_in(2)(1))) +
+    --              --to_integer(unsigned(gray8_2d_in(2)(3))) +
+    --              --to_integer(unsigned(gray8_2d_in(2)(4))) +
 
-    --              to_integer(unsigned(win(3)(0))) +
-    --              to_integer(unsigned(win(3)(1))) +
-    --              to_integer(unsigned(win(3)(2))) +
-    --              to_integer(unsigned(win(3)(3))) +
-    --              to_integer(unsigned(win(3)(4))) +
+    --              to_integer(unsigned(gray8_2d_in(3)(0))) +
+    --              to_integer(unsigned(gray8_2d_in(3)(1))) +
+    --              to_integer(unsigned(gray8_2d_in(3)(2))) +
+    --              to_integer(unsigned(gray8_2d_in(3)(3))) +
+    --              to_integer(unsigned(gray8_2d_in(3)(4))) +
 
-    --              to_integer(unsigned(win(4)(1))) +
-    --              to_integer(unsigned(win(4)(2))) +
-    --              to_integer(unsigned(win(4)(3)));
-    sum := to_integer(unsigned(mono_2d_in(2*5+2)));
+    --              to_integer(unsigned(gray8_2d_in(4)(1))) +
+    --              to_integer(unsigned(gray8_2d_in(4)(2))) +
+    --              to_integer(unsigned(gray8_2d_in(4)(3)));
+
+    u := to_unsigned(sum, 24);
+
+--    stage_next.data_1 <= std_logic_vector(u(7+4 downto 0+4));
+
+    stage_next.data_1 <= mono_2d_in(OFFSET);
 -------------------------------------------------------------------------------
 -- Output
 -------------------------------------------------------------------------------    
-    if (sum > 0) then
-      stage_next.data_1 <= (others => '1');
+--    if (sum > 0) then
+--      stage_next.data_1 <= (others => '1');
 --      stage_next.data_8   <= (others => '1');
 --      stage_next.data_565 <= (others => '1');
 --      stage_next.data_888 <= (others => '1');
-    else
-      stage_next.data_1 <= (others => '0');
+--  else
+--      stage_next.data_1 <= (others => '0');
 --      stage_next.data_8   <= (others => '0');
 --      stage_next.data_565 <= (others => '0');
 --      stage_next.data_888 <= (others => '0');
-    end if;
+--  end if;
 -------------------------------------------------------------------------------
 -- Reset
 -------------------------------------------------------------------------------
     if pipe_in.cfg(ID).identify = '1' then
-      stage_next.identity <= IDENT_WIN_TEST;
+      stage_next.identity <= IDENT_WIN_TEST_8;
     end if;
     if rst = '1' then
       stage_next <= NULL_STAGE;

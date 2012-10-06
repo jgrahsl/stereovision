@@ -131,26 +131,13 @@ begin
           end if;
         end if;
       when 5 =>
-        if r_r.rows = 0 then
-          mono_1d_out(1) <= (others => '0');
-          mono_1d_out(2) <= (others => '0');
-          mono_1d_out(3) <= (others => '0');
-          mono_1d_out(4) <= (others => '0');
-        elsif r_r.rows = 1 then
-          mono_1d_out(1) <= q(0);
-          mono_1d_out(2) <= (others => '0');
-          mono_1d_out(3) <= (others => '0');
-          mono_1d_out(4) <= (others => '0');
-        elsif r_r.rows = 2 then
-          mono_1d_out(1) <= q(1);
-          mono_1d_out(2) <= q(0);
-          mono_1d_out(3) <= (others => '0');
-          mono_1d_out(4) <= (others => '0');
-        elsif r_r.rows = 3 then
-          mono_1d_out(1) <= q(2);
-          mono_1d_out(2) <= q(1);
-          mono_1d_out(3) <= q(0);
-          mono_1d_out(4) <= (others => '0');
+        for i in 0 to NUM_LINES-1 loop
+          mono_1d_out(i) <= (others => '0');          
+        end loop;  -- i        
+        if r_r.rows < NUM_LINES-1 then
+          for i in 1 to r_r.rows loop
+            mono_1d_out(i) <= q(r_r.rows-i);
+          end loop;        
         else
           if r_r.sel = 0 then
             mono_1d_out(1) <= q(4); mono_1d_out(2) <= q(3); mono_1d_out(3) <= q(2); mono_1d_out(4) <= q(1);
