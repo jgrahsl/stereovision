@@ -75,6 +75,8 @@ begin
       issue             <= pipe_in.cfg(ID).enable;
       stage_next.data_1 <= (others => '0');
       stage_next.data_8 <= (others => '0');
+      stage_next.data_565 <= (others => '0');
+      stage_next.data_888 <= (others => '0');                  
       stage_next.valid  <= '1';
       en                := '1';
     end if;
@@ -83,6 +85,8 @@ begin
       issue             <= pipe_in.cfg(ID).enable;
       stage_next.data_1 <= (others => '0');
       stage_next.data_8 <= (others => '0');
+      stage_next.data_565 <= (others => '0');      
+      stage_next.data_888 <= (others => '0');
       stage_next.valid  <= '1';
       en                := '1';
     end if;

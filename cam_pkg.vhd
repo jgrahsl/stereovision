@@ -67,6 +67,9 @@ package cam_pkg is
   type gray8_1d_t is array (0 to MAX_KERNEL-1) of gray8_t;
   type gray8_2d_t is array (0 to MAX_KERNEL*MAX_KERNEL-1) of gray8_t;
 
+  type rgb565_1d_t is array (0 to MAX_KERNEL-1) of rgb565_t;
+  type rgb565_2d_t is array (0 to MAX_KERNEL*MAX_KERNEL-1) of rgb565_t;
+  
   subtype byte_t is std_logic_vector(7 downto 0);
   type    param_t is array (0 to MAX_PARAM-1) of byte_t;
 

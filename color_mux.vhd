@@ -69,15 +69,15 @@ begin
     end if;
 
     if MODE = 3 then
-      brightness := ("00" & unsigned(pipe_in.stage.data_565(15 downto 11)) & "0") +
+      brightness := ("00" & unsigned(pipe_in.stage.data_565(15 downto 11)) & "1") +
                     ("00" & unsigned(pipe_in.stage.data_565(10 downto 5))) +
-                    ("00" & unsigned(pipe_in.stage.data_565(4 downto 0)) & "0");
+                    ("00" & unsigned(pipe_in.stage.data_565(4 downto 0)) & "1");
 
-      stage_next.data_1   <= (others => '0');
+      stage_next.data_1   <= std_logic_vector(brightness(7 downto 7));
       stage_next.data_8   <= std_logic_vector(brightness);
-      stage_next.data_888 <= pipe_in.stage.data_565(15 downto 11) & "000" &
-                             pipe_in.stage.data_565(10 downto 5) & "00" &
-                             pipe_in.stage.data_565(4 downto 0) & "000";
+      stage_next.data_888 <= pipe_in.stage.data_565(15 downto 11) & "111" &
+                             pipe_in.stage.data_565(10 downto 5) & "11" &
+                             pipe_in.stage.data_565(4 downto 0) & "111";
     end if;
 -------------------------------------------------------------------------------
 -- Reset

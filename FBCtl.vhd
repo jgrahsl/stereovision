@@ -673,9 +673,9 @@ architecture Behavioral of FBCtl is
   constant HEIGHT : natural := 480;
 
   signal abcd       : abcd_t;
+  signal abcd2       : abcd2_t;  
   signal gray8_2d_1 : gray8_2d_t;
   signal gray8_2d_2 : gray8_2d_t;
-  signal gray8_2d_3 : gray8_2d_t;  
 begin
 ----------------------------------------------------------------------------------
 -- mcb instantiation
@@ -1668,25 +1668,23 @@ begin
       stall_in    => stall(5),
       stall_out   => stall(4),
       abcd        => abcd,
-      gray8_2d_in => gray8_2d_2
+      gray8_2d_in => gray8_2d_2,
+      abcd2       => abcd2
       );                                -- [inout]
 
-  --bitest3 : entity work.bi3
-  --  generic map (
-  --    ID     => 27,
-  --    WIDTH  => WIDTH,
-  --    HEIGHT => HEIGHT)
-  --  port map (
-  --    pipe_in     => pipe(5),           -- [in]
-  --    pipe_out    => pipe(6),
-  --    stall_in    => stall(6),
-  --    stall_out   => stall(5),
-  --    gray8_2d_in => gray8_2d_3,
-  --    disx => disx,
-  --    disy => disy
-      
-  --    );                                -- [inout]
-  
+  bitest3 : entity work.bi3
+    generic map (
+      ID     => 27,
+      WIDTH  => WIDTH,
+      HEIGHT => HEIGHT)
+    port map (
+      pipe_in   => pipe(5),             -- [in]
+      pipe_out  => pipe(6),
+      stall_in  => stall(6),
+      stall_out => stall(5),
+      abcd2     => abcd2
+      );                                -- [inout]
+
   my_col_mux : entity work.color_mux
     generic map (
       ID   => 29,
