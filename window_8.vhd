@@ -8,7 +8,7 @@ use work.cam_pkg.all;
 entity window_8 is
   generic (
     ID       : integer range 0 to 63   := 0;
-    NUM_COLS : natural range 0 to 5    := 5;
+    NUM_COLS : natural                 := 5;
     WIDTH    : natural range 1 to 2048 := 2048;
     HEIGHT   : natural range 1 to 2048 := 2048
     );
@@ -68,7 +68,7 @@ begin
           next_q(i+b*NUM_COLS+1) <= q(i+b*NUM_COLS);
         end loop;  -- i                
       end loop;  -- b
-     
+
       if r.cols = (WIDTH-1) then
         v.cols := 0;
 --        next_q <= (others => (others => '0'));
@@ -76,9 +76,9 @@ begin
         v.cols := v.cols + 1;
       end if;
 
-      for b in 0 to (NUM_COLS-1) loop      
+      for b in 0 to (NUM_COLS-1) loop
         next_q(b*NUM_COLS) <= gray8_1d_in(b);
-      end loop;     
+      end loop;
     end if;
 -------------------------------------------------------------------------------
 -- Output

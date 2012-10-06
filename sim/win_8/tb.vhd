@@ -64,6 +64,7 @@ begin  -- impl
   dut : entity work.win_gray8
     generic map (
       ID     => 25,
+      KERNEL => KERNEL,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (
