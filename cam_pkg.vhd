@@ -49,7 +49,9 @@ package cam_pkg is
 
   constant IDENT_BI1      : std_logic_vector(7 downto 0) := X"1A";
   constant IDENT_BI2      : std_logic_vector(7 downto 0) := X"1B";  
-  constant IDENT_BI3      : std_logic_vector(7 downto 0) := X"1C";    
+  constant IDENT_BI3      : std_logic_vector(7 downto 0) := X"1C";
+  constant IDENT_DISPARITY      : std_logic_vector(7 downto 0) := X"1D";
+  constant IDENT_CENSUS      : std_logic_vector(7 downto 0) := X"1E";      
 
 
   constant IDENT_NULL    : std_logic_vector(7 downto 0) := X"F0";
