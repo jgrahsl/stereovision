@@ -8,7 +8,7 @@ use work.cam_pkg.all;
 entity window is
   generic (
     ID       : integer range 0 to 63   := 0;
-    NUM_COLS : natural range 0 to 5    := 5;
+    NUM_COLS : natural := 5;
     WIDTH    : natural range 1 to 2048 := 2048;
     HEIGHT   : natural range 1 to 2048 := 2048
     );

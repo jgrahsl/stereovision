@@ -8,8 +8,8 @@ use work.cam_pkg.all;
 entity win_test is
   generic (
     ID     : integer range 0 to 63 := 0;
-    KERNEL : natural range 1 to 5  := 5;
-    OFFSET : natural range 0 to 24 := 0
+    KERNEL : natural := 5;
+    OFFSET : natural := 0
     );
   port (
     pipe_in    : in  pipe_t;

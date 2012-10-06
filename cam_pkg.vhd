@@ -8,7 +8,7 @@ package cam_pkg is
 -- vin_data(0)(1) 1 row delay
   constant MAX_PIPE  : natural := 32;
   constant MAX_PARAM : natural := 6;
-
+  constant MAX_KERNEL : natural := 9;
   -----------------------------------------------------------------------------
   -- Bilinear
   -----------------------------------------------------------------------------
@@ -61,11 +61,11 @@ package cam_pkg is
   subtype rgb888_t is std_logic_vector(23 downto 0);
   subtype gray8_t is std_logic_vector(7 downto 0);
 
-  type mono_1d_t is array (0 to 4) of mono_t;
-  type mono_2d_t is array (0 to 24) of mono_t;
+  type mono_1d_t is array (0 to MAX_KERNEL-1) of mono_t;
+  type mono_2d_t is array (0 to MAX_KERNEL*MAX_KERNEL-1) of mono_t;
 
-  type gray8_1d_t is array (0 to 4) of gray8_t;
-  type gray8_2d_t is array (0 to 24) of gray8_t;
+  type gray8_1d_t is array (0 to MAX_KERNEL-1) of gray8_t;
+  type gray8_2d_t is array (0 to MAX_KERNEL*MAX_KERNEL-1) of gray8_t;
 
   subtype byte_t is std_logic_vector(7 downto 0);
   type    param_t is array (0 to MAX_PARAM-1) of byte_t;

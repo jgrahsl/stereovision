@@ -64,6 +64,7 @@ begin  -- impl
   dut : entity work.win_mono
     generic map (
       ID     => 25,
+      KERNEL => KERNEL,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (

@@ -8,7 +8,7 @@ use work.cam_pkg.all;
 entity line_buffer is
   generic (
     ID        : integer range 0 to 63   := 0;
-    NUM_LINES : natural range 1 to 5    := 3;
+    NUM_LINES : natural := 3;
     WIDTH     : natural range 1 to 2048 := 2048;
     HEIGHT    : natural range 1 to 2048 := 2048);
   port (
@@ -151,6 +151,37 @@ begin
             mono_1d_out(1) <= q(3); mono_1d_out(2) <= q(2); mono_1d_out(3) <= q(1); mono_1d_out(4) <= q(0);
           end if;
         end if;
+
+      when 9 =>
+        for i in 0 to NUM_LINES-1 loop
+          mono_1d_out(i) <= (others => '0');          
+        end loop;  -- i        
+        if r_r.rows < NUM_LINES-1 then
+          for i in 1 to r_r.rows loop
+            mono_1d_out(i) <= q(r_r.rows-i);
+          end loop;        
+        else
+          if r_r.sel = 0 then
+            mono_1d_out(1) <= q(8); mono_1d_out(2) <= q(7); mono_1d_out(3) <= q(6); mono_1d_out(4) <= q(5); mono_1d_out(5) <= q(4); mono_1d_out(6) <= q(3); mono_1d_out(7) <= q(2); mono_1d_out(8) <= q(1);
+          elsif r_r.sel = 1 then
+            mono_1d_out(1) <= q(0); mono_1d_out(2) <= q(8); mono_1d_out(3) <= q(7); mono_1d_out(4) <= q(6); mono_1d_out(5) <= q(5); mono_1d_out(6) <= q(4); mono_1d_out(7) <= q(3); mono_1d_out(8) <= q(2);            
+          elsif r_r.sel = 2 then
+            mono_1d_out(1) <= q(1); mono_1d_out(2) <= q(0); mono_1d_out(3) <= q(8); mono_1d_out(4) <= q(7); mono_1d_out(5) <= q(6); mono_1d_out(6) <= q(5); mono_1d_out(7) <= q(4); mono_1d_out(8) <= q(3);            
+          elsif r_r.sel = 3 then
+            mono_1d_out(1) <= q(2); mono_1d_out(2) <= q(1); mono_1d_out(3) <= q(0); mono_1d_out(4) <= q(8); mono_1d_out(5) <= q(7); mono_1d_out(6) <= q(6); mono_1d_out(7) <= q(5); mono_1d_out(8) <= q(4);
+          elsif r_r.sel = 4 then
+            mono_1d_out(1) <= q(3); mono_1d_out(2) <= q(2); mono_1d_out(3) <= q(1); mono_1d_out(4) <= q(0); mono_1d_out(5) <= q(8); mono_1d_out(6) <= q(7); mono_1d_out(7) <= q(6); mono_1d_out(8) <= q(5);
+          elsif r_r.sel = 5 then
+            mono_1d_out(1) <= q(4); mono_1d_out(2) <= q(3); mono_1d_out(3) <= q(2); mono_1d_out(4) <= q(1); mono_1d_out(5) <= q(0); mono_1d_out(6) <= q(8); mono_1d_out(7) <= q(7); mono_1d_out(8) <= q(6);
+          elsif r_r.sel = 6 then
+            mono_1d_out(1) <= q(5); mono_1d_out(2) <= q(4); mono_1d_out(3) <= q(3); mono_1d_out(4) <= q(2); mono_1d_out(5) <= q(1); mono_1d_out(6) <= q(0); mono_1d_out(7) <= q(8); mono_1d_out(8) <= q(7);
+          elsif r_r.sel = 7 then
+            mono_1d_out(1) <= q(6); mono_1d_out(2) <= q(5); mono_1d_out(3) <= q(4); mono_1d_out(4) <= q(3); mono_1d_out(5) <= q(2); mono_1d_out(6) <= q(1); mono_1d_out(7) <= q(0); mono_1d_out(8) <= q(8);
+          elsif r_r.sel = 8 then
+            mono_1d_out(1) <= q(7); mono_1d_out(2) <= q(6); mono_1d_out(3) <= q(5); mono_1d_out(4) <= q(4); mono_1d_out(5) <= q(3); mono_1d_out(6) <= q(2); mono_1d_out(7) <= q(1); mono_1d_out(8) <= q(0);
+          end if;
+        end if;
+
       when others => null;
     end case;
 

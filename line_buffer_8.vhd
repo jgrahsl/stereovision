@@ -8,7 +8,7 @@ use work.cam_pkg.all;
 entity line_buffer_8 is
   generic (
     ID        : integer range 0 to 63   := 0;
-    NUM_LINES : natural range 1 to 5    := 3;
+    NUM_LINES : natural := 3;
     WIDTH     : natural range 1 to 2048 := 2048;
     HEIGHT    : natural range 1 to 2048 := 2048);
   port (
@@ -133,8 +133,7 @@ begin
       when 5 =>
         for i in 0 to NUM_LINES-1 loop
           gray8_1d_out(i) <= (others => '0');          
-        end loop;  -- i
-        
+        end loop;  -- i        
         if r_r.rows < NUM_LINES-1 then
           for i in 1 to r_r.rows loop
             gray8_1d_out(i) <= q(r_r.rows-i);
