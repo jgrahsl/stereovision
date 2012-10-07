@@ -135,10 +135,15 @@ begin
           end if;
         end if;
       when 5 =>
-        if r_r.rows < NUM_LINES-1 then
-          for i in 1 to r_r.rows loop
-            rgb565_1d_out(i) <= q(r_r.rows-i);
-          end loop;
+        if r_r.rows = 1 then
+          gray8_1d_out(1) <= q(0);
+        elsif r_r.rows = 2 then
+          gray8_1d_out(1) <= q(1);
+          gray8_1d_out(2) <= q(0);
+        elsif r_r.rows = 3 then
+          gray8_1d_out(1) <= q(2);
+          gray8_1d_out(2) <= q(1);
+          gray8_1d_out(3) <= q(0);        
         else
           if r_r.sel = 0 then
             rgb565_1d_out(1) <= q(4); rgb565_1d_out(2) <= q(3); rgb565_1d_out(3) <= q(2); rgb565_1d_out(4) <= q(1);
@@ -154,10 +159,50 @@ begin
         end if;
 
       when 9 =>
-        if r_r.rows < NUM_LINES-1 then
-          for i in 1 to r_r.rows loop
-            rgb565_1d_out(i) <= q(r_r.rows-i);
-          end loop;
+        if r_r.rows = 1 then
+          gray8_1d_out(1) <= q(0);
+        elsif r_r.rows = 2 then
+          gray8_1d_out(1) <= q(1);
+          gray8_1d_out(2) <= q(0);
+        elsif r_r.rows = 3 then
+          gray8_1d_out(1) <= q(2);
+          gray8_1d_out(2) <= q(1);
+          gray8_1d_out(3) <= q(0);        
+        elsif r_r.rows = 4 then
+          gray8_1d_out(1) <= q(3);
+          gray8_1d_out(2) <= q(2);
+          gray8_1d_out(3) <= q(1);
+          gray8_1d_out(4) <= q(0);                  
+        elsif r_r.rows = 5 then
+          gray8_1d_out(1) <= q(4);
+          gray8_1d_out(2) <= q(3);
+          gray8_1d_out(3) <= q(2);
+          gray8_1d_out(4) <= q(1);
+          gray8_1d_out(5) <= q(0);                            
+        elsif r_r.rows = 6 then
+          gray8_1d_out(1) <= q(5);
+          gray8_1d_out(2) <= q(4);
+          gray8_1d_out(3) <= q(3);
+          gray8_1d_out(4) <= q(2);
+          gray8_1d_out(5) <= q(1);
+          gray8_1d_out(6) <= q(0);                            
+        elsif r_r.rows = 7 then
+          gray8_1d_out(1) <= q(6);
+          gray8_1d_out(2) <= q(5);
+          gray8_1d_out(3) <= q(4);
+          gray8_1d_out(4) <= q(3);
+          gray8_1d_out(5) <= q(2);                  
+          gray8_1d_out(6) <= q(1);                  
+          gray8_1d_out(7) <= q(0);                            
+        elsif r_r.rows = 8 then
+          gray8_1d_out(1) <= q(7);
+          gray8_1d_out(2) <= q(6);
+          gray8_1d_out(3) <= q(5);
+          gray8_1d_out(4) <= q(4);
+          gray8_1d_out(5) <= q(3);
+          gray8_1d_out(6) <= q(2);
+          gray8_1d_out(7) <= q(1);
+          gray8_1d_out(8) <= q(0);                            
         else
           if r_r.sel = 0 then
             rgb565_1d_out(1) <= q(8); rgb565_1d_out(2) <= q(7); rgb565_1d_out(3) <= q(6); rgb565_1d_out(4) <= q(5); rgb565_1d_out(5) <= q(4); rgb565_1d_out(6) <= q(3); rgb565_1d_out(7) <= q(2); rgb565_1d_out(8) <= q(1);
