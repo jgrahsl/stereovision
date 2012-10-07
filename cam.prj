@@ -43,18 +43,27 @@ vhdl work "bi2.vhd"
 vhdl work "bi3.vhd"
 
 
-vhdl work "window.vhd"
-vhdl work "window_8.vhd"
 vhdl work "bit_ram.vhd"
-vhdl work "line_buffer.vhd"
-vhdl work "line_buffer_8.vhd"
 vhdl work "translate.vhd"
+
+vhdl work "window.vhd"
+vhdl work "line_buffer.vhd"
 vhdl work "translate_win.vhd"
-vhdl work "translate_win_8.vhd"
 vhdl work "win.vhd"
-vhdl work "win_8.vhd"
 vhdl work "win_test.vhd"
+
+vhdl work "window_8.vhd"
+vhdl work "line_buffer_8.vhd"
+vhdl work "translate_win_8.vhd"
+vhdl work "win_8.vhd"
 vhdl work "win_test_8.vhd"
+
+vhdl work "window_16.vhd"
+vhdl work "line_buffer_16.vhd"
+vhdl work "translate_win_16.vhd"
+vhdl work "win_16.vhd"
+vhdl work "win_test_16.vhd"
+
 
 vhdl work "morph_kernel.vhd"
 vhdl work "morph_new.vhd"
