@@ -114,7 +114,7 @@ begin
       end if;
     end loop;
 
-    stage_next.data_8 <= std_logic_vector(to_unsigned(minimum_index, 4) & "0000");
+    stage_next.data_8 <= std_logic_vector(to_unsigned(minimum_index, 3) & "00000");
 
 -------------------------------------------------------------------------------
 -- Reset
@@ -125,6 +125,10 @@ begin
     if rst = '1' then
       stage_next <= NULL_STAGE;
     end if;
+-------------------------------------------------------------------------------
+-- Next
+-------------------------------------------------------------------------------    
+    r_next <= v;    
   end process;
 
   proc_clk : process(clk, rst, stall, pipe_in, stage_next)

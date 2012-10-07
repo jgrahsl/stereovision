@@ -49,7 +49,7 @@ begin
     mono_2d_l_next <= (others => "0");
     for i in 0 to KERNEL-1 loop
       for j in 0 to KERNEL-1 loop
-        if rgb565_2d_in(i+j*KERNEL)(15 downto 8) > rgb565_2d_in(HALF_KERNEL+HALF_KERNEL*KERNEL)(15 downto 8) then
+        if rgb565_2d_in(i+j*KERNEL)(15 downto 8) >= rgb565_2d_in(HALF_KERNEL+HALF_KERNEL*KERNEL)(15 downto 8) then
           mono_2d_l_next(i+j*KERNEL) <= "1";
         end if;
       end loop;  -- j
@@ -58,7 +58,7 @@ begin
     mono_2d_r_next <= (others => "0");
     for i in 0 to KERNEL-1 loop
       for j in 0 to KERNEL-1 loop
-        if rgb565_2d_in(i+j*KERNEL)(7 downto 0) > rgb565_2d_in(HALF_KERNEL+HALF_KERNEL*KERNEL)(7 downto 0) then
+        if rgb565_2d_in(i+j*KERNEL)(7 downto 0) >= rgb565_2d_in(HALF_KERNEL+HALF_KERNEL*KERNEL)(7 downto 0) then
           mono_2d_r_next(i+j*KERNEL) <= "1";
         end if;
       end loop;  -- j

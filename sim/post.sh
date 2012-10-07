@@ -6,6 +6,7 @@
 MODULE=$1
 STIM=$2
 
+
 cat $MODULE/$STIM/sim.out | ./dat2tiff.py $MODULE/$STIM/expect.tiff
 cat sim.out | ./dat2tiff.py $MODULE/$STIM/output.tiff
 

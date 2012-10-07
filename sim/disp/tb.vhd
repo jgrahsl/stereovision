@@ -146,7 +146,6 @@ begin  -- impl
   --  print(hstr(rd_data));
 
   process
-    constant stim_file : string  := "sim.dat";
     file f             : text open read_mode is stim_file;
     variable l         : line;
     variable s         : string(1 to (24+16+8+1));
@@ -167,8 +166,7 @@ begin  -- impl
   end process;
 
   process
-    constant stim_file : string  := "sim.out";
-    file f             : text open write_mode is stim_file;
+    file f             : text open write_mode is sim_file;
     variable s         : string(1 to (24+16+8+1));
     variable c         : integer := 0;
     variable b         : std_logic_vector((24+16+8+1)-1 downto 0);
