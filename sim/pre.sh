@@ -8,9 +8,8 @@ STIM=$2
 
 #INPUT DATA
 
-if [[ $MODULE -eq "disp" ]]; then
+if [ "$MODULE" == "disp" ]; then
     ./tiff2dat_stereo.py $MODULE/$STIM/l.tiff $MODULE/$STIM/r.tiff > stereo.dat
-
 else
     ./tiff2dat.py $MODULE/$STIM/input.tiff > sim.dat
     cat sim.dat sim.dat sim.dat sim.dat sim.dat sim.dat sim.dat sim.dat > sim8.dat
