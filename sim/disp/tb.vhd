@@ -94,7 +94,8 @@ begin  -- impl
   dut3 : entity work.disparity
     generic map (
       ID     => 27,
-      KERNEL => KERNEL)
+      KERNEL => KERNEL,
+      MAX_DISPARITY => MAX_DISPARITY)
     port map (
       pipe_in     => pipe(3),           -- [in]
       pipe_out    => pipe(4),

@@ -8,7 +8,7 @@ package cam_pkg is
 -- vin_data(0)(1) 1 row delay
   constant MAX_PIPE  : natural := 32;
   constant MAX_PARAM : natural := 6;
-  constant MAX_KERNEL : natural := 9;
+  constant MAX_KERNEL : natural := 13;
   -----------------------------------------------------------------------------
   -- Bilinear
   -----------------------------------------------------------------------------

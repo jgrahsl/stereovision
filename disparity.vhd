@@ -7,8 +7,9 @@ use work.cam_pkg.all;
 
 entity disparity is
   generic (
-    ID     : integer range 0 to 63 := 0;
-    KERNEL : natural range 1 to 5  := 5
+    ID            : integer range 0 to 63 := 0;
+    KERNEL        : natural               := 5;
+    MAX_DISPARITY : natural               := 0
     );
   port (
     pipe_in   : in  pipe_t;
@@ -30,7 +31,7 @@ architecture impl of disparity is
   signal issue      : std_logic;
   signal stall      : std_logic;
 
-  type mono_2d_delay_t is array (0 to 7) of mono_2d_t;
+  type mono_2d_delay_t is array (0 to MAX_DISPARITY-1) of mono_2d_t;
 
   type reg_t is record
 --    cols : natural range 0 to WIDTH-1;
@@ -75,20 +76,20 @@ begin
     variable minimum       : natural range 0 to (KERNEL*KERNEL);
     variable current       : natural range 0 to (KERNEL*KERNEL);
     variable v             : reg_t;
-    variable sum : natural range 0 to KERNEL*KERNEL := 0;
+    variable sum           : natural range 0 to KERNEL*KERNEL := 0;
   begin  -- process
     stage_next <= pipe_in.stage;
     v          := r;
 -------------------------------------------------------------------------------
 -- Logic
 -------------------------------------------------------------------------------
-    for b in 0 to 6 loop
+    for b in 0 to MAX_DISPARITY-2 loop
       v.delay(b+1) := r.delay(b);
     end loop;  -- b
     v.delay(0) := mono_2d_r;
 
     minimum       := KERNEL*KERNEL;
-    minimum_index := 7;
+    minimum_index := MAX_DISPARITY-1;
 
     current := hamming(mono_2d_l, mono_2d_r);
     if current < minimum then
@@ -96,7 +97,7 @@ begin
       minimum_index := 0;
     end if;
 
-    for i in 0 to 7 loop
+    for i in 0 to MAX_DISPARITY-1 loop
 
       sum := 0;
       for j in 0 to KERNEL*KERNEL-1 loop
@@ -114,7 +115,7 @@ begin
       end if;
     end loop;
 
-    stage_next.data_8 <= std_logic_vector(to_unsigned(minimum_index, 3) & "00000");
+    stage_next.data_8 <= std_logic_vector(to_unsigned(minimum_index, 4) & "0000");
 
 -------------------------------------------------------------------------------
 -- Reset
@@ -128,7 +129,7 @@ begin
 -------------------------------------------------------------------------------
 -- Next
 -------------------------------------------------------------------------------    
-    r_next <= v;    
+    r_next <= v;
   end process;
 
   proc_clk : process(clk, rst, stall, pipe_in, stage_next)
