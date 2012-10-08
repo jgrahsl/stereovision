@@ -574,21 +574,32 @@ architecture Behavioral of FBCtl is
   signal mono_1d : mono_1d_t;
   signal mono_2d : mono_2d_t;
 
-  signal pr_fifo   : mcb_fifo_t;
+  signal pra_fifo   : mcb_fifo_t;
+  signal prb_fifo   : mcb_fifo_t;  
   signal pw_fifo   : mcb_fifo_t;
   signal auxr_fifo : mcb_fifo_t;
   signal auxw_fifo : mcb_fifo_t;
 
-  signal pr_clk   : std_logic;
-  signal pr_rst   : std_logic;
-  signal pr_in    : std_logic_vector(31 downto 0);
-  signal pr_out   : std_logic_vector(31 downto 0);
-  signal pr_rd    : std_logic;
-  signal pr_wr    : std_logic;
-  signal pr_empty : std_logic;
-  signal pr_full  : std_logic;
-  signal pr_count : std_logic_vector(6 downto 0) := (others => '0');
+  signal pra_clk   : std_logic;
+  signal pra_rst   : std_logic;
+  signal pra_in    : std_logic_vector(31 downto 0);
+  signal pra_out   : std_logic_vector(31 downto 0);
+  signal pra_rd    : std_logic;
+  signal pra_wr    : std_logic;
+  signal pra_empty : std_logic;
+  signal pra_full  : std_logic;
+  signal pra_count : std_logic_vector(6 downto 0) := (others => '0');
 
+  signal prb_clk   : std_logic;
+  signal prb_rst   : std_logic;
+  signal prb_in    : std_logic_vector(31 downto 0);
+  signal prb_out   : std_logic_vector(31 downto 0);
+  signal prb_rd    : std_logic;
+  signal prb_wr    : std_logic;
+  signal prb_empty : std_logic;
+  signal prb_full  : std_logic;
+  signal prb_count : std_logic_vector(6 downto 0) := (others => '0');
+  
   signal pw_clk   : std_logic;
   signal pw_rst   : std_logic;
   signal pw_in    : std_logic_vector(31 downto 0);
@@ -623,11 +634,16 @@ architecture Behavioral of FBCtl is
     move_reset,
     move_wait,
 
-    move_r_p,
-    move_r_p_inc,
-    move_r_transfer_p,
-    move_r_transfer_p_1,
+    move_r_pa,
+    move_r_pa_inc,
+    move_r_transfer_pa,
+    move_r_transfer_pa_1,
 
+    move_r_pb,
+    move_r_pb_inc,
+    move_r_transfer_pb,
+    move_r_transfer_pb_1,
+    
     move_r_aux,
     move_r_aux_inc,
     move_r_transfer_aux,
@@ -646,7 +662,8 @@ architecture Behavioral of FBCtl is
   signal move_state  : move_state_t;
   signal move_nstate : move_state_t;
 
-  signal my_pixel_rd_addr : natural range 0 to 2**24-1 := 0;
+  signal my_pixel_a_rd_addr : natural range 0 to 2**24-1 := 0;
+  signal my_pixel_b_rd_addr : natural range 0 to 2**24-1 := 0;  
   signal my_aux_rd_addr   : natural range 0 to 2**24-1 := 0;
 
   signal my_pixel_wr_addr : natural range 0 to 2**24-1 := 0;
@@ -680,6 +697,7 @@ architecture Behavioral of FBCtl is
   signal mono_2d_l : mono_2d_t;
   signal mono_2d_r : mono_2d_t;  
 
+  signal done_b : std_logic;
 begin
 ----------------------------------------------------------------------------------
 -- mcb instantiation
@@ -1097,6 +1115,10 @@ begin
     if rising_edge(clkcam_b) then
       if (srstcam_b = '1') then
         pb_int_rst <= '1';
+        if redo_b = '1' then
+           redo_b <= '0';
+           done_b <= '0';
+        end if;
       elsif (p1_wr_empty = '1') then
         pb_int_rst <= '0';
       end if;
@@ -1123,6 +1145,7 @@ begin
       elsif (statewrb = stwrcmd) then
         if (pb_wr_addr = 640*480*2/(wr_batch*4)-1) then
           pb_wr_addr <= 0;
+          done_b <= '1';
         else
           pb_wr_addr <= pb_wr_addr + 1;
         end if;
@@ -1152,7 +1175,7 @@ begin
   end process;
 
   p1_wr_clk                <= clkcam_b;
-  p1_wr_en                 <= pb_wr_data_sel and encam_b;
+  p1_wr_en                 <= pb_wr_data_sel and encam_b and not done_b;
   p1_wr_data(31 downto 16) <= dcam_b;
   p1_wr_mask               <= "0000";
 
@@ -1208,7 +1231,8 @@ begin
       if rstalg = '1' then                 -- synchronous reset (active high)
         move_state <= move_reset;
 
-        my_pixel_rd_addr <= 0;
+        my_pixel_a_rd_addr <= 0;
+        my_pixel_b_rd_addr <= 0;        
         my_pixel_wr_addr <= 0;
         my_aux_rd_addr   <= 0;
         my_aux_wr_addr   <= 0;
@@ -1216,14 +1240,22 @@ begin
 -------------------------------------------------------------------------------
 -- Memory 
 -------------------------------------------------------------------------------
-        if move_state = move_r_p_inc then
-          if (my_pixel_rd_addr = (640*2*480-16*4)) then
-            my_pixel_rd_addr <= 0;
+        if move_state = move_r_pa_inc then
+          if (my_pixel_a_rd_addr = (640*2*480-16*4)) then
+            my_pixel_a_rd_addr <= 0;
           else
-            my_pixel_rd_addr <= my_pixel_rd_addr + 16*4;
+            my_pixel_a_rd_addr <= my_pixel_a_rd_addr + 16*4;
           end if;
         end if;
 
+        if move_state = move_r_pb_inc then
+          if (my_pixel_b_rd_addr = (640*2*480-16*4)) then
+            my_pixel_b_rd_addr <= 0;
+          else
+            my_pixel_b_rd_addr <= my_pixel_b_rd_addr + 16*4;
+          end if;
+        end if;
+        
         if move_state = move_r_aux_inc then
           if (my_aux_rd_addr = (640*2*480-32*4)) then
             my_aux_rd_addr <= 0;
@@ -1257,19 +1289,32 @@ begin
 -- MCB_FIFO TO PR/AUXR_FIFO
 -------------------------------------------------------------------------------
 
-  pr_fifo_comp : entity work.mcb_pixel_fifo
+  pr_fifo_comp_a : entity work.mcb_pixel_fifo
     port map (
-      clk        => pr_clk,             -- [IN]
-      rst        => pr_rst,             -- [IN]
-      din        => pr_in,              -- [IN]
-      wr_en      => pr_wr,              -- [IN]
-      rd_en      => pr_rd,              -- [IN]
-      dout       => pr_out,
-      full       => pr_full,            -- [OUT]
-      empty      => pr_empty,
-      data_count => pr_count(6 downto 0)
+      clk        => pra_clk,             -- [IN]
+      rst        => pra_rst,             -- [IN]
+      din        => pra_in,              -- [IN]
+      wr_en      => pra_wr,              -- [IN]
+      rd_en      => pra_rd,              -- [IN]
+      dout       => pra_out,
+      full       => pra_full,            -- [OUT]
+      empty      => pra_empty,
+      data_count => pra_count(6 downto 0)
       );                                -- [OUT]
 
+  pr_fifo_comp_b : entity work.mcb_pixel_fifo
+    port map (
+      clk        => prb_clk,             -- [IN]
+      rst        => prb_rst,             -- [IN]
+      din        => prb_in,              -- [IN]
+      wr_en      => prb_wr,              -- [IN]
+      rd_en      => prb_rd,              -- [IN]
+      dout       => prb_out,
+      full       => prb_full,            -- [OUT]
+      empty      => prb_empty,
+      data_count => prb_count(6 downto 0)
+      );                                -- [OUT]
+  
   pw_fifo_comp : entity work.mcb_pixel_fifo
     port map (
       clk        => pw_clk,             -- [IN]
@@ -1315,12 +1360,18 @@ begin
 -- READ
 -------------------------------------------------------------------------------
   -- mbc_fifo to p/aux_fifo
-  pr_rst        <= rstalg;
-  pr_clk        <= pr_fifo.clk;
-  pr_rd         <= pr_fifo.en;
-  pr_fifo.stall <= pr_empty;
-  pr_fifo.data  <= pr_out;
+  pra_rst        <= rstalg;
+  pra_clk        <= pra_fifo.clk;
+  pra_rd         <= pra_fifo.en;
+  pra_fifo.stall <= pra_empty;
+  pra_fifo.data  <= pra_out;
 
+  prb_rst        <= rstalg;
+  prb_clk        <= prb_fifo.clk;
+  prb_rd         <= prb_fifo.en;
+  prb_fifo.stall <= prb_empty;
+  prb_fifo.data  <= prb_out;
+  
   auxr_rst        <= rstalg;
   auxr_clk        <= auxr_fifo.clk;
   auxr_rd         <= auxr_fifo.en;
@@ -1343,7 +1394,8 @@ begin
   auxw_in         <= auxw_fifo.data;
 
   -- p/aux_fifo to real mcb
-  pr_in   <= p0_rd_data;
+  pra_in   <= p0_rd_data;
+  prb_in   <= p0_rd_data;  
   auxr_in <= p0_rd_data;
 
   p0_cmd_clk <= clkalg;
@@ -1362,7 +1414,8 @@ begin
 
     p0_rd_en <= '0';
     p0_wr_en <= '0';
-    pr_wr    <= '0';
+    pra_wr    <= '0';
+    prb_wr    <= '0';    
     auxr_wr  <= '0';
     pw_rd    <= '0';
     auxw_rd  <= '0';
@@ -1376,8 +1429,11 @@ begin
 
         
       when move_wait =>
-        if pr_count <= std_logic_vector(to_unsigned((64-16), 7)) then
-          move_nstate <= move_r_p;
+        if pra_count <= std_logic_vector(to_unsigned((64-16), 7)) then
+          move_nstate <= move_r_pa;
+        end if;
+        if prb_count <= std_logic_vector(to_unsigned((64-16), 7)) then
+          move_nstate <= move_r_pb;
         end if;
         if auxr_count <= std_logic_vector(to_unsigned((128-32), 8)) then
           move_nstate <= move_r_aux;
@@ -1390,31 +1446,55 @@ begin
         end if;
         d.state(0) <= '1';
         
-      when move_r_p =>
+      when move_r_pa =>
         d.state(1) <= '1';
         if p0_cmd_empty = '1' then
           p0_cmd_en        <= '1';
           p0_cmd_instr     <= MCB_CMD_RD;
           p0_cmd_bl        <= std_logic_vector(to_unsigned(15, 6));
-          p0_cmd_byte_addr <= std_logic_vector(to_unsigned(my_pixel_rd_addr+CAMB_OFFSET, 30));
-          move_nstate      <= move_r_transfer_p;
+          p0_cmd_byte_addr <= std_logic_vector(to_unsigned(my_pixel_a_rd_addr+CAMA_OFFSET, 30));
+          move_nstate      <= move_r_transfer_pa;
         end if;
-      when move_r_transfer_p =>
+      when move_r_transfer_pa =>
         d.state(2) <= '1';
         if p0_rd_count >= std_logic_vector(to_unsigned(16, 6)) then
-          move_nstate <= move_r_transfer_p_1;
+          move_nstate <= move_r_transfer_pa_1;
         end if;
-      when move_r_transfer_p_1 =>
+      when move_r_transfer_pa_1 =>
         d.state(3) <= '1';
         if p0_rd_empty = '0' then
           p0_rd_en <= '1';
-          pr_wr    <= '1';
+          pra_wr    <= '1';
         else
-          move_nstate <= move_r_p_inc;
+          move_nstate <= move_r_pa_inc;
         end if;
-      when move_r_p_inc =>
+      when move_r_pa_inc =>
         move_nstate <= move_wait;
 
+      when move_r_pb =>
+        d.state(1) <= '1';
+        if p0_cmd_empty = '1' then
+          p0_cmd_en        <= '1';
+          p0_cmd_instr     <= MCB_CMD_RD;
+          p0_cmd_bl        <= std_logic_vector(to_unsigned(15, 6));
+          p0_cmd_byte_addr <= std_logic_vector(to_unsigned(my_pixel_b_rd_addr+CAMB_OFFSET, 30));
+          move_nstate      <= move_r_transfer_pb;
+        end if;
+      when move_r_transfer_pb =>
+        d.state(2) <= '1';
+        if p0_rd_count >= std_logic_vector(to_unsigned(16, 6)) then
+          move_nstate <= move_r_transfer_pb_1;
+        end if;
+      when move_r_transfer_pb_1 =>
+        d.state(3) <= '1';
+        if p0_rd_empty = '0' then
+          p0_rd_en <= '1';
+          prb_wr    <= '1';
+        else
+          move_nstate <= move_r_pb_inc;
+        end if;
+      when move_r_pb_inc =>
+        move_nstate <= move_wait;        
         
       when move_r_aux =>
         d.state(4) <= '1';
@@ -1510,28 +1590,6 @@ begin
       din  => cfg_unsync,               -- [in]
       dout => cfg);                     -- [out] 
 
--------------------------------------------------------------------------------
--- LED
--------------------------------------------------------------------------------  
-  --led_o <= "0" & p0_rd_count when rd_mode(3 downto 0) = "0000" else
-  --         "0" & p1_rd_count when rd_mode(3 downto 0) = "0001" else
-  --         "0" & p0_wr_count when rd_mode(3 downto 0) = "0010" else
-  --         "0" & p1_wr_count when rd_mode(3 downto 0) = "0011" else
-
-  --         pr_count(7 downto 0)   when rd_mode(3 downto 0) = "0100" else
-  --         auxr_count(7 downto 0) when rd_mode(3 downto 0) = "0101" else
-  --         pw_count(7 downto 0)   when rd_mode(3 downto 0) = "0110" else
-  --         auxw_count(7 downto 0) when rd_mode(3 downto 0) = "0111" else
-
-  --         reg0                                                                                      when rd_mode(3 downto 0) = "1000" else
-  --         reg1                                                                                      when rd_mode(3 downto 0) = "1001" else
-  --         reg2                                                                                      when rd_mode(3 downto 0) = "1010" else
-  --         reg3                                                                                      when rd_mode(3 downto 0) = "1011" else
-  --         pr_empty & pr_full & auxr_empty & auxr_full & pw_empty & pw_full & auxw_empty & auxw_full when rd_mode(3 downto 0) = "1100" else
-
-  --         pipe(0).ctrl.stall & pipe(0).ctrl.issue &
-  --         pipe(1).ctrl.stall & pipe(1).ctrl.issue &
-  --         pipe(8).ctrl.stall & pipe(8).ctrl.issue & "11";
   led_o <= (others => '0');
 -------------------------------------------------------------------------------
 -- PIPE
@@ -1547,7 +1605,7 @@ begin
       pipe_out => pipe(0));             -- [out]
 
   stallo <= stall(0);
-  my_mcb_feed : entity work.mcb_feed
+  my_mcb_feed_dual : entity work.mcb_feed_dual
     generic map (
       ID => 1)
     port map (
@@ -1555,7 +1613,8 @@ begin
       pipe_out  => pipe(1),             -- [out]
       stall_in  => stall(1),
       stall_out => stall(0),
-      p0_fifo   => pr_fifo,             -- [inout]
+      pa_fifo   => pra_fifo,             -- [inout]
+      pb_fifo   => prb_fifo,             -- [inout]      
       p1_fifo   => auxr_fifo);          -- [inout]
 
 
@@ -1760,13 +1819,13 @@ begin
   --usb_fifo.stall <= '0';
 
 
-  d.pr_count   <= "0" & pr_count;
+  d.pr_count   <= "0" & pra_count;
   d.pw_count   <= "0" & pw_count;
   d.auxr_count <= auxr_count;
   d.auxw_count <= auxw_count;
 
-  d.fe(0) <= pr_empty;
-  d.fe(1) <= pr_full;
+  d.fe(0) <= pra_empty;
+  d.fe(1) <= pra_full;
   d.fe(2) <= pw_empty;
   d.fe(3) <= pw_full;
   d.fe(4) <= auxr_empty;

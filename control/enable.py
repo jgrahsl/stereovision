@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'enable.ui'
 #
-# Created: Thu Oct  4 16:58:06 2012
+# Created: Mon Oct  8 20:37:55 2012
 #      by: PyQt4 UI code generator 4.9.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -30,6 +30,9 @@ class Ui_EnableBox(object):
         self.p00 = QtGui.QCheckBox(EnableBox)
         self.p00.setGeometry(QtCore.QRect(10, 80, 93, 26))
         self.p00.setObjectName(_fromUtf8("p00"))
+        self.p10 = QtGui.QCheckBox(EnableBox)
+        self.p10.setGeometry(QtCore.QRect(10, 120, 93, 26))
+        self.p10.setObjectName(_fromUtf8("p10"))
 
         self.retranslateUi(EnableBox)
         QtCore.QMetaObject.connectSlotsByName(EnableBox)
@@ -39,4 +42,5 @@ class Ui_EnableBox(object):
         EnableBox.setTitle(QtGui.QApplication.translate("EnableBox", "EnableBox", None, QtGui.QApplication.UnicodeUTF8))
         self.enable.setText(QtGui.QApplication.translate("EnableBox", "enable", None, QtGui.QApplication.UnicodeUTF8))
         self.p00.setText(QtGui.QApplication.translate("EnableBox", "p(0)(0)", None, QtGui.QApplication.UnicodeUTF8))
+        self.p10.setText(QtGui.QApplication.translate("EnableBox", "p(1)(0)", None, QtGui.QApplication.UnicodeUTF8))
 

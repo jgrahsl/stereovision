@@ -489,27 +489,27 @@ begin
               '1' when f2hready = '1'                                            else
               '0';
   
-  led_o <= d.pr_count                                                                          when sw_i(3 downto 0) = "00000" else
-           d.pw_count                                                                          when sw_i(3 downto 0) = "00001" else
-           d.auxr_count                                                                        when sw_i(3 downto 0) = "00010" else
-           d.auxw_count                                                                        when sw_i(3 downto 0) = "00011" else
+  led_o <= d.pr_count                                                                          when sw_i(4 downto 0) = "00000" else
+           d.pw_count                                                                          when sw_i(4 downto 0) = "00001" else
+           d.auxr_count                                                                        when sw_i(4 downto 0) = "00010" else
+           d.auxw_count                                                                        when sw_i(4 downto 0) = "00011" else
            
-           d.state(7 downto 0)                                                                 when sw_i(3 downto 0) = "00100" else
-           d.state(15 downto 8)                                                                when sw_i(3 downto 0) = "00101" else
+           d.state(7 downto 0)                                                                 when sw_i(4 downto 0) = "00100" else
+           d.state(15 downto 8)                                                                when sw_i(4 downto 0) = "00101" else
            
-           f2hready & f2hvalid & usb_fifo.stall & fifosel & stallo & h2fready & h2fvalid & "1" when sw_i(3 downto 0) = "00110" else         
-           d.fe                                                                                when sw_i(3 downto 0) = "00111" else
+           f2hready & f2hvalid & usb_fifo.stall & fifosel & stallo & h2fready & h2fvalid & "1" when sw_i(4 downto 0) = "00110" else         
+           d.fe                                                                                when sw_i(4 downto 0) = "00111" else
 
-           d.off                                                                               when sw_i(3 downto 0) = "01000" else         
+           d.off                                                                               when sw_i(4 downto 0) = "01000" else         
            
-           d.dvistate                                                                          when sw_i(3 downto 0) = "10000" else
-           d.p3                                                                                when sw_i(3 downto 0) = "10001" else
+           d.dvistate                                                                          when sw_i(4 downto 0) = "10000" else
+           d.p3                                                                                when sw_i(4 downto 0) = "10001" else
            
-           d.p2state                                                                           when sw_i(3 downto 0) = "10010" else
-           d.p2                                                                                when sw_i(3 downto 0) = "10011" else
+           d.p2state                                                                           when sw_i(4 downto 0) = "10010" else
+           d.p2                                                                                when sw_i(4 downto 0) = "10011" else
            
-           d.p1state                                                                           when sw_i(3 downto 0) = "10100" else
-           d.p1                                                                                when sw_i(3 downto 0) = "10101" else
+           d.p1state                                                                           when sw_i(4 downto 0) = "10100" else
+           d.p1                                                                                when sw_i(4 downto 0) = "10101" else
            (others => '1');
 
 

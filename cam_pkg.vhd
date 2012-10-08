@@ -122,6 +122,13 @@ package cam_pkg is
     data  : std_logic_vector(31 downto 0);
   end record;
 
+  type cam_fifo_t is record
+    clk   : std_logic;
+    en    : std_logic;
+    stall : std_logic;
+    data  : std_logic_vector(15 downto 0);
+  end record;
+  
   type sim_fifo_t is record
     clk   : std_logic;
     en    : std_logic;

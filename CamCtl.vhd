@@ -108,7 +108,7 @@ attribute BUFFER_TYPE of PCLK_I: signal is "BUFG";
 		natural(ceil(real(CMD_DELAY*1000*CLOCKFREQ)));
 	
 	--modify this to reflect the number of configuration words
-	constant INIT_VECTORS : natural := 36;
+	constant INIT_VECTORS : natural := 34;
 	constant DATA_WIDTH : integer := 33;
 	constant ADDR_WIDTH : natural := natural(ceil(log(real(INIT_VECTORS), 2.0)));
 	
@@ -117,14 +117,24 @@ attribute BUFFER_TYPE of PCLK_I: signal is "BUFG";
 		IRD & x"30000000", -- Chip version. Default 0x1580
 
 		IWR & x"32140D85", -- Slew rate control, PCLK 5, D 5
+
+                                          
 		IWR & x"341E8F0B", -- PLL control; Default 0x8F0B
 		IWR & x"341C0250", -- PLL dividers; M=80,N=2,fMCLK=fCLKIN*M/(N+1)/8=80MHz
+                                          
 		IWR & x"341E8F09", -- PLL control; Power-up PLL; wait 1ms after this!
 		IWR & x"341E8F08", -- PLL control; Turn off bypass
+                                          
 
 		IWR & x"3202000C", -- Take camera out of standby, but Stop MCU to allow configuration
 		IRD & x"32040000", -- Bit [1] should be checked for init status
 		
+
+
+
+
+
+                                          
 		IWR & x"338C2795", -- Output format; Context A shadow
 		IWR & x"33900030",
 
@@ -133,15 +143,11 @@ attribute BUFFER_TYPE of PCLK_I: signal is "BUFG";
                                           
 		IWR & x"338C2719", -- Read mode; Context A
 		IWR & x"3390046C",
+--		IWR & x"338CA102", -- AE ... off
+--		IWR & x"33900000", -- = 0
 
-                                          
-		IWR & x"338CA102", -- Driver enable
-		IWR & x"33900000", -- = 0
-
-		IWR & x"338CA129", -- 
-		IWR & x"33900000", -- = 0
-                                          
-                                          
+--		IWR & x"338CA129", --  AE in preview mode off
+--		IWR & x"33900000", -- = 0
 		IWR & x"338C2703", -- Output width; Context A
 		IWR & x"33900280", -- 640
 		IWR & x"338C2705", -- Output height; Context A
@@ -156,10 +162,14 @@ attribute BUFFER_TYPE of PCLK_I: signal is "BUFG";
 		IWR & x"33900258", -- 600
 
                                           
+                                          
+                                          
 		IWR & x"338CA103", -- Refresh Sequencer
 		IWR & x"33900005", -- = 5
 		IWR & x"338CA103", -- Refresh Sequencer Mode
 		IWR & x"33900006", -- = 6
+		IWR & x"338CA103", -- Refresh Sequencer Mode
+		IWR & x"33900002", -- = 6                                         
 
 		IWR & x"32020008", -- Kick-start MCU
 		IWR & x"301A02CC" -- reset/output control; parallel enable, drive pins, start streaming 		
