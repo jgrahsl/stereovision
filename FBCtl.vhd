@@ -1609,47 +1609,47 @@ begin
   --    pipe_in  => pipe(5),              -- [in]
   --    pipe_out => pipe(6));             -- [out]
 
-  dut : entity work.win_16
-    generic map (
-      ID     => 25,
-      KERNEL => 9,
-      WIDTH  => WIDTH,
-      HEIGHT => HEIGHT)
-    port map (
-      pipe_in      => pipe(1),          -- [in]
-      pipe_out     => pipe(2),
-      stall_in     => stall(2),
-      stall_out    => stall(1),
-      rgb565_2d_out => rgb565_2d
-      );                                -- [inout]
+  --dut : entity work.win_16
+  --  generic map (
+  --    ID     => 25,
+  --    KERNEL => 9,
+  --    WIDTH  => WIDTH,
+  --    HEIGHT => HEIGHT)
+  --  port map (
+  --    pipe_in      => pipe(1),          -- [in]
+  --    pipe_out     => pipe(2),
+  --    stall_in     => stall(2),
+  --    stall_out    => stall(1),
+  --    rgb565_2d_out => rgb565_2d
+  --    );                                -- [inout]
 
-  dut2 : entity work.census
-    generic map (
-      ID     => 26,
-      KERNEL => 9
-    port map (
-      pipe_in     => pipe(2),           -- [in]
-      pipe_out    => pipe(3),
-      stall_in    => stall(3),
-      stall_out   => stall(2),
-      rgb565_2d_in => rgb565_2d,
-      mono_2d_l => mono_2d_l,
-      mono_2d_r => mono_2d_r      
-      );                                -- [inout]
+  --dut2 : entity work.census
+  --  generic map (
+  --    ID     => 26,
+  --    KERNEL => 9
+  --  port map (
+  --    pipe_in     => pipe(2),           -- [in]
+  --    pipe_out    => pipe(3),
+  --    stall_in    => stall(3),
+  --    stall_out   => stall(2),
+  --    rgb565_2d_in => rgb565_2d,
+  --    mono_2d_l => mono_2d_l,
+  --    mono_2d_r => mono_2d_r      
+  --    );                                -- [inout]
   
-  dut3 : entity work.disparity
-    generic map (
-      ID     => 27,
-      KERNEL => 9 ,
-      MAX_DISPARITY => 8
-    port map (
-      pipe_in     => pipe(3),           -- [in]
-      pipe_out    => pipe(4),
-      stall_in    => stall(4),
-      stall_out   => stall(3),
-      mono_2d_l => mono_2d_l,
-      mono_2d_r => mono_2d_r      
-      );                                -- [inout]
+  --dut3 : entity work.disparity
+  --  generic map (
+  --    ID     => 27,
+  --    KERNEL => 9 ,
+  --    MAX_DISPARITY => 8
+  --  port map (
+  --    pipe_in     => pipe(3),           -- [in]
+  --    pipe_out    => pipe(4),
+  --    stall_in    => stall(4),
+  --    stall_out   => stall(3),
+  --    mono_2d_l => mono_2d_l,
+  --    mono_2d_r => mono_2d_r      
+  --    );                                -- [inout]
 
   --dut2 : entity work.win_test_8
   --  generic map (
@@ -1708,17 +1708,17 @@ begin
 
   my_col_mux : entity work.color_mux
     generic map (
-      ID   => 29,
-      MODE => 2)
+      ID   => 3,
+      MODE => 3)
     port map (
-      pipe_in   => pipe(4),             -- [in]
+      pipe_in   => pipe(1),             -- [in]
       pipe_out  => pipe(7),
       stall_in  => stall(7),
-      stall_out => stall(4));           -- [inout]
+      stall_out => stall(1));           -- [inout]
 
   my_fifo_sink : entity work.fifo_sink
     generic map (
-      ID     => 30,
+      ID     => 4,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT
       )
@@ -1731,7 +1731,7 @@ begin
 
   my_mcb_sink : entity work.mcb_sink
     generic map (
-      ID => 31)
+      ID => 2)
     port map (
       pipe_in   => pipe(8),             -- [in]
       pipe_out  => pipe(9),             -- [out]

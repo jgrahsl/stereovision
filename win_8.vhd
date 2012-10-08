@@ -7,7 +7,7 @@ library work;
 use work.cam_pkg.all;
 
 
-entity win_gray8 is
+entity win_8 is
 
   generic (
     ID     : integer range 0 to 63   := 0;
@@ -22,9 +22,9 @@ entity win_gray8 is
     gray8_2d_out : out gray8_2d_t
     );  
 
-end win_gray8;
+end win_8;
 
-architecture myrtl of win_gray8 is
+architecture myrtl of win_8 is
 
   signal pipe     : pipe_set_t;
   signal gray8_1d : gray8_1d_t;

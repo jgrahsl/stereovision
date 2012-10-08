@@ -32,9 +32,11 @@ architecture impl of tb is
   signal finish : std_logic := '0';
 
   signal rgb565_2d : rgb565_2d_t;
+  signal gray8_2d : gray8_2d_t;  
 
   signal mono_2d_l : mono_2d_t;
-  signal mono_2d_r : mono_2d_t;  
+  signal mono_2d_r : mono_2d_t;
+  
 begin  -- impl
 
   ena : for i in 0 to (MAX_PIPE-1) generate
@@ -65,7 +67,7 @@ begin  -- impl
 
   dut : entity work.win_16
     generic map (
-      ID     => 25,
+      ID     => 4,
       KERNEL => KERNEL,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
@@ -79,7 +81,7 @@ begin  -- impl
 
   dut2 : entity work.census
     generic map (
-      ID     => 26,
+      ID     => 8,
       KERNEL => KERNEL)
     port map (
       pipe_in     => pipe(2),           -- [in]
@@ -93,7 +95,7 @@ begin  -- impl
   
   dut3 : entity work.disparity
     generic map (
-      ID     => 27,
+      ID     => 9,
       KERNEL => KERNEL,
       MAX_DISPARITY => MAX_DISPARITY)
     port map (
@@ -104,25 +106,53 @@ begin  -- impl
       mono_2d_l => mono_2d_l,
       mono_2d_r => mono_2d_r      
       );                                -- [inout]
+
+  dut4 : entity work.win_8
+    generic map (
+      ID     => 10,
+      KERNEL => 5,
+      WIDTH  => WIDTH,
+      HEIGHT => HEIGHT)
+    port map (
+      pipe_in      => pipe(4),          -- [in]
+      pipe_out     => pipe(5),
+      stall_in     => stall(5),
+      stall_out    => stall(4),
+      gray8_2d_out => gray8_2d
+      );                                -- [inout]
+
+  dut5 : entity work.kernel_8
+    generic map (
+      ID     => 14,
+      KERNEL => 5)
+    port map (
+      pipe_in      => pipe(5),          -- [in]
+      pipe_out     => pipe(6),
+      stall_in     => stall(6),
+      stall_out    => stall(5),
+      gray8_2d_in => gray8_2d
+      );                                -- [inout]
+
+
   
   colmux : entity work.color_mux
     generic map (
-      ID   => 23,
+      ID   => 3,
       MODE => 2)      
     port map (
-      pipe_in   => pipe(4),             -- [in]
-      pipe_out  => pipe(5),
-      stall_in  => stall(5),
-      stall_out => stall(4));           -- [inout]
+      pipe_in   => pipe(6),             -- [in]
+      pipe_out  => pipe(7),
+      stall_in  => stall(7),
+      stall_out => stall(6));           -- [inout]
 
   my_sim_sink : entity work.sim_sink
     generic map (
-      ID => 22)
+      ID => 2)
     port map (
-      pipe_in   => pipe(5),             -- [in]
+      pipe_in   => pipe(7),             -- [in]
       pipe_out  => pipe(8),
       stall_in  => stall(8),
-      stall_out => stall(5),
+      stall_out => stall(7),
       p0_fifo   => p0_wr_fifo);         -- [inout]
 
 -------------------------------------------------------------------------------  

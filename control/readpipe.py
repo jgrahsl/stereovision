@@ -57,8 +57,8 @@ except FLException, ex:
 
  
 def stream():
-    set_reg(31,0x61,1)
-    set_reg(31,0x70,1)        
+    set_reg(2,0x61,1)
+    set_reg(2,0x70,1)        
 
     set_reg(0,0x61,1)
     set_reg(0,0x70,1)        
@@ -69,11 +69,11 @@ def stream():
 def reqpic():
     stream()
 
-    set_reg(30,0x61,1)
-    if (get_reg(30,0x70) & 1): 
-        set_reg(30,0x70,0)
+    set_reg(4,0x61,1)
+    if (get_reg(4,0x70) & 1): 
+        set_reg(4,0x70,0)
     else:
-        set_reg(30,0x70,1)
+        set_reg(4,0x70,1)
 
 def readpic():
     reqpic()

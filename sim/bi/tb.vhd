@@ -65,7 +65,7 @@ begin  -- impl
 
 
 
-  dut : entity work.win_gray8
+  dut : entity work.win_8
     generic map (
       ID     => 4,
       WIDTH  => WIDTH,
