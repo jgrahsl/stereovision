@@ -1,6 +1,6 @@
 #!/usr/bin/python
 import time
-
+import sys
 from fpgalink2 import *
 
 vp = "1443:0007"
@@ -66,9 +66,9 @@ def stream():
     set_reg(1,0x61,1)
     set_reg(1,0x70,1)        
 
+
 def reqpic():
     stream()
-
     set_reg(4,0x61,1)
     if (get_reg(4,0x70) & 1): 
         set_reg(4,0x70,0)
@@ -118,11 +118,14 @@ def scan():
 #           a  = 0
         i = i + 1
 
-#reqpic()
-readpic()
-#scan()
-#stream()
-#scan()
+if sys.argv[1] == "pic":
+    readpic()
+elif sys.argv[1] == "stream":
+    stream()
+elif sys.argv[1] == "req":
+    reqpic()
+elif sys.argv[1] == "scan":
+    scan()
 
 #f.close()
 flClose(handle)

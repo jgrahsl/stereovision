@@ -1774,6 +1774,8 @@ begin
   d.fe(6) <= auxw_empty;
   d.fe(7) <= auxw_full;
 
+
+  d.off <= stall(1) & stall(0) & stall(7) & stall(8) & "0000";
 end Behavioral;
 
 

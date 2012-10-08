@@ -1,5 +1,5 @@
 //! **************************************************************************
-// Written by: Map P.28xd on Mon Oct 08 17:04:16 2012
+// Written by: Map P.28xd on Mon Oct 08 18:04:20 2012
 //! **************************************************************************
 
 SCHEMATIC START;
@@ -357,7 +357,8 @@ TIMEGRP fx2clk_in = BEL "cfg[0]_enable" BEL "cfg[0]_identify" BEL
         "comm.comm_fpga_fx2/state_FSM_FFd2_1" BEL
         "comm.comm_fpga_fx2/state_FSM_FFd2_2" BEL
         "comm.comm_fpga_fx2/state_FSM_FFd3_2" BEL
-        "comm.comm_fpga_fx2/state_FSM_FFd1_1" BEL "fx2clk_int_BUFG" BEL
+        "comm.comm_fpga_fx2/state_FSM_FFd1_1" BEL
+        "comm.comm_fpga_fx2/state_FSM_FFd4_1" BEL "fx2clk_int_BUFG" BEL
         "my_inspect_sync/Mshreg_inspect_2_identity_3" BEL
         "my_inspect_sync/inspect_2_identity_3" BEL
         "my_inspect_sync/Mshreg_inspect_2_identity_2" BEL
@@ -514,7 +515,7 @@ TIMEGRP cambpclk = BEL "inst_inputsync_fvb/D_O" BEL
         "inst_fbctl/pb_wr_cnt_4" BEL "inst_fbctl/pb_wr_cnt_3" BEL
         "inst_fbctl/pb_wr_cnt_2" BEL "inst_fbctl/pb_wr_cnt_1" BEL
         "inst_fbctl/pb_wr_cnt_0" BEL "inst_fbctl/stateWrB_FSM_FFd2" BEL
-        "inst_fbctl/stateWrB_FSM_FFd1" BEL "inst_fbctl/stateWrB_FSM_FFd4" BEL
+        "inst_fbctl/stateWrB_FSM_FFd4" BEL
         "inst_fbctl/inst_localrstb1_b/RstQ_1" BEL
         "inst_fbctl/inst_localrstb1_b/RstQ_2" BEL
         "inst_fbctl/inst_localrstb1_b/RstQ_3" BEL
@@ -545,9 +546,9 @@ TIMEGRP cambpclk = BEL "inst_inputsync_fvb/D_O" BEL
         BEL "inst_camctlb/D_O_0" BEL "inst_fbctl/pb_int_rst" BEL
         "inst_fbctl/pb_wr_data_sel" BEL "inst_fbctl/stateWrB_FSM_FFd3" BEL
         "inst_camctlb/cam_data_sel";
-PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<299> = BEL
+PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<297> = BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0" PINNAME P2CLK;
-PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<321> = BEL
+PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<319> = BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0" PINNAME
         P2CMDCLK;
 TIMEGRP camapclk = BEL "inst_inputsync_fva/D_O" BEL
@@ -566,8 +567,8 @@ TIMEGRP camapclk = BEL "inst_inputsync_fva/D_O" BEL
         "inst_fbctl/pa_wr_addr_1" BEL "inst_fbctl/pa_wr_cnt_5" BEL
         "inst_fbctl/pa_wr_cnt_4" BEL "inst_fbctl/pa_wr_cnt_3" BEL
         "inst_fbctl/pa_wr_cnt_2" BEL "inst_fbctl/pa_wr_cnt_1" BEL
-        "inst_fbctl/pa_wr_cnt_0" BEL "inst_fbctl/stateWrA_FSM_FFd1" BEL
-        "inst_fbctl/stateWrA_FSM_FFd2" BEL "inst_fbctl/stateWrA_FSM_FFd4" BEL
+        "inst_fbctl/pa_wr_cnt_0" BEL "inst_fbctl/stateWrA_FSM_FFd2" BEL
+        "inst_fbctl/stateWrA_FSM_FFd4" BEL
         "inst_fbctl/inst_localrstb1_a/RstQ_1" BEL
         "inst_fbctl/inst_localrstb1_a/RstQ_2" BEL
         "inst_fbctl/inst_localrstb1_a/RstQ_3" BEL
@@ -584,10 +585,10 @@ TIMEGRP camapclk = BEL "inst_inputsync_fva/D_O" BEL
         "inst_fbctl/p2_wr_data_11" BEL "inst_fbctl/p2_wr_data_12" BEL
         "inst_fbctl/p2_wr_data_13" BEL "inst_fbctl/p2_wr_data_14" BEL
         "inst_fbctl/p2_wr_data_15" PIN
-        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<299>" PIN
-        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<321>" PIN
-        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<299>" PIN
-        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<321>" BEL
+        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<297>" PIN
+        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<319>" PIN
+        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<297>" PIN
+        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<319>" BEL
         "inst_camctla/DV_O" BEL "inst_camctla/D_O_15" BEL
         "inst_camctla/D_O_14" BEL "inst_camctla/D_O_13" BEL
         "inst_camctla/D_O_12" BEL "inst_camctla/D_O_11" BEL
@@ -1913,9 +1914,9 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkfx = BEL
         "inst_fbctl/auxw_fifo_comp/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_1"
         PIN "inst_camctla/Inst_ODDR2_MCLK_FORWARD_pins<1>" PIN
         "inst_camctlb/Inst_ODDR2_MCLK_FORWARD_pins<1>";
-PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<385> = BEL
+PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<381> = BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0" PINNAME P3CLK;
-PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<407> = BEL
+PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<403> = BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0" PINNAME
         P3CMDCLK;
 TIMEGRP inst_syscon_pllout_x1 = BEL "inst_fbctl/pc_rd_addr1_23" BEL
@@ -1934,15 +1935,15 @@ TIMEGRP inst_syscon_pllout_x1 = BEL "inst_fbctl/pc_rd_addr1_23" BEL
         "inst_fbctl/pc_rd_addr1_5" BEL "inst_fbctl/pc_rd_addr1_4" BEL
         "inst_fbctl/pc_rd_addr1_3" BEL "inst_fbctl/pc_rd_addr1_2" BEL
         "inst_fbctl/pc_rd_addr1_1" BEL "inst_fbctl/pc_rd_addr1_0" BEL
-        "inst_fbctl/stateRd_FSM_FFd1" BEL "inst_fbctl/stateRd_FSM_FFd2" BEL
-        "inst_fbctl/stateRd_FSM_FFd4" BEL "inst_fbctl/inst_localrstc/RstQ_1"
-        BEL "inst_fbctl/inst_localrstc/RstQ_2" BEL
+        "inst_fbctl/stateRd_FSM_FFd2" BEL "inst_fbctl/stateRd_FSM_FFd4" BEL
+        "inst_fbctl/inst_localrstc/RstQ_1" BEL
+        "inst_fbctl/inst_localrstc/RstQ_2" BEL
         "inst_fbctl/inst_localrstc/RstQ_3" BEL
         "inst_fbctl/inst_localrstc/RstQ_4" PIN
-        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<385>" PIN
-        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<407>" PIN
-        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<385>" PIN
-        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<407>" BEL
+        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<381>" PIN
+        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<403>" PIN
+        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<381>" PIN
+        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<403>" BEL
         "inst_syscon/BUFG_inst1" BEL "inst_videotimingctl/VCnt_0" BEL
         "inst_videotimingctl/VCnt_8" BEL "inst_videotimingctl/VCnt_7" BEL
         "inst_videotimingctl/VCnt_6" BEL "inst_videotimingctl/VCnt_5" BEL
@@ -2073,13 +2074,13 @@ TIMEGRP RESET_SINK = BEL "inst_fbctl/inst_localrstalg/RstQ_1" BEL
         "inst_fbctl/inst_localrstalg/RstQ_2" BEL
         "inst_fbctl/inst_localrstalg/RstQ_3" BEL
         "inst_fbctl/inst_localrstalg/RstQ_4";
-PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<684> = BEL
+PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<678> = BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0" PINNAME UICLK;
 TIMEGRP inst_syscon_mcb_drp_clk_bfg = BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/IODRP2_RZQ"
         BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/gen_zio.IODRP2_ZIO"
-        PIN "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<684>"
+        PIN "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<678>"
         BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/syn_uiclk_pll_lock"
         BEL
@@ -2561,11 +2562,7 @@ TIMEGRP inst_syscon_mcb_drp_clk_bfg = BEL
         BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/STATE_FSM_FFd5_1"
         BEL
-        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/STATE_FSM_FFd3_1"
-        BEL
-        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Max_Value_int_6_1"
-        BEL
-        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Max_Value_int_5_1"
+        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Max_Value_int_7_1"
         BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Mshreg_SELFREFRESH_MCB_MODE_R2"
         BEL
@@ -2656,7 +2653,7 @@ PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/ioi_ldm_0_pins<0> = BEL
 PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/ioi_udm_0_pins<0> = BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/ioi_udm_0" PINNAME
         CLK0;
-PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<666> = BEL
+PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<660> = BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0" PINNAME
         PLLCLK1;
 TIMEGRP inst_syscon_ddr2clk_2x_180 = PIN
@@ -2693,7 +2690,7 @@ TIMEGRP inst_syscon_ddr2clk_2x_180 = PIN
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_dq[0].oserdes2_dq_0_pins<0>"
         PIN "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/ioi_ldm_0_pins<0>"
         PIN "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/ioi_udm_0_pins<0>"
-        PIN "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<666>";
+        PIN "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<660>";
 PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/oserdes2_udqsn_0_pins<0> =
         BEL "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/oserdes2_udqsn_0"
         PINNAME CLK0;
@@ -2801,7 +2798,7 @@ PIN
         = BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_addr_oserdes2[0].ioi_addr_0"
         PINNAME CLK0;
-PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<665> = BEL
+PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<659> = BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0" PINNAME
         PLLCLK0;
 PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/ioi_ck_0/N_pins<0> = BEL
@@ -2856,7 +2853,7 @@ TIMEGRP inst_syscon_ddr2clk_2x = PIN
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_addr_oserdes2[1].ioi_addr_0_pins<0>"
         PIN
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_addr_oserdes2[0].ioi_addr_0_pins<0>"
-        PIN "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<665>"
+        PIN "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<659>"
         PIN
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/ioi_ck_0/N_pins<0>"
         PIN "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/ioi_ck_0_pins<0>";
@@ -3023,7 +3020,7 @@ TS_inst_syscon_pllout_xs = PERIOD TIMEGRP "inst_syscon_pllout_xs"
         TS_inst_syscon_Inst_dcm_recfg_clkfx * 10 HIGH 50%;
 TS_inst_syscon_pllout_x1 = PERIOD TIMEGRP "inst_syscon_pllout_x1"
         TS_inst_syscon_Inst_dcm_recfg_clkfx HIGH 50%;
-PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<671> = BEL
+PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<665> = BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0" PINNAME
         SELFREFRESHMODE;
 PIN inst_syscon/BUFPLL_MCB_INST_pins<3> = BEL "inst_syscon/BUFPLL_MCB_INST"
@@ -3034,7 +3031,7 @@ PIN
         = BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/CKE_Train"
         PINNAME Q;
-PIN "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<671>" TIG;
+PIN "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<665>" TIG;
 PIN "inst_syscon/BUFPLL_MCB_INST_pins<3>" TIG;
 PIN "inst_syscon/ASYNC_RST1_pins<2>" TIG;
 PIN
