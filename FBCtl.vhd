@@ -686,9 +686,10 @@ architecture Behavioral of FBCtl is
   constant DVI_OFFSET  : natural := 0;
 
 
-  constant WIDTH  : natural := 640;
-  constant HEIGHT : natural := 480;
-
+  constant WIDTH  : natural := 320;
+  constant HEIGHT : natural := 240;
+  constant SIZE : natural := WIDTH*HEIGHT*2;
+  
   signal abcd       : abcd_t;
   signal abcd2       : abcd2_t;  
   signal gray8_2d_1 : gray8_2d_t;
@@ -703,7 +704,21 @@ architecture Behavioral of FBCtl is
 
   signal done_a : std_logic;
   signal cama_trigger : std_logic;
-  signal cama_trigger_old : std_logic;  
+  signal cama_trigger_old : std_logic;
+
+  signal sel : natural range 0 to 3;
+
+  signal x : natural range  0 to 640;
+  signal y : natural range 0 to 480;
+
+  signal src_a : natural range 0 to 2400*64;
+  signal src_b : natural range 0 to 2400*64;
+  signal src_c : natural range 0 to 2400*64;  
+
+  signal src_a_s : std_logic_vector(29 downto 0);
+  signal src_b_s : std_logic_vector(29 downto 0);
+  signal src_c_s : std_logic_vector(29 downto 0);
+  
 begin
 ----------------------------------------------------------------------------------
 -- mcb instantiation
@@ -929,15 +944,44 @@ begin
           rd_data_sel <= not rd_data_sel;
         end if;
         if (staterd = strdcmd) then
-          if (pc_rd_addr1 = 640*2*480/(rd_batch*4)-1) then
+          if (pc_rd_addr1 = 640*480*2/(rd_batch*4)-1) then
             pc_rd_addr1 <= 0;
+            x <= 0;
+            y <= 0;
+            src_a <= 0;
+            src_b <= 0;
+            src_c <= 0;
           else
+            if x < 20-1 then
+              x <= x + 1;                                       
+            else
+              x <= 0;
+              if y < 480-1 then
+                y <= y + 1;
+              else
+                y <= 0;                
+              end if;
+            end if;
+
+            if x >= 0 and x < 10 and y >= 0 and y < 240 then
+              src_a <= src_a + (rd_batch*4);
+            end if;
+            
+            if x >= 10 and x < 20 and y >= 0 and y < 240 then
+              src_b <= src_b + (rd_batch*4);
+            end if;
+            
+            if x >= 0 and x < 10 and y >=240 and y < 480 then
+              src_c <= src_c + (rd_batch*4);
+            end if;
+
             pc_rd_addr1 <= pc_rd_addr1 + 1;
           end if;
         end if;
         if (p3_rd_empty = '0') then
           rdy_o <= '1';
         end if;
+        
       end if;
       
     end if;
@@ -945,6 +989,15 @@ begin
   doc <= p3_rd_data(31 downto 16) when rd_data_sel = '1' else
          p3_rd_data(15 downto 0);
 
+  sel <= 0 when x >= 0 and x < 10 and y >= 0 and y < 240 else
+         1 when x >= 10 and x < 20 and y >= 0 and y < 240 else
+         2 when x >= 0 and x < 10 and y >= 240 and y < 480 else 3;
+  
+    p3_cmd_byte_addr <= std_logic_vector(to_unsigned(src_a+(CAMA_OFFSET), 30)) when sel = 0 else
+                        std_logic_vector(to_unsigned(src_b+(CAMB_OFFSET), 30)) when sel = 1 else
+                        std_logic_vector(to_unsigned(src_c+(DVI_OFFSET), 30)) when sel = 2 else (others => '0');
+
+  
   next_state_decode : process (staterd, p3_rd_count, p3_rd_error)
   begin
     nstaterd <= staterd;                --default is to stay in current state
@@ -954,8 +1007,7 @@ begin
     p3_cmd_clk   <= clkc;
 
     p3_cmd_en        <= '0';
-    p3_cmd_byte_addr <= std_logic_vector(to_unsigned(pc_rd_addr1 * (rd_batch*4)+(DVI_OFFSET), 30));
-
+    
     p3_rd_en  <= rd_data_sel and enc;
     p3_rd_clk <= clkc;
 
@@ -1048,7 +1100,7 @@ begin
       if (pa_int_rst = '1' and p2_wr_empty = '1') then
         pa_wr_addr <= 0;
       elsif (statewra = stwrcmd) then
-        if (pa_wr_addr = 640*480*2/(wr_batch*4)-1) then
+        if (pa_wr_addr = SIZE/(wr_batch*4)-1) then
           pa_wr_addr <= 0;
         else
           pa_wr_addr <= pa_wr_addr + 1;
@@ -1180,7 +1232,7 @@ begin
       if (pb_int_rst = '1' and p1_wr_empty = '1') then
         pb_wr_addr <= 0;
       elsif (statewrb = stwrcmd) then
-        if (pb_wr_addr = 640*480*2/(wr_batch*4)-1) then
+        if (pb_wr_addr = SIZE/(wr_batch*4)-1) then
           pb_wr_addr <= 0;
 --          done_b <= '0';
         else
@@ -1278,7 +1330,7 @@ begin
 -- Memory 
 -------------------------------------------------------------------------------
         if move_state = move_r_pa_inc then
-          if (my_pixel_a_rd_addr = (640*2*480-16*4)) then
+          if (my_pixel_a_rd_addr = (SIZE-16*4)) then
             my_pixel_a_rd_addr <= 0;
           else
             my_pixel_a_rd_addr <= my_pixel_a_rd_addr + 16*4;
@@ -1286,7 +1338,7 @@ begin
         end if;
 
         if move_state = move_r_pb_inc then
-          if (my_pixel_b_rd_addr = (640*2*480-16*4)) then
+          if (my_pixel_b_rd_addr = (SIZE-16*4)) then
             my_pixel_b_rd_addr <= 0;
           else
             my_pixel_b_rd_addr <= my_pixel_b_rd_addr + 16*4;
@@ -1294,7 +1346,7 @@ begin
         end if;
         
         if move_state = move_r_aux_inc then
-          if (my_aux_rd_addr = (640*2*480-32*4)) then
+          if (my_aux_rd_addr = (SIZE-32*4)) then
             my_aux_rd_addr <= 0;
           else
             my_aux_rd_addr <= my_aux_rd_addr + 32*4;
@@ -1302,7 +1354,7 @@ begin
         end if;
 
         if move_state = move_w_p_inc then
-          if (my_pixel_wr_addr = (640*2*480-16*4)) then
+          if (my_pixel_wr_addr = (SIZE-16*4)) then
             my_pixel_wr_addr <= 0;
           else
             my_pixel_wr_addr <= my_pixel_wr_addr + 16*4;
@@ -1310,7 +1362,7 @@ begin
         end if;
 
         if move_state = move_w_aux_inc then
-          if (my_aux_wr_addr = (640*2*480-32*4)) then
+          if (my_aux_wr_addr = (SIZE-32*4)) then
             my_aux_wr_addr <= 0;
           else
             my_aux_wr_addr <= my_aux_wr_addr + 32*4;
@@ -1679,8 +1731,8 @@ begin
   --  generic map (
   --    ID     => 4,
   --    KERNEL => 5,
-  --    WIDTH  => 640,
-  --    HEIGHT => 480)
+  --    WIDTH  => WIDTH,
+  --    HEIGHT => HEIGHT)
   --  port map (
   --    pipe_in   => pipe(2),             -- [in]
   --    pipe_out  => pipe(3),
@@ -1690,8 +1742,8 @@ begin
   --my_hist_x : entity work.hist_x
   --  generic map (
   --    ID     => 24,
-  --    WIDTH  => 640,
-  --    HEIGHT => 480)
+  --    WIDTH  => WIDTH,
+  --    HEIGHT => HEIGHT)
   --  port map (
   --    pipe_in  => pipe(4),              -- [in]
   --    pipe_out => pipe(5));             -- [out]
@@ -1699,8 +1751,8 @@ begin
   --my_hist_y : entity work.hist_y
   --  generic map (
   --    ID     => 25,
-  --    WIDTH  => 640,
-  --    HEIGHT => 480)
+  --    WIDTH  => WIDTH,
+  --    HEIGHT => HEIGHT)
   --  port map (
   --    pipe_in  => pipe(5),              -- [in]
   --    pipe_out => pipe(6));             -- [out]

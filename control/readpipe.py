@@ -2,7 +2,7 @@
 import time
 import sys
 from fpgalink2 import *
-
+from PIL import Image
 vp = "1443:0007"
 handle = None
 
@@ -97,16 +97,19 @@ def reqpic():
 
 def readpic():
     reqpic()
+    a = flReadChannel(handle,2000, 0x20,320*240*2)
+    width=320
+    height=240
+    i = 0
+    im = Image.new('RGBA', (width, height), (0, 0, 0, 0))
+    for y in range(height):
+        for x in range(width):
 
-#    time.sleep(1)
+            c = (a[i])<<8 | (a[i+1])
+            im.putpixel((x,y),(((c & 0xf800)>>11) << 3, ((c & 0x07e0)>>5) << 2 , (c & 0x001f)<<3, 255))
+            i = i + 2        
 
-    f = open("a.out","w")
-    a = flReadChannel(handle,2000, 0x20,640*480*2)
-#    a = " " * 614400
-    print len(a)
-    f.write(a)
-    f.close()
-
+    im.save(sys.argv[2])
 
 def scan():
     i = 0

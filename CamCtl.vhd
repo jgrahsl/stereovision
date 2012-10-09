@@ -149,9 +149,9 @@ attribute BUFFER_TYPE of PCLK_I: signal is "BUFG";
 --		IWR & x"338CA129", --  AE in preview mode off
 --		IWR & x"33900000", -- = 0
 		IWR & x"338C2703", -- Output width; Context A
-		IWR & x"33900280", -- 640
+		IWR & x"33900140", -- 640
 		IWR & x"338C2705", -- Output height; Context A
-		IWR & x"339001E0", -- 480
+		IWR & x"339000F0", -- 480
 		IWR & x"338C2751", -- Crop X0; Context A
 		IWR & x"33900000", -- 0
 		IWR & x"338C2755", -- Crop Y0; Context A
