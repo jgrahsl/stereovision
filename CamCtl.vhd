@@ -120,7 +120,7 @@ attribute BUFFER_TYPE of PCLK_I: signal is "BUFG";
 
                                           
 		IWR & x"341E8F0B", -- PLL control; Default 0x8F0B
-		IWR & x"341C0250", -- PLL dividers; M=80,N=2,fMCLK=fCLKIN*M/(N+1)/8=80MHz
+		IWR & x"341C0450", -- PLL dividers; M=80,N=2,fMCLK=fCLKIN*M/(N+1)/8=80MHz
                                           
 		IWR & x"341E8F09", -- PLL control; Power-up PLL; wait 1ms after this!
 		IWR & x"341E8F08", -- PLL control; Turn off bypass
