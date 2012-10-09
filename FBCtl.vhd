@@ -698,6 +698,12 @@ architecture Behavioral of FBCtl is
   signal mono_2d_r : mono_2d_t;  
 
   signal done_b : std_logic;
+  signal camb_trigger : std_logic;
+  signal camb_trigger_old : std_logic;  
+
+  signal done_a : std_logic;
+  signal cama_trigger : std_logic;
+  signal cama_trigger_old : std_logic;  
 begin
 ----------------------------------------------------------------------------------
 -- mcb instantiation
@@ -995,11 +1001,21 @@ begin
     srst_o => scalibdonea
     );
 
+  inst_inputsync_fva : entity digilent.inputsync port map(
+    d_i   => cfg(2).p(1)(0),
+    d_o   => cama_trigger,
+    clk_i => clkcam_a
+    );  
+  
   portarst_proc_aa : process(clkcam_a)
   begin
     if rising_edge(clkcam_a) then
       if (srstcam_a = '1') then
         pa_int_rst <= '1';
+        if cama_trigger /= cama_trigger_old then
+          done_a <= '1';
+          cama_trigger_old <= cama_trigger;
+        end if;       
       elsif (p2_wr_empty = '1') then
         pa_int_rst <= '0';
       end if;
@@ -1026,6 +1042,7 @@ begin
       elsif (statewra = stwrcmd) then
         if (pa_wr_addr = 640*480*2/(wr_batch*4)-1) then
           pa_wr_addr <= 0;
+          done_a <= '0';
         else
           pa_wr_addr <= pa_wr_addr + 1;
         end if;
@@ -1055,7 +1072,7 @@ begin
   end process;
 
   p2_wr_clk                <= clkcam_a;
-  p2_wr_en                 <= pa_wr_data_sel and encam_a;
+  p2_wr_en                 <= pa_wr_data_sel and encam_a and done_a;
   p2_wr_data(31 downto 16) <= dcam_a;
   p2_wr_mask               <= "0000";
 
@@ -1110,17 +1127,23 @@ begin
     srst_o => scalibdoneb
     );
 
+  inst_inputsync_fvb : entity digilent.inputsync port map(
+    d_i   => cfg(2).p(1)(0),
+    d_o   => camb_trigger,
+    clk_i => clkcam_b
+    );
+  
   portarst_proc_b : process(clkcam_b)
   begin
     if rising_edge(clkcam_b) then
       if (srstcam_b = '1') then
         pb_int_rst <= '1';
-        if redo_b = '1' then
-           redo_b <= '0';
-           done_b <= '0';
-        end if;
+        if camb_trigger /= camb_trigger_old then
+          done_b <= '1';
+          camb_trigger_old <= camb_trigger;
+        end if;       
       elsif (p1_wr_empty = '1') then
-        pb_int_rst <= '0';
+        pb_int_rst <= '0';        
       end if;
 
 -------------------------------------------------------------------------------
@@ -1145,7 +1168,7 @@ begin
       elsif (statewrb = stwrcmd) then
         if (pb_wr_addr = 640*480*2/(wr_batch*4)-1) then
           pb_wr_addr <= 0;
-          done_b <= '1';
+          done_b <= '0';
         else
           pb_wr_addr <= pb_wr_addr + 1;
         end if;
@@ -1175,7 +1198,7 @@ begin
   end process;
 
   p1_wr_clk                <= clkcam_b;
-  p1_wr_en                 <= pb_wr_data_sel and encam_b and not done_b;
+  p1_wr_en                 <= pb_wr_data_sel and encam_b and done_b;
   p1_wr_data(31 downto 16) <= dcam_b;
   p1_wr_mask               <= "0000";
 

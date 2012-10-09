@@ -26,7 +26,6 @@ vhdl work "comm_fpga_fx2.vhdl"
 vhdl work "cam_pkg.vhd"
 vhdl work "pipe_head.vhd"
 vhdl work "mcb_feed.vhd"
-vhdl work "mcb_cam_feed.vhd"
 vhdl work "mcb_feed_dual.vhd"
 vhdl work "mcb_sink.vhd"
 
