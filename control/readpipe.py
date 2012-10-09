@@ -66,20 +66,19 @@ def stream():
     set_reg(1,0x61,1)
     set_reg(1,0x70,1)        
 
+    set_reg(2,0x71,1)
+
 def snap():
-    set_reg(2,0x61,1)
-    set_reg(2,0x70,1)        
+#    set_reg(2,0x61,1)
+#    set_reg(2,0x70,1)        
 
-    if (get_reg(2,0x71) & 1):
-        set_reg(2,0x71,0)
-    else:
-        set_reg(2,0x71,1)
+    set_reg(2,0x71,0)
 
-    set_reg(0,0x61,1)
-    set_reg(0,0x70,1)        
+#    set_reg(0,0x61,1)
+#    set_reg(0,0x70,1)        
 
-    set_reg(1,0x61,1)
-    set_reg(1,0x70,1)        
+#    set_reg(1,0x61,1)
+#    set_reg(1,0x70,1)        
 
 def show0():
     set_reg(1,0x71,0)        

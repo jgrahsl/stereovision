@@ -1012,10 +1012,18 @@ begin
     if rising_edge(clkcam_a) then
       if (srstcam_a = '1') then
         pa_int_rst <= '1';
-        if cama_trigger /= cama_trigger_old then
-          done_a <= '1';
-          cama_trigger_old <= cama_trigger;
-        end if;       
+
+          if cama_trigger = '1' then
+            done_a <= '1';
+          else
+            done_a <= '0';          
+          end if;                
+
+        --if cama_trigger /= cama_trigger_old then
+        --  done_a <= '1';
+        --  cama_trigger_old <= cama_trigger;
+        --end if;       
+        
       elsif (p2_wr_empty = '1') then
         pa_int_rst <= '0';
       end if;
@@ -1042,7 +1050,6 @@ begin
       elsif (statewra = stwrcmd) then
         if (pa_wr_addr = 640*480*2/(wr_batch*4)-1) then
           pa_wr_addr <= 0;
-          done_a <= '0';
         else
           pa_wr_addr <= pa_wr_addr + 1;
         end if;
@@ -1138,10 +1145,17 @@ begin
     if rising_edge(clkcam_b) then
       if (srstcam_b = '1') then
         pb_int_rst <= '1';
-        if camb_trigger /= camb_trigger_old then
+
+        if camb_trigger = '1' then
           done_b <= '1';
-          camb_trigger_old <= camb_trigger;
-        end if;       
+        else
+          done_b <= '0';          
+        end if;                
+
+        --if camb_trigger /= camb_trigger_old then
+        --  done_b <= '1';
+        --  camb_trigger_old <= camb_trigger;
+        --end if;       
       elsif (p1_wr_empty = '1') then
         pb_int_rst <= '0';        
       end if;
@@ -1168,7 +1182,7 @@ begin
       elsif (statewrb = stwrcmd) then
         if (pb_wr_addr = 640*480*2/(wr_batch*4)-1) then
           pb_wr_addr <= 0;
-          done_b <= '0';
+--          done_b <= '0';
         else
           pb_wr_addr <= pb_wr_addr + 1;
         end if;

@@ -1,5 +1,5 @@
 //! **************************************************************************
-// Written by: Map P.28xd on Tue Oct 09 11:43:53 2012
+// Written by: Map P.28xd on Tue Oct 09 13:47:25 2012
 //! **************************************************************************
 
 SCHEMATIC START;
@@ -528,8 +528,8 @@ TIMEGRP cambpclk = BEL "inst_inputsync_fvb/D_O" BEL
         "inst_fbctl/inst_localrstb2_b/RstQ_4" BEL "inst_fbctl/p1_wr_data_0"
         BEL "inst_fbctl/p1_wr_data_1" BEL "inst_fbctl/p1_wr_data_2" BEL
         "inst_fbctl/p1_wr_data_3" BEL "inst_fbctl/p1_wr_data_4" BEL
-        "inst_fbctl/p1_wr_data_6" BEL "inst_fbctl/p1_wr_data_7" BEL
-        "inst_fbctl/p1_wr_data_5" BEL "inst_fbctl/p1_wr_data_8" BEL
+        "inst_fbctl/p1_wr_data_5" BEL "inst_fbctl/p1_wr_data_6" BEL
+        "inst_fbctl/p1_wr_data_7" BEL "inst_fbctl/p1_wr_data_8" BEL
         "inst_fbctl/p1_wr_data_9" BEL "inst_fbctl/p1_wr_data_10" BEL
         "inst_fbctl/p1_wr_data_11" BEL "inst_fbctl/p1_wr_data_12" BEL
         "inst_fbctl/p1_wr_data_13" BEL "inst_fbctl/p1_wr_data_15" BEL
@@ -547,8 +547,7 @@ TIMEGRP cambpclk = BEL "inst_inputsync_fvb/D_O" BEL
         "inst_camctlb/D_O_3" BEL "inst_camctlb/D_O_2" BEL "inst_camctlb/D_O_1"
         BEL "inst_camctlb/D_O_0" BEL "inst_fbctl/pb_int_rst" BEL
         "inst_fbctl/pb_wr_data_sel" BEL "inst_fbctl/stateWrB_FSM_FFd3" BEL
-        "inst_fbctl/camb_trigger_old" BEL "inst_fbctl/done_b" BEL
-        "inst_camctlb/cam_data_sel";
+        "inst_fbctl/done_b" BEL "inst_camctlb/cam_data_sel";
 PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<299> = BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0" PINNAME P2CLK;
 PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<321> = BEL
@@ -558,14 +557,14 @@ TIMEGRP camapclk = BEL "inst_inputsync_fva/D_O" BEL
         "inst_inputsync_fva/sreg_1" BEL "inst_inputsync_fva/sreg_0" BEL
         "inst_fbctl/pa_wr_addr_0" BEL "inst_fbctl/pa_wr_addr_22" BEL
         "inst_fbctl/pa_wr_addr_21" BEL "inst_fbctl/pa_wr_addr_20" BEL
-        "inst_fbctl/pa_wr_addr_19" BEL "inst_fbctl/pa_wr_addr_18" BEL
-        "inst_fbctl/pa_wr_addr_16" BEL "inst_fbctl/pa_wr_addr_15" BEL
-        "inst_fbctl/pa_wr_addr_17" BEL "inst_fbctl/pa_wr_addr_14" BEL
-        "inst_fbctl/pa_wr_addr_13" BEL "inst_fbctl/pa_wr_addr_11" BEL
-        "inst_fbctl/pa_wr_addr_10" BEL "inst_fbctl/pa_wr_addr_12" BEL
-        "inst_fbctl/pa_wr_addr_9" BEL "inst_fbctl/pa_wr_addr_8" BEL
-        "inst_fbctl/pa_wr_addr_6" BEL "inst_fbctl/pa_wr_addr_5" BEL
-        "inst_fbctl/pa_wr_addr_7" BEL "inst_fbctl/pa_wr_addr_4" BEL
+        "inst_fbctl/pa_wr_addr_19" BEL "inst_fbctl/pa_wr_addr_17" BEL
+        "inst_fbctl/pa_wr_addr_16" BEL "inst_fbctl/pa_wr_addr_18" BEL
+        "inst_fbctl/pa_wr_addr_15" BEL "inst_fbctl/pa_wr_addr_14" BEL
+        "inst_fbctl/pa_wr_addr_12" BEL "inst_fbctl/pa_wr_addr_11" BEL
+        "inst_fbctl/pa_wr_addr_13" BEL "inst_fbctl/pa_wr_addr_10" BEL
+        "inst_fbctl/pa_wr_addr_9" BEL "inst_fbctl/pa_wr_addr_7" BEL
+        "inst_fbctl/pa_wr_addr_6" BEL "inst_fbctl/pa_wr_addr_8" BEL
+        "inst_fbctl/pa_wr_addr_5" BEL "inst_fbctl/pa_wr_addr_4" BEL
         "inst_fbctl/pa_wr_addr_3" BEL "inst_fbctl/pa_wr_addr_2" BEL
         "inst_fbctl/pa_wr_addr_1" BEL "inst_fbctl/pa_wr_cnt_5" BEL
         "inst_fbctl/pa_wr_cnt_4" BEL "inst_fbctl/pa_wr_cnt_3" BEL
@@ -586,8 +585,8 @@ TIMEGRP camapclk = BEL "inst_inputsync_fva/D_O" BEL
         BEL "inst_fbctl/p2_wr_data_1" BEL "inst_fbctl/p2_wr_data_2" BEL
         "inst_fbctl/p2_wr_data_3" BEL "inst_fbctl/p2_wr_data_4" BEL
         "inst_fbctl/p2_wr_data_5" BEL "inst_fbctl/p2_wr_data_6" BEL
-        "inst_fbctl/p2_wr_data_8" BEL "inst_fbctl/p2_wr_data_9" BEL
-        "inst_fbctl/p2_wr_data_7" BEL "inst_fbctl/p2_wr_data_10" BEL
+        "inst_fbctl/p2_wr_data_7" BEL "inst_fbctl/p2_wr_data_9" BEL
+        "inst_fbctl/p2_wr_data_10" BEL "inst_fbctl/p2_wr_data_8" BEL
         "inst_fbctl/p2_wr_data_11" BEL "inst_fbctl/p2_wr_data_12" BEL
         "inst_fbctl/p2_wr_data_13" BEL "inst_fbctl/p2_wr_data_14" BEL
         "inst_fbctl/p2_wr_data_15" PIN
@@ -604,8 +603,7 @@ TIMEGRP camapclk = BEL "inst_inputsync_fva/D_O" BEL
         "inst_camctla/D_O_3" BEL "inst_camctla/D_O_2" BEL "inst_camctla/D_O_1"
         BEL "inst_camctla/D_O_0" BEL "inst_fbctl/pa_int_rst" BEL
         "inst_fbctl/pa_wr_data_sel" BEL "inst_fbctl/stateWrA_FSM_FFd3" BEL
-        "inst_fbctl/cama_trigger_old" BEL "inst_fbctl/done_a" BEL
-        "inst_camctla/cam_data_sel";
+        "inst_fbctl/done_a" BEL "inst_camctla/cam_data_sel";
 PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<109> = BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0" PINNAME
         P0CMDCLK;
@@ -2138,16 +2136,16 @@ TIMEGRP inst_syscon_pllout_x1 = BEL "inst_fbctl/pc_rd_addr1_23" BEL
         "inst_fbctl/pc_rd_addr1_28" BEL "inst_fbctl/pc_rd_addr1_25" BEL
         "inst_fbctl/pc_rd_addr1_24" BEL "inst_fbctl/pc_rd_addr1_22" BEL
         "inst_fbctl/pc_rd_addr1_21" BEL "inst_fbctl/pc_rd_addr1_20" BEL
-        "inst_fbctl/pc_rd_addr1_19" BEL "inst_fbctl/pc_rd_addr1_17" BEL
-        "inst_fbctl/pc_rd_addr1_16" BEL "inst_fbctl/pc_rd_addr1_18" BEL
+        "inst_fbctl/pc_rd_addr1_18" BEL "inst_fbctl/pc_rd_addr1_17" BEL
+        "inst_fbctl/pc_rd_addr1_19" BEL "inst_fbctl/pc_rd_addr1_16" BEL
         "inst_fbctl/pc_rd_addr1_15" BEL "inst_fbctl/pc_rd_addr1_14" BEL
         "inst_fbctl/pc_rd_addr1_13" BEL "inst_fbctl/pc_rd_addr1_12" BEL
-        "inst_fbctl/pc_rd_addr1_11" BEL "inst_fbctl/pc_rd_addr1_10" BEL
-        "inst_fbctl/pc_rd_addr1_8" BEL "inst_fbctl/pc_rd_addr1_7" BEL
-        "inst_fbctl/pc_rd_addr1_9" BEL "inst_fbctl/pc_rd_addr1_6" BEL
+        "inst_fbctl/pc_rd_addr1_11" BEL "inst_fbctl/pc_rd_addr1_9" BEL
+        "inst_fbctl/pc_rd_addr1_8" BEL "inst_fbctl/pc_rd_addr1_10" BEL
+        "inst_fbctl/pc_rd_addr1_7" BEL "inst_fbctl/pc_rd_addr1_6" BEL
         "inst_fbctl/pc_rd_addr1_5" BEL "inst_fbctl/pc_rd_addr1_4" BEL
         "inst_fbctl/pc_rd_addr1_3" BEL "inst_fbctl/pc_rd_addr1_2" BEL
-        "inst_fbctl/pc_rd_addr1_1" BEL "inst_fbctl/pc_rd_addr1_0" BEL
+        "inst_fbctl/pc_rd_addr1_0" BEL "inst_fbctl/pc_rd_addr1_1" BEL
         "inst_fbctl/stateRd_FSM_FFd1" BEL "inst_fbctl/stateRd_FSM_FFd2" BEL
         "inst_fbctl/stateRd_FSM_FFd4" BEL "inst_fbctl/inst_localrstc/RstQ_1"
         BEL "inst_fbctl/inst_localrstc/RstQ_2" BEL
