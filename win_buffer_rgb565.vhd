@@ -5,7 +5,7 @@ use IEEE.NUMERIC_STD.all;
 library work;
 use work.cam_pkg.all;
 
-entity window_16 is
+entity window_rgb565 is
   generic (
     ID       : integer range 0 to 63   := 0;
     NUM_COLS : natural                 := 5;
@@ -13,16 +13,16 @@ entity window_16 is
     HEIGHT   : natural range 1 to 2048 := 2048
     );
   port (
-    pipe_in      : in  pipe_t;
-    pipe_out     : out pipe_t;
-    stall_in     : in  std_logic;
-    stall_out    : out std_logic;
+    pipe_in       : in  pipe_t;
+    pipe_out      : out pipe_t;
+    stall_in      : in  std_logic;
+    stall_out     : out std_logic;
     rgb565_1d_in  : in  rgb565_1d_t;
     rgb565_2d_out : out rgb565_2d_t
     );
-end window_16;
+end window_rgb565;
 
-architecture impl of window_16 is
+architecture impl of window_rgb565 is
 
   signal clk        : std_logic;
   signal rst        : std_logic;

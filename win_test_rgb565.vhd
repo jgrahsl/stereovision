@@ -5,22 +5,22 @@ use IEEE.NUMERIC_STD.all;
 library work;
 use work.cam_pkg.all;
 
-entity win_test_16 is
+entity win_test_rgb565 is
   generic (
     ID     : integer range 0 to 63 := 0;
-    KERNEL : natural := 5;
-    OFFSET : natural := 0
+    KERNEL : natural               := 5;
+    OFFSET : natural               := 0
     );
   port (
-    pipe_in     : in  pipe_t;
-    pipe_out    : out pipe_t;
-    stall_in    : in  std_logic;
-    stall_out   : out std_logic;
+    pipe_in      : in  pipe_t;
+    pipe_out     : out pipe_t;
+    stall_in     : in  std_logic;
+    stall_out    : out std_logic;
     rgb565_2d_in : in  rgb565_2d_t
     );
-end win_test_16;
+end win_test_rgb565;
 
-architecture impl of win_test_16 is
+architecture impl of win_test_rgb565 is
 
   signal clk        : std_logic;
   signal rst        : std_logic;
@@ -79,7 +79,7 @@ begin
     --              to_integer(unsigned(rgb565_2d_in(4)(1))) +
     --              to_integer(unsigned(rgb565_2d_in(4)(2))) +
     --              to_integer(unsigned(rgb565_2d_in(4)(3)));
-    
+
 --    u := to_unsigned(sum, 24);
 
     stage_next.data_565 <= rgb565_2d_in(OFFSET);

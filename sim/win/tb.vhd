@@ -68,23 +68,23 @@ begin  -- impl
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (
-      pipe_in      => pipe(1),          -- [in]
-      pipe_out     => pipe(2),
-      stall_in     => stall(2),
-      stall_out    => stall(1),
+      pipe_in     => pipe(1),           -- [in]
+      pipe_out    => pipe(2),
+      stall_in    => stall(2),
+      stall_out   => stall(1),
       mono_2d_out => mono_2d
       );                                -- [inout]
 
-  dut2 : entity work.win_test
+  dut2 : entity work.win_test_mono
     generic map (
       ID     => 26,
       KERNEL => KERNEL,
-      OFFSET =>  OFFSET)
+      OFFSET => OFFSET)
     port map (
-      pipe_in     => pipe(2),           -- [in]
-      pipe_out    => pipe(3),
-      stall_in    => stall(3),
-      stall_out   => stall(2),
+      pipe_in    => pipe(2),            -- [in]
+      pipe_out   => pipe(3),
+      stall_in   => stall(3),
+      stall_out  => stall(2),
       mono_2d_in => mono_2d
       );                                -- [inout]
 

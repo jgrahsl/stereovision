@@ -31,11 +31,11 @@ architecture impl of tb is
 
   signal finish : std_logic := '0';
 
-  signal abcd : abcd_t;
-  signal abcd2 : abcd2_t;  
+  signal abcd       : abcd_t;
+  signal abcd2      : abcd2_t;
   signal gray8_2d_1 : gray8_2d_t;
   signal gray8_2d_2 : gray8_2d_t;
-  signal gray8_2d_3 : gray8_2d_t;  
+  signal gray8_2d_3 : gray8_2d_t;
   
 begin  -- impl
 
@@ -65,7 +65,7 @@ begin  -- impl
 
 
 
-  dut : entity work.win_8
+  dut : entity work.win_gray8
     generic map (
       ID     => 4,
       WIDTH  => WIDTH,
@@ -118,7 +118,7 @@ begin  -- impl
       stall_out   => stall(3),
       abcd        => abcd,
       gray8_2d_in => gray8_2d_2,
-      abcd2 => abcd2
+      abcd2       => abcd2
       );                                -- [inout]
 
   bitest3 : entity work.bi3
@@ -127,14 +127,14 @@ begin  -- impl
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (
-      pipe_in     => pipe(4),           -- [in]
-      pipe_out    => pipe(5),
-      stall_in    => stall(5),
-      stall_out   => stall(4),
-      abcd2        => abcd2
+      pipe_in   => pipe(4),             -- [in]
+      pipe_out  => pipe(5),
+      stall_in  => stall(5),
+      stall_out => stall(4),
+      abcd2     => abcd2
       );                                -- [inout]
-  
-  
+
+
   colmux : entity work.color_mux
     generic map (
       ID   => 3,
@@ -144,7 +144,7 @@ begin  -- impl
       pipe_out  => pipe(6),
       stall_in  => stall(6),
       stall_out => stall(5));           -- [inout]
-  
+
   my_sim_sink : entity work.sim_sink
     generic map (
       ID => 2)

@@ -5,7 +5,7 @@ use IEEE.NUMERIC_STD.all;
 library work;
 use work.cam_pkg.all;
 
-entity line_buffer_16 is
+entity line_buffer_rgb565 is
   generic (
     ID        : integer range 0 to 63   := 0;
     NUM_LINES : natural                 := 3;
@@ -18,9 +18,9 @@ entity line_buffer_16 is
     stall_out     : out std_logic;
     rgb565_1d_out : out rgb565_1d_t
     );
-end line_buffer_16;
+end line_buffer_rgb565;
 
-architecture impl of line_buffer_16 is
+architecture impl of line_buffer_rgb565 is
 
   signal clk        : std_logic;
   signal rst        : std_logic;
@@ -143,7 +143,7 @@ begin
         elsif r_r.rows = 3 then
           rgb565_1d_out(1) <= q(2);
           rgb565_1d_out(2) <= q(1);
-          rgb565_1d_out(3) <= q(0);        
+          rgb565_1d_out(3) <= q(0);
         else
           if r_r.sel = 0 then
             rgb565_1d_out(1) <= q(4); rgb565_1d_out(2) <= q(3); rgb565_1d_out(3) <= q(2); rgb565_1d_out(4) <= q(1);
@@ -167,33 +167,33 @@ begin
         elsif r_r.rows = 3 then
           rgb565_1d_out(1) <= q(2);
           rgb565_1d_out(2) <= q(1);
-          rgb565_1d_out(3) <= q(0);        
+          rgb565_1d_out(3) <= q(0);
         elsif r_r.rows = 4 then
           rgb565_1d_out(1) <= q(3);
           rgb565_1d_out(2) <= q(2);
           rgb565_1d_out(3) <= q(1);
-          rgb565_1d_out(4) <= q(0);                  
+          rgb565_1d_out(4) <= q(0);
         elsif r_r.rows = 5 then
           rgb565_1d_out(1) <= q(4);
           rgb565_1d_out(2) <= q(3);
           rgb565_1d_out(3) <= q(2);
           rgb565_1d_out(4) <= q(1);
-          rgb565_1d_out(5) <= q(0);                            
+          rgb565_1d_out(5) <= q(0);
         elsif r_r.rows = 6 then
           rgb565_1d_out(1) <= q(5);
           rgb565_1d_out(2) <= q(4);
           rgb565_1d_out(3) <= q(3);
           rgb565_1d_out(4) <= q(2);
           rgb565_1d_out(5) <= q(1);
-          rgb565_1d_out(6) <= q(0);                            
+          rgb565_1d_out(6) <= q(0);
         elsif r_r.rows = 7 then
           rgb565_1d_out(1) <= q(6);
           rgb565_1d_out(2) <= q(5);
           rgb565_1d_out(3) <= q(4);
           rgb565_1d_out(4) <= q(3);
-          rgb565_1d_out(5) <= q(2);                  
-          rgb565_1d_out(6) <= q(1);                  
-          rgb565_1d_out(7) <= q(0);                            
+          rgb565_1d_out(5) <= q(2);
+          rgb565_1d_out(6) <= q(1);
+          rgb565_1d_out(7) <= q(0);
         elsif r_r.rows = 8 then
           rgb565_1d_out(1) <= q(7);
           rgb565_1d_out(2) <= q(6);
@@ -202,7 +202,7 @@ begin
           rgb565_1d_out(5) <= q(3);
           rgb565_1d_out(6) <= q(2);
           rgb565_1d_out(7) <= q(1);
-          rgb565_1d_out(8) <= q(0);                            
+          rgb565_1d_out(8) <= q(0);
         else
           if r_r.sel = 0 then
             rgb565_1d_out(1) <= q(8); rgb565_1d_out(2) <= q(7); rgb565_1d_out(3) <= q(6); rgb565_1d_out(4) <= q(5); rgb565_1d_out(5) <= q(4); rgb565_1d_out(6) <= q(3); rgb565_1d_out(7) <= q(2); rgb565_1d_out(8) <= q(1);

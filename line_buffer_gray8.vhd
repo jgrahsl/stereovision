@@ -5,10 +5,10 @@ use IEEE.NUMERIC_STD.all;
 library work;
 use work.cam_pkg.all;
 
-entity line_buffer_8 is
+entity line_buffer_gray8 is
   generic (
     ID        : integer range 0 to 63   := 0;
-    NUM_LINES : natural := 3;
+    NUM_LINES : natural                 := 3;
     WIDTH     : natural range 1 to 2048 := 2048;
     HEIGHT    : natural range 1 to 2048 := 2048);
   port (
@@ -18,9 +18,9 @@ entity line_buffer_8 is
     stall_out    : out std_logic;
     gray8_1d_out : out gray8_1d_t
     );
-end line_buffer_8;
+end line_buffer_gray8;
 
-architecture impl of line_buffer_8 is
+architecture impl of line_buffer_gray8 is
 
   signal clk        : std_logic;
   signal rst        : std_logic;
@@ -139,7 +139,7 @@ begin
         elsif r_r.rows = 3 then
           gray8_1d_out(1) <= q(2);
           gray8_1d_out(2) <= q(1);
-          gray8_1d_out(3) <= q(0);        
+          gray8_1d_out(3) <= q(0);
         else
           if r_r.sel = 0 then
             gray8_1d_out(1) <= q(4); gray8_1d_out(2) <= q(3); gray8_1d_out(3) <= q(2); gray8_1d_out(4) <= q(1);
@@ -163,33 +163,33 @@ begin
         elsif r_r.rows = 3 then
           gray8_1d_out(1) <= q(2);
           gray8_1d_out(2) <= q(1);
-          gray8_1d_out(3) <= q(0);        
+          gray8_1d_out(3) <= q(0);
         elsif r_r.rows = 4 then
           gray8_1d_out(1) <= q(3);
           gray8_1d_out(2) <= q(2);
           gray8_1d_out(3) <= q(1);
-          gray8_1d_out(4) <= q(0);                  
+          gray8_1d_out(4) <= q(0);
         elsif r_r.rows = 5 then
           gray8_1d_out(1) <= q(4);
           gray8_1d_out(2) <= q(3);
           gray8_1d_out(3) <= q(2);
           gray8_1d_out(4) <= q(1);
-          gray8_1d_out(5) <= q(0);                            
+          gray8_1d_out(5) <= q(0);
         elsif r_r.rows = 6 then
           gray8_1d_out(1) <= q(5);
           gray8_1d_out(2) <= q(4);
           gray8_1d_out(3) <= q(3);
           gray8_1d_out(4) <= q(2);
           gray8_1d_out(5) <= q(1);
-          gray8_1d_out(6) <= q(0);                            
+          gray8_1d_out(6) <= q(0);
         elsif r_r.rows = 7 then
           gray8_1d_out(1) <= q(6);
           gray8_1d_out(2) <= q(5);
           gray8_1d_out(3) <= q(4);
           gray8_1d_out(4) <= q(3);
-          gray8_1d_out(5) <= q(2);                  
-          gray8_1d_out(6) <= q(1);                  
-          gray8_1d_out(7) <= q(0);                            
+          gray8_1d_out(5) <= q(2);
+          gray8_1d_out(6) <= q(1);
+          gray8_1d_out(7) <= q(0);
         elsif r_r.rows = 8 then
           gray8_1d_out(1) <= q(7);
           gray8_1d_out(2) <= q(6);
@@ -198,7 +198,7 @@ begin
           gray8_1d_out(5) <= q(3);
           gray8_1d_out(6) <= q(2);
           gray8_1d_out(7) <= q(1);
-          gray8_1d_out(8) <= q(0);                            
+          gray8_1d_out(8) <= q(0);
         else
           if r_r.sel = 0 then
             gray8_1d_out(1) <= q(8); gray8_1d_out(2) <= q(7); gray8_1d_out(3) <= q(6); gray8_1d_out(4) <= q(5); gray8_1d_out(5) <= q(4); gray8_1d_out(6) <= q(3); gray8_1d_out(7) <= q(2); gray8_1d_out(8) <= q(1);

@@ -5,7 +5,7 @@ use IEEE.NUMERIC_STD.all;
 library work;
 use work.cam_pkg.all;
 
-entity window_8 is
+entity window_mono is
   generic (
     ID       : integer range 0 to 63   := 0;
     NUM_COLS : natural                 := 5;
@@ -13,16 +13,16 @@ entity window_8 is
     HEIGHT   : natural range 1 to 2048 := 2048
     );
   port (
-    pipe_in      : in  pipe_t;
-    pipe_out     : out pipe_t;
-    stall_in     : in  std_logic;
-    stall_out    : out std_logic;
-    gray8_1d_in  : in  gray8_1d_t;
-    gray8_2d_out : out gray8_2d_t
+    pipe_in     : in  pipe_t;
+    pipe_out    : out pipe_t;
+    stall_in    : in  std_logic;
+    stall_out   : out std_logic;
+    mono_1d_in  : in  mono_1d_t;
+    mono_2d_out : out mono_2d_t
     );
-end window_8;
+end window_mono;
 
-architecture impl of window_8 is
+architecture impl of window_mono is
 
   signal clk        : std_logic;
   signal rst        : std_logic;
@@ -38,8 +38,8 @@ architecture impl of window_8 is
   end record;
   signal r                   :       reg_t;
   signal rin                 :       reg_t;
-  signal q                   :       gray8_2d_t;
-  signal next_q              :       gray8_2d_t;
+  signal q                   :       mono_2d_t;
+  signal next_q              :       mono_2d_t;
   procedure init (variable v : inout reg_t) is
   begin
     v.cols := 0;
@@ -51,7 +51,7 @@ begin
 
   connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);
 
-  process(pipe_in, stage, r, q, src_valid, rst, gray8_1d_in)
+  process(pipe_in, stage, r, q, src_valid, rst, mono_1d_in)
     variable v : reg_t;
   begin  -- process
     stage_next <= pipe_in.stage;
@@ -62,7 +62,6 @@ begin
 -- Counters
 -------------------------------------------------------------------------------
     if src_valid = '1' then
-
       for b in 0 to (NUM_COLS-1) loop
         for i in 0 to (NUM_COLS-2) loop
           next_q(i+b*NUM_COLS+1) <= q(i+b*NUM_COLS);
@@ -77,18 +76,30 @@ begin
       end if;
 
       for b in 0 to (NUM_COLS-1) loop
-        next_q(b*NUM_COLS) <= gray8_1d_in(b);
+        next_q(b*NUM_COLS) <= mono_1d_in(b);
       end loop;
     end if;
 -------------------------------------------------------------------------------
 -- Output
 -------------------------------------------------------------------------------
-    gray8_2d_out <= q;
+    mono_2d_out <= q;
+
+--    if pipe_in.stage.data_1 = "1" then
+--      stage_next.data_1 <= (others => '1');
+----      stage_next.data_8   <= (others => '1');
+----      stage_next.data_565 <= (others => '1');
+----      stage_next.data_888 <= (others => '1');
+--    else
+--      stage_next.data_1 <= (others => '0');
+----      stage_next.data_8   <= (others => '0');
+----      stage_next.data_565 <= (others => '0');
+----      stage_next.data_888 <= (others => '0');
+--    end if;
 -------------------------------------------------------------------------------
 -- Reset
 -------------------------------------------------------------------------------
     if pipe_in.cfg(ID).identify = '1' then
-      stage_next.identity <= IDENT_WINDOW_8;
+      stage_next.identity <= IDENT_WINDOW;
     end if;
     if rst = '1' then
       init(v);

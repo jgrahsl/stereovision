@@ -61,30 +61,30 @@ begin  -- impl
       stall_out => stall(0),
       p0_fifo   => p0_rd_fifo);         -- [inout]
 
-  dut : entity work.win_16
+  dut : entity work.win_rgb565
     generic map (
       ID     => 25,
       KERNEL => KERNEL,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (
-      pipe_in      => pipe(1),          -- [in]
-      pipe_out     => pipe(2),
-      stall_in     => stall(2),
-      stall_out    => stall(1),
+      pipe_in       => pipe(1),         -- [in]
+      pipe_out      => pipe(2),
+      stall_in      => stall(2),
+      stall_out     => stall(1),
       rgb565_2d_out => rgb565_2d
       );                                -- [inout]
 
-  dut2 : entity work.win_test_16
+  dut2 : entity work.win_test_rgb565
     generic map (
       ID     => 26,
       KERNEL => KERNEL,
-      OFFSET =>  OFFSET)
+      OFFSET => OFFSET)
     port map (
-      pipe_in     => pipe(2),           -- [in]
-      pipe_out    => pipe(3),
-      stall_in    => stall(3),
-      stall_out   => stall(2),
+      pipe_in      => pipe(2),          -- [in]
+      pipe_out     => pipe(3),
+      stall_in     => stall(3),
+      stall_out    => stall(2),
       rgb565_2d_in => rgb565_2d
       );                                -- [inout]
 

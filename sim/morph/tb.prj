@@ -6,11 +6,11 @@ sim_feed.vhd
 sim_sink.vhd
 pipe_head.vhd
 bit_ram.vhd
-line_buffer.vhd
-window.vhd
+line_buffer_mono.vhd
+win_buffer_mono.vhd
 morph_kernel.vhd
 translate.vhd
-translate_win.vhd
-win.vhd
+translate_win_mono.vhd
+window_mono.vhd
 morph_new.vhd
 morph_set.vhd

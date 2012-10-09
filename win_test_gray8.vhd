@@ -5,11 +5,11 @@ use IEEE.NUMERIC_STD.all;
 library work;
 use work.cam_pkg.all;
 
-entity win_test_8 is
+entity win_test_gray8 is
   generic (
     ID     : integer range 0 to 63 := 0;
-    KERNEL : natural := 5;
-    OFFSET : natural := 0
+    KERNEL : natural               := 5;
+    OFFSET : natural               := 0
     );
   port (
     pipe_in     : in  pipe_t;
@@ -18,9 +18,9 @@ entity win_test_8 is
     stall_out   : out std_logic;
     gray8_2d_in : in  gray8_2d_t
     );
-end win_test_8;
+end win_test_gray8;
 
-architecture impl of win_test_8 is
+architecture impl of win_test_gray8 is
 
   signal clk        : std_logic;
   signal rst        : std_logic;
@@ -79,7 +79,7 @@ begin
     --              to_integer(unsigned(gray8_2d_in(4)(1))) +
     --              to_integer(unsigned(gray8_2d_in(4)(2))) +
     --              to_integer(unsigned(gray8_2d_in(4)(3)));
-    
+
     u := to_unsigned(sum, 24);
 
     stage_next.data_8 <= std_logic_vector(u(7+4 downto 0+4));

@@ -5,11 +5,11 @@ use IEEE.NUMERIC_STD.all;
 library work;
 use work.cam_pkg.all;
 
-entity win_test is
+entity win_test_mono is
   generic (
     ID     : integer range 0 to 63 := 0;
-    KERNEL : natural := 5;
-    OFFSET : natural := 0
+    KERNEL : natural               := 5;
+    OFFSET : natural               := 0
     );
   port (
     pipe_in    : in  pipe_t;
@@ -18,9 +18,9 @@ entity win_test is
     stall_out  : out std_logic;
     mono_2d_in : in  mono_2d_t
     );
-end win_test;
+end win_test_mono;
 
-architecture impl of win_test is
+architecture impl of win_test_mono is
 
   signal clk        : std_logic;
   signal rst        : std_logic;

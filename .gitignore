@@ -5,6 +5,7 @@ tmp
 \#*
 *~
 /*.out
+control/*.tiff
 sim/wave.do
 sim/*/sim.out
 *.stackdump

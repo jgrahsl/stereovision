@@ -5,24 +5,27 @@ use ieee.numeric_std.all;
 library work;
 use work.cam_pkg.all;
 
-entity translate_win is
+entity translate_win_gray8 is
   generic (
-    ID     : integer range 0 to 63   := 0;
-    WIDTH  : natural range 1 to 2048 := 2048;
-    HEIGHT : natural range 1 to 2048 := 2048;
-    CUT    : natural range 0 to 2047 := 0;
-    APPEND : natural range 0 to 2047 := 0);
+    ID       : integer range 0 to 63   := 0;
+    WIDTH    : natural range 1 to 2048 := 2048;
+    HEIGHT   : natural range 1 to 2048 := 2048;
+    CUT_W    : natural range 0 to 2047 := 0;
+    CUT_H    : natural range 0 to 2047 := 0;
+    APPEND_W : natural range 0 to 2047 := 0;
+    APPEND_H : natural range 0 to 2047 := 0);
+
   port (
     pipe_in     : in  pipe_t;
     pipe_out    : out pipe_t;
     stall_in    : in  std_logic;
     stall_out   : out std_logic;
-    mono_2d_in  : in  mono_2d_t;
-    mono_2d_out : out mono_2d_t
+    gray8_2d_in  : in  gray8_2d_t;
+    gray8_2d_out : out gray8_2d_t
     );
-end translate_win;
+end translate_win_gray8;
 
-architecture impl of translate_win is
+architecture impl of translate_win_gray8 is
 
 -------------------------------------------------------------------------------
 -- Pipe
@@ -46,7 +49,7 @@ architecture impl of translate_win is
     cols    : natural range 0 to WIDTH*2;
     rows    : natural range 0 to HEIGHT*2;
     state   : state_t;
-    mono_2d : mono_2d_t;
+    gray8_2d : gray8_2d_t;
   end record;
 
   signal r      : reg_t;
@@ -71,29 +74,29 @@ begin
 -------------------------------------------------------------------------------
 -- Logic
 -------------------------------------------------------------------------------
-    v.mono_2d  := mono_2d_in;
+    v.gray8_2d  := gray8_2d_in;
 
     en                                := '0';
     issue                             <= '0';
-    if v.rows > (HEIGHT-1) and v.rows <= (HEIGHT+APPEND-1) then
+    if v.rows > (HEIGHT-1) and v.rows <= (HEIGHT+APPEND_H-1) then
       issue             <= pipe_in.cfg(ID).enable;
       stage_next.data_1 <= (others => '0');
       stage_next.valid  <= '1';
       en                := '1';
     end if;
 
-    if v.cols > (WIDTH-1) and v.cols <= (WIDTH+APPEND-1) then
+    if v.cols > (WIDTH-1) and v.cols <= (WIDTH+APPEND_W-1) then
       issue             <= pipe_in.cfg(ID).enable;
       stage_next.data_1 <= (others => '0');
       stage_next.valid  <= '1';
       en                := '1';
     end if;
 
-    if v.rows < (CUT) then
+    if v.rows < (CUT_H) then
       stage_next.valid <= '0';
     end if;
 
-    if v.cols < (CUT) then
+    if v.cols < (CUT_W) then
       stage_next.valid <= '0';
     end if;
 
@@ -112,9 +115,9 @@ begin
 -- Counter
 -------------------------------------------------------------------------------
     if src_valid = '1' or en = '1' then
-      if v.cols = (WIDTH+APPEND-1) then
+      if v.cols = (WIDTH+APPEND_W-1) then
         v.cols := 0;
-        if v.rows = (HEIGHT+APPEND-1) then
+        if v.rows = (HEIGHT+APPEND_H-1) then
           v.rows := 0;
         else
           v.rows := v.rows + 1;
@@ -139,8 +142,8 @@ begin
     r_next <= v;
   end process;
 
-  mono_2d_out <= r.mono_2d;
-  
+  gray8_2d_out <= r.gray8_2d;
+
   proc_clk : process(clk, rst, stall, pipe_in, stage_next, r_next)
   begin
     if rising_edge(clk) and (stall = '0' or rst = '1') then

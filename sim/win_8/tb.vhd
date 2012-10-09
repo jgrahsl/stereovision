@@ -61,7 +61,7 @@ begin  -- impl
       stall_out => stall(0),
       p0_fifo   => p0_rd_fifo);         -- [inout]
 
-  dut : entity work.win_8
+  dut : entity work.win_gray8
     generic map (
       ID     => 25,
       KERNEL => KERNEL,
@@ -75,7 +75,7 @@ begin  -- impl
       gray8_2d_out => gray8_2d
       );                                -- [inout]
 
-  dut2 : entity work.win_test_8
+  dut2 : entity work.win_test_gray8
     generic map (
       ID     => 26,
       KERNEL => KERNEL,
