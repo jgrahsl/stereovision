@@ -558,10 +558,7 @@ architecture Behavioral of FBCtl is
   signal rstcam_b_int               : std_logic;
 
   -- VGA
-  signal pc_rd_addr1, pc_rd_addr2 : natural   := 0;
-  signal fVMemSource              : std_logic := '0';
   signal rd_data_sel              : std_logic;
-  signal int_rd_mode              : std_logic_vector(1 downto 0);
   signal RstC, SRstC              : std_logic;
 
   -- ALG
@@ -574,8 +571,8 @@ architecture Behavioral of FBCtl is
   signal mono_1d : mono_1d_t;
   signal mono_2d : mono_2d_t;
 
-  signal pra_fifo   : mcb_fifo_t;
-  signal prb_fifo   : mcb_fifo_t;  
+  signal pra_fifo  : mcb_fifo_t;
+  signal prb_fifo  : mcb_fifo_t;
   signal pw_fifo   : mcb_fifo_t;
   signal auxr_fifo : mcb_fifo_t;
   signal auxw_fifo : mcb_fifo_t;
@@ -599,7 +596,7 @@ architecture Behavioral of FBCtl is
   signal prb_empty : std_logic;
   signal prb_full  : std_logic;
   signal prb_count : std_logic_vector(6 downto 0) := (others => '0');
-  
+
   signal pw_clk   : std_logic;
   signal pw_rst   : std_logic;
   signal pw_in    : std_logic_vector(31 downto 0);
@@ -643,7 +640,7 @@ architecture Behavioral of FBCtl is
     move_r_pb_inc,
     move_r_transfer_pb,
     move_r_transfer_pb_1,
-    
+
     move_r_aux,
     move_r_aux_inc,
     move_r_transfer_aux,
@@ -663,8 +660,8 @@ architecture Behavioral of FBCtl is
   signal move_nstate : move_state_t;
 
   signal my_pixel_a_rd_addr : natural range 0 to 2**24-1 := 0;
-  signal my_pixel_b_rd_addr : natural range 0 to 2**24-1 := 0;  
-  signal my_aux_rd_addr   : natural range 0 to 2**24-1 := 0;
+  signal my_pixel_b_rd_addr : natural range 0 to 2**24-1 := 0;
+  signal my_aux_rd_addr     : natural range 0 to 2**24-1 := 0;
 
   signal my_pixel_wr_addr : natural range 0 to 2**24-1 := 0;
   signal my_aux_wr_addr   : natural range 0 to 2**24-1 := 0;
@@ -688,37 +685,32 @@ architecture Behavioral of FBCtl is
 
   constant WIDTH  : natural := 320;
   constant HEIGHT : natural := 240;
-  constant SIZE : natural := WIDTH*HEIGHT*2;
-  
+  constant SIZE   : natural := WIDTH*HEIGHT*2;
+
   signal abcd       : abcd_t;
-  signal abcd2       : abcd2_t;  
+  signal abcd2      : abcd2_t;
   signal gray8_2d_1 : gray8_2d_t;
   signal gray8_2d_2 : gray8_2d_t;
-  signal rgb565_2d: rgb565_2d_t;
-  signal mono_2d_l : mono_2d_t;
-  signal mono_2d_r : mono_2d_t;  
+  signal rgb565_2d  : rgb565_2d_t;
+  signal mono_2d_l  : mono_2d_t;
+  signal mono_2d_r  : mono_2d_t;
 
-  signal done_b : std_logic;
-  signal camb_trigger : std_logic;
-  signal camb_trigger_old : std_logic;  
+  signal done_b           : std_logic;
+  signal camb_trigger     : std_logic;
+  signal camb_trigger_old : std_logic;
 
-  signal done_a : std_logic;
-  signal cama_trigger : std_logic;
+  signal done_a           : std_logic;
+  signal cama_trigger     : std_logic;
   signal cama_trigger_old : std_logic;
 
   signal sel : natural range 0 to 3;
 
-  signal x : natural range  0 to 640;
-  signal y : natural range 0 to 480;
+  signal x : unsigned(9 downto 0);
+  signal y : unsigned(9 downto 0);
 
-  signal src_a : natural range 0 to 2400*64;
-  signal src_b : natural range 0 to 2400*64;
-  signal src_c : natural range 0 to 2400*64;  
-
-  signal src_a_s : std_logic_vector(29 downto 0);
-  signal src_b_s : std_logic_vector(29 downto 0);
-  signal src_c_s : std_logic_vector(29 downto 0);
-  
+  signal src_a : natural range 0 to 2400;
+  signal src_b : natural range 0 to 2400;
+  signal src_c : natural range 0 to 2400;
 begin
 ----------------------------------------------------------------------------------
 -- mcb instantiation
@@ -934,7 +926,12 @@ begin
       if (srstc = '1') then
         staterd     <= strdidle;
         rd_data_sel <= '0';
-        pc_rd_addr1 <= 0;
+        x     <= (others => '0');
+        y     <= (others => '0');
+        src_a <= 0;
+        src_b <= 0;
+        src_c <= 0;
+
         rdy_o       <= '0';
       else
         
@@ -944,39 +941,36 @@ begin
           rd_data_sel <= not rd_data_sel;
         end if;
         if (staterd = strdcmd) then
-          if (pc_rd_addr1 = 640*480*2/(rd_batch*4)-1) then
-            pc_rd_addr1 <= 0;
-            x <= 0;
-            y <= 0;
-            src_a <= 0;
-            src_b <= 0;
-            src_c <= 0;
+          if x < 20-1 then
+            x <= x + 1;
           else
-            if x < 20-1 then
-              x <= x + 1;                                       
+            x <= (others => '0');
+            if y < 480-1 then
+              y <= y + 1;
             else
-              x <= 0;
-              if y < 480-1 then
-                y <= y + 1;
-              else
-                y <= 0;                
-              end if;
-            end if;
+              y <= (others => '0');
 
-            if x >= 0 and x < 10 and y >= 0 and y < 240 then
-              src_a <= src_a + (rd_batch*4);
+              x     <= (others => '0');
+              y     <= (others => '0');
+              src_a <= 0;
+              src_b <= 0;
+              src_c <= 0;
+              
             end if;
-            
-            if x >= 10 and x < 20 and y >= 0 and y < 240 then
-              src_b <= src_b + (rd_batch*4);
-            end if;
-            
-            if x >= 0 and x < 10 and y >=240 and y < 480 then
-              src_c <= src_c + (rd_batch*4);
-            end if;
-
-            pc_rd_addr1 <= pc_rd_addr1 + 1;
           end if;
+
+          if x < 10 and y < 240 then
+            src_a <= src_a + 1;
+          end if;
+
+          if x >= 10 and x < 20 and y < 240 then
+            src_b <= src_b + 1;
+          end if;
+
+          if x < 10 and y >= 240 and y < 480 then
+            src_c <= src_c + 1;
+          end if;
+
         end if;
         if (p3_rd_empty = '0') then
           rdy_o <= '1';
@@ -989,13 +983,13 @@ begin
   doc <= p3_rd_data(31 downto 16) when rd_data_sel = '1' else
          p3_rd_data(15 downto 0);
 
-  sel <= 0 when x >= 0 and x < 10 and y >= 0 and y < 240 else
-         1 when x >= 10 and x < 20 and y >= 0 and y < 240 else
-         2 when x >= 0 and x < 10 and y >= 240 and y < 480 else 3;
+  sel <= 0 when x < 10 and y < 240 else
+         1 when x >= 10 and x < 20 and y < 240  else
+         2 when x < 10 and y >= 240 and y < 480 else 3;
   
-    p3_cmd_byte_addr <= std_logic_vector(to_unsigned(src_a+(CAMA_OFFSET), 30)) when sel = 0 else
-                        std_logic_vector(to_unsigned(src_b+(CAMB_OFFSET), 30)) when sel = 1 else
-                        std_logic_vector(to_unsigned(src_c+(DVI_OFFSET), 30)) when sel = 2 else (others => '0');
+  p3_cmd_byte_addr <= std_logic_vector(to_unsigned(src_a*(rd_batch*4)+(CAMA_OFFSET), 30)) when sel = 0 else
+                      std_logic_vector(to_unsigned(src_b*(rd_batch*4)+(CAMB_OFFSET), 30)) when sel = 1 else
+                      std_logic_vector(to_unsigned(src_c*(rd_batch*4)+(DVI_OFFSET), 30))  when sel = 2 else (others => '0');
 
   
   next_state_decode : process (staterd, p3_rd_count, p3_rd_error)
@@ -1006,8 +1000,8 @@ begin
     p3_cmd_bl    <= std_logic_vector(to_unsigned(rd_batch-1, 6));  -- we read 32 dwords (32-bit) at a time
     p3_cmd_clk   <= clkc;
 
-    p3_cmd_en        <= '0';
-    
+    p3_cmd_en <= '0';
+
     p3_rd_en  <= rd_data_sel and enc;
     p3_rd_clk <= clkc;
 
@@ -1058,18 +1052,18 @@ begin
     d_o   => cama_trigger,
     clk_i => clkcam_a
     );  
-  
+
   portarst_proc_aa : process(clkcam_a)
   begin
     if rising_edge(clkcam_a) then
       if (srstcam_a = '1') then
         pa_int_rst <= '1';
 
-          if cama_trigger = '1' then
-            done_a <= '1';
-          else
-            done_a <= '0';          
-          end if;                
+        if cama_trigger = '1' then
+          done_a <= '1';
+        else
+          done_a <= '0';
+        end if;
 
         --if cama_trigger /= cama_trigger_old then
         --  done_a <= '1';
@@ -1191,7 +1185,7 @@ begin
     d_o   => camb_trigger,
     clk_i => clkcam_b
     );
-  
+
   portarst_proc_b : process(clkcam_b)
   begin
     if rising_edge(clkcam_b) then
@@ -1201,15 +1195,15 @@ begin
         if camb_trigger = '1' then
           done_b <= '1';
         else
-          done_b <= '0';          
-        end if;                
+          done_b <= '0';
+        end if;
 
         --if camb_trigger /= camb_trigger_old then
         --  done_b <= '1';
         --  camb_trigger_old <= camb_trigger;
         --end if;       
       elsif (p1_wr_empty = '1') then
-        pb_int_rst <= '0';        
+        pb_int_rst <= '0';
       end if;
 
 -------------------------------------------------------------------------------
@@ -1321,10 +1315,10 @@ begin
         move_state <= move_reset;
 
         my_pixel_a_rd_addr <= 0;
-        my_pixel_b_rd_addr <= 0;        
-        my_pixel_wr_addr <= 0;
-        my_aux_rd_addr   <= 0;
-        my_aux_wr_addr   <= 0;
+        my_pixel_b_rd_addr <= 0;
+        my_pixel_wr_addr   <= 0;
+        my_aux_rd_addr     <= 0;
+        my_aux_wr_addr     <= 0;
       else
 -------------------------------------------------------------------------------
 -- Memory 
@@ -1344,7 +1338,7 @@ begin
             my_pixel_b_rd_addr <= my_pixel_b_rd_addr + 16*4;
           end if;
         end if;
-        
+
         if move_state = move_r_aux_inc then
           if (my_aux_rd_addr = (SIZE-32*4)) then
             my_aux_rd_addr <= 0;
@@ -1380,30 +1374,30 @@ begin
 
   pr_fifo_comp_a : entity work.mcb_pixel_fifo
     port map (
-      clk        => pra_clk,             -- [IN]
-      rst        => pra_rst,             -- [IN]
-      din        => pra_in,              -- [IN]
-      wr_en      => pra_wr,              -- [IN]
-      rd_en      => pra_rd,              -- [IN]
+      clk        => pra_clk,            -- [IN]
+      rst        => pra_rst,            -- [IN]
+      din        => pra_in,             -- [IN]
+      wr_en      => pra_wr,             -- [IN]
+      rd_en      => pra_rd,             -- [IN]
       dout       => pra_out,
-      full       => pra_full,            -- [OUT]
+      full       => pra_full,           -- [OUT]
       empty      => pra_empty,
       data_count => pra_count(6 downto 0)
       );                                -- [OUT]
 
   pr_fifo_comp_b : entity work.mcb_pixel_fifo
     port map (
-      clk        => prb_clk,             -- [IN]
-      rst        => prb_rst,             -- [IN]
-      din        => prb_in,              -- [IN]
-      wr_en      => prb_wr,              -- [IN]
-      rd_en      => prb_rd,              -- [IN]
+      clk        => prb_clk,            -- [IN]
+      rst        => prb_rst,            -- [IN]
+      din        => prb_in,             -- [IN]
+      wr_en      => prb_wr,             -- [IN]
+      rd_en      => prb_rd,             -- [IN]
       dout       => prb_out,
-      full       => prb_full,            -- [OUT]
+      full       => prb_full,           -- [OUT]
       empty      => prb_empty,
       data_count => prb_count(6 downto 0)
       );                                -- [OUT]
-  
+
   pw_fifo_comp : entity work.mcb_pixel_fifo
     port map (
       clk        => pw_clk,             -- [IN]
@@ -1460,7 +1454,7 @@ begin
   prb_rd         <= prb_fifo.en;
   prb_fifo.stall <= prb_empty;
   prb_fifo.data  <= prb_out;
-  
+
   auxr_rst        <= rstalg;
   auxr_clk        <= auxr_fifo.clk;
   auxr_rd         <= auxr_fifo.en;
@@ -1483,8 +1477,8 @@ begin
   auxw_in         <= auxw_fifo.data;
 
   -- p/aux_fifo to real mcb
-  pra_in   <= p0_rd_data;
-  prb_in   <= p0_rd_data;  
+  pra_in  <= p0_rd_data;
+  prb_in  <= p0_rd_data;
   auxr_in <= p0_rd_data;
 
   p0_cmd_clk <= clkalg;
@@ -1503,8 +1497,8 @@ begin
 
     p0_rd_en <= '0';
     p0_wr_en <= '0';
-    pra_wr    <= '0';
-    prb_wr    <= '0';    
+    pra_wr   <= '0';
+    prb_wr   <= '0';
     auxr_wr  <= '0';
     pw_rd    <= '0';
     auxw_rd  <= '0';
@@ -1553,7 +1547,7 @@ begin
         d.state(3) <= '1';
         if p0_rd_empty = '0' then
           p0_rd_en <= '1';
-          pra_wr    <= '1';
+          pra_wr   <= '1';
         else
           move_nstate <= move_r_pa_inc;
         end if;
@@ -1578,12 +1572,12 @@ begin
         d.state(3) <= '1';
         if p0_rd_empty = '0' then
           p0_rd_en <= '1';
-          prb_wr    <= '1';
+          prb_wr   <= '1';
         else
           move_nstate <= move_r_pb_inc;
         end if;
       when move_r_pb_inc =>
-        move_nstate <= move_wait;        
+        move_nstate <= move_wait;
         
       when move_r_aux =>
         d.state(4) <= '1';
@@ -1702,8 +1696,8 @@ begin
       pipe_out  => pipe(1),             -- [out]
       stall_in  => stall(1),
       stall_out => stall(0),
-      pa_fifo   => pra_fifo,             -- [inout]
-      pb_fifo   => prb_fifo,             -- [inout]      
+      pa_fifo   => pra_fifo,            -- [inout]
+      pb_fifo   => prb_fifo,            -- [inout]      
       p1_fifo   => auxr_fifo);          -- [inout]
 
 
@@ -1784,7 +1778,7 @@ begin
   --    mono_2d_l => mono_2d_l,
   --    mono_2d_r => mono_2d_r      
   --    );                                -- [inout]
-  
+
   --dut3 : entity work.disparity
   --  generic map (
   --    ID     => 27,
@@ -1809,8 +1803,8 @@ begin
   --    stall_out    => stall(3),
   --    gray8_2d_in => gray8_2d_1      
   --    );                                -- [inout]
-  
-  
+
+
   --bitest : entity work.bi
   --  generic map (
   --    ID     => 25,
