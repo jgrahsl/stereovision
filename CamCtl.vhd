@@ -93,22 +93,22 @@ attribute BUFFER_TYPE of PCLK_I: signal is "BUFG";
 	constant RST_T4_CYCLES : NATURAL := 7000; -- see MT9D112 datasheet
 	constant IRD : std_logic := '1'; -- init read
 	constant IWR : std_logic := '0'; -- init write
-	constant VMODCAM_RST_RISETIME : NATURAL := 25; --us
+	constant VMODCAM_RST_RISETIME : NATURAL := 50; --us
 	constant VMODCAM_RST_RISETIME_CYCLES : NATURAL := 
 		natural(ceil(real(VMODCAM_RST_RISETIME*CLOCKFREQ)));
-	constant VMODCAM_VDD_FALLTIME : NATURAL := 100; --ms
+	constant VMODCAM_VDD_FALLTIME : NATURAL := 200; --ms
 	constant VMODCAM_VDD_FALLTIME_CYCLES : NATURAL := 
 		natural(ceil(real(VMODCAM_VDD_FALLTIME*1_000*CLOCKFREQ)));
-	constant VMODCAM_VDD_RISETIME : NATURAL := 50; --us
+	constant VMODCAM_VDD_RISETIME : NATURAL := 100; --us
 	constant VMODCAM_VDD_RISETIME_CYCLES : NATURAL := 
 		natural(ceil(real(VMODCAM_VDD_RISETIME*CLOCKFREQ)));	
 		
 	constant CMD_DELAY : NATURAL := 1; --ms
 	constant CMD_DELAY_CYCLES : NATURAL := 
-		natural(ceil(real(CMD_DELAY*1000*CLOCKFREQ)));
+		natural(ceil(real(CMD_DELAY*5000*CLOCKFREQ)));
 	
 	--modify this to reflect the number of configuration words
-	constant INIT_VECTORS : natural := 39;
+	constant INIT_VECTORS : natural := 43;
 	constant DATA_WIDTH : integer := 33;
 	constant ADDR_WIDTH : natural := natural(ceil(log(real(INIT_VECTORS), 2.0)));
 
@@ -155,8 +155,13 @@ attribute BUFFER_TYPE of PCLK_I: signal is "BUFG";
 		IWR & x"33900169", -- 361 		
 
 		IWR & x"338CA120", -- Capture mode options
-		IWR & x"339000F2", -- Turn on AWB, AE, HG, Video
-		
+		IWR & x"33900002", -- Turn on AE, Video
+		IWR & x"338CA137", -- Capture mode options
+		IWR & x"33900000", -- AE Manual mde
+		IWR & x"338CA223", -- Capture mode options
+		IWR & x"33900000", -- Integration time
+
+                                          
 		IWR & x"338CA103", -- Refresh Sequencer Mode
 		IWR & x"33900002", -- Capture
 		IRD & x"33900000", -- Read until sequencer in mode 0 (run)

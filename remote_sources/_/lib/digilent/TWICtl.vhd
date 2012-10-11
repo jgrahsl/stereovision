@@ -120,7 +120,7 @@ end TWICtl;
 architecture Behavioral of TWICtl is
 	attribute fsm_encoding: string;
 	
-	constant FSCL : natural := 400_000; --in Hz SCL clock frequency
+	constant FSCL : natural := 100_000; --in Hz SCL clock frequency
 	constant TIMEOUT : natural := 10; --in ms TWI timeout for slave wait period
 	constant TSCL_CYCLES : natural := 
 		natural(ceil(real(CLOCKFREQ*1_000_000/FSCL)));

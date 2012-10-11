@@ -1,5 +1,5 @@
 //! **************************************************************************
-// Written by: Map P.28xd on Thu Oct 11 11:27:57 2012
+// Written by: Map P.28xd on Thu Oct 11 12:09:17 2012
 //! **************************************************************************
 
 SCHEMATIC START;
@@ -355,8 +355,8 @@ TIMEGRP fx2clk_in = BEL "cfg[0]_enable" BEL "cfg[0]_identify" BEL
         "comm.comm_fpga_fx2/chanAddr_0" BEL "comm.comm_fpga_fx2/isAligned" BEL
         "comm.comm_fpga_fx2/state_FSM_FFd3_1" BEL
         "comm.comm_fpga_fx2/state_FSM_FFd2_1" BEL
-        "comm.comm_fpga_fx2/state_FSM_FFd2_2" BEL
-        "comm.comm_fpga_fx2/state_FSM_FFd1_1" BEL "fx2clk_int_BUFG" BEL
+        "comm.comm_fpga_fx2/state_FSM_FFd1_1" BEL
+        "comm.comm_fpga_fx2/state_FSM_FFd4_1" BEL "fx2clk_int_BUFG" BEL
         "my_inspect_sync/Mshreg_inspect_2_identity_2" BEL
         "my_inspect_sync/inspect_2_identity_2" BEL
         "my_inspect_sync/Mshreg_inspect_2_identity_3" BEL
@@ -771,49 +771,50 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkfx = BEL
         "inst_camctlb/initA_5" BEL "inst_camctlb/initA_4" BEL
         "inst_camctlb/initA_3" BEL "inst_camctlb/initA_2" BEL
         "inst_camctlb/initA_1" BEL "inst_camctlb/initA_0" BEL
-        "inst_camctlb/rstCnt_21" BEL "inst_camctlb/rstCnt_20" BEL
-        "inst_camctlb/rstCnt_19" BEL "inst_camctlb/rstCnt_18" BEL
-        "inst_camctlb/rstCnt_17" BEL "inst_camctlb/rstCnt_16" BEL
-        "inst_camctlb/rstCnt_15" BEL "inst_camctlb/rstCnt_14" BEL
-        "inst_camctlb/rstCnt_13" BEL "inst_camctlb/rstCnt_12" BEL
-        "inst_camctlb/rstCnt_11" BEL "inst_camctlb/rstCnt_10" BEL
-        "inst_camctlb/rstCnt_9" BEL "inst_camctlb/rstCnt_8" BEL
-        "inst_camctlb/rstCnt_7" BEL "inst_camctlb/rstCnt_6" BEL
-        "inst_camctlb/rstCnt_5" BEL "inst_camctlb/rstCnt_4" BEL
-        "inst_camctlb/rstCnt_3" BEL "inst_camctlb/rstCnt_2" BEL
-        "inst_camctlb/rstCnt_1" BEL "inst_camctlb/rstCnt_0" BEL
-        "inst_camctlb/waitCnt_14" BEL "inst_camctlb/waitCnt_13" BEL
-        "inst_camctlb/waitCnt_12" BEL "inst_camctlb/waitCnt_11" BEL
+        "inst_camctlb/rstCnt_22" BEL "inst_camctlb/rstCnt_21" BEL
+        "inst_camctlb/rstCnt_20" BEL "inst_camctlb/rstCnt_19" BEL
+        "inst_camctlb/rstCnt_18" BEL "inst_camctlb/rstCnt_17" BEL
+        "inst_camctlb/rstCnt_16" BEL "inst_camctlb/rstCnt_15" BEL
+        "inst_camctlb/rstCnt_14" BEL "inst_camctlb/rstCnt_13" BEL
+        "inst_camctlb/rstCnt_12" BEL "inst_camctlb/rstCnt_11" BEL
+        "inst_camctlb/rstCnt_10" BEL "inst_camctlb/rstCnt_9" BEL
+        "inst_camctlb/rstCnt_8" BEL "inst_camctlb/rstCnt_7" BEL
+        "inst_camctlb/rstCnt_6" BEL "inst_camctlb/rstCnt_5" BEL
+        "inst_camctlb/rstCnt_4" BEL "inst_camctlb/rstCnt_3" BEL
+        "inst_camctlb/rstCnt_2" BEL "inst_camctlb/rstCnt_1" BEL
+        "inst_camctlb/rstCnt_0" BEL "inst_camctlb/waitCnt_16" BEL
+        "inst_camctlb/waitCnt_15" BEL "inst_camctlb/waitCnt_14" BEL
+        "inst_camctlb/waitCnt_13" BEL "inst_camctlb/waitCnt_11" BEL
+        "inst_camctlb/waitCnt_10" BEL "inst_camctlb/waitCnt_12" BEL
         "inst_camctlb/waitCnt_9" BEL "inst_camctlb/waitCnt_8" BEL
-        "inst_camctlb/waitCnt_10" BEL "inst_camctlb/waitCnt_7" BEL
         "inst_camctlb/waitCnt_6" BEL "inst_camctlb/waitCnt_5" BEL
-        "inst_camctlb/waitCnt_4" BEL "inst_camctlb/waitCnt_3" BEL
-        "inst_camctlb/waitCnt_2" BEL "inst_camctlb/waitCnt_0" BEL
-        "inst_camctlb/waitCnt_1" BEL "inst_camctlb/state_FSM_FFd1" BEL
-        "inst_camctlb/state_FSM_FFd2" BEL "inst_camctlb/state_FSM_FFd3" BEL
-        "inst_camctlb/Mram_CamInitRAM33" BEL "inst_camctlb/Mram_CamInitRAM32"
-        BEL "inst_camctlb/Mram_CamInitRAM31" BEL
-        "inst_camctlb/Mram_CamInitRAM30" BEL "inst_camctlb/Mram_CamInitRAM29"
-        BEL "inst_camctlb/Mram_CamInitRAM28" BEL
-        "inst_camctlb/Mram_CamInitRAM27" BEL "inst_camctlb/Mram_CamInitRAM26"
-        BEL "inst_camctlb/Mram_CamInitRAM25" BEL
-        "inst_camctlb/Mram_CamInitRAM24" BEL "inst_camctlb/Mram_CamInitRAM23"
-        BEL "inst_camctlb/Mram_CamInitRAM22" BEL
-        "inst_camctlb/Mram_CamInitRAM21" BEL "inst_camctlb/Mram_CamInitRAM20"
-        BEL "inst_camctlb/Mram_CamInitRAM18" BEL
-        "inst_camctlb/Mram_CamInitRAM17" BEL "inst_camctlb/Mram_CamInitRAM19"
-        BEL "inst_camctlb/Mram_CamInitRAM16" BEL
-        "inst_camctlb/Mram_CamInitRAM15" BEL "inst_camctlb/Mram_CamInitRAM14"
-        BEL "inst_camctlb/Mram_CamInitRAM13" BEL
-        "inst_camctlb/Mram_CamInitRAM12" BEL "inst_camctlb/Mram_CamInitRAM11"
-        BEL "inst_camctlb/Mram_CamInitRAM9" BEL
-        "inst_camctlb/Mram_CamInitRAM8" BEL "inst_camctlb/Mram_CamInitRAM10"
-        BEL "inst_camctlb/Mram_CamInitRAM7" BEL
-        "inst_camctlb/Mram_CamInitRAM6" BEL "inst_camctlb/Mram_CamInitRAM5"
-        BEL "inst_camctlb/Mram_CamInitRAM4" BEL
-        "inst_camctlb/Mram_CamInitRAM3" BEL "inst_camctlb/Mram_CamInitRAM2"
-        BEL "inst_camctlb/Mram_CamInitRAM1" BEL
-        "inst_camctlb/Inst_LocalRst/RstQ_1" BEL
+        "inst_camctlb/waitCnt_7" BEL "inst_camctlb/waitCnt_4" BEL
+        "inst_camctlb/waitCnt_3" BEL "inst_camctlb/waitCnt_1" BEL
+        "inst_camctlb/waitCnt_0" BEL "inst_camctlb/waitCnt_2" BEL
+        "inst_camctlb/state_FSM_FFd1" BEL "inst_camctlb/state_FSM_FFd2" BEL
+        "inst_camctlb/state_FSM_FFd3" BEL "inst_camctlb/Mram_CamInitRAM33" BEL
+        "inst_camctlb/Mram_CamInitRAM32" BEL "inst_camctlb/Mram_CamInitRAM31"
+        BEL "inst_camctlb/Mram_CamInitRAM30" BEL
+        "inst_camctlb/Mram_CamInitRAM29" BEL "inst_camctlb/Mram_CamInitRAM28"
+        BEL "inst_camctlb/Mram_CamInitRAM26" BEL
+        "inst_camctlb/Mram_CamInitRAM25" BEL "inst_camctlb/Mram_CamInitRAM27"
+        BEL "inst_camctlb/Mram_CamInitRAM24" BEL
+        "inst_camctlb/Mram_CamInitRAM23" BEL "inst_camctlb/Mram_CamInitRAM22"
+        BEL "inst_camctlb/Mram_CamInitRAM21" BEL
+        "inst_camctlb/Mram_CamInitRAM20" BEL "inst_camctlb/Mram_CamInitRAM19"
+        BEL "inst_camctlb/Mram_CamInitRAM17" BEL
+        "inst_camctlb/Mram_CamInitRAM16" BEL "inst_camctlb/Mram_CamInitRAM18"
+        BEL "inst_camctlb/Mram_CamInitRAM15" BEL
+        "inst_camctlb/Mram_CamInitRAM14" BEL "inst_camctlb/Mram_CamInitRAM13"
+        BEL "inst_camctlb/Mram_CamInitRAM12" BEL
+        "inst_camctlb/Mram_CamInitRAM11" BEL "inst_camctlb/Mram_CamInitRAM10"
+        BEL "inst_camctlb/Mram_CamInitRAM8" BEL
+        "inst_camctlb/Mram_CamInitRAM7" BEL "inst_camctlb/Mram_CamInitRAM9"
+        BEL "inst_camctlb/Mram_CamInitRAM6" BEL
+        "inst_camctlb/Mram_CamInitRAM5" BEL "inst_camctlb/Mram_CamInitRAM4"
+        BEL "inst_camctlb/Mram_CamInitRAM3" BEL
+        "inst_camctlb/Mram_CamInitRAM2" BEL "inst_camctlb/Mram_CamInitRAM1"
+        BEL "inst_camctlb/Inst_LocalRst/RstQ_1" BEL
         "inst_camctlb/Inst_LocalRst/RstQ_2" BEL
         "inst_camctlb/Inst_LocalRst/RstQ_3" BEL
         "inst_camctlb/Inst_LocalRst/RstQ_4" BEL "inst_camctlb/regData1_7" BEL
@@ -823,33 +824,34 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkfx = BEL
         "inst_camctlb/regData1_0" BEL "inst_camctla/initA_5" BEL
         "inst_camctla/initA_4" BEL "inst_camctla/initA_3" BEL
         "inst_camctla/initA_2" BEL "inst_camctla/initA_1" BEL
-        "inst_camctla/initA_0" BEL "inst_camctla/waitCnt_14" BEL
-        "inst_camctla/waitCnt_13" BEL "inst_camctla/waitCnt_12" BEL
-        "inst_camctla/waitCnt_11" BEL "inst_camctla/waitCnt_9" BEL
-        "inst_camctla/waitCnt_8" BEL "inst_camctla/waitCnt_10" BEL
-        "inst_camctla/waitCnt_7" BEL "inst_camctla/waitCnt_6" BEL
-        "inst_camctla/waitCnt_5" BEL "inst_camctla/waitCnt_4" BEL
-        "inst_camctla/waitCnt_3" BEL "inst_camctla/waitCnt_2" BEL
-        "inst_camctla/waitCnt_0" BEL "inst_camctla/waitCnt_1" BEL
+        "inst_camctla/initA_0" BEL "inst_camctla/waitCnt_16" BEL
+        "inst_camctla/waitCnt_15" BEL "inst_camctla/waitCnt_14" BEL
+        "inst_camctla/waitCnt_13" BEL "inst_camctla/waitCnt_11" BEL
+        "inst_camctla/waitCnt_10" BEL "inst_camctla/waitCnt_12" BEL
+        "inst_camctla/waitCnt_9" BEL "inst_camctla/waitCnt_8" BEL
+        "inst_camctla/waitCnt_6" BEL "inst_camctla/waitCnt_5" BEL
+        "inst_camctla/waitCnt_7" BEL "inst_camctla/waitCnt_4" BEL
+        "inst_camctla/waitCnt_3" BEL "inst_camctla/waitCnt_1" BEL
+        "inst_camctla/waitCnt_0" BEL "inst_camctla/waitCnt_2" BEL
         "inst_camctla/state_FSM_FFd1" BEL "inst_camctla/state_FSM_FFd2" BEL
         "inst_camctla/state_FSM_FFd3" BEL "inst_camctla/Mram_CamInitRAM33" BEL
         "inst_camctla/Mram_CamInitRAM32" BEL "inst_camctla/Mram_CamInitRAM31"
         BEL "inst_camctla/Mram_CamInitRAM30" BEL
         "inst_camctla/Mram_CamInitRAM29" BEL "inst_camctla/Mram_CamInitRAM28"
-        BEL "inst_camctla/Mram_CamInitRAM27" BEL
-        "inst_camctla/Mram_CamInitRAM26" BEL "inst_camctla/Mram_CamInitRAM25"
+        BEL "inst_camctla/Mram_CamInitRAM26" BEL
+        "inst_camctla/Mram_CamInitRAM25" BEL "inst_camctla/Mram_CamInitRAM27"
         BEL "inst_camctla/Mram_CamInitRAM24" BEL
         "inst_camctla/Mram_CamInitRAM23" BEL "inst_camctla/Mram_CamInitRAM22"
         BEL "inst_camctla/Mram_CamInitRAM21" BEL
-        "inst_camctla/Mram_CamInitRAM20" BEL "inst_camctla/Mram_CamInitRAM18"
+        "inst_camctla/Mram_CamInitRAM20" BEL "inst_camctla/Mram_CamInitRAM19"
         BEL "inst_camctla/Mram_CamInitRAM17" BEL
-        "inst_camctla/Mram_CamInitRAM19" BEL "inst_camctla/Mram_CamInitRAM16"
+        "inst_camctla/Mram_CamInitRAM16" BEL "inst_camctla/Mram_CamInitRAM18"
         BEL "inst_camctla/Mram_CamInitRAM15" BEL
         "inst_camctla/Mram_CamInitRAM14" BEL "inst_camctla/Mram_CamInitRAM13"
         BEL "inst_camctla/Mram_CamInitRAM12" BEL
-        "inst_camctla/Mram_CamInitRAM11" BEL "inst_camctla/Mram_CamInitRAM9"
+        "inst_camctla/Mram_CamInitRAM11" BEL "inst_camctla/Mram_CamInitRAM10"
         BEL "inst_camctla/Mram_CamInitRAM8" BEL
-        "inst_camctla/Mram_CamInitRAM10" BEL "inst_camctla/Mram_CamInitRAM7"
+        "inst_camctla/Mram_CamInitRAM7" BEL "inst_camctla/Mram_CamInitRAM9"
         BEL "inst_camctla/Mram_CamInitRAM6" BEL
         "inst_camctla/Mram_CamInitRAM5" BEL "inst_camctla/Mram_CamInitRAM4"
         BEL "inst_camctla/Mram_CamInitRAM3" BEL
@@ -860,14 +862,18 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkfx = BEL
         "inst_camctla/regData1_1" BEL "inst_camctla/regData1_0" BEL
         "inst_camctla/Inst_TWICtl/subState_1" BEL
         "inst_camctla/Inst_TWICtl/subState_0" BEL
-        "inst_camctla/Inst_TWICtl/sclCnt_3" BEL
-        "inst_camctla/Inst_TWICtl/sclCnt_2" BEL
+        "inst_camctla/Inst_TWICtl/sclCnt_5" BEL
+        "inst_camctla/Inst_TWICtl/sclCnt_4" BEL
+        "inst_camctla/Inst_TWICtl/sclCnt_1" BEL
+        "inst_camctla/Inst_TWICtl/sclCnt_0" BEL
+        "inst_camctla/Inst_TWICtl/busFreeCnt_6" BEL
         "inst_camctla/Inst_TWICtl/busFreeCnt_5" BEL
+        "inst_camctla/Inst_TWICtl/busFreeCnt_7" BEL
         "inst_camctla/Inst_TWICtl/busFreeCnt_4" BEL
         "inst_camctla/Inst_TWICtl/busFreeCnt_3" BEL
-        "inst_camctla/Inst_TWICtl/busFreeCnt_2" BEL
         "inst_camctla/Inst_TWICtl/busFreeCnt_1" BEL
         "inst_camctla/Inst_TWICtl/busFreeCnt_0" BEL
+        "inst_camctla/Inst_TWICtl/busFreeCnt_2" BEL
         "inst_camctla/Inst_TWICtl/bitCount_2" BEL
         "inst_camctla/Inst_TWICtl/bitCount_1" BEL
         "inst_camctla/Inst_TWICtl/bitCount_0" BEL
@@ -887,14 +893,18 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkfx = BEL
         "inst_camctla/Inst_TWICtl/ddSda" BEL "inst_camctla/Inst_TWICtl/dSda"
         BEL "inst_camctlb/Inst_TWICtl/subState_1" BEL
         "inst_camctlb/Inst_TWICtl/subState_0" BEL
-        "inst_camctlb/Inst_TWICtl/sclCnt_3" BEL
-        "inst_camctlb/Inst_TWICtl/sclCnt_2" BEL
+        "inst_camctlb/Inst_TWICtl/sclCnt_5" BEL
+        "inst_camctlb/Inst_TWICtl/sclCnt_4" BEL
+        "inst_camctlb/Inst_TWICtl/sclCnt_1" BEL
+        "inst_camctlb/Inst_TWICtl/sclCnt_0" BEL
+        "inst_camctlb/Inst_TWICtl/busFreeCnt_6" BEL
         "inst_camctlb/Inst_TWICtl/busFreeCnt_5" BEL
+        "inst_camctlb/Inst_TWICtl/busFreeCnt_7" BEL
         "inst_camctlb/Inst_TWICtl/busFreeCnt_4" BEL
         "inst_camctlb/Inst_TWICtl/busFreeCnt_3" BEL
-        "inst_camctlb/Inst_TWICtl/busFreeCnt_2" BEL
         "inst_camctlb/Inst_TWICtl/busFreeCnt_1" BEL
         "inst_camctlb/Inst_TWICtl/busFreeCnt_0" BEL
+        "inst_camctlb/Inst_TWICtl/busFreeCnt_2" BEL
         "inst_camctlb/Inst_TWICtl/bitCount_2" BEL
         "inst_camctlb/Inst_TWICtl/bitCount_1" BEL
         "inst_camctlb/Inst_TWICtl/bitCount_0" BEL
@@ -1099,16 +1109,16 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkfx = BEL
         "inst_fbctl/my_col_mux/stage_aux_2" BEL
         "inst_fbctl/my_col_mux/stage_aux_1" BEL
         "inst_fbctl/my_col_mux/stage_aux_0" BEL
-        "inst_syscon/Inst_dcm_fixed/clkout1_buf" BEL "inst_camctlb/intRst" BEL
-        "inst_camctla/Inst_TWICtl/sclCnt_5" BEL
-        "inst_camctla/Inst_TWICtl/sclCnt_4" BEL
-        "inst_camctla/Inst_TWICtl/sclCnt_0" BEL
-        "inst_camctla/Inst_TWICtl/sclCnt_1" BEL
+        "inst_syscon/Inst_dcm_fixed/clkout1_buf" BEL "inst_camctlb/RST_O" BEL
+        "inst_camctlb/intRst" BEL "inst_camctla/Inst_TWICtl/sclCnt_7" BEL
+        "inst_camctla/Inst_TWICtl/sclCnt_6" BEL
+        "inst_camctla/Inst_TWICtl/sclCnt_2" BEL
+        "inst_camctla/Inst_TWICtl/sclCnt_3" BEL
         "inst_camctla/Inst_TWICtl/DONE_O" BEL "inst_camctla/Inst_TWICtl/ERR_O"
-        BEL "inst_camctlb/Inst_TWICtl/sclCnt_5" BEL
-        "inst_camctlb/Inst_TWICtl/sclCnt_4" BEL
-        "inst_camctlb/Inst_TWICtl/sclCnt_0" BEL
-        "inst_camctlb/Inst_TWICtl/sclCnt_1" BEL
+        BEL "inst_camctlb/Inst_TWICtl/sclCnt_7" BEL
+        "inst_camctlb/Inst_TWICtl/sclCnt_6" BEL
+        "inst_camctlb/Inst_TWICtl/sclCnt_2" BEL
+        "inst_camctlb/Inst_TWICtl/sclCnt_3" BEL
         "inst_camctlb/Inst_TWICtl/DONE_O" BEL "inst_camctlb/Inst_TWICtl/ERR_O"
         BEL "inst_fbctl/my_mcb_feed_dual/r_stop_1" BEL
         "inst_fbctl/my_fifo_sink/r_enable" BEL
@@ -1120,8 +1130,8 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkfx = BEL
         "inst_camctlb/Inst_TWICtl/currAddr_0" BEL
         "inst_camctlb/Inst_TWICtl/rScl" BEL
         "inst_camctlb/Inst_TWICtl/addrNData" BEL
-        "inst_fbctl/my_mcb_sink/stage_identity_3" BEL "inst_camctlb/RST_O" BEL
-        "inst_camctlb/VDDEN_O" BEL "inst_camctla/Inst_TWICtl/int_Rst" BEL
+        "inst_fbctl/my_mcb_sink/stage_identity_3" BEL "inst_camctlb/VDDEN_O"
+        BEL "inst_camctla/Inst_TWICtl/int_Rst" BEL
         "inst_camctlb/Inst_TWICtl/int_Rst" BEL "inst_camctla/Inst_TWICtl/rSda"
         BEL "inst_camctla/Inst_TWICtl/busState_1" BEL
         "inst_camctla/Inst_TWICtl/busState_0" BEL
@@ -2771,15 +2781,13 @@ TIMEGRP inst_syscon_mcb_drp_clk_bfg = BEL
         BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/iodrp_mcb_controller_inst/MCB_UIREAD"
         BEL
-        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/STATE_FSM_FFd5_1"
+        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Max_Value_int_6_1"
+        BEL
+        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Max_Value_int_5_1"
         BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/STATE_FSM_FFd3_1"
         BEL
-        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Max_Value_int_6_1"
-        BEL
-        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Max_Value_int_6_2"
-        BEL
-        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Max_Value_int_5_1"
+        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/iodrp_mcb_controller_inst/state_FSM_FFd10_1"
         BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Mshreg_SELFREFRESH_MCB_MODE_R2"
         BEL
