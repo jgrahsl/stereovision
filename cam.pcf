@@ -1,5 +1,5 @@
 //! **************************************************************************
-// Written by: Map P.28xd on Thu Oct 11 11:07:53 2012
+// Written by: Map P.28xd on Thu Oct 11 11:27:57 2012
 //! **************************************************************************
 
 SCHEMATIC START;
@@ -3256,9 +3256,9 @@ PIN
         TIG;
 OFFSET = IN 1.25 ns VALID 7.5 ns BEFORE COMP "cama_pclk_i" "RISING";
 OFFSET = IN 1.25 ns VALID 7.5 ns BEFORE COMP "camb_pclk_i" "RISING";
-TIMEGRP "fx2out" OFFSET = OUT 15 ns AFTER COMP "fx2clk_in";
-TIMEGRP "fx2out_data" OFFSET = OUT 25 ns AFTER COMP "fx2clk_in";
-TIMEGRP "fx2in" OFFSET = IN 14 ns VALID 15 ns BEFORE COMP "fx2clk_in"
+TIMEGRP "fx2out" OFFSET = OUT 13 ns AFTER COMP "fx2clk_in";
+TIMEGRP "fx2out_data" OFFSET = OUT 22 ns AFTER COMP "fx2clk_in";
+TIMEGRP "fx2in" OFFSET = IN 13 ns VALID 15 ns BEFORE COMP "fx2clk_in"
         "RISING";
 TIMEGRP "fx2data_in" OFFSET = IN 9 ns VALID 15 ns BEFORE COMP "fx2clk_in"
         "RISING";
