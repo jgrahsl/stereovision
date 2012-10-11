@@ -1,4 +1,4 @@
-let PIC=0
+let PIC=$1
 echo -n "" > list.txt
 
 while true; do

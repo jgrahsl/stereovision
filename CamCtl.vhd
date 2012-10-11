@@ -108,72 +108,62 @@ attribute BUFFER_TYPE of PCLK_I: signal is "BUFG";
 		natural(ceil(real(CMD_DELAY*1000*CLOCKFREQ)));
 	
 	--modify this to reflect the number of configuration words
-	constant INIT_VECTORS : natural := 34;
+	constant INIT_VECTORS : natural := 39;
 	constant DATA_WIDTH : integer := 33;
 	constant ADDR_WIDTH : natural := natural(ceil(log(real(INIT_VECTORS), 2.0)));
-	
+
+                                         
 	type CamInitRAM_type is array (0 to INIT_VECTORS-1) of std_logic_vector(DATA_WIDTH-1 downto 0);
 	signal CamInitRAM: CamInitRAM_type := (
-		IRD & x"30000000", -- Chip version. Default 0x1580
+		IRD & x"30001580", -- Chip version. Default 0x1580
 
+		IWR & x"33860501", -- MCU Reset
+		IWR & x"33860500", -- MCU Release from reset
+		
 		IWR & x"32140D85", -- Slew rate control, PCLK 5, D 5
 
-                                          
-		IWR & x"341E8F0B", -- PLL control; Default 0x8F0B
-		IWR & x"341C0450", -- PLL dividers; M=80,N=2,fMCLK=fCLKIN*M/(N+1)/8=80MHz
-                                          
+		IWR & x"341E8F0B", -- PLL control; bypassed, powered down
+		IWR & x"341C0250", -- PLL dividers; M=80,N=2,fMCLK=fCLKIN*M/(N+1)/8=80MHz
 		IWR & x"341E8F09", -- PLL control; Power-up PLL; wait 1ms after this!
 		IWR & x"341E8F08", -- PLL control; Turn off bypass
-                                          
-
-		IWR & x"3202000C", -- Take camera out of standby, but Stop MCU to allow configuration
-		IRD & x"32040000", -- Bit [1] should be checked for init status
 		
+		IWR & x"32020008", -- Standby control; Wake up
 
-
-
-
-
-                                          
-		IWR & x"338C2795", -- Output format; Context A shadow
-		IWR & x"33900030",
-
-		IWR & x"338C2799", -- Special
-		IWR & x"33900000",
-                                          
-		IWR & x"338C2719", -- Read mode; Context A
-		IWR & x"3390046C",
---		IWR & x"338CA102", -- AE ... off
---		IWR & x"33900000", -- = 0
-
---		IWR & x"338CA129", --  AE in preview mode off
---		IWR & x"33900000", -- = 0
-		IWR & x"338C2703", -- Output width; Context A
-		IWR & x"33900140", -- 640
-		IWR & x"338C2705", -- Output height; Context A
-		IWR & x"339000F0", -- 480
-		IWR & x"338C2751", -- Crop X0; Context A
+		IWR & x"338C2797", -- Output format; Context B shadow
+		IWR & x"33900030", -- RGB with BT656 codes
+		IWR & x"338C272F", -- Sensor Row Start Context B
+		IWR & x"33900004", -- 4
+		IWR & x"338C2733", -- Sensor Row End Context B
+		IWR & x"339004BB", -- 1211
+		IWR & x"338C2731", -- Sensor Column Start Context B
+		IWR & x"33900004", -- 4
+		IWR & x"338C2735", -- Sensor Column End Context B
+		IWR & x"3390064B", -- 1611
+		IWR & x"338C2707", -- Output width; Context B
+		IWR & x"33900140", -- 1600
+		IWR & x"338C2709", -- Output height; Context B
+		IWR & x"339000F0", -- 1200
+		IWR & x"338C275F", -- Crop X0; Context B
 		IWR & x"33900000", -- 0
-		IWR & x"338C2755", -- Crop Y0; Context A
+		IWR & x"338C2763", -- Crop Y0; Context B
 		IWR & x"33900000", -- 0
-		IWR & x"338C2753", -- Crop X1; Context A
-		IWR & x"33900320", -- 800
-		IWR & x"338C2757", -- Crop Y1; Context A
-		IWR & x"33900258", -- 600
+		IWR & x"338C2761", -- Crop X1; Context B
+		IWR & x"33900640", -- 1600
+		IWR & x"338C2765", -- Crop Y1; Context B
+		IWR & x"339004B0", -- 1200
+      IWR & x"338C2741", -- Sensor_Fine_IT_min B
+		IWR & x"33900169", -- 361 		
 
-                                          
-                                          
-                                          
-		IWR & x"338CA103", -- Refresh Sequencer
-		IWR & x"33900005", -- = 5
+		IWR & x"338CA120", -- Capture mode options
+		IWR & x"339000F2", -- Turn on AWB, AE, HG, Video
+		
 		IWR & x"338CA103", -- Refresh Sequencer Mode
-		IWR & x"33900006", -- = 6
-		IWR & x"338CA103", -- Refresh Sequencer Mode
-		IWR & x"33900002", -- = 6                                         
-
-		IWR & x"32020008", -- Kick-start MCU
+		IWR & x"33900002", -- Capture
+		IRD & x"33900000", -- Read until sequencer in mode 0 (run)
+		
 		IWR & x"301A02CC" -- reset/output control; parallel enable, drive pins, start streaming 		
-		);
+
+                                          );
 		
 	signal initWord, initFb : std_logic_vector (DATA_WIDTH-1 downto 0);
 	signal initA : natural range 0 to INIT_VECTORS := 0;
@@ -317,7 +307,7 @@ begin
 	end process;
 	
 	initWord <= CamInitRAM(initA);
-	initFb <= initWord(32 downto 16) & regData1 & twiDo; --we feed read data back to the RAM
+	initFb <= initWord(32 downto 0);-- & regData1 & twiDo; --we feed read data back to the RAM
 
 	InitA_CNT: process (CLK) 
 	begin
@@ -358,7 +348,7 @@ begin
 			else
 				state <= nstate;
 			end if;
-		end if;
+ 		end if;
    end process;
 	
    OUTPUT_DECODE: process (state, twiDone, twiErr, initWord)
@@ -390,9 +380,11 @@ begin
 		initEn <= '0';
 		initFbWe <= '0';
 		if (state = stData2 and twiDone = '1' and twiErr /= '1') then
-			initEn <= '1';
-			if (initWord(32) = '1') then
-				initFbWe <= '1';
+			if (initWord(32) = IWR or (initWord(15 downto 8) = regData1 and initWord(7 downto 0) = twiDo)) then
+				initEn <= '1';
+--				if (initWord(32) = IRD) then
+--					initFbWe <= '1';
+--				end if;
 			end if;
 		end if;
 		if (state = stDone) then -- readback phase, no TWI transfer takes place

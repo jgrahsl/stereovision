@@ -1,5 +1,5 @@
 //! **************************************************************************
-// Written by: Map P.28xd on Tue Oct 09 22:52:07 2012
+// Written by: Map P.28xd on Thu Oct 11 11:07:53 2012
 //! **************************************************************************
 
 SCHEMATIC START;
@@ -768,6 +768,9 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkfx = BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<109>" PIN
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<130>" PIN
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<172>" BEL
+        "inst_camctlb/initA_5" BEL "inst_camctlb/initA_4" BEL
+        "inst_camctlb/initA_3" BEL "inst_camctlb/initA_2" BEL
+        "inst_camctlb/initA_1" BEL "inst_camctlb/initA_0" BEL
         "inst_camctlb/rstCnt_21" BEL "inst_camctlb/rstCnt_20" BEL
         "inst_camctlb/rstCnt_19" BEL "inst_camctlb/rstCnt_18" BEL
         "inst_camctlb/rstCnt_17" BEL "inst_camctlb/rstCnt_16" BEL
@@ -781,15 +784,12 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkfx = BEL
         "inst_camctlb/rstCnt_1" BEL "inst_camctlb/rstCnt_0" BEL
         "inst_camctlb/waitCnt_14" BEL "inst_camctlb/waitCnt_13" BEL
         "inst_camctlb/waitCnt_12" BEL "inst_camctlb/waitCnt_11" BEL
-        "inst_camctlb/waitCnt_10" BEL "inst_camctlb/waitCnt_9" BEL
-        "inst_camctlb/waitCnt_8" BEL "inst_camctlb/waitCnt_7" BEL
+        "inst_camctlb/waitCnt_9" BEL "inst_camctlb/waitCnt_8" BEL
+        "inst_camctlb/waitCnt_10" BEL "inst_camctlb/waitCnt_7" BEL
         "inst_camctlb/waitCnt_6" BEL "inst_camctlb/waitCnt_5" BEL
         "inst_camctlb/waitCnt_4" BEL "inst_camctlb/waitCnt_3" BEL
-        "inst_camctlb/waitCnt_2" BEL "inst_camctlb/waitCnt_1" BEL
-        "inst_camctlb/waitCnt_0" BEL "inst_camctlb/initA_5" BEL
-        "inst_camctlb/initA_4" BEL "inst_camctlb/initA_3" BEL
-        "inst_camctlb/initA_2" BEL "inst_camctlb/initA_1" BEL
-        "inst_camctlb/initA_0" BEL "inst_camctlb/state_FSM_FFd1" BEL
+        "inst_camctlb/waitCnt_2" BEL "inst_camctlb/waitCnt_0" BEL
+        "inst_camctlb/waitCnt_1" BEL "inst_camctlb/state_FSM_FFd1" BEL
         "inst_camctlb/state_FSM_FFd2" BEL "inst_camctlb/state_FSM_FFd3" BEL
         "inst_camctlb/Mram_CamInitRAM33" BEL "inst_camctlb/Mram_CamInitRAM32"
         BEL "inst_camctlb/Mram_CamInitRAM31" BEL
@@ -806,8 +806,8 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkfx = BEL
         "inst_camctlb/Mram_CamInitRAM15" BEL "inst_camctlb/Mram_CamInitRAM14"
         BEL "inst_camctlb/Mram_CamInitRAM13" BEL
         "inst_camctlb/Mram_CamInitRAM12" BEL "inst_camctlb/Mram_CamInitRAM11"
-        BEL "inst_camctlb/Mram_CamInitRAM10" BEL
-        "inst_camctlb/Mram_CamInitRAM9" BEL "inst_camctlb/Mram_CamInitRAM8"
+        BEL "inst_camctlb/Mram_CamInitRAM9" BEL
+        "inst_camctlb/Mram_CamInitRAM8" BEL "inst_camctlb/Mram_CamInitRAM10"
         BEL "inst_camctlb/Mram_CamInitRAM7" BEL
         "inst_camctlb/Mram_CamInitRAM6" BEL "inst_camctlb/Mram_CamInitRAM5"
         BEL "inst_camctlb/Mram_CamInitRAM4" BEL
@@ -820,17 +820,17 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkfx = BEL
         "inst_camctlb/regData1_6" BEL "inst_camctlb/regData1_5" BEL
         "inst_camctlb/regData1_4" BEL "inst_camctlb/regData1_3" BEL
         "inst_camctlb/regData1_2" BEL "inst_camctlb/regData1_1" BEL
-        "inst_camctlb/regData1_0" BEL "inst_camctla/waitCnt_14" BEL
+        "inst_camctlb/regData1_0" BEL "inst_camctla/initA_5" BEL
+        "inst_camctla/initA_4" BEL "inst_camctla/initA_3" BEL
+        "inst_camctla/initA_2" BEL "inst_camctla/initA_1" BEL
+        "inst_camctla/initA_0" BEL "inst_camctla/waitCnt_14" BEL
         "inst_camctla/waitCnt_13" BEL "inst_camctla/waitCnt_12" BEL
-        "inst_camctla/waitCnt_11" BEL "inst_camctla/waitCnt_10" BEL
-        "inst_camctla/waitCnt_9" BEL "inst_camctla/waitCnt_8" BEL
+        "inst_camctla/waitCnt_11" BEL "inst_camctla/waitCnt_9" BEL
+        "inst_camctla/waitCnt_8" BEL "inst_camctla/waitCnt_10" BEL
         "inst_camctla/waitCnt_7" BEL "inst_camctla/waitCnt_6" BEL
         "inst_camctla/waitCnt_5" BEL "inst_camctla/waitCnt_4" BEL
         "inst_camctla/waitCnt_3" BEL "inst_camctla/waitCnt_2" BEL
-        "inst_camctla/waitCnt_1" BEL "inst_camctla/waitCnt_0" BEL
-        "inst_camctla/initA_5" BEL "inst_camctla/initA_4" BEL
-        "inst_camctla/initA_3" BEL "inst_camctla/initA_2" BEL
-        "inst_camctla/initA_1" BEL "inst_camctla/initA_0" BEL
+        "inst_camctla/waitCnt_0" BEL "inst_camctla/waitCnt_1" BEL
         "inst_camctla/state_FSM_FFd1" BEL "inst_camctla/state_FSM_FFd2" BEL
         "inst_camctla/state_FSM_FFd3" BEL "inst_camctla/Mram_CamInitRAM33" BEL
         "inst_camctla/Mram_CamInitRAM32" BEL "inst_camctla/Mram_CamInitRAM31"
@@ -847,9 +847,9 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkfx = BEL
         BEL "inst_camctla/Mram_CamInitRAM15" BEL
         "inst_camctla/Mram_CamInitRAM14" BEL "inst_camctla/Mram_CamInitRAM13"
         BEL "inst_camctla/Mram_CamInitRAM12" BEL
-        "inst_camctla/Mram_CamInitRAM11" BEL "inst_camctla/Mram_CamInitRAM10"
-        BEL "inst_camctla/Mram_CamInitRAM9" BEL
-        "inst_camctla/Mram_CamInitRAM8" BEL "inst_camctla/Mram_CamInitRAM7"
+        "inst_camctla/Mram_CamInitRAM11" BEL "inst_camctla/Mram_CamInitRAM9"
+        BEL "inst_camctla/Mram_CamInitRAM8" BEL
+        "inst_camctla/Mram_CamInitRAM10" BEL "inst_camctla/Mram_CamInitRAM7"
         BEL "inst_camctla/Mram_CamInitRAM6" BEL
         "inst_camctla/Mram_CamInitRAM5" BEL "inst_camctla/Mram_CamInitRAM4"
         BEL "inst_camctla/Mram_CamInitRAM3" BEL
@@ -2777,6 +2777,8 @@ TIMEGRP inst_syscon_mcb_drp_clk_bfg = BEL
         BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Max_Value_int_6_1"
         BEL
+        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Max_Value_int_6_2"
+        BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Max_Value_int_5_1"
         BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Mshreg_SELFREFRESH_MCB_MODE_R2"
@@ -3211,8 +3213,8 @@ TIMEGRP fx2in = BEL "fx2gotdata_in" BEL "fx2gotroom_in";
 TIMEGRP fx2out = BEL "fx2addr_out<1>" BEL "fx2addr_out<0>" BEL "fx2read_out"
         BEL "fx2oe_out" BEL "fx2write_out" BEL "fx2pktend_out";
 TS_CLK_I = PERIOD TIMEGRP "CLK_I" 100 MHz HIGH 50%;
-TS_camapclk = PERIOD TIMEGRP "camapclk" 40 MHz HIGH 50%;
-TS_cambpclk = PERIOD TIMEGRP "cambpclk" 40 MHz HIGH 50%;
+TS_camapclk = PERIOD TIMEGRP "camapclk" 80 MHz HIGH 50%;
+TS_cambpclk = PERIOD TIMEGRP "cambpclk" 80 MHz HIGH 50%;
 PATH TS_RESET_path = FROM TIMEGRP "RSTQ_SOURCE" TO TIMEGRP "RESET_SINK";
 PATH "TS_RESET_path" TIG;
 TS_fx2clk_in = PERIOD TIMEGRP "fx2clk_in" 20 ns HIGH 50%;
