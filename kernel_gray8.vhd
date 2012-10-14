@@ -5,7 +5,7 @@ use IEEE.NUMERIC_STD.all;
 library work;
 use work.cam_pkg.all;
 
-entity kernel_8 is
+entity kernel_gray8 is
   generic (
     ID     : integer range 0 to 63 := 0;
     KERNEL : natural range 1 to 5  := 5
@@ -17,9 +17,9 @@ entity kernel_8 is
     stall_out  : out std_logic;
     gray8_2d_in : in  gray8_2d_t
     );
-end kernel_8;
+end kernel_gray8;
 
-architecture impl of kernel_8 is
+architecture impl of kernel_gray8 is
 
   signal clk        : std_logic;
   signal rst        : std_logic;
@@ -83,15 +83,15 @@ begin
 -------------------------------------------------------------------------------
 -- Output
 -------------------------------------------------------------------------------    
-    if (sum/21) > 162 and (sum/21) < 182 then
---      stage_next.data_8   <= std_logic_vector(to_unsigned(sum/16,8));
-      stage_next.data_8   <= (others => '1');
-      stage_next.data_1   <= (others => '1');
-    else
-      stage_next.data_8   <= (others => '0');
-      stage_next.data_1   <= (others => '0');      
-    end if;
-
+--    if (sum/21) > 162 and (sum/21) < 182 then
+----      stage_next.data_8   <= std_logic_vector(to_unsigned(sum/16,8));
+--      stage_next.data_8   <= (others => '1');
+--      stage_next.data_1   <= (others => '1');
+--    else
+--      stage_next.data_8   <= (others => '0');
+--      stage_next.data_1   <= (others => '0');      
+--    end if;
+    stage_next.data_8   <= std_logic_vector(to_unsigned(sum/21,8));
 -------------------------------------------------------------------------------
 -- Reset
 -------------------------------------------------------------------------------

@@ -65,7 +65,7 @@ begin
 
   connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);
 
-  process (pipe_in, r, src_valid, rst)
+  process (pipe_in, r, src_valid, rst, rgb565_2d_in)
     variable v  : reg_t;
     variable en : std_logic;
   begin

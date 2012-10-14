@@ -400,12 +400,15 @@ while True:
     if v == 0x1A:
         print "BI1" + str(i)
         t.append(Enable(ui.pipe,i,"BI1"))
-    if v == 0x1B:
+    if v == 0x1E:
         print "BI2" + str(i)
-        t.append(Enable(ui.pipe,i,"BI2"))
-    if v == 0x1C:
+        t.append(Enable(ui.pipe,i,"Census"))
+    if v == 0x1D:
         print "BI3" + str(i)
-        t.append(Enable(ui.pipe,i,"BI3"))
+        t.append(Enable(ui.pipe,i,"Disparity"))
+
+
+
 
        
     i = i + 1
