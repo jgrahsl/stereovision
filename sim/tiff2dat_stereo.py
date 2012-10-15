@@ -24,4 +24,6 @@ def mono(i):
 
 for i in range(len(datl)):    
 #   print datr[i]
-   print rgb888(datl[i]) + "{:08b}".format(datl[i]) +"{:08b}".format(datr[i]) + gray8(datl[i]) + mono(datl[i])
+   l = datl[i][0]
+   r = datr[i][0]
+   print rgb888(l) + "{:08b}".format(l) +"{:08b}".format(r) + gray8(l) + mono(l)

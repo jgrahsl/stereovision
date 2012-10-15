@@ -76,6 +76,9 @@ vhdl work "morph_set.vhd"
 
 #vhdl work "motion.vhd"
 
+#vhdl work "disparity.vhd"
+#vhdl work "census.vhd"
+
 vhdl work "cfg_sync.vhd"
 vhdl work "inspect_sync.vhd"
 vhdl work "SysCon.vhd"

@@ -72,8 +72,10 @@ begin
                    word_b;
   
   process (pipe_in, r, rst, avail, p1_fifo, selected_word)
-    variable v          : reg_t;
-    variable brightness : unsigned(7 downto 0);
+    variable v            : reg_t;
+    variable brightness   : unsigned(7 downto 0);
+    variable brightness_a : unsigned(7 downto 0);
+    variable brightness_b : unsigned(7 downto 0);
   begin
     stage_next <= pipe_in.stage;
     v          := r;
@@ -85,12 +87,21 @@ begin
     stage_next.init  <= '0';
     stage_next.aux   <= p1_fifo.data;
 
+    brightness_a := ("00" & unsigned(word_a(15 downto 11)) & "0") +
+                    ("00" & unsigned(word_a(10 downto 5))) +
+                    ("00" & unsigned(word_a(4 downto 0)) & "0");
+
+    brightness_b := ("00" & unsigned(word_b(15 downto 11)) & "0") +
+                    ("00" & unsigned(word_b(10 downto 5))) +
+                    ("00" & unsigned(word_b(4 downto 0)) & "0");
+
     brightness := ("00" & unsigned(selected_word(15 downto 11)) & "0") +
                   ("00" & unsigned(selected_word(10 downto 5))) +
                   ("00" & unsigned(selected_word(4 downto 0)) & "0");
-
+    
     stage_next.data_1   <= (others => '0');
     stage_next.data_8   <= std_logic_vector(brightness);
+--    stage_next.data_565 <= std_logic_vector(brightness_a) & std_logic_vector(brightness_b);
     stage_next.data_565 <= selected_word;
     stage_next.data_888 <= selected_word(15 downto 11) & "000" &
                            selected_word(10 downto 5) & "00" &

@@ -202,6 +202,7 @@ architecture behavioral of top is
   signal d        : d0_t;               --   
   signal stallo   : std_logic;
   signal cam_rst  : std_logic;
+  signal clk10mhz : std_logic;
 begin
 ----------------------------------------------------------------------------------
 -- system control unit
@@ -229,7 +230,8 @@ begin
     pll_ce_0_o       => pll_ce_0,
     pll_ce_90_o      => pll_ce_90,
     pll_lock         => pll_lock,
-    async_rst        => async_rst
+    async_rst        => async_rst,
+    clk10mhz => clk10mhz
     );
 
 ----------------------------------------------------------------------------------
@@ -306,7 +308,8 @@ begin
       led_o      => led_o_t,
       usb_fifo   => usb_fifo,
       stallo     => stallo,
-      d          => d
+      d          => d,
+      clk10mhz => clk10mhz
       );
 
   fbrden  <= vtcvde;

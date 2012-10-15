@@ -71,7 +71,7 @@ begin
 
   connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);
 
-  process(pipe_in, rst, src_valid, mono_2d_l, mono_2d_r)
+  process(pipe_in, rst, src_valid, mono_2d_l, mono_2d_r, r)
     variable minimum_index : natural range 0 to (KERNEL*KERNEL);
     variable minimum       : natural range 0 to (KERNEL*KERNEL);
     variable current       : natural range 0 to (KERNEL*KERNEL);
@@ -115,7 +115,7 @@ begin
       end if;
     end loop;
 
-    stage_next.data_8 <= std_logic_vector(to_unsigned(minimum_index, 4) & "0000");
+    stage_next.data_8 <= std_logic_vector(to_unsigned(minimum_index, 5) & "000");
 
 -------------------------------------------------------------------------------
 -- Reset

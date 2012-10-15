@@ -118,7 +118,7 @@ def scan():
         set_reg(i,0x61,3)
         v = flReadChannel(handle, 5000, 0x62,1)
         set_reg(i,0x61,0)
-        print str(i) + ": rd_id = " + str(v)
+        print str(i) + ": rd_id = " + hex(v)
 #    if i == 0 and v != 0:
 #        print "error"
 #        while 1==1:

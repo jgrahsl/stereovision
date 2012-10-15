@@ -54,8 +54,9 @@
 -- "Output    Output      Phase     Duty      Pk-to-Pk        Phase"
 -- "Clock    Freq (MHz) (degrees) Cycle (%) Jitter (ps)  Error (ps)"
 ------------------------------------------------------------------------------
--- CLK_OUT1____24.000______0.000______50.0_____1033.333____150.000
--- CLK_OUT2____24.000____180.000______50.0_____1033.333____150.000
+-- CLK_OUT1____24.000______0.000______50.0______428.485____266.022
+-- CLK_OUT2____24.000____180.000______50.0______428.485____266.022
+-- CLK_OUT3____10.000______0.000______50.0______506.139____266.022
 --
 ------------------------------------------------------------------------------
 -- "Input Clock   Freq (MHz)    Input Jitter (UI)"
@@ -72,6 +73,7 @@ port
   -- Clock out ports
   CLK_OUT1          : out    std_logic;
   CLK_OUT2          : out    std_logic;
+  CLK_OUT3          : out    std_logic;
   -- Status and control signals
   RESET             : in     std_logic;
   LOCKED            : out    std_logic
@@ -89,6 +91,7 @@ your_instance_name : dcm_fixed
     -- Clock out ports
     CLK_OUT1 => CLK_OUT1,
     CLK_OUT2 => CLK_OUT2,
+    CLK_OUT3 => CLK_OUT3,
     -- Status and control signals
     RESET  => RESET,
     LOCKED => LOCKED);

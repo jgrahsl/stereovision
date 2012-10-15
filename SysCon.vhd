@@ -49,7 +49,9 @@ entity SysCon is
 			  PLL_CE_0_O : out STD_LOGIC;
 			  PLL_CE_90_O : out STD_LOGIC;
 			  PLL_LOCK : out STD_LOGIC;
-			  ASYNC_RST : out STD_LOGIC);
+			  ASYNC_RST : out STD_LOGIC;
+clk10mhz : out STD_LOGIC
+           );
 end SysCon;
 
 architecture Behavioral of SysCon is
@@ -81,6 +83,7 @@ architecture Behavioral of SysCon is
 	  -- Clock out ports
 	  CLK_OUT1          : out    std_logic;
 	  CLK_OUT2          : out    std_logic;
+	  CLK_OUT3          : out    std_logic;     
 	  -- Status and control signals
 	  RESET             : in     std_logic;
 	  LOCKED            : out    std_logic
@@ -219,6 +222,7 @@ Inst_dcm_fixed : dcm_fixed
     -- Clock out ports
     CLK_OUT1           => CAMCLK_O,
 	 CLK_OUT2           => CAMCLK_180_O,
+	 CLK_OUT3           => clk10mhz,    
     -- Status and control signals
     RESET              => DcmRst,
     LOCKED             => Dcm2Lckd);
