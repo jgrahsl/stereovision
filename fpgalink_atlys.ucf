@@ -72,7 +72,7 @@ INST "fx2data_io<7>" TNM = fx2out_data;
 
 
 
-TIMEGRP "fx2out" OFFSET = OUT 13 ns AFTER "fx2clk_in";
+TIMEGRP "fx2out" OFFSET = OUT 14 ns AFTER "fx2clk_in";
 TIMEGRP "fx2out_data" OFFSET = OUT 22 ns AFTER "fx2clk_in";
 
 TIMEGRP "fx2in" OFFSET = IN 13 ns VALID 15 ns BEFORE "fx2clk_in" RISING;

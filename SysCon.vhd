@@ -57,7 +57,7 @@ end SysCon;
 architecture Behavioral of SysCon is
 
 	constant S : NATURAL := 10; -- serialization factor
-	constant CLKIN_PERIOD : REAL := 13.468; --ns = 74.25MHz (maximum supported pixel clock)
+	constant CLKIN_PERIOD : REAL := 9.2592593; --ns = 74.25MHz (maximum supported pixel clock)
 	constant PLLO0 : NATURAL := 1;	-- SERCLK = PCLK * S
 	constant PLLO2 : NATURAL := PLLO0 * S; -- PCLK = PCLK * S / S
 	constant PLLO3 : NATURAL := PLLO0 * S / 2;	-- PCLK_X2 = PLCK * S / (S/2)
@@ -445,7 +445,7 @@ Inst_pll_mcb : PLL_BASE generic map(
       DIVCLK_DIVIDE		=> 3,       			-- division factor for all clocks (1 to 52)
       CLKFBOUT_PHASE		=> 0.0,     			-- phase shift (degrees) of all output clocks
 		CLK_FEEDBACK		=> "CLKFBOUT",
-      CLKIN_PERIOD		=> CLKIN_PERIOD,  		-- clock period (ns) of input clock on clkin1
+      CLKIN_PERIOD		=> 10.0,  		-- clock period (ns) of input clock on clkin1
       CLKOUT0_DIVIDE		=> 1,       			-- division factor for clkout0 (1 to 128)
 		CLKOUT0_PHASE     => 0.000,
 		CLKOUT0_DUTY_CYCLE => 0.500,
