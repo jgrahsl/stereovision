@@ -1784,7 +1784,7 @@ begin
       pipe_in   => pipe(1),             -- [in]
       pipe_out  => pipe(7),
       stall_in  => stall(7),
-      stall_out => stall(15));           -- [inout]
+      stall_out => stall(1));           -- [inout]
 
   my_fifo_sink : entity work.fifo_sink
     generic map (

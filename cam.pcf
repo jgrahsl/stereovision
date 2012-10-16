@@ -1,5 +1,5 @@
 //! **************************************************************************
-// Written by: Map P.28xd on Tue Oct 16 09:15:38 2012
+// Written by: Map P.28xd on Tue Oct 16 10:13:19 2012
 //! **************************************************************************
 
 SCHEMATIC START;
@@ -353,11 +353,8 @@ TIMEGRP fx2clk_in = BEL "cfg[0]_enable" BEL "cfg[0]_identify" BEL
         "comm.comm_fpga_fx2/chanAddr_3" BEL "comm.comm_fpga_fx2/chanAddr_2"
         BEL "comm.comm_fpga_fx2/chanAddr_1" BEL
         "comm.comm_fpga_fx2/chanAddr_0" BEL "comm.comm_fpga_fx2/isAligned" BEL
-        "comm.comm_fpga_fx2/state_FSM_FFd3_1" BEL
-        "comm.comm_fpga_fx2/state_FSM_FFd2_1" BEL
-        "comm.comm_fpga_fx2/state_FSM_FFd1_1" BEL "fx2clk_int_BUFG" BEL
-        "my_inspect_sync/Mshreg_inspect_2_identity_2" BEL
-        "my_inspect_sync/inspect_2_identity_2" BEL
+        "fx2clk_int_BUFG" BEL "my_inspect_sync/Mshreg_inspect_2_identity_2"
+        BEL "my_inspect_sync/inspect_2_identity_2" BEL
         "my_inspect_sync/Mshreg_inspect_2_identity_3" BEL
         "my_inspect_sync/inspect_2_identity_3" BEL
         "my_inspect_sync/Mshreg_inspect_2_identity_1" BEL
@@ -818,9 +815,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/my_mcb_feed_dual/stage_aux_2" BEL
         "inst_fbctl/my_mcb_feed_dual/stage_aux_1" BEL
         "inst_fbctl/my_mcb_feed_dual/stage_aux_0" BEL
-        "inst_fbctl/my_mcb_feed_dual/r_stop_1" BEL
         "inst_fbctl/my_mcb_feed_dual/stage_identity_0" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[1]_enable" BEL
         "inst_fbctl/my_fifo_sink/r_cols_8" BEL
         "inst_fbctl/my_fifo_sink/r_cols_7" BEL
         "inst_fbctl/my_fifo_sink/r_cols_5" BEL
@@ -940,6 +935,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         BEL "inst_fbctl/colmux/stage_aux_2" BEL
         "inst_fbctl/colmux/stage_aux_1" BEL "inst_fbctl/colmux/stage_aux_0"
         BEL "inst_syscon/Inst_dcm_fixed/clkout3_buf" BEL
+        "inst_fbctl/my_mcb_feed_dual/r_stop_1" BEL
         "inst_fbctl/my_fifo_sink/r_enable" BEL
         "inst_fbctl/my_fifo_sink/r_dummy" BEL
         "inst_fbctl/my_mcb_sink/r_sel_is_high" BEL
@@ -954,7 +950,6 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/my_fifo_sink/r_rows_2" BEL
         "inst_fbctl/my_fifo_sink/r_rows_1" BEL
         "inst_fbctl/my_fifo_sink/r_rows_0" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[1]_enable_1" BEL
         "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[4]_identify" BEL
         "inst_fbctl/my_cfg_sync/cfg_2[4]_identify" BEL
         "inst_fbctl/my_cfg_sync/Mshreg_cfg_2_4" BEL
@@ -977,10 +972,10 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/my_cfg_sync/cfg_2_11" BEL
         "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[2]_enable" BEL
         "inst_fbctl/my_cfg_sync/cfg_2[2]_enable" BEL
+        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[1]_enable" BEL
+        "inst_fbctl/my_cfg_sync/cfg_2[1]_enable" BEL
         "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[1]_identify" BEL
         "inst_fbctl/my_cfg_sync/cfg_2[1]_identify" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_1[1]_enable" BEL
-        "inst_fbctl/my_cfg_sync/cfg_1[1]_enable" BEL
         "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i"
         BEL
         "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i"
@@ -2594,10 +2589,6 @@ TIMEGRP inst_syscon_mcb_drp_clk_bfg = BEL
         BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/iodrp_mcb_controller_inst/MCB_UIREAD"
         BEL
-        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Max_Value_int_5_1"
-        BEL
-        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Max_Value_int_7_1"
-        BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Mshreg_SELFREFRESH_MCB_MODE_R2"
         BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/SELFREFRESH_MCB_MODE_R2";
@@ -3073,13 +3064,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout0 = BEL "inst_camctlb/initA_5" BEL
         "inst_camctla/Inst_TWICtl/busState_0" BEL
         "inst_camctlb/Inst_TWICtl/rSda" BEL
         "inst_camctlb/Inst_TWICtl/busState_1" BEL
-        "inst_camctlb/Inst_TWICtl/busState_0" BEL "inst_camctlb/VDDEN_O" BEL
-        "inst_camctlb/initA_3_1" BEL "inst_camctla/initA_3_1" BEL
-        "inst_camctlb/initA_5_1" BEL "inst_camctla/initA_5_1" BEL
-        "inst_camctlb/initA_2_1" BEL "inst_camctla/initA_2_1" BEL
-        "inst_camctlb/initA_0_1" BEL "inst_camctla/initA_0_1" BEL
-        "inst_camctlb/initA_1_1" BEL "inst_camctla/initA_1_1" BEL
-        "inst_camctlb/initA_4_1" BEL "inst_camctla/initA_4_1" PIN
+        "inst_camctlb/Inst_TWICtl/busState_0" BEL "inst_camctlb/VDDEN_O" PIN
         "inst_camctla/Inst_ODDR2_MCLK_FORWARD_pins<1>" PIN
         "inst_camctlb/Inst_ODDR2_MCLK_FORWARD_pins<1>";
 PIN inst_syscon/Inst_dcm_recfg/dcm_clkgen_inst_pins<1> = BEL
