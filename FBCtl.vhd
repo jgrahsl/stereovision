@@ -719,11 +719,17 @@ architecture Behavioral of FBCtl is
   signal gray8_2d_2 : gray8_2d_t;
   signal gray8_2d_3 : gray8_2d_t;
   signal gray8_2d_4 : gray8_2d_t;  
-  signal ox_1         : signed(7 downto 0);
-  signal ox_2         : signed(7 downto 0);
-  signal oy         : signed(7 downto 0);  
+  signal ox_1         : signed((ABCD_BITS/2)+SUBGRID_BITS-1 downto 0);
+  signal ox_2         : signed((ABCD_BITS/2)+SUBGRID_BITS-1 downto 0);
+  signal oy         : signed((ABCD_BITS/2)+SUBGRID_BITS-1 downto 0);  
 
 
+  attribute keep_hierarchy : string;
+  attribute keep_hierarchy of inst_bi2_x: label is "yes";
+  attribute keep_hierarchy of inst_bi2_y: label is "yes";
+  attribute keep_hierarchy of inst_bi2_c: label is "yes";    
+
+  
 begin
 ----------------------------------------------------------------------------------
 -- mcb instantiation
@@ -1743,7 +1749,7 @@ begin
       );                                -- [inout]
 
 
-    bitest2_x : entity work.bi2_x
+    inst_bi2_x : entity work.bi2_x
       generic map (
         ID     => 11,
         WIDTH  => WIDTH,
@@ -1759,7 +1765,8 @@ begin
         gray8_2d_out => gray8_2d_3,
         ox_out       => ox_1
         );
-    bitest2_y : entity work.bi2_y
+  
+    inst_bi2_y : entity work.bi2_y
       generic map (
         ID     => 12,
         WIDTH  => WIDTH,
@@ -1777,7 +1784,7 @@ begin
         ox_out       => ox_2,
         oy_out       => oy
         );
-    my_bi2_c : entity work.bi2_c
+    inst_bi2_c : entity work.bi2_c
       generic map (
         ID     => 13,
         WIDTH  => WIDTH,

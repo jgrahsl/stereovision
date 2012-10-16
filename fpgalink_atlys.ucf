@@ -48,32 +48,29 @@ INST "fx2PktEnd_out" TNM = fx2out;
 INST "fx2Addr_out[0]" TNM = fx2out;
 INST "fx2Addr_out[1]" TNM = fx2out;
 
-#INST "fx2data_io<0>" TNM = fx2data_in;
-#INST "fx2data_io<1>" TNM = fx2data_in;
-#INST "fx2data_io<2>" TNM = fx2data_in;
-#INST "fx2data_io<3>" TNM = fx2data_in;
-#INST "fx2data_io<4>" TNM = fx2data_in;
-#INST "fx2data_io<5>" TNM = fx2data_in;
-#INST "fx2data_io<6>" TNM = fx2data_in;
-#INST "fx2data_io<7>" TNM = fx2data_in;
+INST "fx2data_io<0>" TNM = fx2data_in;
+INST "fx2data_io<1>" TNM = fx2data_in;
+INST "fx2data_io<2>" TNM = fx2data_in;
+INST "fx2data_io<3>" TNM = fx2data_in;
+INST "fx2data_io<4>" TNM = fx2data_in;
+INST "fx2data_io<5>" TNM = fx2data_in;
+INST "fx2data_io<6>" TNM = fx2data_in;
+INST "fx2data_io<7>" TNM = fx2data_in;
 
 INST "fx2gotdata_in" TNM = fx2in;
 INST "fx2gotroom_in" TNM = fx2in;
 
-#INST "fx2data_io<0>" TNM = fx2out_data;
-#INST "fx2data_io<1>" TNM = fx2out_data;
-#INST "fx2data_io<2>" TNM = fx2out_data;
-#INST "fx2data_io<3>" TNM = fx2out_data;
-#INST "fx2data_io<4>" TNM = fx2out_data;
-#INST "fx2data_io<5>" TNM = fx2out_data;
-#INST "fx2data_io<6>" TNM = fx2out_data;
-#INST "fx2data_io<7>" TNM = fx2out_data;
-
-
-
+INST "fx2data_io<0>" TNM = fx2out_data;
+INST "fx2data_io<1>" TNM = fx2out_data;
+INST "fx2data_io<2>" TNM = fx2out_data;
+INST "fx2data_io<3>" TNM = fx2out_data;
+INST "fx2data_io<4>" TNM = fx2out_data;
+INST "fx2data_io<5>" TNM = fx2out_data;
+INST "fx2data_io<6>" TNM = fx2out_data;
+INST "fx2data_io<7>" TNM = fx2out_data;
 
 TIMEGRP "fx2out" OFFSET = OUT 14 ns AFTER "fx2clk_in";
-#TIMEGRP "fx2out_data" OFFSET = OUT 22 ns AFTER "fx2clk_in";
+TIMEGRP "fx2out_data" OFFSET = OUT 22 ns AFTER "fx2clk_in";
 
 TIMEGRP "fx2in" OFFSET = IN 13 ns VALID 15 ns BEFORE "fx2clk_in" RISING;
-#TIMEGRP "fx2data_in" OFFSET = IN 9 ns VALID 15 ns BEFORE "fx2clk_in" RISING;
+TIMEGRP "fx2data_in" OFFSET = IN 9 ns VALID 15 ns BEFORE "fx2clk_in" RISING;
