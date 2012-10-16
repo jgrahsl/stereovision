@@ -67,10 +67,10 @@ begin
   x <= unsigned(to_unsigned(r.cols, x'length));
   y <= unsigned(to_unsigned(r.rows, y'length));
 
-  x_pixel <= "0010"; --unsigned(std_logic_vector(ox(ox'high downto ox'high-(ABCD_BITS/2)+1)));
-  y_pixel <= "0010"; --unsigned(std_logic_vector(oy(oy'high downto oy'high-(ABCD_BITS/2)+1)));
-  x_frac  <= "0000"; --unsigned(std_logic_vector(ox(SUBGRID_BITS-1 downto 0)));
-  y_frac  <= "0000"; --unsigned(std_logic_vector(oy(SUBGRID_BITS-1 downto 0)));
+  x_pixel <= unsigned(std_logic_vector(ox(ox'high downto ox'high-(ABCD_BITS/2)+1)));
+  y_pixel <= unsigned(std_logic_vector(oy(oy'high downto oy'high-(ABCD_BITS/2)+1)));
+  x_frac  <= unsigned(std_logic_vector(ox(SUBGRID_BITS-1 downto 0)));
+  y_frac  <= unsigned(std_logic_vector(oy(SUBGRID_BITS-1 downto 0)));
 
   process(pipe_in, r, rst, src_valid)
     variable v : reg_t;

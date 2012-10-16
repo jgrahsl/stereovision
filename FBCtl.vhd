@@ -1737,7 +1737,7 @@ begin
       pipe_out     => pipe(3),
       stall_in     => stall(3),
       stall_out    => stall(2),
-      abcd         => abcd,
+      abcd         => abcd_1,
       gray8_2d_in  => gray8_2d_1,
       gray8_2d_out => gray8_2d_2
       );                                -- [inout]
