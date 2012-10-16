@@ -8,7 +8,7 @@ package cam_pkg is
 -- vin_data(0)(1) 1 row delay
   constant MAX_PIPE  : natural := 32;
   constant MAX_PARAM : natural := 6;
-  constant MAX_KERNEL : natural := 5;
+  constant MAX_KERNEL : natural := 13;
   -----------------------------------------------------------------------------
   -- Bilinear
   -----------------------------------------------------------------------------
@@ -16,7 +16,7 @@ package cam_pkg is
   constant GRIDX_BITS   : natural := 2;
   constant GRIDY_BITS   : natural := 2;  -- MS bits taken from pixel counter
                                          -- for rom adr
-  constant SUBGRID_BITS : natural := 4;  -- LS bits taken from pixel counter
+  constant SUBGRID_BITS : natural := 5;  -- LS bits taken from pixel counter
                                          -- for interpolation
   -----------------------------------------------------------------------------
   -- Ident codes

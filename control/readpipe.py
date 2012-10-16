@@ -141,6 +141,47 @@ def scan():
 #           a  = 0
         i = i + 1
 
+def on():
+    i = 0
+    while i < 32: 
+
+        set_reg(i,0x61,3)
+        v = flReadChannel(handle, 5000, 0x62,1)
+        if v != 0:
+            set_reg(i,0x61,1)
+            print str(i) + ": on"
+
+            if v == 0x01:
+                set_reg(i,0x70,1)
+                set_reg(i,0x71,1)
+            if v == 0x07:
+                set_reg(i,0x70,1)
+                set_reg(i,0x71,1)
+        else:
+            set_reg(i,0x61,0)
+
+#    if i == 0 and v != 0:
+#        print "error"
+#        while 1==1:
+#            a  = 0
+#    if i == 1 and v != 1:
+#        print "error"
+#        while 1==1:
+#            a  = 0
+#    if i == 29 and v != 8:
+#        print "error"
+#        while 1==1:
+#            a  = 0
+#    if i == 30 and v != 11:
+#        print "error"
+#        while 1==1:
+#            a  = 0
+#    if i == 31 and v != 7:
+#        print "error"
+#       while 1==1:
+#           a  = 0
+        i = i + 1
+
 if sys.argv[1] == "pic":
     readpic()
 elif sys.argv[1] == "stream":
@@ -155,6 +196,8 @@ elif sys.argv[1] == "req":
     reqpic()
 elif sys.argv[1] == "scan":
     scan()
+elif sys.argv[1] == "on":
+    on()
 
 #f.close()
 flClose(handle)
