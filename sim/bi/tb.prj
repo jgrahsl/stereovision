@@ -17,4 +17,7 @@ rom.vhd
 bilinear.vhd
 bi.vhd
 bi2.vhd
+bi2_x.vhd
+bi2_y.vhd
+bi2_combine.vhd
 bi3.vhd

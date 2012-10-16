@@ -8,7 +8,7 @@ package cam_pkg is
 -- vin_data(0)(1) 1 row delay
   constant MAX_PIPE  : natural := 32;
   constant MAX_PARAM : natural := 6;
-  constant MAX_KERNEL : natural := 13;
+  constant MAX_KERNEL : natural := 5;
   -----------------------------------------------------------------------------
   -- Bilinear
   -----------------------------------------------------------------------------
@@ -48,10 +48,13 @@ package cam_pkg is
   constant IDENT_TESTPIC      : std_logic_vector(7 downto 0) := X"19";
 
   constant IDENT_BI1      : std_logic_vector(7 downto 0) := X"1A";
-  constant IDENT_BI2      : std_logic_vector(7 downto 0) := X"1B";  
-  constant IDENT_BI3      : std_logic_vector(7 downto 0) := X"1C";
-  constant IDENT_DISPARITY      : std_logic_vector(7 downto 0) := X"1D";
-  constant IDENT_CENSUS      : std_logic_vector(7 downto 0) := X"1E";      
+  constant IDENT_BI2      : std_logic_vector(7 downto 0) := X"1B";
+  constant IDENT_BI2_X      : std_logic_vector(7 downto 0) := X"1C";
+  constant IDENT_BI2_Y      : std_logic_vector(7 downto 0) := X"1D";
+  constant IDENT_BI2_C      : std_logic_vector(7 downto 0) := X"1E";    
+  constant IDENT_BI3      : std_logic_vector(7 downto 0) := X"1F";
+  constant IDENT_DISPARITY      : std_logic_vector(7 downto 0) := X"20";
+  constant IDENT_CENSUS      : std_logic_vector(7 downto 0) := X"21";      
 
 
   constant IDENT_NULL    : std_logic_vector(7 downto 0) := X"F0";

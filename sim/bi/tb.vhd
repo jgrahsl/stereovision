@@ -31,12 +31,18 @@ architecture impl of tb is
 
   signal finish : std_logic := '0';
 
-  signal abcd       : abcd_t;
+  signal abcd_1     : abcd_t;
+  signal abcd_2     : abcd_t;
+  signal abcd_3     : abcd_t;
+  signal abcd_4     : abcd_t;
   signal abcd2      : abcd2_t;
   signal gray8_2d_1 : gray8_2d_t;
   signal gray8_2d_2 : gray8_2d_t;
   signal gray8_2d_3 : gray8_2d_t;
-  
+  signal gray8_2d_4 : gray8_2d_t;
+  signal ox_1       : signed((ABCD_BITS/2)+SUBGRID_BITS-1 downto 0);
+  signal ox_2       : signed((ABCD_BITS/2)+SUBGRID_BITS-1 downto 0);
+  signal oy         : signed((ABCD_BITS/2)+SUBGRID_BITS-1 downto 0);
 begin  -- impl
 
   ena : for i in 0 to (MAX_PIPE-1) generate
@@ -78,19 +84,6 @@ begin  -- impl
       gray8_2d_out => gray8_2d_1
       );                                -- [inout]
 
-  --dut2 : entity work.win_test_8
-  --  generic map (
-  --    ID     => 25,
-  --    OFFSET => 12)
-  --  port map (
-  --    pipe_in      => pipe(2),          -- [in]
-  --    pipe_out     => pipe(3),
-  --    stall_in     => stall(3),
-  --    stall_out    => stall(2),
-  --    gray8_2d_in => gray8_2d_1      
-  --    );                                -- [inout]
-  
-  
   bitest : entity work.bi
     generic map (
       ID     => 25,
@@ -101,36 +94,89 @@ begin  -- impl
       pipe_out     => pipe(3),
       stall_in     => stall(3),
       stall_out    => stall(2),
-      abcd         => abcd,
+      abcd         => abcd_1,
       gray8_2d_in  => gray8_2d_1,
       gray8_2d_out => gray8_2d_2
       );                                -- [inout]
-
-  bitest2 : entity work.bi2
-    generic map (
-      ID     => 26,
-      WIDTH  => WIDTH,
-      HEIGHT => HEIGHT)
-    port map (
-      pipe_in     => pipe(3),           -- [in]
-      pipe_out    => pipe(4),
-      stall_in    => stall(4),
-      stall_out   => stall(3),
-      abcd        => abcd,
-      gray8_2d_in => gray8_2d_2,
-      abcd2       => abcd2
-      );                                -- [inout]
-
+-------------------------------------------------------------------------------
+  gen : if SPLIT = 0 generate
+    bitest2 : entity work.bi2
+      generic map (
+        ID     => 26,
+        WIDTH  => WIDTH,
+        HEIGHT => HEIGHT)
+      port map (
+        pipe_in     => pipe(3),         -- [in]
+        pipe_out    => pipe(6),
+        stall_in    => stall(6),
+        stall_out   => stall(3),
+        abcd        => abcd_1,
+        gray8_2d_in => gray8_2d_2,
+        abcd2       => abcd2
+        );                              -- [inout]
+  end generate gen;
+-------------------------------------------------------------------------------
+  gen2 : if SPLIT = 1 generate
+    bitest2_x : entity work.bi2_x
+      generic map (
+        ID     => 26,
+        WIDTH  => WIDTH,
+        HEIGHT => HEIGHT)
+      port map (
+        pipe_in      => pipe(3),        -- [in]
+        pipe_out     => pipe(4),
+        stall_in     => stall(4),
+        stall_out    => stall(3),
+        abcd_in      => abcd_1,
+        abcd_out     => abcd_2,
+        gray8_2d_in  => gray8_2d_2,
+        gray8_2d_out => gray8_2d_3,
+        ox_out       => ox_1
+        );
+    bitest2_y : entity work.bi2_y
+      generic map (
+        ID     => 27,
+        WIDTH  => WIDTH,
+        HEIGHT => HEIGHT)
+      port map (
+        pipe_in      => pipe(4),        -- [in]
+        pipe_out     => pipe(5),
+        stall_in     => stall(5),
+        stall_out    => stall(4),
+        abcd_in      => abcd_2,
+        abcd_out     => abcd_3,
+        gray8_2d_in  => gray8_2d_3,
+        gray8_2d_out => gray8_2d_4,
+        ox_in        => ox_1,
+        ox_out       => ox_2,
+        oy_out       => oy
+        );
+    my_bi2_c : entity work.bi2_c
+      generic map (
+        ID     => 28,
+        WIDTH  => WIDTH,
+        HEIGHT => HEIGHT)
+      port map (
+        pipe_in     => pipe(5),         -- [in]
+        pipe_out    => pipe(6),         -- [out]
+        stall_in    => stall(6),        -- [in]
+        stall_out   => stall(5),        -- [out]
+        gray8_2d_in => gray8_2d_4,
+        ox          => ox_2,            -- [in]
+        oy          => oy,              -- [in]
+        abcd2       => abcd2);          -- [out]       
+  end generate gen2;
+-------------------------------------------------------------------------------
   bitest3 : entity work.bi3
     generic map (
-      ID     => 26,
+      ID     => 29,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (
-      pipe_in   => pipe(4),             -- [in]
-      pipe_out  => pipe(5),
-      stall_in  => stall(5),
-      stall_out => stall(4),
+      pipe_in   => pipe(6),             -- [in]
+      pipe_out  => pipe(7),
+      stall_in  => stall(7),
+      stall_out => stall(6),
       abcd2     => abcd2
       );                                -- [inout]
 
@@ -140,19 +186,19 @@ begin  -- impl
       ID   => 3,
       MODE => 2)      
     port map (
-      pipe_in   => pipe(5),             -- [in]
-      pipe_out  => pipe(6),
-      stall_in  => stall(6),
-      stall_out => stall(5));           -- [inout]
+      pipe_in   => pipe(7),             -- [in]
+      pipe_out  => pipe(8),
+      stall_in  => stall(8),
+      stall_out => stall(7));           -- [inout]
 
   my_sim_sink : entity work.sim_sink
     generic map (
       ID => 2)
     port map (
-      pipe_in   => pipe(6),             -- [in]
-      pipe_out  => pipe(8),
+      pipe_in   => pipe(8),             -- [in]
+      pipe_out  => pipe(9),
       stall_in  => '0',
-      stall_out => stall(6),
+      stall_out => stall(8),
       p0_fifo   => p0_wr_fifo);         -- [inout]
 
 -------------------------------------------------------------------------------  

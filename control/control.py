@@ -19,7 +19,7 @@ def send_byte(chan,val):
     ba[1] = val
     ba[2] = val
     ba[3] = val
-    print "wrChan:" +str(chan) + " " + str(val)
+#    print "wrChan:" +str(chan) + " " + str(val)
     flWriteChannel(handle, 1000, chan,ba)
 
 def set_pipe(n):
@@ -326,85 +326,74 @@ while True:
     set_reg(i,0x61,0)
     print "rd_id = " + str(v)
     if v == 0x01:
-        print "MCBFeed at " + str(i)
         t.append(Enable(ui.pipe,i,"MCBFeed"))
     if v == 0x02:
-        print "Skin at " + str(i)
         t.append(Enable(ui.pipe,i,"Skin")) 
     if v == 0x03:
-        print "Motion at " + str(i)
         t.append(Motion(ui.pipe,i)) 
     if v == 0x04:
-        print "Morph at " + str(i-4)
         t.append(Morph(ui.pipe,i-4))
         i = i + 16
     if v == 0x05:
-        print "HistX at " + str(i)
         t.append(Hist(ui.pipe,i,"HistX")) 
     if v == 0x06:
-        print "HistY at " + str(i)
         t.append(Hist(ui.pipe,i,"HistY")) 
     if v == 0x07:
-        print "MCBSink at " + str(i)
         t.append(Enable(ui.pipe,i,"MCBSink"))
     if v == 0x08:
-        print "ColMux at " + str(i)
         t.append(Enable(ui.pipe,i,"ColMux"))
 
 
     if v == 0x0B:
-        print "FifoSink at " + str(i)
         t.append(Enable(ui.pipe,i,"FifoSink"))
 
-
     if v == 0x10:
-        print "Translate at " + str(i)
         t.append(Enable(ui.pipe,i,"Translate"))
 
     if v == 0x11:
-        print "Translate Win at " + str(i)
         t.append(Enable(ui.pipe,i,"Translate Win"))
 
     if v == 0x12:
-        print "Translate Win 8 at " + str(i)
         t.append(Enable(ui.pipe,i,"Translate Win 8"))
 
     if v == 0x13:
-        print "Linebuffer " + str(i)
         t.append(Enable(ui.pipe,i,"Linebuffer"))
 
     if v == 0x14:
-        print "Linebuffer 8 " + str(i)
         t.append(Enable(ui.pipe,i,"Linebuffer 8"))
 
     if v == 0x15:
-        print "Window " + str(i)
         t.append(Enable(ui.pipe,i,"Window"))
 
     if v == 0x16:
-        print "Window 8 " + str(i)
         t.append(Enable(ui.pipe,i,"Window 8"))
 
     if v == 0x17:
-        print "Win Test " + str(i)
         t.append(Enable(ui.pipe,i,"Win Test"))
 
     if v == 0x18:
-        print "Win Test 8 " + str(i)
         t.append(Enable(ui.pipe,i,"Win Test 8"))
 
     if v == 0x19:
-        print "Testpic" + str(i)
         t.append(Enable(ui.pipe,i,"Testpic"))
 
     if v == 0x1A:
-        print "BI1" + str(i)
         t.append(Enable(ui.pipe,i,"BI1"))
-    if v == 0x1E:
-        print "BI2" + str(i)
-        t.append(Enable(ui.pipe,i,"Census"))
+    if v == 0x1B:
+        t.append(Enable(ui.pipe,i,"BI2"))
+    if v == 0x1C:
+        t.append(Enable(ui.pipe,i,"BI2X"))
     if v == 0x1D:
-        print "BI3" + str(i)
+        t.append(Enable(ui.pipe,i,"BI1Y"))
+    if v == 0x1E:
+        t.append(Enable(ui.pipe,i,"BI1C"))
+    if v == 0x1F:
+        t.append(Enable(ui.pipe,i,"BI3"))
+
+
+    if v == 0x20:
+        t.append(Enable(ui.pipe,i,"Census"))
+    if v == 0x21:
         t.append(Enable(ui.pipe,i,"Disparity"))
 
 
