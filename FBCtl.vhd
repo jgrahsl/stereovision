@@ -719,9 +719,9 @@ architecture Behavioral of FBCtl is
   signal gray8_2d_2 : gray8_2d_t;
   signal gray8_2d_3 : gray8_2d_t;
   signal gray8_2d_4 : gray8_2d_t;  
-  signal ox_1         : signed((ABCD_BITS/2)+SUBGRID_BITS-1 downto 0);
-  signal ox_2         : signed((ABCD_BITS/2)+SUBGRID_BITS-1 downto 0);
-  signal oy         : signed((ABCD_BITS/2)+SUBGRID_BITS-1 downto 0);  
+  signal ox_1         : signed(7 downto 0);
+  signal ox_2         : signed(7 downto 0);
+  signal oy         : signed(7 downto 0);  
 
 
 begin

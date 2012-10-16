@@ -14,11 +14,11 @@ from fpgalink2 import *
 
 def send_byte(chan,val):
     global handle
-    ba = bytearray(b"    ")
+    ba = bytearray(1)
     ba[0] = val
-    ba[1] = val
-    ba[2] = val
-    ba[3] = val
+#    ba[1] = val
+#    ba[2] = val
+#    ba[3] = val
 #    print "wrChan:" +str(chan) + " " + str(val)
     flWriteChannel(handle, 1000, chan,ba)
 
