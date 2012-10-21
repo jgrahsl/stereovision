@@ -1722,7 +1722,7 @@ begin
   dut : entity work.win_gray8
     generic map (
       ID     => 5,
-      KERNEL => 5,
+      KERNEL => 15,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (
@@ -1787,6 +1787,7 @@ begin
     inst_bi2_c : entity work.bi2_c
       generic map (
         ID     => 13,
+        KERNEL => 15,
         WIDTH  => WIDTH,
         HEIGHT => HEIGHT)
       port map (

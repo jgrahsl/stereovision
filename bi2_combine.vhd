@@ -8,6 +8,7 @@ use work.cam_pkg.all;
 entity bi2_c is
   generic (
     ID     : integer range 0 to 63   := 0;
+    KERNEL : integer range 0 to MAX_KERNEL := 0;
     WIDTH  : natural range 0 to 2048 := 2048;
     HEIGHT : natural range 0 to 2048 := 2048);
   port (
@@ -35,8 +36,6 @@ architecture impl of bi2_c is
   type reg_t is record
     cols : natural range 0 to WIDTH-1;
     rows : natural range 0 to HEIGHT-1;
-    disx : unsigned(5 downto 0);
-    disy : unsigned(5 downto 0);
   end record;
 
   signal r      : reg_t;
@@ -46,8 +45,6 @@ architecture impl of bi2_c is
   begin
     v.cols := 0;
     v.rows := 0;
-    v.disx := (others => '0');
-    v.disy := (others => '0');
   end init;
 
   signal x : unsigned(15 downto 0);
@@ -83,19 +80,19 @@ begin
 -------------------------------------------------------------------------------
 -- Output
 -------------------------------------------------------------------------------
-    abcd2_next.a <= "0" & gray8_2d_in(to_integer(y_pixel*5 + x_pixel));
-    if to_integer(y_pixel*5 + x_pixel+1) < 25 then
-      abcd2_next.b <= "0" & gray8_2d_in(to_integer(y_pixel*5 + x_pixel+1));
+    abcd2_next.a <= "0" & gray8_2d_in(to_integer(y_pixel*KERNEL + x_pixel));
+    if to_integer(y_pixel*KERNEL + x_pixel+1) < KERNEL*KERNEL then
+      abcd2_next.b <= "0" & gray8_2d_in(to_integer(y_pixel*KERNEL + x_pixel+1));
     else
       abcd2_next.b <= (others => '0');
     end if;
-    if to_integer((y_pixel+1)*5 + x_pixel) < 25 then
-      abcd2_next.c <= "0" & gray8_2d_in(to_integer((y_pixel+1)*5 + x_pixel));
+    if to_integer((y_pixel+1)*KERNEL + x_pixel) < KERNEL*KERNEL then
+      abcd2_next.c <= "0" & gray8_2d_in(to_integer((y_pixel+1)*KERNEL + x_pixel));
     else
       abcd2_next.c <= (others => '0');
     end if;
-    if to_integer((y_pixel+1)*5 + x_pixel+1) < 25 then
-      abcd2_next.d <= "0" & gray8_2d_in(to_integer((y_pixel+1)*5 + x_pixel+1));
+    if to_integer((y_pixel+1)*KERNEL + x_pixel+1) < KERNEL*KERNEL then
+      abcd2_next.d <= "0" & gray8_2d_in(to_integer((y_pixel+1)*KERNEL + x_pixel+1));
     else
       abcd2_next.d <= (others => '0');
     end if;

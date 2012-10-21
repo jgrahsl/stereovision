@@ -8,11 +8,11 @@ package cam_pkg is
 -- vin_data(0)(1) 1 row delay
   constant MAX_PIPE  : natural := 32;
   constant MAX_PARAM : natural := 6;
-  constant MAX_KERNEL : natural := 13;
+  constant MAX_KERNEL : natural := 15;
   -----------------------------------------------------------------------------
   -- Bilinear
   -----------------------------------------------------------------------------
-  constant ABCD_BITS    : natural := 8;
+  constant ABCD_BITS    : natural := 10;
   constant GRIDX_BITS   : natural := 2;
   constant GRIDY_BITS   : natural := 2;  -- MS bits taken from pixel counter
                                          -- for rom adr

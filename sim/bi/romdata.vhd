@@ -25,28 +25,28 @@ begin
   begin
     case areg is
       -- GRIDY+GRIDX --    REFY+REFX
-      when "0000" => q <= "00100010";  -- TODO: comment
-      when "0001" => q <= "00100010";  -- TODO: comment                     
-      when "0010" => q <= "00100010";  -- TODO: comment
-      when "0011" => q <= "00100010";  -- TODO: comment                     
+      when "0000" => q <= "0001100011";  -- TODO: comment
+      when "0001" => q <= "0001100011";  -- TODO: comment                     
+      when "0010" => q <= "0001100011";  -- TODO: comment
+      when "0011" => q <= "0001100011";  -- TODO: comment                     
 
-      when "0100" => q <= "00100010";  -- TODO: comment
-      when "0101" => q <= "01000100";  -- TODO: comment                     
-      when "0110" => q <= "01000000";  -- TODO: comment
-      when "0111" => q <= "00100010";  -- TODO: comment                     
+      when "0100" => q <= "0001100011";  -- TODO: comment
+      when "0101" => q <= "0010100101";  -- TODO: comment                     
+      when "0110" => q <= "0010100000";  -- TODO: comment
+      when "0111" => q <= "0001100011";  -- TODO: comment                     
 
-      when "1000" => q <= "00100010";  -- TODO: comment
-      when "1001" => q <= "00000100";  -- TODO: comment                     
-      when "1010" => q <= "00000000";  -- TODO: comment
-      when "1011" => q <= "00100010";  -- TODO: comment                     
+      when "1000" => q <= "0001100011";  -- TODO: comment
+      when "1001" => q <= "0000000101";  -- TODO: comment                     
+      when "1010" => q <= "0000000000";  -- TODO: comment
+      when "1011" => q <= "0001100011";  -- TODO: comment                     
 
-      when "1100" => q <= "00100010";  -- TODO: comment
-      when "1101" => q <= "00100010";  -- TODO: comment                     
-      when "1110" => q <= "00100010";  -- TODO: comment
-      when "1111" => q <= "00100010";  -- TODO: comment                     
+      when "1100" => q <= "0001100011";  -- TODO: comment
+      when "1101" => q <= "0001100011";  -- TODO: comment                     
+      when "1110" => q <= "0001100011";  -- TODO: comment
+      when "1111" => q <= "0001100011";  -- TODO: comment                     
                      
                      
-      when others => q <= "00000000";
+      when others => q <= "0001100011";
     end case;
   end process;
 

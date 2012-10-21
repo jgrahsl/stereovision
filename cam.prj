@@ -48,11 +48,15 @@ vhdl work "bi2_combine.vhd"
 vhdl work "bi3.vhd"
 
 vhdl work "bit_ram.vhd"
+
 vhdl work "translate.vhd"
 
-vhdl work "line_buffer_mono.vhd"
-vhdl work "line_buffer_gray8.vhd"
-vhdl work "line_buffer_rgb565.vhd"
+vhdl work "inf_shiftreg.vhd"
+vhdl work "shiftreg.vhd"
+
+vhdl work "line_buffer_mono_new.vhd"
+vhdl work "line_buffer_gray8_new.vhd"
+vhdl work "line_buffer_rgb565_new.vhd"
 
 vhdl work "win_buffer_mono.vhd"
 vhdl work "win_buffer_gray8.vhd"

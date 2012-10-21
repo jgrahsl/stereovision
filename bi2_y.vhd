@@ -39,8 +39,6 @@ architecture impl of bi2_y is
   type reg_t is record
     cols : natural range 0 to WIDTH-1;
     rows : natural range 0 to HEIGHT-1;
-    disx : unsigned(5 downto 0);
-    disy : unsigned(5 downto 0);
   end record;
 
   signal r      : reg_t;
@@ -50,8 +48,6 @@ architecture impl of bi2_y is
   begin
     v.cols := 0;
     v.rows := 0;
-    v.disx := (others => '0');
-    v.disy := (others => '0');
   end init;
 
   signal x  : unsigned(15 downto 0);

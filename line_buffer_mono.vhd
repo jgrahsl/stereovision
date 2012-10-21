@@ -20,7 +20,7 @@ entity line_buffer_mono is
     );
 end line_buffer_mono;
 
-architecture impl of line_buffer is
+architecture impl of line_buffer_mono is
 
   signal clk        : std_logic;
   signal rst        : std_logic;

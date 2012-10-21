@@ -74,6 +74,7 @@ begin  -- impl
   dut : entity work.win_gray8
     generic map (
       ID     => 4,
+      KERNEL => 7,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (
@@ -154,6 +155,7 @@ begin  -- impl
     my_bi2_c : entity work.bi2_c
       generic map (
         ID     => 28,
+        KERNEL => 7,        
         WIDTH  => WIDTH,
         HEIGHT => HEIGHT)
       port map (
