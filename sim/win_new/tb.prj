@@ -6,7 +6,9 @@ color_mux.vhd
 sim_feed.vhd
 sim_sink.vhd
 bit_ram.vhd
-ipcore_dir/shiftreg.vhd
+inf_shift.reg.vhd
+#ipcore_dir/shiftreg.vhd
+shiftreg.vhd
 line_buffer_mono_new.vhd
 win_buffer_mono.vhd
 translate.vhd

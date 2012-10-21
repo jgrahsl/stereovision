@@ -58,7 +58,7 @@ begin
   connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);
 
   rams : for i in 0 to (NUM_LINES-1) generate
-    my_shiftreg: entity work.shiftreg
+    my_shiftreg: entity work.shiftregister
       generic map (
         WIDTH => 1,
         DEPTH => WIDTH)
@@ -71,7 +71,7 @@ begin
   end generate rams;
 
   
-  process(pipe_in, stage, r, src_valid, rst, q, shiftin, shiftout)
+  process(pipe_in, stage, r, src_valid, rst, shiftin, shiftout)
     variable v : reg_t;
   begin  -- process
     stage_next <= pipe_in.stage;
@@ -132,7 +132,7 @@ begin
     r_next <= v;
   end process;
 
-  proc_clk : process(clk, rst, stall, stalled, src_valid, r_next, stage_next, pipe_in, qd, qi, q)
+  proc_clk : process(clk, rst, stall, stalled, src_valid, r_next, stage_next, pipe_in)
   begin
     if rising_edge(clk) and (stall = '0' or rst = '1') then
       if (pipe_in.cfg(ID).enable = '1') then
