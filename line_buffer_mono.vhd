@@ -5,7 +5,7 @@ use IEEE.NUMERIC_STD.all;
 library work;
 use work.cam_pkg.all;
 
-entity line_buffer is
+entity line_buffer_mono is
   generic (
     ID        : integer range 0 to 63   := 0;
     NUM_LINES : natural := 3;
@@ -18,7 +18,7 @@ entity line_buffer is
     stall_out   : out std_logic;
     mono_1d_out : out mono_1d_t
     );
-end line_buffer;
+end line_buffer_mono;
 
 architecture impl of line_buffer is
 

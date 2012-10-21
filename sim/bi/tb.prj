@@ -6,13 +6,15 @@ color_mux.vhd
 sim_feed.vhd
 sim_sink.vhd
 bit_ram.vhd
-line_buffer_gray8.vhd
+inf_shiftreg.vhd
+shiftreg.vhd
+line_buffer_gray8_new.vhd
 win_buffer_gray8.vhd
 translate.vhd
 translate_win_gray8.vhd
 window_gray8.vhd
 win_test_gray8.vhd
-romdata.vhd
+sim/bi/romdata.vhd
 rom.vhd
 bilinear.vhd
 bi.vhd

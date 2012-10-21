@@ -5,7 +5,7 @@ use IEEE.NUMERIC_STD.all;
 library work;
 use work.cam_pkg.all;
 
-entity line_buffer_mono is
+entity line_buffer_rgb565 is
   generic (
     ID        : integer range 0 to 63   := 0;
     NUM_LINES : natural                 := 3;
@@ -16,11 +16,11 @@ entity line_buffer_mono is
     pipe_out    : out pipe_t;
     stall_in    : in  std_logic;
     stall_out   : out std_logic;
-    mono_1d_out : out mono_1d_t
+    rgb565_1d_out : out rgb565_1d_t
     );
-end line_buffer_mono;
+end line_buffer_rgb565;
 
-architecture impl of line_buffer_mono is
+architecture impl of line_buffer_rgb565 is
 
   signal clk        : std_logic;
   signal rst        : std_logic;
@@ -47,11 +47,11 @@ architecture impl of line_buffer_mono is
     v.rows := 0;
   end init;
 
-  type shift_t is array (0 to (NUM_LINES-1)) of mono_t;
+  type shift_t is array (0 to (NUM_LINES-1)) of rgb565_t;
 
   signal shiftin  : shift_t;
   signal shiftout : shift_t;
-  signal mono_1d  : mono_1d_t;
+  signal rgb565_1d  : rgb565_1d_t;
 begin
   issue <= '0';
 
@@ -60,7 +60,7 @@ begin
   rams : for i in 0 to (NUM_LINES-2) generate
     my_shiftreg : entity work.shiftregister
       generic map (
-        WIDTH => mono_t'length,
+        WIDTH => rgb565_t'length,
         DEPTH => WIDTH)
       port map (
         clk      => clk,                -- [in]
@@ -102,19 +102,19 @@ begin
 -------------------------------------------------------------------------------
 -- Generate data from pipeline
 -------------------------------------------------------------------------------
-    shiftin(0) <= pipe_in.stage.data_1;
+    shiftin(0) <= pipe_in.stage.data_565;
     for i in 1 to NUM_LINES-1 loop
       shiftin(i) <= shiftout(i-1);
     end loop;  -- i in 1 to NUM_LINES-1
 
-    mono_1d(0) <= pipe_in.stage.data_1;
+    rgb565_1d(0) <= pipe_in.stage.data_565;
     for i in 1 to NUM_LINES-1 loop
-      mono_1d(i) <= shiftout(i-1);
+      rgb565_1d(i) <= shiftout(i-1);
     end loop;  -- i in 1 to NUM_LINES-1
 
     for i in 1 to NUM_LINES-1 loop
       if r.rows < i then
-        mono_1d(i) <= (others => '0');
+        rgb565_1d(i) <= (others => '0');
       end if;
     end loop;  -- i
 -------------------------------------------------------------------------------
@@ -142,7 +142,7 @@ begin
         stage <= pipe_in.stage;
       end if;
       r           <= r_next;
-      mono_1d_out <= mono_1d;
+      rgb565_1d_out <= rgb565_1d;
     end if;
   end process;
 

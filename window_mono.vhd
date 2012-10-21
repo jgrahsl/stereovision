@@ -60,7 +60,8 @@ begin  -- myrtl
       stall_out => stall(0)
       );                                -- [out]
 
-  my_filter0_buffer : entity work.line_buffer
+  my_filter0_buffer : entity work.line_buffer_mono
+    
     generic map (
       ID        => (ID+1),
       NUM_LINES => KERNEL,

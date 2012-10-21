@@ -5,8 +5,8 @@ use IEEE.NUMERIC_STD.all;
 entity shiftregister is
   
   generic (
-    WIDTH : natural range 0 to 15;
-    DEPTH : natural range 0 to 639);
+    WIDTH : natural range 1 to 16;
+    DEPTH : natural range 1 to 640);
 
   port (
     clk      : in  std_logic;
@@ -23,7 +23,7 @@ architecture rtl of shiftregister is
   signal i_shiftout : std_logic_vector(15 downto 0) := (others => '0');
 begin  -- rtl
 
-  process (clk)
+  process (clk,rst,a,enable)
   begin  -- process
     if clk'event and clk = '1' then     -- rising clock edge
       if rst = '1' then                 -- synchronous reset (active high)
@@ -31,7 +31,7 @@ begin  -- rtl
       else
         if enable = '1' then
           a <= std_logic_vector(unsigned(a) + 1);
-          if unsigned(a) = DEPTH-1 then
+          if unsigned(a) = (DEPTH-2) then
             a <= (others => '0');
           end if;
         end if;
@@ -41,19 +41,19 @@ begin  -- rtl
   my_shiftreg : entity work.shiftreg
     generic map (
       ADDR_BITS  => 10,
-      WIDTH_BITS => 1)
+      WIDTH_BITS => WIDTH)
     port map (
       clka   => clk,                    -- [IN]
       wea(0) => enable,                 -- [IN]
       addra  => a,                      -- [IN]
-      dina   => i_shiftin,              -- [IN]
+      dina   => shiftin,              -- [IN]
       clkb   => clk,                    -- [IN]
       enb    => enable,                 -- [IN]
       addrb  => a,                      -- [IN]
-      doutb  => i_shiftout);            -- [OUT]
+      doutb  => shiftout);            -- [OUT]
 
-  shiftout                    <= i_shiftout(WIDTH-1 downto 0);
-  i_shiftin(WIDTH-1 downto 0) <= shiftin;
+--  shiftout                    <= i_shiftout(WIDTH-1 downto 0);
+--  i_shiftin(WIDTH-1 downto 0) <= shiftin;
   
 end rtl;
 
