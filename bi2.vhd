@@ -8,6 +8,7 @@ use work.cam_pkg.all;
 entity bi2 is
   generic (
     ID     : integer range 0 to 63   := 0;
+    KERNEL : natural range 0 to 31 := 0;
     WIDTH  : natural range 0 to 2048 := 2048;
     HEIGHT : natural range 0 to 2048 := 2048);
   port (
@@ -66,7 +67,7 @@ begin
   connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);
 
   x <= unsigned(to_unsigned(r.cols, x'length));
- y <= unsigned(to_unsigned(r.rows, y'length));
+  y <= unsigned(to_unsigned(r.rows, y'length));
 
   bilinear_1 : entity work.bilinear
     generic map (
@@ -110,19 +111,19 @@ begin
 -------------------------------------------------------------------------------
 -- Output
 -------------------------------------------------------------------------------
-    abcd2_next.a <= "0" & gray8_2d_in(to_integer(y_pixel*5 + x_pixel));
-    if to_integer(y_pixel*5 + x_pixel+1) < 25 then
-      abcd2_next.b <= "0" & gray8_2d_in(to_integer(y_pixel*5 + x_pixel+1));
+    abcd2_next.a <= "0" & gray8_2d_in(to_integer(y_pixel*KERNEL + x_pixel));
+    if to_integer(y_pixel*KERNEL + x_pixel+1) < KERNEL*KERNEL then
+      abcd2_next.b <= "0" & gray8_2d_in(to_integer(y_pixel*KERNEL + x_pixel+1));
     else
       abcd2_next.b <= (others => '0');
     end if;
-    if to_integer((y_pixel+1)*5 + x_pixel) < 25 then    
-      abcd2_next.c <= "0" & gray8_2d_in(to_integer((y_pixel+1)*5 + x_pixel));
+    if to_integer((y_pixel+1)*KERNEL + x_pixel) < KERNEL*KERNEL then    
+      abcd2_next.c <= "0" & gray8_2d_in(to_integer((y_pixel+1)*KERNEL + x_pixel));
     else
       abcd2_next.c <= (others => '0');
     end if;
-    if to_integer((y_pixel+1)*5 + x_pixel+1) < 25 then
-      abcd2_next.d <= "0" & gray8_2d_in(to_integer((y_pixel+1)*5 + x_pixel+1));
+    if to_integer((y_pixel+1)*KERNEL + x_pixel+1) < KERNEL*KERNEL then
+      abcd2_next.d <= "0" & gray8_2d_in(to_integer((y_pixel+1)*KERNEL + x_pixel+1));
     else
       abcd2_next.d <= (others => '0');      
     end if;

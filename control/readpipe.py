@@ -182,6 +182,7 @@ def on():
 #           a  = 0
         i = i + 1
 
+print sys.argv[1]
 if sys.argv[1] == "pic":
     readpic()
 elif sys.argv[1] == "stream":

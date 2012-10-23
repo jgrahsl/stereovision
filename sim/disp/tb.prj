@@ -8,8 +8,10 @@ sim_sink.vhd
 romdata.vhd
 rom.vhd
 bit_ram.vhd
-line_buffer_gray8.vhd
-line_buffer_rgb565.vhd
+inf_shiftreg.vhd
+shiftreg.vhd
+line_buffer_gray8_new.vhd
+line_buffer_rgb565_new.vhd
 translate.vhd
 translate_win_gray8.vhd
 translate_win_rgb565.vhd

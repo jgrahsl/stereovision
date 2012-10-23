@@ -11,11 +11,17 @@ while c != "":
         for i in l:
             if sys.argv[1] == "x":
                 off = x - float(i)
-                print off
+                if x < 319:
+                    print str(off) + ",",
+                else:
+                    print str(off) + ","
 
             if sys.argv[1] == "y":
                 off = y - float(i)
-                print off
+                if x < 319:
+                    print str(off) + ",",
+                else:
+                    print str(off) + ","
 
             if x < (320-1):
                 x = x + 1

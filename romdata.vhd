@@ -1,5 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
+library work;
+use work.cam_pkg.all;
 
 entity romdata is
   generic (ADR_BITS  : integer;
@@ -11,7 +13,12 @@ entity romdata is
 end romdata;
 
 architecture rtl of romdata is
-  signal areg : std_logic_vector((GRIDX_BITS+GRIDY_BITS-1 downto 0);  -- GRIDX+GRIDY-1
+  ATTRIBUTE ram_extract: string;
+    ATTRIBUTE ram_extract OF q: SIGNAL IS "yes";
+    ATTRIBUTE ram_style: string;
+    ATTRIBUTE ram_style OF q: SIGNAL IS "block";
+  
+  signal areg : std_logic_vector((GRIDX_BITS+GRIDY_BITS-1) downto 0);  -- GRIDX+GRIDY-1
 begin
 
   process(clk)

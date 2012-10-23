@@ -48,7 +48,7 @@ try:
 
 except FLException, ex:
 #    print str(ex)
-    xsvfFile = "/home/julian/cam/top.xsvf"
+    xsvfFile = "/home/julian/stereovision/top.xsvf"
     print "Playing \"%s\" into the JTAG chain on FPGALink device %s..." % (xsvfFile, vp)
     flPlayXSVF(handle, xsvfFile)  # Or other SVF, XSVF or CSVF
 
