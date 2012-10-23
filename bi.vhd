@@ -122,6 +122,11 @@ begin
     r_next <= v;
   end process;
 
+  process (pipe_in)
+  begin  -- process
+    null;
+  end process;
+
   proc_clk : process(clk, rst, stall, pipe_in, stage_next, r_next, gray8_2d_in)
   begin
     if rising_edge(clk) and (stall = '0' or rst = '1') then
@@ -130,7 +135,8 @@ begin
       else
         stage <= pipe_in.stage;
       end if;
-      gray8_2d <=  gray8_2d_next; 
+      gray8_2d <=  gray8_2d_next;    
+
       r <= r_next;
     end if;
   end process;

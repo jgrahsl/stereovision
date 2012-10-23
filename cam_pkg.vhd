@@ -6,9 +6,9 @@ package cam_pkg is
 
 -- vin_data(1)(0) 1 col delay
 -- vin_data(0)(1) 1 row delay
-  constant MAX_PIPE  : natural := 32;
-  constant MAX_PARAM : natural := 6;
-  constant MAX_KERNEL : natural := 15;
+  constant MAX_PIPE     : natural := 32;
+  constant MAX_PARAM    : natural := 6;
+  constant MAX_KERNEL   : natural := 15;
   -----------------------------------------------------------------------------
   -- Bilinear
   -----------------------------------------------------------------------------
@@ -34,7 +34,7 @@ package cam_pkg is
   constant IDENT_SIMFEED : std_logic_vector(7 downto 0) := X"09";
   constant IDENT_SIMSINK : std_logic_vector(7 downto 0) := X"0A";
 
-  constant IDENT_FIFOSINK : std_logic_vector(7 downto 0) := X"0B";  
+  constant IDENT_FIFOSINK : std_logic_vector(7 downto 0) := X"0B";
 
   constant IDENT_TRANSLATE       : std_logic_vector(7 downto 0) := X"10";
   constant IDENT_TRANSLATE_WIN   : std_logic_vector(7 downto 0) := X"11";
@@ -45,26 +45,26 @@ package cam_pkg is
   constant IDENT_WINDOW_8        : std_logic_vector(7 downto 0) := X"16";
   constant IDENT_WIN_TEST        : std_logic_vector(7 downto 0) := X"17";
   constant IDENT_WIN_TEST_8      : std_logic_vector(7 downto 0) := X"18";
-  constant IDENT_TESTPIC      : std_logic_vector(7 downto 0) := X"19";
+  constant IDENT_TESTPIC         : std_logic_vector(7 downto 0) := X"19";
 
-  constant IDENT_BI1      : std_logic_vector(7 downto 0) := X"1A";
-  constant IDENT_BI2      : std_logic_vector(7 downto 0) := X"1B";
-  constant IDENT_BI2_X      : std_logic_vector(7 downto 0) := X"1C";
-  constant IDENT_BI2_Y      : std_logic_vector(7 downto 0) := X"1D";
-  constant IDENT_BI2_C      : std_logic_vector(7 downto 0) := X"1E";    
-  constant IDENT_BI3      : std_logic_vector(7 downto 0) := X"1F";
-  constant IDENT_DISPARITY      : std_logic_vector(7 downto 0) := X"20";
-  constant IDENT_CENSUS      : std_logic_vector(7 downto 0) := X"21";      
+  constant IDENT_BI1       : std_logic_vector(7 downto 0) := X"1A";
+  constant IDENT_BI2       : std_logic_vector(7 downto 0) := X"1B";
+  constant IDENT_BI2_X     : std_logic_vector(7 downto 0) := X"1C";
+  constant IDENT_BI2_Y     : std_logic_vector(7 downto 0) := X"1D";
+  constant IDENT_BI2_C     : std_logic_vector(7 downto 0) := X"1E";
+  constant IDENT_BI3       : std_logic_vector(7 downto 0) := X"1F";
+  constant IDENT_DISPARITY : std_logic_vector(7 downto 0) := X"20";
+  constant IDENT_CENSUS    : std_logic_vector(7 downto 0) := X"21";
 
 
-  constant IDENT_NULL    : std_logic_vector(7 downto 0) := X"F0";
+  constant IDENT_NULL : std_logic_vector(7 downto 0) := X"F0";
   -----------------------------------------------------------------------------
   -- Stage types
   -----------------------------------------------------------------------------
-  subtype mono_t is std_logic_vector(0 downto 0);
-  subtype rgb565_t is std_logic_vector(15 downto 0);
-  subtype rgb888_t is std_logic_vector(23 downto 0);
-  subtype gray8_t is std_logic_vector(7 downto 0);
+  subtype  mono_t is std_logic_vector(0 downto 0);
+  subtype  rgb565_t is std_logic_vector(15 downto 0);
+  subtype  rgb888_t is std_logic_vector(23 downto 0);
+  subtype  gray8_t is std_logic_vector(7 downto 0);
 
   type mono_1d_t is array (0 to MAX_KERNEL-1) of mono_t;
   type mono_2d_t is array (0 to MAX_KERNEL*MAX_KERNEL-1) of mono_t;
@@ -74,7 +74,7 @@ package cam_pkg is
 
   type rgb565_1d_t is array (0 to MAX_KERNEL-1) of rgb565_t;
   type rgb565_2d_t is array (0 to MAX_KERNEL*MAX_KERNEL-1) of rgb565_t;
-  
+
   subtype byte_t is std_logic_vector(7 downto 0);
   type    param_t is array (0 to MAX_PARAM-1) of byte_t;
 
@@ -131,7 +131,7 @@ package cam_pkg is
     stall : std_logic;
     data  : std_logic_vector(15 downto 0);
   end record;
-  
+
   type sim_fifo_t is record
     clk   : std_logic;
     en    : std_logic;
@@ -159,31 +159,31 @@ package cam_pkg is
   end record;
 
   type abcd2_t is record
-    a : std_logic_vector(8 downto 0);
-    b : std_logic_vector(8 downto 0);
-    c : std_logic_vector(8 downto 0);
-    d : std_logic_vector(8 downto 0);
+    a      : std_logic_vector(8 downto 0);
+    b      : std_logic_vector(8 downto 0);
+    c      : std_logic_vector(8 downto 0);
+    d      : std_logic_vector(8 downto 0);
     x_frac : unsigned(SUBGRID_BITS-1 downto 0);
-    y_frac : unsigned(SUBGRID_BITS-1 downto 0);    
+    y_frac : unsigned(SUBGRID_BITS-1 downto 0);
   end record;
-  
+
 
   type d0_t is record
-                 pr_count : std_logic_vector(7 downto 0);
-                 pw_count : std_logic_vector(7 downto 0);
-                 auxr_count : std_logic_vector(7 downto 0);
-                 auxw_count : std_logic_vector(7 downto 0);
-                 state : std_logic_vector(15 downto 0);
-                 fe : std_logic_vector(7 downto 0);
-                 p1 : std_logic_vector(7 downto 0);
-                 p2 : std_logic_vector(7 downto 0);                 
-                 p3 : std_logic_vector(7 downto 0);
-                 p1state : std_logic_vector(7 downto 0);
-                 p2state : std_logic_vector(7 downto 0);                 
-                 dvistate : std_logic_vector(7 downto 0);
-               off : std_logic_vector(7 downto 0);
-               off2 : std_logic_vector(7 downto 0);                 
-  end record; 
+    pr_count   : std_logic_vector(7 downto 0);
+    pw_count   : std_logic_vector(7 downto 0);
+    auxr_count : std_logic_vector(7 downto 0);
+    auxw_count : std_logic_vector(7 downto 0);
+    state      : std_logic_vector(15 downto 0);
+    fe         : std_logic_vector(7 downto 0);
+    p1         : std_logic_vector(7 downto 0);
+    p2         : std_logic_vector(7 downto 0);
+    p3         : std_logic_vector(7 downto 0);
+    p1state    : std_logic_vector(7 downto 0);
+    p2state    : std_logic_vector(7 downto 0);
+    dvistate   : std_logic_vector(7 downto 0);
+    off        : std_logic_vector(7 downto 0);
+    off2       : std_logic_vector(7 downto 0);
+  end record;
   
   procedure connect_pipe (
     signal clk       : out std_logic;
@@ -226,6 +226,67 @@ package body cam_pkg is
     src_valid <= pipe_in.stage.valid and not (stall_in or issue);
   end procedure connect_pipe;
 
+  procedure connect_pipe_join (
+    signal clk         : out std_logic;
+    signal rst         : out std_logic;
+    signal pipe_in_1   : in  pipe_t;
+    signal pipe_in_2   : in  pipe_t;
+    signal pipe_out    : out pipe_t;
+    signal stall_in    : in  std_logic;
+    signal stall_out_1 : out std_logic;
+    signal stall_out_2 : out std_logic;
+    signal stage       : in  stage_t;
+    signal src_valid   : out std_logic;
+    signal issue       : in  std_logic;
+    signal stall       : out std_logic)
+  is
+  begin
+    clk <= pipe_in_1.ctrl.clk;
+    rst <= pipe_in_1.ctrl.rst;
+
+    pipe_out.ctrl  <= pipe_in_1.ctrl;
+    pipe_out.cfg   <= pipe_in_1.cfg;
+    pipe_out.stage <= stage;
+
+    stall_out_1 <= stall_in or issue or (pipe_in_1.stage.valid and not pipe_in_2.stage.valid);
+    stall_out_2 <= stall_in or issue or (not pipe_in_1.stage.valid and pipe_in_2.stage.valid);
+    stall       <= stall_in;
+
+    src_valid <= pipe_in_1.stage.valid and pipe_in_2.stage.valid and not (stall_in or issue);
+  end procedure connect_pipe_join;
+
+  procedure connect_pipe_fork (
+    signal clk        : out std_logic;
+    signal rst        : out std_logic;
+    signal pipe_in    : in  pipe_t;
+    signal pipe_out_1 : out pipe_t;
+    signal pipe_out_2 : out pipe_t;
+    signal stall_in_1 : in  std_logic;
+    signal stall_in_2 : in  std_logic;
+    signal stall_out  : out std_logic;
+    signal stage      : in  stage_t;
+    signal src_valid  : out std_logic;
+    signal issue      : in  std_logic;
+    signal stall      : out std_logic)
+  is
+  begin
+    clk <= pipe_in.ctrl.clk;
+    rst <= pipe_in.ctrl.rst;
+
+    pipe_out_1.ctrl  <= pipe_in.ctrl;
+    pipe_out_1.cfg   <= pipe_in.cfg;
+    pipe_out_1.stage <= stage;
+
+    pipe_out_2.ctrl  <= pipe_in.ctrl;
+    pipe_out_2.cfg   <= pipe_in.cfg;
+    pipe_out_2.stage <= stage;
+    
+    stall_out <= (stall_in_1 or stall_in_2) or issue;
+    stall     <= stall_in_1 or stall_in_2;
+
+    src_valid <= pipe_in.stage.valid and not (stall_in_1 or stall_in_2 or issue);
+  end procedure connect_pipe_fork;
+  
   
 
 end cam_pkg;

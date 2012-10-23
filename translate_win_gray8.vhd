@@ -42,14 +42,10 @@ architecture impl of translate_win_gray8 is
 -------------------------------------------------------------------------------
 -- Register
 -------------------------------------------------------------------------------
-  type state_t is (PRE_S, WAIT_S, EMIT_S);
-
   subtype counter_t is natural range 0 to 2047;
   type    reg_t is record
     cols    : natural range 0 to WIDTH*2;
     rows    : natural range 0 to HEIGHT*2;
-    state   : state_t;
-    gray8_2d : gray8_2d_t;
   end record;
 
   signal r      : reg_t;
@@ -59,7 +55,6 @@ architecture impl of translate_win_gray8 is
   begin
     v.cols  := 0;
     v.rows  := 0;
-    v.state := PRE_S;
   end init;
 begin
 
@@ -74,8 +69,6 @@ begin
 -------------------------------------------------------------------------------
 -- Logic
 -------------------------------------------------------------------------------
-    v.gray8_2d  := gray8_2d_in;
-
     en                                := '0';
     issue                             <= '0';
     if v.rows > (HEIGHT-1) and v.rows <= (HEIGHT+APPEND_H-1) then
@@ -142,8 +135,10 @@ begin
     r_next <= v;
   end process;
 
-  gray8_2d_out <= r.gray8_2d;
-
+  process (pipe_in)
+  begin  -- process
+    null;
+  end process;
   proc_clk : process(clk, rst, stall, pipe_in, stage_next, r_next)
   begin
     if rising_edge(clk) and (stall = '0' or rst = '1') then
@@ -152,6 +147,8 @@ begin
       else
         stage <= pipe_in.stage;
       end if;
+      gray8_2d_out <= gray8_2d_in;        
+
       r <= r_next;
     end if;
   end process;
