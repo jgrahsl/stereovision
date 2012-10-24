@@ -12,10 +12,12 @@ entity bi2 is
     WIDTH  : natural range 0 to 2048 := 2048;
     HEIGHT : natural range 0 to 2048 := 2048);
   port (
-    pipe_in     : in  pipe_t;
+    pipe_in_1     : in  pipe_t;
+    pipe_in_2     : in  pipe_t;    
     pipe_out    : out pipe_t;
     stall_in    : in  std_logic;
-    stall_out   : out std_logic;
+    stall_out_1   : out std_logic;
+    stall_out_2   : out std_logic;    
     abcd        : in  abcd_t;
     gray8_2d_in : in  gray8_2d_t;
     abcd2     : out abcd2_t
@@ -64,7 +66,7 @@ architecture impl of bi2 is
 begin 
   issue <= '0';
 
-  connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);
+  connect_pipe_join(clk, rst, pipe_in_1, pipe_in_2, pipe_out, stall_in, stall_out_1, stall_out_2, stage, src_valid, issue, stall);
 
   x <= unsigned(to_unsigned(r.cols, x'length));
   y <= unsigned(to_unsigned(r.rows, y'length));
@@ -100,10 +102,10 @@ begin
   x_frac <= unsigned(std_logic_vector(ox(SUBGRID_BITS-1 downto 0)));
   y_frac <= unsigned(std_logic_vector(oy(SUBGRID_BITS-1 downto 0)));
    
-  process(pipe_in, r, rst, src_valid)
+  process(pipe_in_1, r, rst, src_valid, gray8_2d_in, y_pixel, x_frac, y_frac, x_pixel)
     variable v : reg_t;
   begin
-    stage_next <= pipe_in.stage;
+    stage_next <= pipe_in_1.stage;
     v          := r;
 -------------------------------------------------------------------------------
 -- Logic
@@ -147,7 +149,7 @@ begin
 ------------------------------------------------------------------------------
 -- Reset
 -------------------------------------------------------------------------------
-    if pipe_in.cfg(ID).identify = '1' then
+    if pipe_in_1.cfg(ID).identify = '1' then
       stage_next.identity <= IDENT_BI2;
     end if;
     if rst = '1' then
@@ -157,13 +159,14 @@ begin
     r_next <= v;
   end process;
 
-  proc_clk : process(clk, rst, stall, pipe_in, stage_next, r_next, gray8_2d_in)
+  proc_clk : process(clk, rst, stall, pipe_in_1, stage_next, r_next, gray8_2d_in)
   begin
     if rising_edge(clk) and (stall = '0' or rst = '1') then
-      if pipe_in.cfg(ID).enable = '1' then
+      if pipe_in_1.cfg(ID).enable = '1' then
         stage <= stage_next;
       else
-        stage <= pipe_in.stage;
+        stage <= pipe_in_1.stage;
+        stage.identity <= pipe_in_1.stage.identity or pipe_in_2.stage.identity;
       end if;
       r <= r_next;
       abcd2 <= abcd2_next;

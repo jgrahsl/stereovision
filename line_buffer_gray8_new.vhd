@@ -13,8 +13,10 @@ entity line_buffer_gray8 is
     HEIGHT    : natural range 1 to 2048 := 2048);
   port (
     pipe_in     : in  pipe_t;
-    pipe_out    : out pipe_t;
-    stall_in    : in  std_logic;
+    pipe_out_1     : out pipe_t;
+    pipe_out_2     : out pipe_t;    
+    stall_in_1     : in  std_logic;
+    stall_in_2     : in  std_logic;    
     stall_out   : out std_logic;
     gray8_1d_out : out gray8_1d_t
     );
@@ -55,7 +57,8 @@ architecture impl of line_buffer_gray8 is
 begin
   issue <= '0';
 
-  connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);
+  connect_pipe_fork(clk, rst, pipe_in, pipe_out_1, pipe_out_2, stall_in_1, stall_in_2 , stall_out, stage, src_valid, issue, stall);  
+--  connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);
 
   rams : for i in 0 to (NUM_LINES-2) generate
     my_shiftreg : entity work.shiftregister

@@ -17,7 +17,7 @@ def send_byte(chan,val):
     ba = bytearray(1)
     ba[0] = val
 #    ba[1] = val
-#    ba[2] = val
+#    ba[2] = val 
 #    ba[3] = val
 #    print "wrChan:" +str(chan) + " " + str(val)
     flWriteChannel(handle, 1000, chan,ba)
@@ -405,8 +405,11 @@ while True:
         break
 QtCore.QObject.connect(ui.pushButton_exit, QtCore.SIGNAL("clicked()"), do_exit)
 
-set_reg(31,0x61,1)
-set_reg(31,0x70,1)
+#set_reg(31,0x61,1)
+#set_reg(31,0x70,1)
+
+set_reg(15,0x61,1)
+
 MainWindow.show()
 r = app.exec_()
 sys.exit(r)

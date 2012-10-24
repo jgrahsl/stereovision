@@ -196,6 +196,35 @@ package cam_pkg is
     signal src_valid : out std_logic;
     signal issue     : in  std_logic;
     signal stall     : out std_logic);
+
+  procedure connect_pipe_join (
+    signal clk         : out std_logic;
+    signal rst         : out std_logic;
+    signal pipe_in_1   : in  pipe_t;
+    signal pipe_in_2   : in  pipe_t;
+    signal pipe_out    : out pipe_t;
+    signal stall_in    : in  std_logic;
+    signal stall_out_1 : out std_logic;
+    signal stall_out_2 : out std_logic;
+    signal stage       : in  stage_t;
+    signal src_valid   : out std_logic;
+    signal issue       : in  std_logic;
+    signal stall       : out std_logic);
+
+  procedure connect_pipe_fork (
+    signal clk        : out std_logic;
+    signal rst        : out std_logic;
+    signal pipe_in    : in  pipe_t;
+    signal pipe_out_1 : out pipe_t;
+    signal pipe_out_2 : out pipe_t;
+    signal stall_in_1 : in  std_logic;
+    signal stall_in_2 : in  std_logic;
+    signal stall_out  : out std_logic;
+    signal stage      : in  stage_t;
+    signal src_valid  : out std_logic;
+    signal issue      : in  std_logic;
+    signal stall      : out std_logic);
+
 end cam_pkg;
 
 
@@ -281,10 +310,10 @@ package body cam_pkg is
     pipe_out_2.cfg   <= pipe_in.cfg;
     pipe_out_2.stage <= stage;
     
-    stall_out <= (stall_in_1 or stall_in_2) or issue;
-    stall     <= stall_in_1 or stall_in_2;
+    stall_out <= (stall_in_1) or issue;
+    stall     <= stall_in_1;
 
-    src_valid <= pipe_in.stage.valid and not (stall_in_1 or stall_in_2 or issue);
+    src_valid <= pipe_in.stage.valid and not (stall_in_1 or issue);
   end procedure connect_pipe_fork;
   
   

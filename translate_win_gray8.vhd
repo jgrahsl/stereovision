@@ -56,6 +56,8 @@ architecture impl of translate_win_gray8 is
     v.cols  := 0;
     v.rows  := 0;
   end init;
+
+  signal gray8_2d_next : gray8_2d_t;
 begin
 
   connect_pipe(clk, rst, pipe_in, pipe_out, stall_in, stall_out, stage, src_valid, issue, stall);
@@ -137,20 +139,22 @@ begin
 
   process (pipe_in)
   begin  -- process
-    null;
-  end process;
-  proc_clk : process(clk, rst, stall, pipe_in, stage_next, r_next)
-  begin
-    if rising_edge(clk) and (stall = '0' or rst = '1') then
       if (pipe_in.cfg(ID).enable = '1') then
         stage <= stage_next;
       else
         stage <= pipe_in.stage;
       end if;
-      gray8_2d_out <= gray8_2d_in;        
+      gray8_2d_out <= gray8_2d_next;
 
+    null;
+  end process;
+  proc_clk : process(clk, rst, stall, pipe_in, stage_next, r_next)
+  begin
+    if rising_edge(clk) and (stall = '0' or rst = '1') then
       r <= r_next;
     end if;
   end process;
+  gray8_2d_next <= gray8_2d_in;
+  
 
 end impl;
