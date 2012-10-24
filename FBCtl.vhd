@@ -727,7 +727,7 @@ architecture Behavioral of FBCtl is
   attribute keep_hierarchy : string;
 --  attribute keep_hierarchy of inst_bi2_x: label is "yes";
 --  attribute keep_hierarchy of inst_bi2_y: label is "yes";
---  attribute keep_hierarchy of inst_bi2_c: label is "yes";    
+  attribute keep_hierarchy of inst_bi2_c: label is "yes";    
 
   
 begin
@@ -1719,34 +1719,34 @@ begin
       pb_fifo   => prb_fifo,            -- [inout]      
       p1_fifo   => auxr_fifo);          -- [inout]
 
-  --dut : entity work.win_gray8
-  --  generic map (
-  --    ID     => 5,
-  --    KERNEL => 15,
-  --    WIDTH  => WIDTH,
-  --    HEIGHT => HEIGHT)
-  --  port map (
-  --    pipe_in      => pipe(1),          -- [in]
-  --    pipe_out     => pipe(2),
-  --    stall_in     => stall(2),
-  --    stall_out    => stall(1),
-  --    gray8_2d_out => gray8_2d_1
-  --    );                                -- [inout]
+  dut : entity work.win_gray8
+    generic map (
+      ID     => 5,
+      KERNEL => 15,
+      WIDTH  => WIDTH,
+      HEIGHT => HEIGHT)
+    port map (
+      pipe_in      => pipe(1),          -- [in]
+      pipe_out     => pipe(2),
+      stall_in     => stall(2),
+      stall_out    => stall(1),
+      gray8_2d_out => gray8_2d_1
+      );                                -- [inout]
   
-  --bitest : entity work.bi
-  --  generic map (
-  --    ID     => 10,
-  --    WIDTH  => WIDTH,
-  --    HEIGHT => HEIGHT)
-  --  port map (
-  --    pipe_in      => pipe(2),          -- [in]
-  --    pipe_out     => pipe(3),
-  --    stall_in     => stall(3),
-  --    stall_out    => stall(2),
-  --    abcd         => abcd_1,
-  --    gray8_2d_in  => gray8_2d_1,
-  --    gray8_2d_out => gray8_2d_2
-  --    );                                -- [inout]
+  bitest : entity work.bi
+    generic map (
+      ID     => 10,
+      WIDTH  => WIDTH,
+      HEIGHT => HEIGHT)
+    port map (
+      pipe_in      => pipe(2),          -- [in]
+      pipe_out     => pipe(3),
+      stall_in     => stall(3),
+      stall_out    => stall(2),
+      abcd         => abcd_1,
+      gray8_2d_in  => gray8_2d_1,
+      gray8_2d_out => gray8_2d_2
+      );                                -- [inout]
 
 
     --inst_bi2_x : entity work.bi2_x
@@ -1801,43 +1801,43 @@ begin
     --    abcd2       => abcd2);          -- [out]       
 
 
-  --  inst_bi2_c : entity work.bi2
-  --    generic map (
-  --      ID     => 13,
-  --      KERNEL => 15,
-  --      WIDTH  => WIDTH,
-  --      HEIGHT => HEIGHT)
-  --    port map (
-  --      pipe_in     => pipe(3),         -- [in]
-  --      pipe_out    => pipe(6),         -- [out]
-  --      stall_in    => stall(6),        -- [in]
-  --      stall_out   => stall(3),        -- [out]
-  --      abcd => abcd_1,
-  --      gray8_2d_in => gray8_2d_2,        
-  --      abcd2       => abcd2);          -- [out]         
+    inst_bi2_c : entity work.bi2
+      generic map (
+        ID     => 13,
+        KERNEL => 15,
+        WIDTH  => WIDTH,
+        HEIGHT => HEIGHT)
+      port map (
+        pipe_in     => pipe(3),         -- [in]
+        pipe_out    => pipe(6),         -- [out]
+        stall_in    => stall(6),        -- [in]
+        stall_out   => stall(3),        -- [out]
+        abcd => abcd_1,
+        gray8_2d_in => gray8_2d_2,        
+        abcd2       => abcd2);          -- [out]         
 
-  --bitest3 : entity work.bi3
-  --  generic map (
-  --    ID     => 14,
-  --    WIDTH  => WIDTH,
-  --    HEIGHT => HEIGHT)
-  --  port map (
-  --    pipe_in   => pipe(6),             -- [in]
-  --    pipe_out  => pipe(7),
-  --    stall_in  => stall(7),
-  --    stall_out => stall(6),
-  --    abcd2     => abcd2
-  --    );                                -- [inout]
+  bitest3 : entity work.bi3
+    generic map (
+      ID     => 14,
+      WIDTH  => WIDTH,
+      HEIGHT => HEIGHT)
+    port map (
+      pipe_in   => pipe(6),             -- [in]
+      pipe_out  => pipe(7),
+      stall_in  => stall(7),
+      stall_out => stall(6),
+      abcd2     => abcd2
+      );                                -- [inout]
   
-  --colmux : entity work.color_mux
-  --  generic map (
-  --    ID   => 3,
-  --    MODE => 2)      
-  --  port map (
-  --    pipe_in   => pipe(7),             -- [in]
-  --    pipe_out  => pipe(8),
-  --    stall_in  => stall(8),
-  --    stall_out => stall(7));           -- [inout]
+  colmux : entity work.color_mux
+    generic map (
+      ID   => 3,
+      MODE => 2)      
+    port map (
+      pipe_in   => pipe(7),             -- [in]
+      pipe_out  => pipe(8),
+      stall_in  => stall(8),
+      stall_out => stall(7));           -- [inout]
 
   my_fifo_sink : entity work.fifo_sink
     generic map (
@@ -1846,10 +1846,10 @@ begin
       HEIGHT => HEIGHT
       )
     port map (
-      pipe_in   => pipe(1),             -- [in]
+      pipe_in   => pipe(8),             -- [in]
       pipe_out  => pipe(9),             -- [out]
       stall_in  => stall(9),
-      stall_out => stall(1),
+      stall_out => stall(8),
       p0_fifo   => out_fifo);           -- [inout]
 
   my_mcb_sink : entity work.mcb_sink
