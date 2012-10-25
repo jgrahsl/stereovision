@@ -1,5 +1,5 @@
 //! **************************************************************************
-// Written by: Map P.28xd on Thu Oct 25 11:26:35 2012
+// Written by: Map P.28xd on Thu Oct 25 12:06:43 2012
 //! **************************************************************************
 
 SCHEMATIC START;
@@ -3938,7 +3938,7 @@ OFFSET = IN 1.25 ns VALID 7.5 ns BEFORE COMP "cama_pclk_i" "RISING";
 OFFSET = IN 1.25 ns VALID 7.5 ns BEFORE COMP "camb_pclk_i" "RISING";
 TIMEGRP "fx2out" OFFSET = OUT 14 ns AFTER COMP "fx2clk_in";
 TIMEGRP "fx2out_data" OFFSET = OUT 22 ns AFTER COMP "fx2clk_in";
-TIMEGRP "fx2in" OFFSET = IN 13 ns VALID 15 ns BEFORE COMP "fx2clk_in"
+TIMEGRP "fx2in" OFFSET = IN 11 ns VALID 15 ns BEFORE COMP "fx2clk_in"
         "RISING";
 TIMEGRP "fx2data_in" OFFSET = IN 9 ns VALID 15 ns BEFORE COMP "fx2clk_in"
         "RISING";

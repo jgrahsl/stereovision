@@ -6634,13 +6634,13 @@ inst_syscon/Inst_pll_mcb/CLKOUT2|    6.049|         |         |         |
 =========================================================================
 
 
-Total REAL time to Xst completion: 76.00 secs
-Total CPU time to Xst completion: 40.15 secs
+Total REAL time to Xst completion: 41.00 secs
+Total CPU time to Xst completion: 40.17 secs
  
 --> 
 
 
-Total memory usage is 193136 kilobytes
+Total memory usage is 192496 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings : 2832 (   0 filtered)
