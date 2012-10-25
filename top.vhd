@@ -430,7 +430,7 @@ begin
       wr_clk  => fx2clk_int,            -- [in]
       wr_data => h2fdata,               -- [in]
       wr_en   => wr_en_a,               -- [in]
-      wr_full => open, c => led_o);     -- [out]
+      wr_full => wr_full_a, c => led_o);     -- [out]
 
   my_i2c_b : entity work.i2c
     port map (
@@ -594,15 +594,14 @@ begin
       wr_en  => wr_en_a,                  -- [IN]
       rd_en  => rd_en_a,                  -- [IN]
       dout   => dout,                   -- [OUT]
-      full   => wr_full_a,                -- [OUT]
+      full   => open,                -- [OUT]
       empty  => wr_empty_a);                 -- [OUT]
-
-  
+ 
 
   i2c_sel_a <= '1' when chanaddr = "0100001"                                    else '0';
   i2c_sel_b <= '1' when chanaddr = "0100010"                                    else '0';
   wr_en_a   <= '1' when i2c_sel_a = '1' and wr_full_a = '0' and h2fvalid = '1'  else '0';
-  rd_en_a   <= '1' when i2c_sel_a = '1' and wr_empty_a = '0' and f2hready = '1' else '0';
+  rd_en_a   <= '1' when i2c_sel_a = '1' and wr_empty_aa = '0' and f2hready = '1' else '0';
   wr_en_b   <= '1' when i2c_sel_b = '1' and wr_full_b = '0' and h2fvalid = '1'  else '0';
   wr_data   <= h2fdata;
 

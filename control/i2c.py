@@ -96,12 +96,6 @@ print "-"
 def tx(ba):
     flWriteChannel(handle, 1000, 0x21,ba)
 
-def tx2():
-    ba = bytearray(2)
-#    ba[0] = 0x02
-    ba[1] = 0xCC
-    flWriteChannel(handle, 1000, 0x21,ba)
-
 def rx(ba):
     l = 5
     a = flReadChannel(handle,2000, 0x21,l)
@@ -112,18 +106,29 @@ def rx(ba):
         else:
             print "ok"
 
-for i in range(1):
+
+def fill(s):
     ba = bytearray(5)
     ba[0] = 0x78
-    c = 2*i
-    ba[1] = int(init[c][0:2],16)
-    ba[2] = int(init[c][2:4],16)
-    ba[3] = int(init[c][4:6],16)
-    ba[4] = int(init[c][6:8],16)  
-    print i
+    ba[1] = int(s[0:2],16)
+    ba[2] = int(s[2:4],16)
+    ba[3] = int(s[4:6],16)
+    ba[4] = int(s[6:8],16)  
+    return ba
+
+def issue(s):
+    ba = fill(s)
     tx(ba)
     rx(ba)
 
+for i in range(len(init)/2):
+    print i
+    issue(init[2*i])
+    sys.stdin.readline()
+
+issue(init2[0])
+
+    
 #    rx()
 #    sys.stdin.readline()
 

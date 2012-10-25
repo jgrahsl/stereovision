@@ -124,8 +124,8 @@ begin
     end if;
   end process;
 
-  twiAddr(7 downto 1) <= "0111100"; --reg(0)(7 downto 1);
-  twiAddr(0)          <= reg(0)(0) when state = stData1 or state = stData2 else '0';
+  twiAddr(7 downto 1) <= "0111100"; --eg(0)(7 downto 1);
+  twiAddr(0)          <= '0'; --reg(0)(0) when state = stData1 or state = stData2 else '0';
 
   OUTPUT_DECODE : process (state, twiDone, twiErr)
   begin
@@ -161,6 +161,9 @@ begin
         twiNewMsg <= '1';
 
         if (twiDone = '1') then
+          twiStb    <= '0';
+          twiNewMsg <= '0';
+
           if (twiErr = '1') then
             nstate <= stError;
           else
@@ -173,6 +176,9 @@ begin
         twiStb <= '1';
 
         if (twiDone = '1') then
+          twiStb    <= '0';
+          twiNewMsg <= '0';
+
           if (twiErr = '1') then
             nstate <= stError;
           else
@@ -185,6 +191,9 @@ begin
         twiStb <= '1';
 
         if (twiDone = '1') then
+          twiStb    <= '0';
+          twiNewMsg <= '0';
+
           if (twiErr = '1') then
             nstate <= stError;
           else
@@ -201,6 +210,9 @@ begin
         twiStb <= '1';
 
         if (twiDone = '1') then
+          twiStb    <= '0';
+          twiNewMsg <= '0';
+
           if (twiErr = '1') then
             nstate <= stError;
           else

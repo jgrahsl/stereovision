@@ -1,5 +1,5 @@
 //! **************************************************************************
-// Written by: Map P.28xd on Thu Oct 25 16:18:25 2012
+// Written by: Map P.28xd on Thu Oct 25 17:31:09 2012
 //! **************************************************************************
 
 SCHEMATIC START;
@@ -454,6 +454,8 @@ TIMEGRP fx2clk_in = BEL "cfg[0]_enable" BEL "cfg<0>_p_1_0" BEL "cfg<0>_p_1_1"
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/RST_FULL_GEN"
         BEL
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i"
         PIN
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<26>"
         BEL
@@ -682,8 +684,6 @@ TIMEGRP fx2clk_in = BEL "cfg[0]_enable" BEL "cfg<0>_p_1_0" BEL "cfg<0>_p_1_1"
         "my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/RST_FULL_GEN"
         BEL
         "my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i"
-        BEL
-        "my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i"
         BEL
         "my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gras.rsts/ram_empty_fb_i"
         PIN
@@ -3185,10 +3185,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout0 = BEL "my_i2c_b/state_FSM_FFd1" BEL
         BEL "my_i2c_b/reg_1_0" BEL "my_i2c_b/reg_3_7" BEL "my_i2c_b/reg_3_6"
         BEL "my_i2c_b/reg_3_5" BEL "my_i2c_b/reg_3_4" BEL "my_i2c_b/reg_3_3"
         BEL "my_i2c_b/reg_3_2" BEL "my_i2c_b/reg_3_1" BEL "my_i2c_b/reg_3_0"
-        BEL "my_i2c_b/reg_0_7" BEL "my_i2c_b/reg_0_6" BEL "my_i2c_b/reg_0_5"
-        BEL "my_i2c_b/reg_0_4" BEL "my_i2c_b/reg_0_3" BEL "my_i2c_b/reg_0_2"
-        BEL "my_i2c_b/reg_0_1" BEL "my_i2c_b/reg_0_0" BEL
-        "my_i2c_a/state_FSM_FFd1" BEL "my_i2c_a/state_FSM_FFd2" BEL
+        BEL "my_i2c_a/state_FSM_FFd1" BEL "my_i2c_a/state_FSM_FFd2" BEL
         "my_i2c_a/state_FSM_FFd3" BEL "my_i2c_a/state_FSM_FFd4" BEL
         "my_i2c_a/octets_2" BEL "my_i2c_a/octets_1" BEL "my_i2c_a/octets_0"
         BEL "my_i2c_a/waitCnt_23" BEL "my_i2c_a/waitCnt_22" BEL
@@ -3212,19 +3209,9 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout0 = BEL "my_i2c_b/state_FSM_FFd1" BEL
         "my_i2c_a/reg_1_2" BEL "my_i2c_a/reg_1_1" BEL "my_i2c_a/reg_1_0" BEL
         "my_i2c_a/reg_3_7" BEL "my_i2c_a/reg_3_6" BEL "my_i2c_a/reg_3_5" BEL
         "my_i2c_a/reg_3_4" BEL "my_i2c_a/reg_3_3" BEL "my_i2c_a/reg_3_2" BEL
-        "my_i2c_a/reg_3_1" BEL "my_i2c_a/reg_3_0" BEL "my_i2c_a/reg_0_7" BEL
-        "my_i2c_a/reg_0_6" BEL "my_i2c_a/reg_0_5" BEL "my_i2c_a/reg_0_4" BEL
-        "my_i2c_a/reg_0_3" BEL "my_i2c_a/reg_0_2" BEL "my_i2c_a/reg_0_1" BEL
-        "my_i2c_a/reg_0_0" BEL "my_i2c_a/Inst_TWICtl/subState_1" BEL
+        "my_i2c_a/reg_3_1" BEL "my_i2c_a/reg_3_0" BEL
+        "my_i2c_a/Inst_TWICtl/subState_1" BEL
         "my_i2c_a/Inst_TWICtl/subState_0" BEL
-        "my_i2c_a/Inst_TWICtl/bitCount_2" BEL
-        "my_i2c_a/Inst_TWICtl/bitCount_1" BEL
-        "my_i2c_a/Inst_TWICtl/bitCount_0" BEL "my_i2c_a/Inst_TWICtl/sclCnt_7"
-        BEL "my_i2c_a/Inst_TWICtl/sclCnt_6" BEL
-        "my_i2c_a/Inst_TWICtl/sclCnt_5" BEL "my_i2c_a/Inst_TWICtl/sclCnt_4"
-        BEL "my_i2c_a/Inst_TWICtl/sclCnt_3" BEL
-        "my_i2c_a/Inst_TWICtl/sclCnt_2" BEL "my_i2c_a/Inst_TWICtl/sclCnt_1"
-        BEL "my_i2c_a/Inst_TWICtl/sclCnt_0" BEL
         "my_i2c_a/Inst_TWICtl/busFreeCnt_7" BEL
         "my_i2c_a/Inst_TWICtl/busFreeCnt_6" BEL
         "my_i2c_a/Inst_TWICtl/busFreeCnt_5" BEL
@@ -3233,29 +3220,23 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout0 = BEL "my_i2c_b/state_FSM_FFd1" BEL
         "my_i2c_a/Inst_TWICtl/busFreeCnt_2" BEL
         "my_i2c_a/Inst_TWICtl/busFreeCnt_1" BEL
         "my_i2c_a/Inst_TWICtl/busFreeCnt_0" BEL
+        "my_i2c_a/Inst_TWICtl/bitCount_2" BEL
+        "my_i2c_a/Inst_TWICtl/bitCount_1" BEL
+        "my_i2c_a/Inst_TWICtl/bitCount_0" BEL "my_i2c_a/Inst_TWICtl/sclCnt_7"
+        BEL "my_i2c_a/Inst_TWICtl/sclCnt_6" BEL
+        "my_i2c_a/Inst_TWICtl/sclCnt_5" BEL "my_i2c_a/Inst_TWICtl/sclCnt_4"
+        BEL "my_i2c_a/Inst_TWICtl/sclCnt_3" BEL
+        "my_i2c_a/Inst_TWICtl/sclCnt_2" BEL "my_i2c_a/Inst_TWICtl/sclCnt_1"
+        BEL "my_i2c_a/Inst_TWICtl/sclCnt_0" BEL
         "my_i2c_a/Inst_TWICtl/state_FSM_FFd1" BEL
-        "my_i2c_a/Inst_TWICtl/state_FSM_FFd2" BEL
         "my_i2c_a/Inst_TWICtl/state_FSM_FFd3" BEL
-        "my_i2c_a/Inst_TWICtl/state_FSM_FFd4" BEL
-        "my_i2c_a/Inst_TWICtl/currAddr_7" BEL
-        "my_i2c_a/Inst_TWICtl/currAddr_6" BEL
-        "my_i2c_a/Inst_TWICtl/currAddr_5" BEL
-        "my_i2c_a/Inst_TWICtl/currAddr_4" BEL
-        "my_i2c_a/Inst_TWICtl/currAddr_3" BEL
-        "my_i2c_a/Inst_TWICtl/currAddr_2" BEL
-        "my_i2c_a/Inst_TWICtl/currAddr_1" BEL
-        "my_i2c_a/Inst_TWICtl/currAddr_0" BEL "my_i2c_a/Inst_TWICtl/dScl" BEL
-        "my_i2c_a/Inst_TWICtl/ddSda" BEL "my_i2c_a/Inst_TWICtl/dSda" BEL
-        "my_i2c_b/Inst_TWICtl/subState_1" BEL
+        "my_i2c_a/Inst_TWICtl/state_FSM_FFd2" BEL "my_i2c_a/Inst_TWICtl/dScl"
+        BEL "my_i2c_a/Inst_TWICtl/dataByte_6" BEL
+        "my_i2c_a/Inst_TWICtl/dataByte_5" BEL
+        "my_i2c_a/Inst_TWICtl/dataByte_4" BEL
+        "my_i2c_a/Inst_TWICtl/dataByte_3" BEL "my_i2c_a/Inst_TWICtl/ddSda" BEL
+        "my_i2c_a/Inst_TWICtl/dSda" BEL "my_i2c_b/Inst_TWICtl/subState_1" BEL
         "my_i2c_b/Inst_TWICtl/subState_0" BEL
-        "my_i2c_b/Inst_TWICtl/bitCount_2" BEL
-        "my_i2c_b/Inst_TWICtl/bitCount_1" BEL
-        "my_i2c_b/Inst_TWICtl/bitCount_0" BEL "my_i2c_b/Inst_TWICtl/sclCnt_7"
-        BEL "my_i2c_b/Inst_TWICtl/sclCnt_6" BEL
-        "my_i2c_b/Inst_TWICtl/sclCnt_5" BEL "my_i2c_b/Inst_TWICtl/sclCnt_4"
-        BEL "my_i2c_b/Inst_TWICtl/sclCnt_3" BEL
-        "my_i2c_b/Inst_TWICtl/sclCnt_2" BEL "my_i2c_b/Inst_TWICtl/sclCnt_1"
-        BEL "my_i2c_b/Inst_TWICtl/sclCnt_0" BEL
         "my_i2c_b/Inst_TWICtl/busFreeCnt_7" BEL
         "my_i2c_b/Inst_TWICtl/busFreeCnt_6" BEL
         "my_i2c_b/Inst_TWICtl/busFreeCnt_5" BEL
@@ -3264,36 +3245,39 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout0 = BEL "my_i2c_b/state_FSM_FFd1" BEL
         "my_i2c_b/Inst_TWICtl/busFreeCnt_2" BEL
         "my_i2c_b/Inst_TWICtl/busFreeCnt_1" BEL
         "my_i2c_b/Inst_TWICtl/busFreeCnt_0" BEL
+        "my_i2c_b/Inst_TWICtl/bitCount_2" BEL
+        "my_i2c_b/Inst_TWICtl/bitCount_1" BEL
+        "my_i2c_b/Inst_TWICtl/bitCount_0" BEL "my_i2c_b/Inst_TWICtl/sclCnt_7"
+        BEL "my_i2c_b/Inst_TWICtl/sclCnt_6" BEL
+        "my_i2c_b/Inst_TWICtl/sclCnt_5" BEL "my_i2c_b/Inst_TWICtl/sclCnt_4"
+        BEL "my_i2c_b/Inst_TWICtl/sclCnt_3" BEL
+        "my_i2c_b/Inst_TWICtl/sclCnt_2" BEL "my_i2c_b/Inst_TWICtl/sclCnt_1"
+        BEL "my_i2c_b/Inst_TWICtl/sclCnt_0" BEL
         "my_i2c_b/Inst_TWICtl/state_FSM_FFd1" BEL
-        "my_i2c_b/Inst_TWICtl/state_FSM_FFd2" BEL
         "my_i2c_b/Inst_TWICtl/state_FSM_FFd3" BEL
-        "my_i2c_b/Inst_TWICtl/state_FSM_FFd4" BEL
-        "my_i2c_b/Inst_TWICtl/currAddr_7" BEL
-        "my_i2c_b/Inst_TWICtl/currAddr_6" BEL
-        "my_i2c_b/Inst_TWICtl/currAddr_5" BEL
-        "my_i2c_b/Inst_TWICtl/currAddr_4" BEL
-        "my_i2c_b/Inst_TWICtl/currAddr_3" BEL
-        "my_i2c_b/Inst_TWICtl/currAddr_2" BEL
-        "my_i2c_b/Inst_TWICtl/currAddr_1" BEL
-        "my_i2c_b/Inst_TWICtl/currAddr_0" BEL "my_i2c_b/Inst_TWICtl/dScl" BEL
-        "my_i2c_b/Inst_TWICtl/ddSda" BEL "my_i2c_b/Inst_TWICtl/dSda" BEL
-        "my_i2c_a/Inst_LocalRst/RstQ_4" BEL "my_i2c_a/Inst_LocalRst/RstQ_3"
-        BEL "my_i2c_a/Inst_LocalRst/RstQ_2" BEL
-        "my_i2c_a/Inst_LocalRst/RstQ_1" BEL "my_i2c_b/Inst_LocalRst/RstQ_4"
-        BEL "my_i2c_b/Inst_LocalRst/RstQ_3" BEL
-        "my_i2c_b/Inst_LocalRst/RstQ_2" BEL "my_i2c_b/Inst_LocalRst/RstQ_1"
-        BEL "inst_camctlb/rstCnt_0" BEL "inst_camctlb/rstCnt_1" BEL
-        "inst_camctlb/rstCnt_2" BEL "inst_camctlb/rstCnt_3" BEL
-        "inst_camctlb/rstCnt_4" BEL "inst_camctlb/rstCnt_5" BEL
-        "inst_camctlb/rstCnt_6" BEL "inst_camctlb/rstCnt_7" BEL
-        "inst_camctlb/rstCnt_8" BEL "inst_camctlb/rstCnt_9" BEL
-        "inst_camctlb/rstCnt_10" BEL "inst_camctlb/rstCnt_11" BEL
-        "inst_camctlb/rstCnt_12" BEL "inst_camctlb/rstCnt_13" BEL
-        "inst_camctlb/rstCnt_14" BEL "inst_camctlb/rstCnt_15" BEL
-        "inst_camctlb/rstCnt_16" BEL "inst_camctlb/rstCnt_17" BEL
-        "inst_camctlb/rstCnt_18" BEL "inst_camctlb/rstCnt_19" BEL
-        "inst_camctlb/rstCnt_20" BEL "inst_camctlb/rstCnt_21" BEL
-        "inst_camctlb/rstCnt_22" BEL "inst_camctlb/Inst_LocalRst/RstQ_4" BEL
+        "my_i2c_b/Inst_TWICtl/state_FSM_FFd2" BEL "my_i2c_b/Inst_TWICtl/dScl"
+        BEL "my_i2c_b/Inst_TWICtl/dataByte_6" BEL
+        "my_i2c_b/Inst_TWICtl/dataByte_5" BEL
+        "my_i2c_b/Inst_TWICtl/dataByte_4" BEL
+        "my_i2c_b/Inst_TWICtl/dataByte_3" BEL "my_i2c_b/Inst_TWICtl/ddSda" BEL
+        "my_i2c_b/Inst_TWICtl/dSda" BEL "my_i2c_a/Inst_LocalRst/RstQ_4" BEL
+        "my_i2c_a/Inst_LocalRst/RstQ_3" BEL "my_i2c_a/Inst_LocalRst/RstQ_2"
+        BEL "my_i2c_a/Inst_LocalRst/RstQ_1" BEL
+        "my_i2c_b/Inst_LocalRst/RstQ_4" BEL "my_i2c_b/Inst_LocalRst/RstQ_3"
+        BEL "my_i2c_b/Inst_LocalRst/RstQ_2" BEL
+        "my_i2c_b/Inst_LocalRst/RstQ_1" BEL "inst_camctlb/rstCnt_0" BEL
+        "inst_camctlb/rstCnt_1" BEL "inst_camctlb/rstCnt_2" BEL
+        "inst_camctlb/rstCnt_3" BEL "inst_camctlb/rstCnt_4" BEL
+        "inst_camctlb/rstCnt_5" BEL "inst_camctlb/rstCnt_6" BEL
+        "inst_camctlb/rstCnt_7" BEL "inst_camctlb/rstCnt_8" BEL
+        "inst_camctlb/rstCnt_9" BEL "inst_camctlb/rstCnt_10" BEL
+        "inst_camctlb/rstCnt_11" BEL "inst_camctlb/rstCnt_12" BEL
+        "inst_camctlb/rstCnt_13" BEL "inst_camctlb/rstCnt_14" BEL
+        "inst_camctlb/rstCnt_15" BEL "inst_camctlb/rstCnt_16" BEL
+        "inst_camctlb/rstCnt_17" BEL "inst_camctlb/rstCnt_18" BEL
+        "inst_camctlb/rstCnt_19" BEL "inst_camctlb/rstCnt_20" BEL
+        "inst_camctlb/rstCnt_21" BEL "inst_camctlb/rstCnt_22" BEL
+        "inst_camctlb/Inst_LocalRst/RstQ_4" BEL
         "inst_camctlb/Inst_LocalRst/RstQ_3" BEL
         "inst_camctlb/Inst_LocalRst/RstQ_2" BEL
         "inst_camctlb/Inst_LocalRst/RstQ_1" BEL "inst_camctlb/intRst" BEL
@@ -3320,26 +3304,20 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout0 = BEL "my_i2c_b/state_FSM_FFd1" BEL
         "inst_syscon/Inst_dcm_fixed/clkout1_buf" BEL
         "my_i2c_a/Inst_TWICtl/DONE_O" BEL "my_i2c_a/Inst_TWICtl/ERR_O" BEL
         "my_i2c_b/Inst_TWICtl/DONE_O" BEL "my_i2c_b/Inst_TWICtl/ERR_O" BEL
+        "my_i2c_a/Inst_TWICtl/rSda" BEL "my_i2c_b/Inst_TWICtl/rSda" BEL
+        "my_i2c_b/reg_0_0" BEL "my_i2c_a/reg_0_0" BEL
         "my_i2c_a/Inst_TWICtl/rScl" BEL "my_i2c_a/Inst_TWICtl/addrNData" BEL
         "my_i2c_b/Inst_TWICtl/rScl" BEL "my_i2c_b/Inst_TWICtl/addrNData" BEL
         "my_i2c_a/Inst_TWICtl/int_Rst" BEL "my_i2c_b/Inst_TWICtl/int_Rst" BEL
-        "my_i2c_a/Inst_TWICtl/rSda" BEL "my_i2c_a/Inst_TWICtl/busState_1" BEL
-        "my_i2c_a/Inst_TWICtl/busState_0" BEL "my_i2c_b/Inst_TWICtl/rSda" BEL
+        "my_i2c_a/Inst_TWICtl/busState_1" BEL
+        "my_i2c_a/Inst_TWICtl/busState_0" BEL
         "my_i2c_b/Inst_TWICtl/busState_1" BEL
         "my_i2c_b/Inst_TWICtl/busState_0" BEL
         "my_i2c_a/Inst_TWICtl/dataByte_7" BEL
-        "my_i2c_a/Inst_TWICtl/dataByte_6" BEL
-        "my_i2c_a/Inst_TWICtl/dataByte_5" BEL
-        "my_i2c_a/Inst_TWICtl/dataByte_4" BEL
-        "my_i2c_a/Inst_TWICtl/dataByte_3" BEL
         "my_i2c_a/Inst_TWICtl/dataByte_2" BEL
         "my_i2c_a/Inst_TWICtl/dataByte_1" BEL
         "my_i2c_a/Inst_TWICtl/dataByte_0" BEL
         "my_i2c_b/Inst_TWICtl/dataByte_7" BEL
-        "my_i2c_b/Inst_TWICtl/dataByte_6" BEL
-        "my_i2c_b/Inst_TWICtl/dataByte_5" BEL
-        "my_i2c_b/Inst_TWICtl/dataByte_4" BEL
-        "my_i2c_b/Inst_TWICtl/dataByte_3" BEL
         "my_i2c_b/Inst_TWICtl/dataByte_2" BEL
         "my_i2c_b/Inst_TWICtl/dataByte_1" BEL
         "my_i2c_b/Inst_TWICtl/dataByte_0" BEL
