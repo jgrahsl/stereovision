@@ -108,3 +108,6 @@ TIMEGRP "fx2out_data" OFFSET = OUT 22 ns AFTER "fx2clk_in";
 
 TIMEGRP "fx2in" OFFSET = IN 11 ns VALID 15 ns BEFORE "fx2clk_in" RISING;
 TIMEGRP "fx2data_in" OFFSET = IN 9 ns VALID 15 ns BEFORE "fx2clk_in" RISING;
+
+#TIMEGRP "fx2in" OFFSET = IN 9.5 ns  AFTER "fx2clk_in" RISING;
+#TIMEGRP "fx2data_in" OFFSET = IN 11 ns AFTER "fx2clk_in" RISING;
