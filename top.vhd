@@ -430,7 +430,7 @@ begin
       wr_clk  => fx2clk_int,            -- [in]
       wr_data => h2fdata,               -- [in]
       wr_en   => wr_en_a,               -- [in]
-      wr_full => wr_full_a, c => led_o);     -- [out]
+      wr_full => open, c => led_o);     -- [out]
 
   my_i2c_b : entity work.i2c
     port map (
@@ -530,8 +530,8 @@ begin
   usb_fifo.en <= fifoen;
 
 
-  f2hvalid <= --'1' when rd_en_a = '1' else
-              --'0' when i2c_sel_a = '1' and wr_empty_a = '1' and f2hready = '1'   else
+  f2hvalid <= '1' when rd_en_a = '1' else
+              '0' when i2c_sel_a = '1' and wr_empty_a = '1' and f2hready = '1'   else
               '1' when fifoen = '1'                                              else
               '0' when fifosel = '1' and usb_fifo.stall = '1' and f2hready = '1' else
               '1' when f2hready = '1'                                            else
@@ -564,7 +564,7 @@ begin
 --  d.off <= "00" & STD_LOGIC_VECTOR(disx+disy);  
 
   with chanaddr select f2hdata <=
---    dout                                           when "0100001",
+    dout                                           when "0100001",
     std_logic_vector(to_unsigned(adr, 8))          when "1100000",
     "000000" & cfg(adr).identify & cfg(adr).enable when "1100001",
     inspect.identity                               when "1100010",
@@ -585,17 +585,17 @@ begin
 -------------------------------------------------------------------------------
 -- I2C
 -------------------------------------------------------------------------------
-  --my_i2cfifo : entity work.i2cfifo
-  --  port map (
-  --    rst    => not i2c_en_a,                  -- [IN]
-  --    wr_clk => fx2clk_int,                 -- [IN]
-  --    rd_clk => fx2clk_int,                    -- [IN]
-  --    din    => h2fdata,                -- [IN]
-  --    wr_en  => wr_en_a,                  -- [IN]
-  --    rd_en  => rd_en_a,                  -- [IN]
-  --    dout   => dout,                   -- [OUT]
-  --    full   => wr_full_a,                -- [OUT]
-  --    empty  => wr_empty_a);                 -- [OUT]
+  my_i2cfifo : entity work.i2cfifo
+    port map (
+      rst    => not i2c_en_a,                  -- [IN]
+      wr_clk => fx2clk_int,                 -- [IN]
+      rd_clk => fx2clk_int,                    -- [IN]
+      din    => h2fdata,                -- [IN]
+      wr_en  => wr_en_a,                  -- [IN]
+      rd_en  => rd_en_a,                  -- [IN]
+      dout   => dout,                   -- [OUT]
+      full   => wr_full_a,                -- [OUT]
+      empty  => wr_empty_a);                 -- [OUT]
 
   
 

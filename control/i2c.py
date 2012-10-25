@@ -61,29 +61,34 @@ print "-"
 #    readpic()
 
 def tx():
-    ba = bytearray(5)
-    ba[0] = 0x78
-    ba[1] = 0x30
-    ba[2] = 0x1A   
-    ba[3] = 0x02
-    ba[4] = 0xCC
     flWriteChannel(handle, 1000, 0x21,ba)
 
 def tx2():
     ba = bytearray(2)
-    ba[0] = 0x02
+#    ba[0] = 0x02
     ba[1] = 0xCC
     flWriteChannel(handle, 1000, 0x21,ba)
 
 def rx():
-    a = flReadChannel(handle,2000, 0x21,1)
-    print a
+    a = flReadChannel(handle,2000, 0x21,5)
+    for i in range(5):
+        print hex(a[i]),
+        if a[i] != ba[i]:
+            print "err"
+        else:
+            print "ok"
 
+ba = bytearray(5)
+ba[0] = 0x78
+ba[1] = 0x30
+ba[2] = 0x1A   
+ba[3] = 0x02
+ba[4] = 0xCC
 
 
 tx()
 #tx2()
-#rx()
+rx()
 #f.close()
 flClose(handle)
 exit()
