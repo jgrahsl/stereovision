@@ -331,6 +331,7 @@ WARNING:HDLCompiler:946 - "/home/julian/stereovision/top.vhd" Line 362: Actual f
 WARNING:HDLCompiler:946 - "/home/julian/stereovision/top.vhd" Line 363: Actual for formal port blue_i is neither a static name nor a globally static expression
 WARNING:HDLCompiler:946 - "/home/julian/stereovision/top.vhd" Line 426: Actual for formal port rst_i is neither a static name nor a globally static expression
 WARNING:HDLCompiler:946 - "/home/julian/stereovision/top.vhd" Line 437: Actual for formal port rst_i is neither a static name nor a globally static expression
+WARNING:HDLCompiler:946 - "/home/julian/stereovision/top.vhd" Line 590: Actual for formal port rst is neither a static name nor a globally static expression
 
 =========================================================================
 *                            HDL Elaboration                            *
@@ -468,18 +469,18 @@ INFO:HDLCompiler:679 - "/home/julian/stereovision/remote_sources/_/lib/digilent/
 INFO:HDLCompiler:679 - "/home/julian/stereovision/remote_sources/_/lib/digilent/TWICtl.vhd" Line 393. Case statement is complete. others clause is never selected
 INFO:HDLCompiler:679 - "/home/julian/stereovision/remote_sources/_/lib/digilent/TWICtl.vhd" Line 411. Case statement is complete. others clause is never selected
 INFO:HDLCompiler:679 - "/home/julian/stereovision/remote_sources/_/lib/digilent/TWICtl.vhd" Line 429. Case statement is complete. others clause is never selected
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 136: octets should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 137: reg should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 145: empty should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 147: octets should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 150: octets should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 153: dout should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 157: reg should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 170: reg should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 182: reg should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 193: reg should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 198: reg should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 212: waitcnt should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 138: octets should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 139: reg should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 147: empty should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 149: octets should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 152: octets should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 155: dout should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 159: reg should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 172: reg should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 184: reg should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 195: reg should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 200: reg should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 214: waitcnt should be on the sensitivity list of the process
 WARNING:HDLCompiler:1127 - "/home/julian/stereovision/top.vhd" Line 476: Assignment to rd ignored, since the identifier is never used
 
 Elaborating entity <inspect_sync> (architecture <myrtl>) from library <work>.
@@ -525,7 +526,9 @@ INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 279: Output port <d_off
 INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 279: Output port <d_off2> of the instance <inst_fbctl> is unconnected or connected to loadless signal.
 INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 279: Output port <stallo> of the instance <inst_fbctl> is unconnected or connected to loadless signal.
 INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 384: Output port <VDDEN_O> of the instance <inst_camctla> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 424: Output port <wr_full> of the instance <my_i2c_a> is unconnected or connected to loadless signal.
 INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 435: Output port <c> of the instance <my_i2c_b> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 588: Output port <rd_data_count> of the instance <my_i2cfifo> is unconnected or connected to loadless signal.
 WARNING:Xst:653 - Signal <cfg<0>_p<2>> is used but never assigned. This sourceless signal will be automatically connected to value GND.
 WARNING:Xst:653 - Signal <cfg<0>_p<3>> is used but never assigned. This sourceless signal will be automatically connected to value GND.
 WARNING:Xst:653 - Signal <cfg<0>_p<4>> is used but never assigned. This sourceless signal will be automatically connected to value GND.
@@ -790,7 +793,7 @@ WARNING:Xst:653 - Signal <cfg<31>_p<5>> is used but never assigned. This sourcel
 INFO:Xst:2774 - HDL ADVISOR - S property attached to signal dummyb_t may hinder XST clustering optimizations.
     Summary:
 	inferred 581 D-type flip-flop(s).
-	inferred   6 Multiplexer(s).
+	inferred   8 Multiplexer(s).
 Unit <top> synthesized.
 
 Synthesizing Unit <SysCon>.
@@ -2842,8 +2845,8 @@ Unit <CamCtl> synthesized.
 
 Synthesizing Unit <i2c>.
     Related source file is "/home/julian/stereovision/i2c.vhd".
-INFO:Xst:3210 - "/home/julian/stereovision/i2c.vhd" line 85: Output port <D_O> of the instance <Inst_TWICtl> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/i2c.vhd" line 85: Output port <ERRTYPE_O> of the instance <Inst_TWICtl> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/i2c.vhd" line 87: Output port <D_O> of the instance <Inst_TWICtl> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/i2c.vhd" line 87: Output port <ERRTYPE_O> of the instance <Inst_TWICtl> is unconnected or connected to loadless signal.
     Found 4-bit register for signal <state>.
     Found 8-bit register for signal <reg<0>>.
     Found 8-bit register for signal <reg<1>>.
@@ -2851,7 +2854,7 @@ INFO:Xst:3210 - "/home/julian/stereovision/i2c.vhd" line 85: Output port <ERRTYP
     Found 8-bit register for signal <reg<3>>.
     Found 8-bit register for signal <reg<4>>.
     Found 3-bit register for signal <octets>.
-    Found 20-bit register for signal <waitCnt>.
+    Found 24-bit register for signal <waitCnt>.
 INFO:Xst:1799 - State stdone is never reached in FSM <state>.
     Found finite state machine <FSM_8> for signal <state>.
     -----------------------------------------------------------------------
@@ -2867,11 +2870,11 @@ INFO:Xst:1799 - State stdone is never reached in FSM <state>.
     | Encoding           | auto                                           |
     | Implementation     | LUT                                            |
     -----------------------------------------------------------------------
-    Found 3-bit adder for signal <octets[2]_GND_1070_o_add_22_OUT> created at line 150.
-    Found 20-bit subtractor for signal <GND_1070_o_GND_1070_o_sub_1_OUT<19:0>> created at line 107.
+    Found 3-bit adder for signal <octets[2]_GND_1070_o_add_22_OUT> created at line 152.
+    Found 24-bit subtractor for signal <GND_1070_o_GND_1070_o_sub_1_OUT<23:0>> created at line 109.
     Summary:
 	inferred   2 Adder/Subtractor(s).
-	inferred  63 D-type flip-flop(s).
+	inferred  67 D-type flip-flop(s).
 	inferred  10 Multiplexer(s).
 	inferred   1 Finite State Machine(s).
 Unit <i2c> synthesized.
@@ -2982,9 +2985,9 @@ Macro Statistics
  15-bit adder                                          : 6
  16-bit adder                                          : 1
  2-bit adder                                           : 2
- 20-bit subtractor                                     : 2
  23-bit adder                                          : 4
  24-bit adder                                          : 6
+ 24-bit subtractor                                     : 2
  25-bit adder                                          : 3
  26-bit adder                                          : 2
  3-bit adder                                           : 4
@@ -3009,9 +3012,8 @@ Macro Statistics
  12-bit register                                       : 3
  16-bit register                                       : 6
  2-bit register                                        : 10
- 20-bit register                                       : 2
  23-bit register                                       : 4
- 24-bit register                                       : 8
+ 24-bit register                                       : 10
  3-bit register                                        : 7
  32-bit register                                       : 4
  4-bit register                                        : 2
@@ -3038,17 +3040,16 @@ Macro Statistics
  8-bit comparator greater                              : 10
  8-bit comparator lessequal                            : 2
  8-bit comparator not equal                            : 2
-# Multiplexers                                         : 373
- 1-bit 2-to-1 multiplexer                              : 238
+# Multiplexers                                         : 375
+ 1-bit 2-to-1 multiplexer                              : 240
  1-bit 3-to-1 multiplexer                              : 1
  1-bit 32-to-1 multiplexer                             : 2
  10-bit 2-to-1 multiplexer                             : 9
  12-bit 2-to-1 multiplexer                             : 3
  16-bit 2-to-1 multiplexer                             : 7
  2-bit 2-to-1 multiplexer                              : 10
- 20-bit 2-to-1 multiplexer                             : 2
  23-bit 2-to-1 multiplexer                             : 1
- 24-bit 2-to-1 multiplexer                             : 6
+ 24-bit 2-to-1 multiplexer                             : 8
  3-bit 2-to-1 multiplexer                              : 3
  30-bit 2-to-1 multiplexer                             : 10
  30-bit 4-to-1 multiplexer                             : 1
@@ -3076,10 +3077,11 @@ WARNING:Xst:638 - in unit top Conflict on KEEP property on signal dummya_t and d
 *                       Advanced HDL Synthesis                          *
 =========================================================================
 
+Reading core <ipcore_dir/i2cfifo.ngc>.
 Reading core <ipcore_dir/pixel_fifo.ngc>.
 Reading core <ipcore_dir/mcb_pixel_fifo.ngc>.
 Reading core <ipcore_dir/mcb_aux_fifo.ngc>.
-Reading core <ipcore_dir/i2cfifo.ngc>.
+Loading core <i2cfifo> for timing and area information for instance <my_i2cfifo>.
 Loading core <pixel_fifo> for timing and area information for instance <my_pixel_fifo>.
 Loading core <mcb_pixel_fifo> for timing and area information for instance <pr_fifo_comp_a>.
 Loading core <mcb_pixel_fifo> for timing and area information for instance <pr_fifo_comp_b>.
@@ -3351,8 +3353,8 @@ Macro Statistics
  12-bit up counter                                     : 3
  16-bit up counter                                     : 1
  2-bit up counter                                      : 2
- 20-bit down counter                                   : 2
  23-bit up counter                                     : 4
+ 24-bit down counter                                   : 2
  3-bit down counter                                    : 2
  3-bit up counter                                      : 4
  4-bit up counter                                      : 1
@@ -3383,8 +3385,8 @@ Macro Statistics
  8-bit comparator greater                              : 10
  8-bit comparator lessequal                            : 2
  8-bit comparator not equal                            : 2
-# Multiplexers                                         : 392
- 1-bit 2-to-1 multiplexer                              : 268
+# Multiplexers                                         : 394
+ 1-bit 2-to-1 multiplexer                              : 270
  1-bit 3-to-1 multiplexer                              : 1
  1-bit 32-to-1 multiplexer                             : 18
  10-bit 2-to-1 multiplexer                             : 9
@@ -3737,6 +3739,20 @@ Optimizing unit <TMDSEncoder> ...
 WARNING:Xst:1293 - FF/Latch <cnt_t_1_0> has a constant value of 0 in block <TMDSEncoder>. This FF/Latch will be trimmed during the optimization process.
 
 Optimizing unit <SerializerN_1> ...
+WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_blue/n0_q_m_4> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_blue/n1_q_m_3> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_blue/q_m_d_2> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_blue/n1_d_3> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_blue/d_d_2> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_blue/d_d_1> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_blue/d_d_0> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_green/n0_q_m_4> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_green/n1_q_m_3> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_green/n1_d_3> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_green/c0_d> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_green/d_d_1> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_green/d_d_0> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_green/c1_d> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_red/n0_q_m_4> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_red/n1_q_m_3> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_red/q_m_d_2> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
@@ -3746,38 +3762,24 @@ WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_red/d_d_2> (wi
 WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_red/d_d_1> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_red/d_d_0> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_red/c1_d> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_green/n0_q_m_4> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_green/n1_q_m_3> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_green/n1_d_3> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_green/c0_d> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_green/d_d_1> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_green/d_d_0> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_green/c1_d> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_blue/n0_q_m_4> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_blue/n1_q_m_3> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_blue/q_m_d_2> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_blue/n1_d_3> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_blue/d_d_2> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_blue/d_d_1> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_blue/d_d_0> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <inst_fbctl/my_fifo_sink/stage_identity_2> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <inst_fbctl/my_fifo_sink/stage_identity_4> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <inst_fbctl/my_fifo_sink/stage_identity_5> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <inst_fbctl/my_fifo_sink/stage_identity_6> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <inst_fbctl/my_fifo_sink/stage_identity_7> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/iodrp_mcb_controller_inst/data_reg_7> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1710 - FF/Latch <inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/iodrp_controller_inst/data_reg_7> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/iodrp_mcb_controller_inst/data_reg_7> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <inst_fbctl/my_fifo_sink/stage_identity_7> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <inst_fbctl/my_fifo_sink/stage_identity_6> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <inst_fbctl/my_fifo_sink/stage_identity_5> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <inst_fbctl/my_fifo_sink/stage_identity_4> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <inst_fbctl/my_fifo_sink/stage_identity_2> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <inst_fbctl/my_mcb_sink/stage_identity_5> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <inst_fbctl/my_mcb_sink/stage_identity_4> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <inst_fbctl/my_mcb_sink/stage_identity_6> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <inst_fbctl/my_mcb_sink/stage_identity_7> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_green/c0_dd> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_green/c1_dd> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_green/q_m_d_0> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_red/q_m_d_0> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_red/c1_dd> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_red/c0_dd> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_blue/q_m_d_0> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <inst_fbctl/my_mcb_sink/stage_identity_7> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <inst_fbctl/my_mcb_sink/stage_identity_6> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <inst_fbctl/my_mcb_sink/stage_identity_5> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_green/q_m_d_0> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <inst_fbctl/my_mcb_sink/stage_identity_4> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_green/c1_dd> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_green/c0_dd> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <my_inspect_sync/inspect_0_identity_7> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <my_inspect_sync/inspect_0_identity_6> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <my_inspect_sync/inspect_0_identity_5> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
@@ -5619,12 +5621,12 @@ WARNING:Xst:2677 - Node <inst_fbctl/my_mcb_sink/stage_aux_1> of sequential type 
 WARNING:Xst:2677 - Node <inst_fbctl/my_mcb_sink/stage_aux_0> of sequential type is unconnected in block <top>.
 WARNING:Xst:2677 - Node <VDDEN_O> of sequential type is unconnected in block <inst_camctla>.
 WARNING:Xst:2677 - Node <inst_syscon/RSEL_O> of sequential type is unconnected in block <top>.
-WARNING:Xst:2677 - Node <inst_dvitransmitter/Inst_TMDSEncoder_red/n1_d_1> of sequential type is unconnected in block <top>.
-WARNING:Xst:2677 - Node <inst_dvitransmitter/Inst_TMDSEncoder_red/n1_d_0> of sequential type is unconnected in block <top>.
-WARNING:Xst:2677 - Node <inst_dvitransmitter/Inst_TMDSEncoder_green/n1_d_1> of sequential type is unconnected in block <top>.
-WARNING:Xst:2677 - Node <inst_dvitransmitter/Inst_TMDSEncoder_green/n1_d_0> of sequential type is unconnected in block <top>.
 WARNING:Xst:2677 - Node <inst_dvitransmitter/Inst_TMDSEncoder_blue/n1_d_1> of sequential type is unconnected in block <top>.
 WARNING:Xst:2677 - Node <inst_dvitransmitter/Inst_TMDSEncoder_blue/n1_d_0> of sequential type is unconnected in block <top>.
+WARNING:Xst:2677 - Node <inst_dvitransmitter/Inst_TMDSEncoder_green/n1_d_1> of sequential type is unconnected in block <top>.
+WARNING:Xst:2677 - Node <inst_dvitransmitter/Inst_TMDSEncoder_green/n1_d_0> of sequential type is unconnected in block <top>.
+WARNING:Xst:2677 - Node <inst_dvitransmitter/Inst_TMDSEncoder_red/n1_d_1> of sequential type is unconnected in block <top>.
+WARNING:Xst:2677 - Node <inst_dvitransmitter/Inst_TMDSEncoder_red/n1_d_0> of sequential type is unconnected in block <top>.
 WARNING:Xst:1710 - FF/Latch <inst_fbctl/x_9> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1710 - FF/Latch <inst_fbctl/x_8> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1710 - FF/Latch <inst_fbctl/x_6> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
@@ -5632,76 +5634,90 @@ WARNING:Xst:1710 - FF/Latch <inst_fbctl/x_5> (without init value) has a constant
 WARNING:Xst:1710 - FF/Latch <inst_fbctl/x_7> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1710 - FF/Latch <inst_fbctl/y_9> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1710 - FF/Latch <inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/DQS_DELAY_7> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+INFO:Xst:2261 - The FF/Latch <inst_dvitransmitter/Inst_d0_serializer_10_1/gear> in Unit <top> is equivalent to the following 3 FFs/Latches, which will be removed : <inst_dvitransmitter/Inst_d1_serializer_10_1/gear> <inst_dvitransmitter/Inst_d2_serializer_10_1/gear> <inst_dvitransmitter/Inst_clk_serializer_10_1/gear> 
+INFO:Xst:2261 - The FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_blue/de_d> in Unit <top> is equivalent to the following 2 FFs/Latches, which will be removed : <inst_dvitransmitter/Inst_TMDSEncoder_green/de_d> <inst_dvitransmitter/Inst_TMDSEncoder_red/de_d> 
 INFO:Xst:2261 - The FF/Latch <inst_fbctl/my_fifo_sink/stage_identity_3> in Unit <top> is equivalent to the following FF/Latch, which will be removed : <inst_fbctl/my_fifo_sink/stage_identity_1> 
 INFO:Xst:2261 - The FF/Latch <inst_dvitransmitter/Inst_clk_serializer_10_1/intDPIn_4> in Unit <top> is equivalent to the following 4 FFs/Latches, which will be removed : <inst_dvitransmitter/Inst_clk_serializer_10_1/intDPIn_3> <inst_dvitransmitter/Inst_clk_serializer_10_1/intDPIn_2> <inst_dvitransmitter/Inst_clk_serializer_10_1/intDPIn_1> <inst_dvitransmitter/Inst_clk_serializer_10_1/intDPIn_0> 
 INFO:Xst:2261 - The FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_red/q_out_d_9> in Unit <top> is equivalent to the following FF/Latch, which will be removed : <inst_dvitransmitter/Inst_TMDSEncoder_red/q_out_d_2> 
-INFO:Xst:2261 - The FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_red/de_d> in Unit <top> is equivalent to the following 2 FFs/Latches, which will be removed : <inst_dvitransmitter/Inst_TMDSEncoder_green/de_d> <inst_dvitransmitter/Inst_TMDSEncoder_blue/de_d> 
-INFO:Xst:2261 - The FF/Latch <inst_dvitransmitter/Inst_clk_serializer_10_1/gear> in Unit <top> is equivalent to the following 3 FFs/Latches, which will be removed : <inst_dvitransmitter/Inst_d2_serializer_10_1/gear> <inst_dvitransmitter/Inst_d1_serializer_10_1/gear> <inst_dvitransmitter/Inst_d0_serializer_10_1/gear> 
+INFO:Xst:2261 - The FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_blue/de_dd> in Unit <top> is equivalent to the following 2 FFs/Latches, which will be removed : <inst_dvitransmitter/Inst_TMDSEncoder_green/de_dd> <inst_dvitransmitter/Inst_TMDSEncoder_red/de_dd> 
 INFO:Xst:2261 - The FF/Latch <inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/syn_uiclk_pll_lock> in Unit <top> is equivalent to the following FF/Latch, which will be removed : <inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/PLL_LOCK_R1> 
-INFO:Xst:2261 - The FF/Latch <inst_dvitransmitter/Inst_TMDSEncoder_red/de_dd> in Unit <top> is equivalent to the following 2 FFs/Latches, which will be removed : <inst_dvitransmitter/Inst_TMDSEncoder_green/de_dd> <inst_dvitransmitter/Inst_TMDSEncoder_blue/de_dd> 
 
 Mapping all equations...
 Building and optimizing final netlist ...
-INFO:Xst:2261 - The FF/Latch <inst_dvitransmitter/Inst_clk_serializer_10_1/gear_s> in Unit <top> is equivalent to the following 3 FFs/Latches, which will be removed : <inst_dvitransmitter/Inst_d2_serializer_10_1/gear_s> <inst_dvitransmitter/Inst_d1_serializer_10_1/gear_s> <inst_dvitransmitter/Inst_d0_serializer_10_1/gear_s> 
+INFO:Xst:2261 - The FF/Latch <inst_dvitransmitter/Inst_d0_serializer_10_1/gear_s> in Unit <top> is equivalent to the following 3 FFs/Latches, which will be removed : <inst_dvitransmitter/Inst_d1_serializer_10_1/gear_s> <inst_dvitransmitter/Inst_d2_serializer_10_1/gear_s> <inst_dvitransmitter/Inst_clk_serializer_10_1/gear_s> 
 Found area constraint ratio of 100 (+ 5) on block top, actual ratio is 14.
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i> in Unit <my_i2c_a/my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_1> in Unit <my_i2c_a/my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/curr_fwft_state_FSM_FFd2> in Unit <my_i2c_a/my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/user_valid> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <my_i2c_a/my_i2cfifo> is equivalent to the following 2 FFs/Latches : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_1> <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <my_i2c_a/my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i> in Unit <my_i2c_b/my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_1> in Unit <my_i2c_b/my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/curr_fwft_state_FSM_FFd2> in Unit <my_i2c_b/my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/user_valid> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <my_i2c_b/my_i2cfifo> is equivalent to the following 2 FFs/Latches : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_1> <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <my_i2c_b/my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i> in Unit <my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_1> in Unit <my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/curr_fwft_state_FSM_FFd2> in Unit <my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/user_valid> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <my_i2cfifo> is equivalent to the following 2 FFs/Latches : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_1> <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i> in Unit <inst_fbctl/my_pixel_fifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_1> in Unit <inst_fbctl/my_pixel_fifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_0> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <inst_fbctl/my_pixel_fifo> is equivalent to the following 2 FFs/Latches : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_1> <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <inst_fbctl/my_pixel_fifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <inst_fbctl/pr_fifo_comp_a> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_i> in Unit <inst_fbctl/pr_fifo_comp_a> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_fb_i> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <inst_fbctl/pr_fifo_comp_a> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <inst_fbctl/pr_fifo_comp_b> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_i> in Unit <inst_fbctl/pr_fifo_comp_b> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_fb_i> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <inst_fbctl/pr_fifo_comp_b> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <inst_fbctl/pw_fifo_comp> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_i> in Unit <inst_fbctl/pw_fifo_comp> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_fb_i> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <inst_fbctl/pw_fifo_comp> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <inst_fbctl/auxr_fifo_comp> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_i> in Unit <inst_fbctl/auxr_fifo_comp> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_fb_i> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <inst_fbctl/auxr_fifo_comp> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <inst_fbctl/pr_fifo_comp_b> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_i> in Unit <inst_fbctl/pr_fifo_comp_b> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_fb_i> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <inst_fbctl/pr_fifo_comp_b> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <inst_fbctl/pr_fifo_comp_a> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_i> in Unit <inst_fbctl/pr_fifo_comp_a> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_fb_i> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <inst_fbctl/pr_fifo_comp_a> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <inst_fbctl/auxw_fifo_comp> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_i> in Unit <inst_fbctl/auxw_fifo_comp> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_fb_i> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <inst_fbctl/auxw_fifo_comp> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <inst_fbctl/auxr_fifo_comp> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_i> in Unit <inst_fbctl/auxr_fifo_comp> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_fb_i> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <inst_fbctl/auxr_fifo_comp> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i> in Unit <my_i2c_a/my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <my_i2c_a/my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_1> in Unit <my_i2c_a/my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_0> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <my_i2c_a/my_i2cfifo> is equivalent to the following 2 FFs/Latches : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_1> <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <my_i2c_a/my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i> in Unit <my_i2c_a/my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/curr_fwft_state_FSM_FFd2> in Unit <my_i2c_a/my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/user_valid> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i> in Unit <my_i2c_b/my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <my_i2c_b/my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_1> in Unit <my_i2c_b/my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_0> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <my_i2c_b/my_i2cfifo> is equivalent to the following 2 FFs/Latches : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_1> <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <my_i2c_b/my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i> in Unit <my_i2c_b/my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/curr_fwft_state_FSM_FFd2> in Unit <my_i2c_b/my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/user_valid> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i> in Unit <my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_1> in Unit <my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <my_i2cfifo> is equivalent to the following 2 FFs/Latches : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_1> <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/curr_fwft_state_FSM_FFd2> in Unit <my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/user_valid> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i> in Unit <inst_fbctl/my_pixel_fifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <inst_fbctl/my_pixel_fifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_1> in Unit <inst_fbctl/my_pixel_fifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_0> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <inst_fbctl/my_pixel_fifo> is equivalent to the following 2 FFs/Latches : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_1> <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <inst_fbctl/pr_fifo_comp_a> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_i> in Unit <inst_fbctl/pr_fifo_comp_a> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_fb_i> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <inst_fbctl/pr_fifo_comp_a> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <inst_fbctl/pr_fifo_comp_b> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_i> in Unit <inst_fbctl/pr_fifo_comp_b> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_fb_i> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <inst_fbctl/pr_fifo_comp_b> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <inst_fbctl/pw_fifo_comp> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_i> in Unit <inst_fbctl/pw_fifo_comp> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_fb_i> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <inst_fbctl/pw_fifo_comp> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <inst_fbctl/auxr_fifo_comp> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_i> in Unit <inst_fbctl/auxr_fifo_comp> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_fb_i> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <inst_fbctl/auxr_fifo_comp> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <inst_fbctl/pr_fifo_comp_b> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_i> in Unit <inst_fbctl/pr_fifo_comp_b> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_fb_i> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <inst_fbctl/pr_fifo_comp_b> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <inst_fbctl/pr_fifo_comp_a> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_i> in Unit <inst_fbctl/pr_fifo_comp_a> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_fb_i> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <inst_fbctl/pr_fifo_comp_a> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <inst_fbctl/auxw_fifo_comp> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_i> in Unit <inst_fbctl/auxw_fifo_comp> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_fb_i> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <inst_fbctl/auxw_fifo_comp> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <my_i2c_a/my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_1> in Unit <my_i2c_a/my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_0> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i> in Unit <my_i2c_a/my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <my_i2c_a/my_i2cfifo> is equivalent to the following 2 FFs/Latches : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_1> <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <my_i2c_b/my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_1> in Unit <my_i2c_b/my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_0> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i> in Unit <my_i2c_b/my_i2cfifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <my_i2c_b/my_i2cfifo> is equivalent to the following 2 FFs/Latches : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_1> <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
-FlipFlop comm.comm_fpga_fx2/chanAddr_4 has been replicated 1 time(s)
-FlipFlop comm.comm_fpga_fx2/state_FSM_FFd2 has been replicated 1 time(s)
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <inst_fbctl/auxr_fifo_comp> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_i> in Unit <inst_fbctl/auxr_fifo_comp> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_fb_i> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <inst_fbctl/auxr_fifo_comp> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
+FlipFlop comm.comm_fpga_fx2/chanAddr_0 has been replicated 1 time(s)
 FlipFlop comm.comm_fpga_fx2/state_FSM_FFd3 has been replicated 1 time(s)
 FlipFlop inst_fbctl/my_cfg_sync/cfg_2[1]_enable has been replicated 1 time(s)
+FlipFlop inst_fbctl/my_mcb_feed_dual/r_stop_1 has been replicated 1 time(s)
 
 Final Macro Processing ...
 
@@ -5731,17 +5747,17 @@ Processing Unit <top> :
 	Found 3-bit shift register for signal <my_inspect_sync/inspect_2_identity_2>.
 	Found 3-bit shift register for signal <my_inspect_sync/inspect_2_identity_1>.
 	Found 3-bit shift register for signal <my_inspect_sync/inspect_2_identity_0>.
-	Found 2-bit shift register for signal <inst_dvitransmitter/Inst_TMDSEncoder_red/de_dd>.
+	Found 2-bit shift register for signal <inst_dvitransmitter/Inst_TMDSEncoder_blue/de_dd>.
 	Found 2-bit shift register for signal <inst_dvitransmitter/Inst_TMDSEncoder_blue/c1_dd>.
 	Found 2-bit shift register for signal <inst_dvitransmitter/Inst_TMDSEncoder_blue/c0_dd>.
 INFO:Xst:741 - HDL ADVISOR - A 4-bit shift register was found for signal <my_i2c_a/Inst_LocalRst/RstQ_4> and currently occupies 4 logic cells (2 slices). Removing the set/reset logic would take advantage of SRL32 (and derived) primitives and reduce this to 1 logic cells (1 slices). Evaluate if the set/reset can be removed for this simple shift register. The majority of simple pipeline structures do not need to be set/reset operationally.
 INFO:Xst:741 - HDL ADVISOR - A 4-bit shift register was found for signal <my_i2c_b/Inst_LocalRst/RstQ_4> and currently occupies 4 logic cells (2 slices). Removing the set/reset logic would take advantage of SRL32 (and derived) primitives and reduce this to 1 logic cells (1 slices). Evaluate if the set/reset can be removed for this simple shift register. The majority of simple pipeline structures do not need to be set/reset operationally.
-INFO:Xst:741 - HDL ADVISOR - A 4-bit shift register was found for signal <inst_fbctl/inst_localrstc/RstQ_4> and currently occupies 4 logic cells (2 slices). Removing the set/reset logic would take advantage of SRL32 (and derived) primitives and reduce this to 1 logic cells (1 slices). Evaluate if the set/reset can be removed for this simple shift register. The majority of simple pipeline structures do not need to be set/reset operationally.
-INFO:Xst:741 - HDL ADVISOR - A 4-bit shift register was found for signal <inst_fbctl/inst_localrstb1_a/RstQ_4> and currently occupies 4 logic cells (2 slices). Removing the set/reset logic would take advantage of SRL32 (and derived) primitives and reduce this to 1 logic cells (1 slices). Evaluate if the set/reset can be removed for this simple shift register. The majority of simple pipeline structures do not need to be set/reset operationally.
-INFO:Xst:741 - HDL ADVISOR - A 4-bit shift register was found for signal <inst_fbctl/inst_localrstb2_a/RstQ_4> and currently occupies 4 logic cells (2 slices). Removing the set/reset logic would take advantage of SRL32 (and derived) primitives and reduce this to 1 logic cells (1 slices). Evaluate if the set/reset can be removed for this simple shift register. The majority of simple pipeline structures do not need to be set/reset operationally.
-INFO:Xst:741 - HDL ADVISOR - A 4-bit shift register was found for signal <inst_fbctl/inst_localrstb1_b/RstQ_4> and currently occupies 4 logic cells (2 slices). Removing the set/reset logic would take advantage of SRL32 (and derived) primitives and reduce this to 1 logic cells (1 slices). Evaluate if the set/reset can be removed for this simple shift register. The majority of simple pipeline structures do not need to be set/reset operationally.
-INFO:Xst:741 - HDL ADVISOR - A 4-bit shift register was found for signal <inst_fbctl/inst_localrstb2_b/RstQ_4> and currently occupies 4 logic cells (2 slices). Removing the set/reset logic would take advantage of SRL32 (and derived) primitives and reduce this to 1 logic cells (1 slices). Evaluate if the set/reset can be removed for this simple shift register. The majority of simple pipeline structures do not need to be set/reset operationally.
 INFO:Xst:741 - HDL ADVISOR - A 4-bit shift register was found for signal <inst_fbctl/inst_localrstalg/RstQ_4> and currently occupies 4 logic cells (2 slices). Removing the set/reset logic would take advantage of SRL32 (and derived) primitives and reduce this to 1 logic cells (1 slices). Evaluate if the set/reset can be removed for this simple shift register. The majority of simple pipeline structures do not need to be set/reset operationally.
+INFO:Xst:741 - HDL ADVISOR - A 4-bit shift register was found for signal <inst_fbctl/inst_localrstb2_b/RstQ_4> and currently occupies 4 logic cells (2 slices). Removing the set/reset logic would take advantage of SRL32 (and derived) primitives and reduce this to 1 logic cells (1 slices). Evaluate if the set/reset can be removed for this simple shift register. The majority of simple pipeline structures do not need to be set/reset operationally.
+INFO:Xst:741 - HDL ADVISOR - A 4-bit shift register was found for signal <inst_fbctl/inst_localrstb1_b/RstQ_4> and currently occupies 4 logic cells (2 slices). Removing the set/reset logic would take advantage of SRL32 (and derived) primitives and reduce this to 1 logic cells (1 slices). Evaluate if the set/reset can be removed for this simple shift register. The majority of simple pipeline structures do not need to be set/reset operationally.
+INFO:Xst:741 - HDL ADVISOR - A 4-bit shift register was found for signal <inst_fbctl/inst_localrstb2_a/RstQ_4> and currently occupies 4 logic cells (2 slices). Removing the set/reset logic would take advantage of SRL32 (and derived) primitives and reduce this to 1 logic cells (1 slices). Evaluate if the set/reset can be removed for this simple shift register. The majority of simple pipeline structures do not need to be set/reset operationally.
+INFO:Xst:741 - HDL ADVISOR - A 4-bit shift register was found for signal <inst_fbctl/inst_localrstb1_a/RstQ_4> and currently occupies 4 logic cells (2 slices). Removing the set/reset logic would take advantage of SRL32 (and derived) primitives and reduce this to 1 logic cells (1 slices). Evaluate if the set/reset can be removed for this simple shift register. The majority of simple pipeline structures do not need to be set/reset operationally.
+INFO:Xst:741 - HDL ADVISOR - A 4-bit shift register was found for signal <inst_fbctl/inst_localrstc/RstQ_4> and currently occupies 4 logic cells (2 slices). Removing the set/reset logic would take advantage of SRL32 (and derived) primitives and reduce this to 1 logic cells (1 slices). Evaluate if the set/reset can be removed for this simple shift register. The majority of simple pipeline structures do not need to be set/reset operationally.
 INFO:Xst:741 - HDL ADVISOR - A 4-bit shift register was found for signal <inst_videotimingctl/Inst_LocalRst/RstQ_4> and currently occupies 4 logic cells (2 slices). Removing the set/reset logic would take advantage of SRL32 (and derived) primitives and reduce this to 1 logic cells (1 slices). Evaluate if the set/reset can be removed for this simple shift register. The majority of simple pipeline structures do not need to be set/reset operationally.
 Unit <top> processed.
 
@@ -5749,8 +5765,8 @@ Unit <top> processed.
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 1839
- Flip-Flops                                            : 1839
+# Registers                                            : 1847
+ Flip-Flops                                            : 1847
 # Shift Registers                                      : 20
  2-bit shift register                                  : 5
  3-bit shift register                                  : 14
@@ -5777,34 +5793,34 @@ Top Level Output File Name         : cam.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 4064
-#      GND                         : 18
-#      INV                         : 96
+# BELS                             : 4430
+#      GND                         : 20
+#      INV                         : 99
 #      LUT1                        : 271
-#      LUT2                        : 359
-#      LUT3                        : 514
-#      LUT4                        : 368
-#      LUT5                        : 397
-#      LUT6                        : 1080
+#      LUT2                        : 393
+#      LUT3                        : 816
+#      LUT4                        : 389
+#      LUT5                        : 427
+#      LUT6                        : 1040
 #      MULT_AND                    : 6
-#      MUXCY                       : 436
-#      MUXF7                       : 58
+#      MUXCY                       : 444
+#      MUXF7                       : 56
 #      VCC                         : 4
-#      XORCY                       : 457
-# FlipFlops/Latches                : 2640
-#      FD                          : 235
-#      FDC                         : 211
-#      FDCE                        : 267
-#      FDE                         : 912
-#      FDP                         : 159
-#      FDPE                        : 9
+#      XORCY                       : 465
+# FlipFlops/Latches                : 2666
+#      FD                          : 262
+#      FDC                         : 216
+#      FDCE                        : 250
+#      FDE                         : 896
+#      FDP                         : 174
+#      FDPE                        : 12
 #      FDR                         : 155
-#      FDRE                        : 642
-#      FDS                         : 42
+#      FDRE                        : 650
+#      FDS                         : 43
 #      FDSE                        : 6
 #      ODDR2                       : 2
-# RAMS                             : 8
-#      RAMB8BWER                   : 8
+# RAMS                             : 9
+#      RAMB8BWER                   : 9
 # Shift Registers                  : 23
 #      SRL16                       : 1
 #      SRLC16E                     : 19
@@ -5840,26 +5856,26 @@ Selected Device : 6slx45csg324-3
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:            2640  out of  54576     4%  
- Number of Slice LUTs:                 3108  out of  27288    11%  
-    Number used as Logic:              3085  out of  27288    11%  
+ Number of Slice Registers:            2666  out of  54576     4%  
+ Number of Slice LUTs:                 3458  out of  27288    12%  
+    Number used as Logic:              3435  out of  27288    12%  
     Number used as Memory:               23  out of   6408     0%  
        Number used as SRL:               23
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:   4151
-   Number with an unused Flip Flop:    1511  out of   4151    36%  
-   Number with an unused LUT:          1043  out of   4151    25%  
-   Number of fully used LUT-FF pairs:  1597  out of   4151    38%  
-   Number of unique control sets:       277
+ Number of LUT Flip Flop pairs used:   4263
+   Number with an unused Flip Flop:    1597  out of   4263    37%  
+   Number with an unused LUT:           805  out of   4263    18%  
+   Number of fully used LUT-FF pairs:  1861  out of   4263    43%  
+   Number of unique control sets:       243
 
 IO Utilization: 
  Number of IOs:                         128
  Number of bonded IOBs:                 118  out of    218    54%  
 
 Specific Feature Utilization:
- Number of Block RAM/FIFO:                4  out of    116     3%  
-    Number using Block RAM only:          4
+ Number of Block RAM/FIFO:                5  out of    116     4%  
+    Number using Block RAM only:          5
  Number of BUFG/BUFGCTRLs:               11  out of     16    68%  
  Number of PLL_ADVs:                      3  out of      4    75%  
 
@@ -5884,13 +5900,13 @@ Clock Information:
 ------------------------------------------------+------------------------+-------+
 Clock Signal                                    | Clock buffer(FF name)  | Load  |
 ------------------------------------------------+------------------------+-------+
-fx2clk_in                                       | IBUFG+BUFG             | 825   |
+fx2clk_in                                       | IBUFG+BUFG             | 867   |
 camb_pclk_i                                     | IBUF+BUFG              | 83    |
 cama_pclk_i                                     | IBUF+BUFG              | 83    |
 inst_syscon/Inst_10_1_pll/CLKOUT2               | BUFG                   | 191   |
-inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT2| BUFG                   | 760   |
+inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT2| BUFG                   | 761   |
 inst_syscon/Inst_pll_mcb/CLKOUT2                | BUFG                   | 241   |
-inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT0| BUFG                   | 431   |
+inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT0| BUFG                   | 415   |
 inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT1| BUFG                   | 2     |
 clk_i                                           | IBUFG                  | 43    |
 inst_syscon/Inst_10_1_pll/CLKOUT3               | BUFG                   | 17    |
@@ -5905,9 +5921,9 @@ Timing Summary:
 Speed Grade: -3
 
    Minimum period: 6.998ns (Maximum Frequency: 142.889MHz)
-   Minimum input arrival time before clock: 7.308ns
-   Maximum output required time after clock: 10.079ns
-   Maximum combinational path delay: 8.436ns
+   Minimum input arrival time before clock: 6.834ns
+   Maximum output required time after clock: 9.523ns
+   Maximum combinational path delay: 7.358ns
 
 Timing Details:
 ---------------
@@ -5915,30 +5931,28 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'fx2clk_in'
-  Clock period: 6.394ns (frequency: 156.400MHz)
-  Total number of paths / destination ports: 17364 / 1305
+  Clock period: 6.499ns (frequency: 153.873MHz)
+  Total number of paths / destination ports: 23933 / 1734
 -------------------------------------------------------------------------
-Delay:               6.394ns (Levels of Logic = 6)
+Delay:               6.499ns (Levels of Logic = 4)
   Source:            comm.comm_fpga_fx2/chanAddr_4 (FF)
-  Destination:       my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i (FF)
+  Destination:       cfg[4]_enable (FF)
   Source Clock:      fx2clk_in rising
   Destination Clock: fx2clk_in rising
 
-  Data Path: comm.comm_fpga_fx2/chanAddr_4 to my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i
+  Data Path: comm.comm_fpga_fx2/chanAddr_4 to cfg[4]_enable
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDE:C->Q            115   0.447   2.021  comm.comm_fpga_fx2/chanAddr_4 (comm.comm_fpga_fx2/chanAddr_4)
-     LUT5:I3->O            1   0.203   0.580  wr_en_a1_SW2 (N472)
-     LUT6:I5->O            2   0.205   0.961  wr_en_b1 (wr_en_b)
-     begin scope: 'my_i2c_b/my_i2cfifo:wr_en'
-     LUT5:I0->O            1   0.203   0.580  U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/Mmux_comp1_GND_176_o_MUX_24_o14 (U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/Mmux_comp1_GND_176_o_MUX_24_o13)
-     LUT3:I2->O            1   0.205   0.684  U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/Mmux_comp1_GND_176_o_MUX_24_o15 (U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/Mmux_comp1_GND_176_o_MUX_24_o14)
-     LUT6:I4->O            2   0.203   0.000  U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/Mmux_comp1_GND_176_o_MUX_24_o18 (U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/comp1_GND_176_o_MUX_24_o)
-     FDP:D                     0.102          U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
+     FDE:C->Q              5   0.447   0.962  comm.comm_fpga_fx2/chanAddr_4 (comm.comm_fpga_fx2/chanAddr_4)
+     LUT4:I0->O           11   0.203   0.883  GND_9_o_chanaddr[6]_equal_366_o<6>11 (GND_9_o_chanaddr[6]_equal_366_o<6>1)
+     LUT5:I4->O            9   0.205   0.830  h2fready11 (h2fready1)
+     LUT6:I5->O           61   0.205   1.621  comm.comm_fpga_fx2/Mmux_h2fValid_out11_4 (comm.comm_fpga_fx2/Mmux_h2fValid_out11_3)
+     LUT5:I4->O            2   0.205   0.616  _n1282_inv1 (_n1282_inv)
+     FDE:CE                    0.322          cfg[12]_enable
     ----------------------------------------
-    Total                      6.394ns (1.568ns logic, 4.826ns route)
-                                       (24.5% logic, 75.5% route)
+    Total                      6.499ns (1.587ns logic, 4.912ns route)
+                                       (24.4% logic, 75.6% route)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'camb_pclk_i'
@@ -5988,34 +6002,34 @@ Delay:               4.791ns (Levels of Logic = 2)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'inst_syscon/Inst_10_1_pll/CLKOUT2'
-  Clock period: 5.866ns (frequency: 170.478MHz)
-  Total number of paths / destination ports: 4861 / 369
+  Clock period: 5.644ns (frequency: 177.170MHz)
+  Total number of paths / destination ports: 4852 / 369
 -------------------------------------------------------------------------
-Delay:               5.866ns (Levels of Logic = 5)
-  Source:            inst_dvitransmitter/Inst_TMDSEncoder_green/n0_q_m_3 (FF)
-  Destination:       inst_dvitransmitter/Inst_TMDSEncoder_green/cnt_t_1_4 (FF)
+Delay:               5.644ns (Levels of Logic = 5)
+  Source:            inst_dvitransmitter/Inst_TMDSEncoder_blue/n1_q_m_1 (FF)
+  Destination:       inst_dvitransmitter/Inst_TMDSEncoder_blue/cnt_t_1_4 (FF)
   Source Clock:      inst_syscon/Inst_10_1_pll/CLKOUT2 rising
   Destination Clock: inst_syscon/Inst_10_1_pll/CLKOUT2 rising
 
-  Data Path: inst_dvitransmitter/Inst_TMDSEncoder_green/n0_q_m_3 to inst_dvitransmitter/Inst_TMDSEncoder_green/cnt_t_1_4
+  Data Path: inst_dvitransmitter/Inst_TMDSEncoder_blue/n1_q_m_1 to inst_dvitransmitter/Inst_TMDSEncoder_blue/cnt_t_1_4
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FD:C->Q              14   0.447   1.302  inst_dvitransmitter/Inst_TMDSEncoder_green/n0_q_m_3 (inst_dvitransmitter/Inst_TMDSEncoder_green/n0_q_m_3)
-     LUT5:I0->O            2   0.203   0.721  inst_dvitransmitter/Inst_TMDSEncoder_green/cond_not_balanced2 (inst_dvitransmitter/Inst_TMDSEncoder_green/cond_not_balanced2)
-     LUT6:I4->O           12   0.203   0.909  inst_dvitransmitter/Inst_TMDSEncoder_green/cond_not_balanced3 (inst_dvitransmitter/Inst_TMDSEncoder_green/cond_not_balanced)
-     LUT6:I5->O            1   0.205   0.684  inst_dvitransmitter/Inst_TMDSEncoder_green/Maccum_cnt_t_1_lut<3>2_SW0 (N309)
-     LUT5:I3->O            1   0.203   0.684  inst_dvitransmitter/Inst_TMDSEncoder_green/Maccum_cnt_t_1_lut<3>31 (inst_dvitransmitter/Inst_TMDSEncoder_green/Maccum_cnt_t_1_lut<3>)
-     LUT6:I4->O            1   0.203   0.000  inst_dvitransmitter/Inst_TMDSEncoder_green/Maccum_cnt_t_1_xor<4>11 (inst_dvitransmitter/Inst_TMDSEncoder_green/Result<4>)
-     FDR:D                     0.102          inst_dvitransmitter/Inst_TMDSEncoder_green/cnt_t_1_4
+     FD:C->Q              18   0.447   1.278  inst_dvitransmitter/Inst_TMDSEncoder_blue/n1_q_m_1 (inst_dvitransmitter/Inst_TMDSEncoder_blue/n1_q_m_1)
+     LUT5:I2->O            1   0.205   0.827  inst_dvitransmitter/Inst_TMDSEncoder_blue/Maccum_cnt_t_1_lut<4>2_SW1_SW0 (N302)
+     LUT6:I2->O            1   0.203   0.808  inst_dvitransmitter/Inst_TMDSEncoder_blue/Maccum_cnt_t_1_lut<4>2_SW1 (N294)
+     LUT6:I3->O            1   0.205   0.580  inst_dvitransmitter/Inst_TMDSEncoder_blue/Maccum_cnt_t_1_lut<4>2 (inst_dvitransmitter/Inst_TMDSEncoder_blue/Maccum_cnt_t_1_lut<4>2)
+     LUT6:I5->O            1   0.205   0.580  inst_dvitransmitter/Inst_TMDSEncoder_blue/Maccum_cnt_t_1_lut<4>3 (inst_dvitransmitter/Inst_TMDSEncoder_blue/Maccum_cnt_t_1_lut<4>)
+     LUT6:I5->O            1   0.205   0.000  inst_dvitransmitter/Inst_TMDSEncoder_blue/Maccum_cnt_t_1_xor<4>11 (inst_dvitransmitter/Inst_TMDSEncoder_blue/Result<4>)
+     FDR:D                     0.102          inst_dvitransmitter/Inst_TMDSEncoder_blue/cnt_t_1_4
     ----------------------------------------
-    Total                      5.866ns (1.566ns logic, 4.300ns route)
-                                       (26.7% logic, 73.3% route)
+    Total                      5.644ns (1.572ns logic, 4.072ns route)
+                                       (27.9% logic, 72.1% route)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT2'
   Clock period: 6.998ns (frequency: 142.889MHz)
-  Total number of paths / destination ports: 11321 / 2123
+  Total number of paths / destination ports: 11335 / 2125
 -------------------------------------------------------------------------
 Delay:               6.998ns (Levels of Logic = 7)
   Source:            inst_fbctl/auxw_fifo_comp/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_i (FF)
@@ -6043,35 +6057,34 @@ Delay:               6.998ns (Levels of Logic = 7)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT0'
-  Clock period: 5.578ns (frequency: 179.272MHz)
-  Total number of paths / destination ports: 9493 / 847
+  Clock period: 5.520ns (frequency: 181.170MHz)
+  Total number of paths / destination ports: 9374 / 779
 -------------------------------------------------------------------------
-Delay:               5.578ns (Levels of Logic = 4)
-  Source:            my_i2c_a/state_FSM_FFd2 (FF)
-  Destination:       my_i2c_a/Inst_TWICtl/state_FSM_FFd1 (FF)
+Delay:               5.520ns (Levels of Logic = 3)
+  Source:            my_i2c_b/state_FSM_FFd2 (FF)
+  Destination:       my_i2c_b/reg_0_7 (FF)
   Source Clock:      inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT0 rising
   Destination Clock: inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT0 rising
 
-  Data Path: my_i2c_a/state_FSM_FFd2 to my_i2c_a/Inst_TWICtl/state_FSM_FFd1
+  Data Path: my_i2c_b/state_FSM_FFd2 to my_i2c_b/reg_0_7
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDS:C->Q             23   0.447   1.498  my_i2c_a/state_FSM_FFd2 (my_i2c_a/state_FSM_FFd2)
-     LUT6:I1->O            1   0.203   0.827  my_i2c_a/Inst_TWICtl/MSG_I_currAddr[7]_OR_215_o4_SW0 (N333)
-     LUT4:I0->O            4   0.203   0.931  my_i2c_a/Inst_TWICtl/MSG_I_currAddr[7]_OR_215_o4 (my_i2c_a/Inst_TWICtl/MSG_I_currAddr[7]_OR_215_o5)
-     LUT6:I2->O            2   0.203   0.961  my_i2c_a/Inst_TWICtl/state_FSM_FFd1-In31 (my_i2c_a/Inst_TWICtl/state_FSM_FFd1-In3)
-     LUT6:I1->O            1   0.203   0.000  my_i2c_a/Inst_TWICtl/state_FSM_FFd1-In2 (my_i2c_a/Inst_TWICtl/state_FSM_FFd1-In)
-     FD:D                      0.102          my_i2c_a/Inst_TWICtl/state_FSM_FFd1
+     FDS:C->Q             28   0.447   1.463  my_i2c_b/state_FSM_FFd2 (my_i2c_b/state_FSM_FFd2)
+     LUT3:I0->O            2   0.205   0.961  my_i2c_b/_n0231_inv111 (my_i2c_b/_n0231_inv11)
+     LUT5:I0->O            4   0.203   0.912  my_i2c_b/_n0169_inv11 (my_i2c_b/_n0169_inv1)
+     LUT3:I0->O            8   0.205   0.802  my_i2c_b/_n0169_inv2 (my_i2c_b/_n0169_inv)
+     FDE:CE                    0.322          my_i2c_b/reg_0_0
     ----------------------------------------
-    Total                      5.578ns (1.361ns logic, 4.217ns route)
-                                       (24.4% logic, 75.6% route)
+    Total                      5.520ns (1.382ns logic, 4.138ns route)
+                                       (25.0% logic, 75.0% route)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'inst_syscon/Inst_pll_mcb/CLKOUT2'
-  Clock period: 6.015ns (frequency: 166.241MHz)
-  Total number of paths / destination ports: 11665 / 587
+  Clock period: 6.049ns (frequency: 165.307MHz)
+  Total number of paths / destination ports: 11734 / 587
 -------------------------------------------------------------------------
-Delay:               6.015ns (Levels of Logic = 5)
+Delay:               6.049ns (Levels of Logic = 5)
   Source:            inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Max_Value_int_7 (FF)
   Destination:       inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/TARGET_DQS_DELAY_6 (FF)
   Source Clock:      inst_syscon/Inst_pll_mcb/CLKOUT2 rising
@@ -6082,15 +6095,15 @@ Delay:               6.015ns (Levels of Logic = 5)
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
      FDRE:C->Q            22   0.447   1.362  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Max_Value_int_7 (inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Max_Value_int_7)
-     LUT6:I3->O            2   0.205   0.721  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Max_Value_int[7]_Max_Value_Previous[7]_LessThan_180_o1_SW0 (N363)
+     LUT6:I3->O            3   0.205   0.755  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Max_Value_int[7]_Max_Value_Previous[7]_LessThan_180_o1_SW0 (N350)
      LUT5:I3->O           13   0.203   0.933  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/_n1315_inv11 (inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/_n1315_inv11)
-     LUT5:I4->O            6   0.205   0.745  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/_n1315_inv13_SW6 (N516)
-     LUT6:I5->O            1   0.205   0.684  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/_n1436_inv4_rstpot_SW17 (N540)
+     LUT5:I4->O            6   0.205   0.745  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/_n1315_inv13_SW6 (N503)
+     LUT6:I5->O            1   0.205   0.684  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/_n1436_inv4_rstpot_SW17 (N527)
      LUT6:I4->O            1   0.203   0.000  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/TARGET_DQS_DELAY_5_dpot (inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/TARGET_DQS_DELAY_5_dpot)
      FDRE:D                    0.102          inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/TARGET_DQS_DELAY_5
     ----------------------------------------
-    Total                      6.015ns (1.570ns logic, 4.445ns route)
-                                       (26.1% logic, 73.9% route)
+    Total                      6.049ns (1.570ns logic, 4.479ns route)
+                                       (26.0% logic, 74.0% route)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'clk_i'
@@ -6121,43 +6134,43 @@ Timing constraint: Default period analysis for Clock 'inst_syscon/Inst_10_1_pll/
   Total number of paths / destination ports: 16 / 16
 -------------------------------------------------------------------------
 Delay:               1.861ns (Levels of Logic = 1)
-  Source:            inst_dvitransmitter/Inst_clk_serializer_10_1/gear_s (FF)
-  Destination:       inst_dvitransmitter/Inst_d2_serializer_10_1/intDPIn_4 (FF)
+  Source:            inst_dvitransmitter/Inst_d0_serializer_10_1/gear_s (FF)
+  Destination:       inst_dvitransmitter/Inst_d0_serializer_10_1/intDPIn_4 (FF)
   Source Clock:      inst_syscon/Inst_10_1_pll/CLKOUT3 rising
   Destination Clock: inst_syscon/Inst_10_1_pll/CLKOUT3 rising
 
-  Data Path: inst_dvitransmitter/Inst_clk_serializer_10_1/gear_s to inst_dvitransmitter/Inst_d2_serializer_10_1/intDPIn_4
+  Data Path: inst_dvitransmitter/Inst_d0_serializer_10_1/gear_s to inst_dvitransmitter/Inst_d0_serializer_10_1/intDPIn_4
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FD:C->Q              16   0.447   1.109  inst_dvitransmitter/Inst_clk_serializer_10_1/gear_s (inst_dvitransmitter/Inst_clk_serializer_10_1/gear_s)
-     LUT4:I2->O            1   0.203   0.000  inst_dvitransmitter/Inst_d2_serializer_10_1/Mmux_DP_I[9]_DP_I[4]_mux_0_OUT11 (inst_dvitransmitter/Inst_d2_serializer_10_1/DP_I[9]_DP_I[4]_mux_0_OUT<0>)
-     FD:D                      0.102          inst_dvitransmitter/Inst_d2_serializer_10_1/intDPIn_0
+     FD:C->Q              16   0.447   1.109  inst_dvitransmitter/Inst_d0_serializer_10_1/gear_s (inst_dvitransmitter/Inst_d0_serializer_10_1/gear_s)
+     LUT4:I2->O            1   0.203   0.000  inst_dvitransmitter/Inst_d0_serializer_10_1/Mmux_DP_I[9]_DP_I[4]_mux_0_OUT11 (inst_dvitransmitter/Inst_d0_serializer_10_1/DP_I[9]_DP_I[4]_mux_0_OUT<0>)
+     FD:D                      0.102          inst_dvitransmitter/Inst_d0_serializer_10_1/intDPIn_0
     ----------------------------------------
     Total                      1.861ns (0.752ns logic, 1.109ns route)
                                        (40.4% logic, 59.6% route)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'fx2clk_in'
-  Total number of paths / destination ports: 1427 / 1345
+  Total number of paths / destination ports: 1457 / 1372
 -------------------------------------------------------------------------
-Offset:              7.308ns (Levels of Logic = 4)
+Offset:              6.834ns (Levels of Logic = 4)
   Source:            fx2gotdata_in (PAD)
-  Destination:       cfg<0>_p_0_0 (FF)
+  Destination:       cfg[4]_enable (FF)
   Destination Clock: fx2clk_in rising
 
-  Data Path: fx2gotdata_in to cfg<0>_p_0_0
+  Data Path: fx2gotdata_in to cfg[4]_enable
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
      IBUF:I->O            35   1.222   1.563  fx2gotdata_in_IBUF (fx2gotdata_in_IBUF)
-     LUT3:I0->O            5   0.205   0.715  comm.comm_fpga_fx2/state_FSM_FFd2-In311 (comm.comm_fpga_fx2/state_FSM_FFd2-In31)
-     LUT6:I5->O          280   0.205   2.070  _n0935_inv1 (_n0935_inv1)
-     LUT6:I5->O            8   0.205   0.802  _n1341_inv1 (_n1341_inv)
-     FDE:CE                    0.322          cfg<14>_p_0_0
+     LUT4:I1->O            7   0.205   0.878  comm.comm_fpga_fx2/fx2GotData_in_h2fReady_in_AND_298_o1_SW0 (N315)
+     LUT6:I4->O           61   0.203   1.621  comm.comm_fpga_fx2/Mmux_h2fValid_out11_4 (comm.comm_fpga_fx2/Mmux_h2fValid_out11_3)
+     LUT5:I4->O            2   0.205   0.616  _n1282_inv1 (_n1282_inv)
+     FDE:CE                    0.322          cfg[12]_enable
     ----------------------------------------
-    Total                      7.308ns (2.159ns logic, 5.149ns route)
-                                       (29.5% logic, 70.5% route)
+    Total                      6.834ns (2.157ns logic, 4.677ns route)
+                                       (31.6% logic, 68.4% route)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'camb_pclk_i'
@@ -6205,7 +6218,7 @@ Offset:              3.016ns (Levels of Logic = 3)
 Timing constraint: Default OFFSET IN BEFORE for Clock 'inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT2'
   Total number of paths / destination ports: 637 / 330
 -------------------------------------------------------------------------
-Offset:              4.700ns (Levels of Logic = 5)
+Offset:              4.729ns (Levels of Logic = 5)
   Source:            inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0:P0WRCOUNT5 (PAD)
   Destination:       inst_fbctl/auxw_fifo_comp/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/grss.rsts/ram_empty_fb_i (FF)
   Destination Clock: inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT2 rising
@@ -6214,16 +6227,16 @@ Offset:              4.700ns (Levels of Logic = 5)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-    MCB:P0WRCOUNT5         5   0.000   0.943  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0 (inst_fbctl/p0_wr_count<5>)
-     LUT3:I0->O           17   0.205   1.275  inst_fbctl/move_state_FSM_FFd16-In211 (inst_fbctl/auxw_rd)
+    MCB:P0WRCOUNT5         6   0.000   0.973  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0 (inst_fbctl/p0_wr_count<5>)
+     LUT3:I0->O           17   0.205   1.275  inst_fbctl/move_state_FSM_FFd16-In11 (inst_fbctl/auxw_rd)
      begin scope: 'inst_fbctl/auxw_fifo_comp:rd_en'
      LUT4:I0->O           15   0.203   0.982  U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/Mmux_RAM_RD_EN_FWFT11 (U0/xst_fifo_generator/gconvfifo.rf/grf.rf/ram_rd_en)
      LUT5:I4->O            1   0.205   0.580  U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/grss.rsts/going_empty_leaving_empty_OR_6_o1 (U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/grss.rsts/going_empty_leaving_empty_OR_6_o1)
      LUT6:I5->O            1   0.205   0.000  U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/grss.rsts/going_empty_leaving_empty_OR_6_o4 (U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/grss.rsts/going_empty_leaving_empty_OR_6_o)
      FDP:D                     0.102          U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/grss.rsts/ram_empty_fb_i
     ----------------------------------------
-    Total                      4.700ns (0.920ns logic, 3.780ns route)
-                                       (19.6% logic, 80.4% route)
+    Total                      4.729ns (0.920ns logic, 3.809ns route)
+                                       (19.5% logic, 80.5% route)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'inst_syscon/Inst_10_1_pll/CLKOUT2'
@@ -6240,7 +6253,7 @@ Offset:              2.528ns (Levels of Logic = 3)
     ----------------------------------------  ------------
     MCB:P3RDDATA6          3   0.000   0.898  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0 (inst_fbctl/p3_rd_data<6>)
      LUT5:I1->O            2   0.203   0.981  inst_dvitransmitter/Inst_TMDSEncoder_green/ADDERTREE_INTERNAL_Madd_xor<0>21 (inst_dvitransmitter/Inst_TMDSEncoder_green/ADDERTREE_INTERNAL_Madd_1)
-     LUT6:I0->O            1   0.203   0.000  inst_dvitransmitter/Inst_TMDSEncoder_green/ADDERTREE_INTERNAL_Madd2_xor<2>11_G (N718)
+     LUT6:I0->O            1   0.203   0.000  inst_dvitransmitter/Inst_TMDSEncoder_green/ADDERTREE_INTERNAL_Madd2_xor<2>11_G (N717)
      MUXF7:I1->O           1   0.140   0.000  inst_dvitransmitter/Inst_TMDSEncoder_green/ADDERTREE_INTERNAL_Madd2_xor<2>11 (inst_dvitransmitter/Inst_TMDSEncoder_green/ADDERTREE_INTERNAL_Madd_22)
      FD:D                      0.102          inst_dvitransmitter/Inst_TMDSEncoder_green/n1_d_2
     ----------------------------------------
@@ -6249,9 +6262,9 @@ Offset:              2.528ns (Levels of Logic = 3)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'inst_syscon/Inst_pll_mcb/CLKOUT2'
-  Total number of paths / destination ports: 82 / 52
+  Total number of paths / destination ports: 84 / 52
 -------------------------------------------------------------------------
-Offset:              5.149ns (Levels of Logic = 5)
+Offset:              5.275ns (Levels of Logic = 5)
   Source:            mcb3_rzq (PAD)
   Destination:       inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/STATE_FSM_FFd6 (FF)
   Destination Clock: inst_syscon/Inst_pll_mcb/CLKOUT2 rising
@@ -6261,14 +6274,14 @@ Offset:              5.149ns (Levels of Logic = 5)
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
      IOBUF:IO->O           2   1.222   0.961  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/IOBUF_RZQ (inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/RZQ_IN)
-     LUT5:I0->O            1   0.203   0.684  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/RZQ_IN_P_Term[5]_OR_84_o1_SW0 (N453)
+     LUT5:I0->O            1   0.203   0.684  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/RZQ_IN_P_Term[5]_OR_84_o1_SW0 (N443)
      LUT6:I4->O            1   0.203   0.684  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/STATE_FSM_FFd6-In7 (inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/STATE_FSM_FFd6-In7)
-     LUT6:I4->O            1   0.203   0.684  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/STATE_FSM_FFd6-In13 (inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/STATE_FSM_FFd6-In14)
-     LUT6:I4->O            1   0.203   0.000  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/STATE_FSM_FFd6-In19 (inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/STATE_FSM_FFd6-In)
+     LUT6:I4->O            1   0.203   0.808  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/STATE_FSM_FFd6-In13 (inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/STATE_FSM_FFd6-In14)
+     LUT6:I3->O            1   0.205   0.000  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/STATE_FSM_FFd6-In19 (inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/STATE_FSM_FFd6-In)
      FDR:D                     0.102          inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/STATE_FSM_FFd6
     ----------------------------------------
-    Total                      5.149ns (2.136ns logic, 3.013ns route)
-                                       (41.5% logic, 58.5% route)
+    Total                      5.275ns (2.138ns logic, 3.137ns route)
+                                       (40.5% logic, 59.5% route)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT0'
@@ -6295,7 +6308,7 @@ Offset:              3.238ns (Levels of Logic = 3)
 Timing constraint: Default OFFSET IN BEFORE for Clock 'clk_i'
   Total number of paths / destination ports: 69 / 34
 -------------------------------------------------------------------------
-Offset:              4.026ns (Levels of Logic = 3)
+Offset:              4.152ns (Levels of Logic = 3)
   Source:            reset_i (PAD)
   Destination:       inst_syscon/RstQ_99 (FF)
   Destination Clock: clk_i rising
@@ -6304,57 +6317,56 @@ Offset:              4.026ns (Levels of Logic = 3)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O             2   1.222   0.617  reset_i_IBUF (reset_i_IBUF)
-     LUT6:I5->O            1   0.205   0.684  inst_syscon/RstDbnc_RstQ[99]_OR_1_o_SW0 (N237)
-     LUT6:I4->O            7   0.203   0.773  inst_syscon/RstDbnc_RstQ[99]_OR_1_o (inst_syscon/RstDbnc_RstQ[99]_OR_1_o)
+     IBUF:I->O             2   1.222   0.845  reset_i_IBUF (reset_i_IBUF)
+     LUT6:I3->O            1   0.205   0.580  inst_syscon/RstDbnc_RstQ[99]_OR_1_o_SW0 (N217)
+     LUT6:I5->O            7   0.205   0.773  inst_syscon/RstDbnc_RstQ[99]_OR_1_o (inst_syscon/RstDbnc_RstQ[99]_OR_1_o)
      FDE:CE                    0.322          inst_syscon/RstQ_97
     ----------------------------------------
-    Total                      4.026ns (1.952ns logic, 2.074ns route)
-                                       (48.5% logic, 51.5% route)
+    Total                      4.152ns (1.954ns logic, 2.198ns route)
+                                       (47.1% logic, 52.9% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT0'
-  Total number of paths / destination ports: 11 / 11
+  Total number of paths / destination ports: 15 / 15
 -------------------------------------------------------------------------
-Offset:              3.950ns (Levels of Logic = 1)
-  Source:            my_i2c_a/Inst_LocalRst/RstQ_4 (FF)
-  Destination:       led_o<7> (PAD)
+Offset:              3.847ns (Levels of Logic = 1)
+  Source:            my_i2c_a/octets_0 (FF)
+  Destination:       led_o<5> (PAD)
   Source Clock:      inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT0 rising
 
-  Data Path: my_i2c_a/Inst_LocalRst/RstQ_4 to led_o<7>
+  Data Path: my_i2c_a/octets_0 to led_o<5>
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDP:C->Q             13   0.447   0.932  my_i2c_a/Inst_LocalRst/RstQ_4 (my_i2c_a/Inst_LocalRst/RstQ_4)
-     OBUF:I->O                 2.571          led_o_7_OBUF (led_o<7>)
+     FDE:C->Q              9   0.447   0.829  my_i2c_a/octets_0 (my_i2c_a/octets_0)
+     OBUF:I->O                 2.571          led_o_5_OBUF (led_o<5>)
     ----------------------------------------
-    Total                      3.950ns (3.018ns logic, 0.932ns route)
-                                       (76.4% logic, 23.6% route)
+    Total                      3.847ns (3.018ns logic, 0.829ns route)
+                                       (78.5% logic, 21.5% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'fx2clk_in'
-  Total number of paths / destination ports: 1339 / 13
+  Total number of paths / destination ports: 1557 / 13
 -------------------------------------------------------------------------
-Offset:              10.079ns (Levels of Logic = 7)
-  Source:            adr_0 (FF)
-  Destination:       fx2data_io<1> (PAD)
+Offset:              9.523ns (Levels of Logic = 6)
+  Source:            adr_1 (FF)
+  Destination:       fx2data_io<4> (PAD)
   Source Clock:      fx2clk_in rising
 
-  Data Path: adr_0 to fx2data_io<1>
+  Data Path: adr_1 to fx2data_io<4>
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDE:C->Q            241   0.447   2.408  adr_0 (adr_0)
-     LUT6:I1->O            1   0.203   0.827  Mmux_adr[4]_cfg[31]_identify_Mux_334_o_81 (Mmux_adr[4]_cfg[31]_identify_Mux_334_o_81)
-     LUT6:I2->O            1   0.203   0.000  Mmux_adr[4]_cfg[31]_identify_Mux_334_o_3 (Mmux_adr[4]_cfg[31]_identify_Mux_334_o_3)
-     MUXF7:I1->O           1   0.140   0.827  Mmux_adr[4]_cfg[31]_identify_Mux_334_o_2_f7 (adr[4]_cfg[31]_identify_Mux_334_o)
-     LUT6:I2->O            1   0.203   0.580  comm.comm_fpga_fx2/Mmux_dataOut21 (comm.comm_fpga_fx2/Mmux_dataOut2)
-     LUT6:I5->O            1   0.205   0.684  comm.comm_fpga_fx2/Mmux_dataOut22 (comm.comm_fpga_fx2/Mmux_dataOut21)
-     LUT5:I3->O            1   0.203   0.579  comm.comm_fpga_fx2/Mmux_dataOut24 (comm.comm_fpga_fx2/dataOut<1>)
-     IOBUF:I->IO               2.571          fx2data_io_1_IOBUF (fx2data_io<1>)
+     FDE:C->Q            154   0.447   2.376  adr_1 (adr_1)
+     LUT6:I0->O            1   0.203   0.827  mux4_81 (mux4_81)
+     LUT6:I2->O            1   0.203   0.000  mux4_3 (mux4_3)
+     MUXF7:I1->O           1   0.140   0.827  mux4_2_f7 (adr[4]_cfg[31]_p[0][7]_wide_mux_351_OUT<4>)
+     LUT6:I2->O            1   0.203   0.944  comm.comm_fpga_fx2/Mmux_dataOut52 (comm.comm_fpga_fx2/Mmux_dataOut51)
+     LUT6:I0->O            1   0.203   0.579  comm.comm_fpga_fx2/Mmux_dataOut53 (comm.comm_fpga_fx2/dataOut<4>)
+     IOBUF:I->IO               2.571          fx2data_io_4_IOBUF (fx2data_io<4>)
     ----------------------------------------
-    Total                     10.079ns (4.175ns logic, 5.904ns route)
-                                       (41.4% logic, 58.6% route)
+    Total                      9.523ns (3.970ns logic, 5.553ns route)
+                                       (41.7% logic, 58.3% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'inst_syscon/Inst_pll_mcb/CLKOUT2'
@@ -6413,7 +6425,7 @@ Offset:              2.975ns (Levels of Logic = 2)
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
      FDE:C->Q             10   0.447   0.961  inst_fbctl/pb_wr_cnt_1 (inst_fbctl/pb_wr_cnt_1)
-     LUT2:I0->O            1   0.203   0.580  inst_fbctl/Mmux_p1_cmd_bl6_SW0 (N132)
+     LUT2:I0->O            1   0.203   0.580  inst_fbctl/Mmux_p1_cmd_bl6_SW0 (N74)
      LUT6:I5->O            1   0.205   0.579  inst_fbctl/Mmux_p1_cmd_bl6 (inst_fbctl/p1_cmd_bl<5>)
     MCB:P1CMDBL5               0.000          inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0
     ----------------------------------------
@@ -6444,25 +6456,25 @@ Offset:              4.037ns (Levels of Logic = 3)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'inst_syscon/Inst_10_1_pll/CLKOUT2'
-  Total number of paths / destination ports: 390 / 16
+  Total number of paths / destination ports: 381 / 16
 -------------------------------------------------------------------------
-Offset:              4.919ns (Levels of Logic = 3)
-  Source:            inst_fbctl/x_3 (FF)
+Offset:              4.950ns (Levels of Logic = 3)
+  Source:            inst_fbctl/y_8 (FF)
   Destination:       inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0:P3CMDBA2 (PAD)
   Source Clock:      inst_syscon/Inst_10_1_pll/CLKOUT2 rising
 
-  Data Path: inst_fbctl/x_3 to inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0:P3CMDBA2
+  Data Path: inst_fbctl/y_8 to inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0:P3CMDBA2
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDRE:C->Q             6   0.447   0.992  inst_fbctl/x_3 (inst_fbctl/x_3)
-     LUT4:I0->O            1   0.203   0.924  inst_fbctl/x[9]_y[9]_AND_74_o_SW0 (N130)
-     LUT6:I1->O           16   0.203   1.369  inst_fbctl/x[9]_y[9]_AND_74_o (inst_fbctl/p3_cmd_byte_addr<22>)
-     LUT6:I0->O            1   0.203   0.579  inst_fbctl/Mmux_p3_cmd_byte_addr15 (inst_fbctl/p3_cmd_byte_addr<10>)
+     FDRE:C->Q             4   0.447   1.028  inst_fbctl/y_8 (inst_fbctl/y_8)
+     LUT5:I0->O            2   0.203   0.961  inst_fbctl/y[9]_GND_229_o_LessThan_51_o1 (inst_fbctl/y[9]_GND_229_o_LessThan_51_o)
+     LUT5:I0->O           15   0.203   1.326  inst_fbctl/GND_229_o_y[9]_AND_76_o1 (inst_fbctl/GND_229_o_y[9]_AND_76_o_inv_inv)
+     LUT6:I1->O            1   0.203   0.579  inst_fbctl/Mmux_p3_cmd_byte_addr15 (inst_fbctl/p3_cmd_byte_addr<10>)
     MCB:P3CMDCA9               0.000          inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0
     ----------------------------------------
-    Total                      4.919ns (1.056ns logic, 3.863ns route)
-                                       (21.5% logic, 78.5% route)
+    Total                      4.950ns (1.056ns logic, 3.894ns route)
+                                       (21.3% logic, 78.7% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'cama_pclk_i'
@@ -6478,7 +6490,7 @@ Offset:              2.975ns (Levels of Logic = 2)
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
      FDE:C->Q             10   0.447   0.961  inst_fbctl/pa_wr_cnt_1 (inst_fbctl/pa_wr_cnt_1)
-     LUT2:I0->O            1   0.203   0.580  inst_fbctl/Mmux_p2_cmd_bl6_SW0 (N134)
+     LUT2:I0->O            1   0.203   0.580  inst_fbctl/Mmux_p2_cmd_bl6_SW0 (N76)
      LUT6:I5->O            1   0.205   0.579  inst_fbctl/Mmux_p2_cmd_bl6 (inst_fbctl/p2_cmd_bl<5>)
     MCB:P2CMDBL5               0.000          inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0
     ----------------------------------------
@@ -6506,25 +6518,24 @@ Offset:              1.161ns (Levels of Logic = 0)
 
 =========================================================================
 Timing constraint: Default path analysis
-  Total number of paths / destination ports: 802 / 737
+  Total number of paths / destination ports: 797 / 737
 -------------------------------------------------------------------------
-Delay:               8.436ns (Levels of Logic = 6)
+Delay:               7.358ns (Levels of Logic = 5)
   Source:            fx2gotroom_in (PAD)
-  Destination:       fx2data_io<7> (PAD)
+  Destination:       fx2data_io<6> (PAD)
 
-  Data Path: fx2gotroom_in to fx2data_io<7>
+  Data Path: fx2gotroom_in to fx2data_io<6>
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O             3   1.222   0.898  fx2gotroom_in_IBUF (fx2gotroom_in_IBUF)
-     LUT4:I0->O            3   0.203   0.651  comm.comm_fpga_fx2/state_FSM_FFd4-In31 (comm.comm_fpga_fx2/state_FSM_FFd4-In3)
-     LUT5:I4->O            3   0.205   1.015  comm.comm_fpga_fx2/_n0223_inv31 (comm.comm_fpga_fx2/_n0223_inv3)
-     LUT6:I0->O            4   0.203   0.684  comm.comm_fpga_fx2/Mmux_dataOut23 (comm.comm_fpga_fx2/Mmux_dataOut23)
-     LUT5:I4->O            1   0.205   0.579  comm.comm_fpga_fx2/Mmux_dataOut24 (comm.comm_fpga_fx2/dataOut<1>)
-     IOBUF:I->IO               2.571          fx2data_io_1_IOBUF (fx2data_io<1>)
+     IBUF:I->O             7   1.222   1.138  fx2gotroom_in_IBUF (fx2gotroom_in_IBUF)
+     LUT6:I0->O           14   0.203   1.302  Mmux_f2hvalid11 (f2hvalid)
+     LUT6:I1->O            1   0.203   0.000  comm.comm_fpga_fx2/Mmux_dataOut73_G (N713)
+     MUXF7:I1->O           1   0.140   0.579  comm.comm_fpga_fx2/Mmux_dataOut73 (comm.comm_fpga_fx2/dataOut<6>)
+     IOBUF:I->IO               2.571          fx2data_io_6_IOBUF (fx2data_io<6>)
     ----------------------------------------
-    Total                      8.436ns (4.609ns logic, 3.827ns route)
-                                       (54.6% logic, 45.4% route)
+    Total                      7.358ns (4.339ns logic, 3.019ns route)
+                                       (59.0% logic, 41.0% route)
 
 =========================================================================
 
@@ -6540,7 +6551,7 @@ cama_pclk_i                                     |    4.791|         |         | 
 clk_i                                           |    3.619|         |         |         |
 inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT0|    2.684|         |         |         |
 inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT2|    1.165|         |         |         |
-inst_syscon/Inst_pll_mcb/CLKOUT2                |    2.876|         |         |         |
+inst_syscon/Inst_pll_mcb/CLKOUT2                |    2.648|         |         |         |
 ------------------------------------------------+---------+---------+---------+---------+
 
 Clock to Setup on destination clock camb_pclk_i
@@ -6552,7 +6563,7 @@ camb_pclk_i                                     |    4.791|         |         | 
 clk_i                                           |    3.619|         |         |         |
 inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT0|    2.684|         |         |         |
 inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT2|    1.165|         |         |         |
-inst_syscon/Inst_pll_mcb/CLKOUT2                |    2.876|         |         |         |
+inst_syscon/Inst_pll_mcb/CLKOUT2                |    2.648|         |         |         |
 ------------------------------------------------+---------+---------+---------+---------+
 
 Clock to Setup on destination clock clk_i
@@ -6568,9 +6579,9 @@ Clock to Setup on destination clock fx2clk_in
                                                 | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock                                    |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ------------------------------------------------+---------+---------+---------+---------+
-fx2clk_in                                       |    6.394|         |         |         |
-inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT0|    2.555|         |         |         |
-inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT2|    2.891|         |         |         |
+fx2clk_in                                       |    6.499|         |         |         |
+inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT0|    2.703|         |         |         |
+inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT2|    2.892|         |         |         |
 ------------------------------------------------+---------+---------+---------+---------+
 
 Clock to Setup on destination clock inst_syscon/Inst_10_1_pll/CLKOUT2
@@ -6579,7 +6590,7 @@ Clock to Setup on destination clock inst_syscon/Inst_10_1_pll/CLKOUT2
 Source Clock                     |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------------------------+---------+---------+---------+---------+
 clk_i                            |    3.517|         |         |         |
-inst_syscon/Inst_10_1_pll/CLKOUT2|    5.866|         |         |         |
+inst_syscon/Inst_10_1_pll/CLKOUT2|    5.644|         |         |         |
 inst_syscon/Inst_pll_mcb/CLKOUT2 |    2.750|         |         |         |
 ---------------------------------+---------+---------+---------+---------+
 
@@ -6599,7 +6610,7 @@ Source Clock                                    |Dest:Rise|Dest:Rise|Dest:Fall|D
 ------------------------------------------------+---------+---------+---------+---------+
 clk_i                                           |    3.738|         |         |         |
 fx2clk_in                                       |    1.128|         |         |         |
-inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT0|    5.578|         |         |         |
+inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT0|    5.520|         |         |         |
 ------------------------------------------------+---------+---------+---------+---------+
 
 Clock to Setup on destination clock inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT2
@@ -6618,21 +6629,21 @@ Clock to Setup on destination clock inst_syscon/Inst_pll_mcb/CLKOUT2
 Source Clock                    |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 --------------------------------+---------+---------+---------+---------+
 clk_i                           |    5.446|         |         |         |
-inst_syscon/Inst_pll_mcb/CLKOUT2|    6.015|         |         |         |
+inst_syscon/Inst_pll_mcb/CLKOUT2|    6.049|         |         |         |
 --------------------------------+---------+---------+---------+---------+
 
 =========================================================================
 
 
-Total REAL time to Xst completion: 46.00 secs
-Total CPU time to Xst completion: 40.31 secs
+Total REAL time to Xst completion: 45.00 secs
+Total CPU time to Xst completion: 39.98 secs
  
 --> 
 
 
-Total memory usage is 192320 kilobytes
+Total memory usage is 192888 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings : 2831 (   0 filtered)
-Number of infos    :  463 (   0 filtered)
+Number of warnings : 2832 (   0 filtered)
+Number of infos    :  479 (   0 filtered)
 

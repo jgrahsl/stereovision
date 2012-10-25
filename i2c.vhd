@@ -32,7 +32,7 @@ architecture rtl of i2c is
   constant IWR                         : std_logic                    := '0';  -- init write
   
   constant CMD_DELAY        : natural := 1;  --ms
-  constant CMD_DELAY_CYCLES : natural := 1000000;
+  constant CMD_DELAY_CYCLES : natural := 10000000;
 
 
 
@@ -60,7 +60,7 @@ architecture rtl of i2c is
   signal next_octets : natural range 0 to 5;
   type   reg_t is array (0 to 4) of std_logic_vector(7 downto 0);
   signal reg         : reg_t;
-
+  signal count : std_logic_vector(4 downto 0);
   signal next_reg : reg_t;
 begin
   my_i2cfifo : entity work.i2cfifo
@@ -73,7 +73,9 @@ begin
       rd_en  => rd_en,                  -- [IN]
       dout   => dout,                   -- [OUT]
       full   => wr_full,                -- [OUT]
-      empty  => empty);                 -- [OUT]
+      empty  => empty,
+    rd_data_count => count
+      );                 -- [OUT]
 
 
   Inst_LocalRst : entity digilent.LocalRst port map(
@@ -122,7 +124,7 @@ begin
     end if;
   end process;
 
-  twiAddr(7 downto 1) <= reg(0)(7 downto 1);
+  twiAddr(7 downto 1) <= "0111100"; --reg(0)(7 downto 1);
   twiAddr(0)          <= reg(0)(0) when state = stData1 or state = stData2 else '0';
 
   OUTPUT_DECODE : process (state, twiDone, twiErr)
@@ -233,5 +235,5 @@ begin
     
   end process;
 
-  c <= intRst & std_logic_vector(to_unsigned(octets,7));
+  c <= std_logic_vector(to_unsigned(octets,3)) & count;
 end rtl;

@@ -50,7 +50,8 @@ ENTITY i2cfifo IS
     rd_en : IN STD_LOGIC;
     dout : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
     full : OUT STD_LOGIC;
-    empty : OUT STD_LOGIC
+    empty : OUT STD_LOGIC;
+    rd_data_count : OUT STD_LOGIC_VECTOR(4 DOWNTO 0)
   );
 END i2cfifo;
 
@@ -66,7 +67,8 @@ COMPONENT wrapped_i2cfifo
     rd_en : IN STD_LOGIC;
     dout : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
     full : OUT STD_LOGIC;
-    empty : OUT STD_LOGIC
+    empty : OUT STD_LOGIC;
+    rd_data_count : OUT STD_LOGIC_VECTOR(4 DOWNTO 0)
   );
 END COMPONENT;
 
@@ -98,7 +100,7 @@ END COMPONENT;
       c_axis_type => 0,
       c_common_clock => 0,
       c_count_type => 0,
-      c_data_count_width => 7,
+      c_data_count_width => 4,
       c_default_value => "BlankString",
       c_din_width => 8,
       c_din_width_axis => 1,
@@ -155,7 +157,7 @@ END COMPONENT;
       c_has_prog_flags_wach => 0,
       c_has_prog_flags_wdch => 0,
       c_has_prog_flags_wrch => 0,
-      c_has_rd_data_count => 0,
+      c_has_rd_data_count => 1,
       c_has_rd_rst => 0,
       c_has_rst => 1,
       c_has_slave_ce => 0,
@@ -197,14 +199,14 @@ END COMPONENT;
       c_prog_empty_type_wach => 0,
       c_prog_empty_type_wdch => 0,
       c_prog_empty_type_wrch => 0,
-      c_prog_full_thresh_assert_val => 127,
+      c_prog_full_thresh_assert_val => 15,
       c_prog_full_thresh_assert_val_axis => 1023,
       c_prog_full_thresh_assert_val_rach => 1023,
       c_prog_full_thresh_assert_val_rdch => 1023,
       c_prog_full_thresh_assert_val_wach => 1023,
       c_prog_full_thresh_assert_val_wdch => 1023,
       c_prog_full_thresh_assert_val_wrch => 1023,
-      c_prog_full_thresh_negate_val => 126,
+      c_prog_full_thresh_negate_val => 14,
       c_prog_full_type => 0,
       c_prog_full_type_axis => 0,
       c_prog_full_type_rach => 0,
@@ -213,10 +215,10 @@ END COMPONENT;
       c_prog_full_type_wdch => 0,
       c_prog_full_type_wrch => 0,
       c_rach_type => 0,
-      c_rd_data_count_width => 7,
-      c_rd_depth => 128,
+      c_rd_data_count_width => 5,
+      c_rd_depth => 16,
       c_rd_freq => 1,
-      c_rd_pntr_width => 7,
+      c_rd_pntr_width => 4,
       c_rdch_type => 0,
       c_reg_slice_mode_axis => 0,
       c_reg_slice_mode_rach => 0,
@@ -239,13 +241,13 @@ END COMPONENT;
       c_use_ecc_wrch => 0,
       c_use_embedded_reg => 0,
       c_use_fifo16_flags => 0,
-      c_use_fwft_data_count => 0,
+      c_use_fwft_data_count => 1,
       c_valid_low => 0,
       c_wach_type => 0,
       c_wdch_type => 0,
       c_wr_ack_low => 0,
-      c_wr_data_count_width => 7,
-      c_wr_depth => 128,
+      c_wr_data_count_width => 5,
+      c_wr_depth => 16,
       c_wr_depth_axis => 1024,
       c_wr_depth_rach => 16,
       c_wr_depth_rdch => 1024,
@@ -253,7 +255,7 @@ END COMPONENT;
       c_wr_depth_wdch => 1024,
       c_wr_depth_wrch => 16,
       c_wr_freq => 1,
-      c_wr_pntr_width => 7,
+      c_wr_pntr_width => 4,
       c_wr_pntr_width_axis => 10,
       c_wr_pntr_width_rach => 4,
       c_wr_pntr_width_rdch => 10,
@@ -276,7 +278,8 @@ U0 : wrapped_i2cfifo
     rd_en => rd_en,
     dout => dout,
     full => full,
-    empty => empty
+    empty => empty,
+    rd_data_count => rd_data_count
   );
 -- synthesis translate_on
 

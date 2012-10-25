@@ -18,55 +18,55 @@
 # USB interface
 #===============================================================================
 # IFCLK
-NET "fx2clk_in" IOSTANDARD = LVTTL;
+NET "fx2clk_in" IOSTANDARD = LVCMOS33;
 NET "fx2clk_in" LOC = C10;
 # PA4/FIFOADR0
-NET "fx2addr_out[0]" IOSTANDARD = LVTTL;
+NET "fx2addr_out[0]" IOSTANDARD = LVCMOS33;
 NET "fx2addr_out[0]" LOC = A14;
 # PA5/FIFOADR1
-NET "fx2addr_out[1]" IOSTANDARD = LVTTL;
+NET "fx2addr_out[1]" IOSTANDARD = LVCMOS33;
 NET "fx2addr_out[1]" LOC = B14;
 # PB0/FD0
-NET "fx2data_io[0]" IOSTANDARD = LVTTL;
+NET "fx2data_io[0]" IOSTANDARD = LVCMOS33;
 NET "fx2data_io[0]" LOC = A2;
 # PB1/FD1
-NET "fx2data_io[1]" IOSTANDARD = LVTTL;
+NET "fx2data_io[1]" IOSTANDARD = LVCMOS33;
 NET "fx2data_io[1]" LOC = D6;
 # PB2/FD2
-NET "fx2data_io[2]" IOSTANDARD = LVTTL;
+NET "fx2data_io[2]" IOSTANDARD = LVCMOS33;
 NET "fx2data_io[2]" LOC = C6;
 # PB3/FD3
-NET "fx2data_io[3]" IOSTANDARD = LVTTL;
+NET "fx2data_io[3]" IOSTANDARD = LVCMOS33;
 NET "fx2data_io[3]" LOC = B3;
 # PB4/FD4
-NET "fx2data_io[4]" IOSTANDARD = LVTTL;
+NET "fx2data_io[4]" IOSTANDARD = LVCMOS33;
 NET "fx2data_io[4]" LOC = A3;
 # PB5/FD5
-NET "fx2data_io[5]" IOSTANDARD = LVTTL;
+NET "fx2data_io[5]" IOSTANDARD = LVCMOS33;
 NET "fx2data_io[5]" LOC = B4;
 # PB6/FD6
-NET "fx2data_io[6]" IOSTANDARD = LVTTL;
+NET "fx2data_io[6]" IOSTANDARD = LVCMOS33;
 NET "fx2data_io[6]" LOC = A4;
 # PB7/FD7
-NET "fx2data_io[7]" IOSTANDARD = LVTTL;
+NET "fx2data_io[7]" IOSTANDARD = LVCMOS33;
 NET "fx2data_io[7]" LOC = C5;
 # RDY0/SLRD
-NET "fx2read_out" IOSTANDARD = LVTTL;
+NET "fx2read_out" IOSTANDARD = LVCMOS33;
 NET "fx2read_out" LOC = F13;
 # PA2/SLOE
-NET "fx2oe_out" IOSTANDARD = LVTTL;
+NET "fx2oe_out" IOSTANDARD = LVCMOS33;
 NET "fx2oe_out" LOC = A15;
 # CTL2/FLAGC
-NET "fx2gotdata_in" IOSTANDARD = LVTTL;
+NET "fx2gotdata_in" IOSTANDARD = LVCMOS33;
 NET "fx2gotdata_in" LOC = C15;
 # RDY1/SLWR
-NET "fx2write_out" IOSTANDARD = LVTTL;
+NET "fx2write_out" IOSTANDARD = LVCMOS33;
 NET "fx2write_out" LOC = E13;
 # CTL1/FLAGB
-NET "fx2gotroom_in" IOSTANDARD = LVTTL;
+NET "fx2gotroom_in" IOSTANDARD = LVCMOS33;
 NET "fx2gotroom_in" LOC = A9;
 # PA6/PKTEND
-NET "fx2pktend_out" IOSTANDARD = LVTTL;
+NET "fx2pktend_out" IOSTANDARD = LVCMOS33;
 NET "fx2pktend_out" LOC = C4;
 #Created by Constraints Editor (xc6slx45-csg324-3) - 2012/10/01
 
@@ -103,11 +103,11 @@ INST "fx2data_io[5]" TNM = "fx2out_data";
 INST "fx2data_io[6]" TNM = "fx2out_data";
 INST "fx2data_io[7]" TNM = "fx2out_data";
 
-TIMEGRP "fx2out" OFFSET = OUT 14 ns AFTER "fx2clk_in";
+TIMEGRP "fx2out" OFFSET = OUT 13 ns AFTER "fx2clk_in";
 TIMEGRP "fx2out_data" OFFSET = OUT 22 ns AFTER "fx2clk_in";
 
-TIMEGRP "fx2in" OFFSET = IN 11 ns VALID 15 ns BEFORE "fx2clk_in" RISING;
-TIMEGRP "fx2data_in" OFFSET = IN 9 ns VALID 15 ns BEFORE "fx2clk_in" RISING;
+TIMEGRP "fx2in" OFFSET = IN 9.5 ns  AFTER "fx2clk_in";
+TIMEGRP "fx2data_in" OFFSET = IN 11 ns  AFTER "fx2clk_in";
 
 #TIMEGRP "fx2in" OFFSET = IN 9.5 ns  AFTER "fx2clk_in" RISING;
 #TIMEGRP "fx2data_in" OFFSET = IN 11 ns AFTER "fx2clk_in" RISING;

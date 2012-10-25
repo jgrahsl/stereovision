@@ -102,25 +102,28 @@ def tx2():
     ba[1] = 0xCC
     flWriteChannel(handle, 1000, 0x21,ba)
 
-def rx():
-    a = flReadChannel(handle,2000, 0x21,5)
-    for i in range(5):
+def rx(ba):
+    l = 5
+    a = flReadChannel(handle,2000, 0x21,l)
+    for i in range(l):
         print hex(a[i]),
         if a[i] != ba[i]:
             print "err"
         else:
             print "ok"
 
-for i in range(len(init)/2):
+for i in range(1):
     ba = bytearray(5)
     ba[0] = 0x78
-    c = 0
+    c = 2*i
     ba[1] = int(init[c][0:2],16)
     ba[2] = int(init[c][2:4],16)
     ba[3] = int(init[c][4:6],16)
     ba[4] = int(init[c][6:8],16)  
     print i
     tx(ba)
+    rx(ba)
+
 #    rx()
 #    sys.stdin.readline()
 
