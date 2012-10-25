@@ -90,6 +90,8 @@ vhdl work "cfg_sync.vhd"
 vhdl work "inspect_sync.vhd"
 vhdl work "SysCon.vhd"
 vhdl work "FBCtl.vhd"
+vhdl work "ipcore_dir/i2cfifo.vhd"
+vhdl work "i2c.vhd"
 vhdl work "CamCtl.vhd"
 
 vhdl work "top.vhd"
