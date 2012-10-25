@@ -579,7 +579,7 @@ begin
     --cfg(adr).p(7)               when "1110111",
     --
     usb_fifo.data(7 downto 0) when "0100000",
-    x"ab"                     when others;
+    x"aa"                     when others;
 
 
 -------------------------------------------------------------------------------

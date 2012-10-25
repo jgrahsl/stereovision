@@ -20,6 +20,7 @@ init = ["33860501", "MCU Reset",
 "32020008", "Standby control; Wake up",
 "338C2797", "Output format; Context B shadow",
 "33900030", "RGB with BT656 codes",
+
 "338C272F", "Sensor Row Start Context B",
 "33900004", "4",
 "338C2733", "Sensor Row End Context B",
@@ -30,6 +31,7 @@ init = ["33860501", "MCU Reset",
 "3390064B", "1611",
 "338C2707", "Output width; Context B",
 "33900140", "1600",
+
 "338C2709", "Output height; Context B",
 "339000F0", "1200",
 "338C275F", "Crop X0; Context B",
@@ -40,6 +42,7 @@ init = ["33860501", "MCU Reset",
 "33900640", "1600",
 "338C2765", "Crop Y1; Context B",
 "339004B0", "1200",
+
 "338C2741", "Sensor_Fine_IT_min B",
 "33900169", "361               ",
 "338CA120", "Capture mode options",
@@ -111,14 +114,15 @@ def rx():
 for i in range(len(init)/2):
     ba = bytearray(5)
     ba[0] = 0x78
-    ba[1] = int(init[2*i][0:2],16)
-    ba[2] = int(init[2*i][2:4],16)
-    ba[3] = int(init[2*i][4:6],16)
-    ba[4] = int(init[2*i][6:8],16)  
-    print ba
+    c = 0
+    ba[1] = int(init[c][0:2],16)
+    ba[2] = int(init[c][2:4],16)
+    ba[3] = int(init[c][4:6],16)
+    ba[4] = int(init[c][6:8],16)  
+    print i
     tx(ba)
 #    rx()
-    sys.stdin.readline()
+#    sys.stdin.readline()
 
 flClose(handle)
 exit()

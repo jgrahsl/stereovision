@@ -5777,18 +5777,18 @@ Top Level Output File Name         : cam.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 4063
+# BELS                             : 4064
 #      GND                         : 18
 #      INV                         : 96
 #      LUT1                        : 271
 #      LUT2                        : 359
 #      LUT3                        : 514
 #      LUT4                        : 368
-#      LUT5                        : 398
-#      LUT6                        : 1079
+#      LUT5                        : 397
+#      LUT6                        : 1080
 #      MULT_AND                    : 6
 #      MUXCY                       : 436
-#      MUXF7                       : 57
+#      MUXF7                       : 58
 #      VCC                         : 4
 #      XORCY                       : 457
 # FlipFlops/Latches                : 2640
@@ -5907,7 +5907,7 @@ Speed Grade: -3
    Minimum period: 6.998ns (Maximum Frequency: 142.889MHz)
    Minimum input arrival time before clock: 7.308ns
    Maximum output required time after clock: 10.079ns
-   Maximum combinational path delay: 8.468ns
+   Maximum combinational path delay: 8.436ns
 
 Timing Details:
 ---------------
@@ -5915,10 +5915,10 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'fx2clk_in'
-  Clock period: 6.391ns (frequency: 156.464MHz)
+  Clock period: 6.394ns (frequency: 156.400MHz)
   Total number of paths / destination ports: 17364 / 1305
 -------------------------------------------------------------------------
-Delay:               6.391ns (Levels of Logic = 6)
+Delay:               6.394ns (Levels of Logic = 6)
   Source:            comm.comm_fpga_fx2/chanAddr_4 (FF)
   Destination:       my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i (FF)
   Source Clock:      fx2clk_in rising
@@ -5928,7 +5928,7 @@ Delay:               6.391ns (Levels of Logic = 6)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDE:C->Q            114   0.447   2.018  comm.comm_fpga_fx2/chanAddr_4 (comm.comm_fpga_fx2/chanAddr_4)
+     FDE:C->Q            115   0.447   2.021  comm.comm_fpga_fx2/chanAddr_4 (comm.comm_fpga_fx2/chanAddr_4)
      LUT5:I3->O            1   0.203   0.580  wr_en_a1_SW2 (N472)
      LUT6:I5->O            2   0.205   0.961  wr_en_b1 (wr_en_b)
      begin scope: 'my_i2c_b/my_i2cfifo:wr_en'
@@ -5937,7 +5937,7 @@ Delay:               6.391ns (Levels of Logic = 6)
      LUT6:I4->O            2   0.203   0.000  U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/Mmux_comp1_GND_176_o_MUX_24_o18 (U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/comp1_GND_176_o_MUX_24_o)
      FDP:D                     0.102          U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
     ----------------------------------------
-    Total                      6.391ns (1.568ns logic, 4.823ns route)
+    Total                      6.394ns (1.568ns logic, 4.826ns route)
                                        (24.5% logic, 75.5% route)
 
 =========================================================================
@@ -6333,7 +6333,7 @@ Offset:              3.950ns (Levels of Logic = 1)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'fx2clk_in'
-  Total number of paths / destination ports: 1352 / 13
+  Total number of paths / destination ports: 1339 / 13
 -------------------------------------------------------------------------
 Offset:              10.079ns (Levels of Logic = 7)
   Source:            adr_0 (FF)
@@ -6350,7 +6350,7 @@ Offset:              10.079ns (Levels of Logic = 7)
      MUXF7:I1->O           1   0.140   0.827  Mmux_adr[4]_cfg[31]_identify_Mux_334_o_2_f7 (adr[4]_cfg[31]_identify_Mux_334_o)
      LUT6:I2->O            1   0.203   0.580  comm.comm_fpga_fx2/Mmux_dataOut21 (comm.comm_fpga_fx2/Mmux_dataOut2)
      LUT6:I5->O            1   0.205   0.684  comm.comm_fpga_fx2/Mmux_dataOut22 (comm.comm_fpga_fx2/Mmux_dataOut21)
-     LUT5:I3->O            1   0.203   0.579  comm.comm_fpga_fx2/Mmux_dataOut23 (comm.comm_fpga_fx2/dataOut<1>)
+     LUT5:I3->O            1   0.203   0.579  comm.comm_fpga_fx2/Mmux_dataOut24 (comm.comm_fpga_fx2/dataOut<1>)
      IOBUF:I->IO               2.571          fx2data_io_1_IOBUF (fx2data_io<1>)
     ----------------------------------------
     Total                     10.079ns (4.175ns logic, 5.904ns route)
@@ -6508,7 +6508,7 @@ Offset:              1.161ns (Levels of Logic = 0)
 Timing constraint: Default path analysis
   Total number of paths / destination ports: 802 / 737
 -------------------------------------------------------------------------
-Delay:               8.468ns (Levels of Logic = 6)
+Delay:               8.436ns (Levels of Logic = 6)
   Source:            fx2gotroom_in (PAD)
   Destination:       fx2data_io<7> (PAD)
 
@@ -6519,12 +6519,12 @@ Delay:               8.468ns (Levels of Logic = 6)
      IBUF:I->O             3   1.222   0.898  fx2gotroom_in_IBUF (fx2gotroom_in_IBUF)
      LUT4:I0->O            3   0.203   0.651  comm.comm_fpga_fx2/state_FSM_FFd4-In31 (comm.comm_fpga_fx2/state_FSM_FFd4-In3)
      LUT5:I4->O            3   0.205   1.015  comm.comm_fpga_fx2/_n0223_inv31 (comm.comm_fpga_fx2/_n0223_inv3)
-     LUT6:I0->O            5   0.203   0.715  comm.comm_fpga_fx2/Mmux_dataOut13 (comm.comm_fpga_fx2/Mmux_dataOut13)
-     LUT5:I4->O            1   0.205   0.579  comm.comm_fpga_fx2/Mmux_dataOut14 (comm.comm_fpga_fx2/dataOut<0>)
-     IOBUF:I->IO               2.571          fx2data_io_0_IOBUF (fx2data_io<0>)
+     LUT6:I0->O            4   0.203   0.684  comm.comm_fpga_fx2/Mmux_dataOut23 (comm.comm_fpga_fx2/Mmux_dataOut23)
+     LUT5:I4->O            1   0.205   0.579  comm.comm_fpga_fx2/Mmux_dataOut24 (comm.comm_fpga_fx2/dataOut<1>)
+     IOBUF:I->IO               2.571          fx2data_io_1_IOBUF (fx2data_io<1>)
     ----------------------------------------
-    Total                      8.468ns (4.609ns logic, 3.859ns route)
-                                       (54.4% logic, 45.6% route)
+    Total                      8.436ns (4.609ns logic, 3.827ns route)
+                                       (54.6% logic, 45.4% route)
 
 =========================================================================
 
@@ -6568,7 +6568,7 @@ Clock to Setup on destination clock fx2clk_in
                                                 | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock                                    |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ------------------------------------------------+---------+---------+---------+---------+
-fx2clk_in                                       |    6.391|         |         |         |
+fx2clk_in                                       |    6.394|         |         |         |
 inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT0|    2.555|         |         |         |
 inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT2|    2.891|         |         |         |
 ------------------------------------------------+---------+---------+---------+---------+
@@ -6624,13 +6624,13 @@ inst_syscon/Inst_pll_mcb/CLKOUT2|    6.015|         |         |         |
 =========================================================================
 
 
-Total REAL time to Xst completion: 45.00 secs
-Total CPU time to Xst completion: 39.53 secs
+Total REAL time to Xst completion: 46.00 secs
+Total CPU time to Xst completion: 40.31 secs
  
 --> 
 
 
-Total memory usage is 192376 kilobytes
+Total memory usage is 192320 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings : 2831 (   0 filtered)
