@@ -18,9 +18,7 @@ entity i2c is
     wr_clk  : in  std_logic;
     wr_data : in  std_logic_vector(7 downto 0);
     wr_en   : in  std_logic;
-    wr_full : out std_logic;
-    c : out std_logic_vector(7 downto 0);
-    t : out std_logic
+    wr_full : out std_logic
     );
 end i2c;
 
@@ -34,13 +32,6 @@ architecture rtl of i2c is
   
   constant CMD_DELAY        : natural := 1;  --ms
   constant CMD_DELAY_CYCLES : natural := 100000; --00000;
-
-
-
-
-
-
-
 
   type   state_type is (stR, stRegAddr1, stRegAddr2, stData1, stData2, stError, stDone, stIdle, stDelay);
   signal state, nstate : state_type := stIdle;
@@ -100,7 +91,7 @@ begin
       SDA       => SDA,
       SCL       => SCL
       );
-  t <= rd_en;
+
   Wait_CNT : process (CLK)
   begin
     if Rising_Edge(CLK) then
@@ -125,7 +116,7 @@ begin
     end if;
   end process;
 
-  twiAddr(7 downto 1) <= "0111100"; --eg(0)(7 downto 1);
+  twiAddr(7 downto 1) <= "0111100"; --reg(0)(7 downto 1);
   twiAddr(0)          <= '0'; --reg(0)(0) when state = stData1 or state = stData2 else '0';
 
   OUTPUT_DECODE : process (state, twiDone, twiErr)
@@ -234,18 +225,5 @@ begin
         null;                                        --default values specifiec before case
     end case;
 
-    --initEn   <= '0';
-    --initFbWe <= '0';
-    --if (state = stData2 and twiDone = '1' and twiErr /= '1') then
-    --  if (initWord(32) = IWR or (initWord(15 downto 8) = regData1 and initWord(7 downto 0) = twiDo)) then
-    --    initEn <= '1';
-    --  end if;
-    --end if;
-    --if (state = stDone) then  -- readback phase, no TWI transfer takes place
-    --  initEn <= '1';
-    --end if;
-    
   end process;
-
-  c <= std_logic_vector(to_unsigned(octets,3)) & count;
 end rtl;

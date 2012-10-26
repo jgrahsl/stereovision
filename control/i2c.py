@@ -5,7 +5,7 @@ from fpgalink2 import *
 from PIL import Image
 vp = "1443:0007"
 handle = None
-adr= 0x21
+adr= 0x22
 
 #                IRD & x"30001580", -- Chip version. Default 0x1580
 

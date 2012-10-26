@@ -233,7 +233,7 @@ architecture behavioral of top is
 --  attribute keep_hierarchy of my_i2c_a: label is "yes";
 --  attribute keep_hierarchy of my_i2c_b: label is "yes";  
 --  attribute keep_hierarchy of inst_bi2_c: label is "yes";    
-  signal t : std_logic;
+  signal t                                 : std_logic;
 begin
 ----------------------------------------------------------------------------------
 -- system control unit
@@ -430,25 +430,25 @@ begin
 
   my_i2c_a : entity work.i2c
     port map (
-      RST_I   => not i2c_en_a,            -- [in]
-      CLK     => fx2clk_int,                  -- [in]
-      SDA     => cama_sda,                -- [inout]
-      SCL     => cama_scl,                -- [inout]
-      wr_clk  => fx2clk_int,              -- [in]
-      wr_data => h2fdata,                 -- [in]
-      wr_en   => wr_en_a,                 -- [in]
-      wr_full => wr_full_a, c => led_o, t => t);  -- [out]
+      RST_I   => not i2c_en_a,                    -- [in]
+      CLK     => camclk,                      -- [in]
+      SDA     => cama_sda,                        -- [inout]
+      SCL     => cama_scl,                        -- [inout]
+      wr_clk  => fx2clk_int,                      -- [in]
+      wr_data => h2fdata,                         -- [in]
+      wr_en   => wr_en_a,                         -- [in]
+      wr_full => wr_full_a);  -- [out]
 
   my_i2c_b : entity work.i2c
     port map (
-      RST_I   => not i2c_en_b,           -- [in]
-      CLK     => fx2clk_int,                 -- [in]
-      SDA     => camb_sda,               -- [inout]
-      SCL     => camb_scl,               -- [inout]
-      wr_clk  => fx2clk_int,             -- [in]
-      wr_data => h2fdata,                -- [in]
-      wr_en   => wr_en_b,                -- [in]
-      wr_full => wr_full_b, c => open, t => open);  -- [out]
+      RST_I   => not i2c_en_b,                      -- [in]
+      CLK     => camclk,                        -- [in]
+      SDA     => camb_sda,                          -- [inout]
+      SCL     => camb_scl,                          -- [inout]
+      wr_clk  => fx2clk_int,                        -- [in]
+      wr_data => h2fdata,                           -- [in]
+      wr_en   => wr_en_b,                           -- [in]
+      wr_full => wr_full_b);  -- [out]
 
   cam_rst <= async_rst or sup_rst;
 ----------------------------------------------------------------------------------
@@ -537,45 +537,38 @@ begin
   usb_fifo.en <= fifoen;
 
 
-  f2hvalid <=  '0' when i2c_sel_a = '1' and wr_empty_a = '1' else
-               '0' when i2c_sel_b = '1' and wr_empty_b = '1' else
-               '0' when i2c_sel_c = '1' and wr_empty_c = '1' else
-               '0' when fifosel = '1' and usb_fifo.stall = '1'  else               
+  f2hvalid <= '0' when i2c_sel_a = '1' and wr_empty_a = '1' else
+               '0' when i2c_sel_b = '1' and wr_empty_b = '1'   else
+--               '0' when i2c_sel_c = '1' and wr_empty_c = '1' else
+               '0' when fifosel = '1' and usb_fifo.stall = '1' else
                '1';
 
---              '1' when fifosel = '1' and usb_fifo.stall = '0' and f2hready = '1' else
---              '0' when fifosel = '1' and usb_fifo.stall = '1' and f2hready = '1' else
---              '1' when f2hready = '1'                                            else
---              '0';
+  led_o <= d.pr_count when sw_i(4 downto 0) = "00000" else
+           d.pw_count   when sw_i(4 downto 0) = "00001" else
+           d.auxr_count when sw_i(4 downto 0) = "00010" else
+           d.auxw_count when sw_i(4 downto 0) = "00011" else
 
-  --led_o <= d.pr_count when sw_i(4 downto 0) = "00000" else
-  --         d.pw_count   when sw_i(4 downto 0) = "00001" else
-  --         d.auxr_count when sw_i(4 downto 0) = "00010" else
-  --         d.auxw_count when sw_i(4 downto 0) = "00011" else
+           d.state(7 downto 0)  when sw_i(4 downto 0) = "00100" else
+           d.state(15 downto 8) when sw_i(4 downto 0) = "00101" else
 
-  --         d.state(7 downto 0)  when sw_i(4 downto 0) = "00100" else
-  --         d.state(15 downto 8) when sw_i(4 downto 0) = "00101" else
+           f2hready & f2hvalid & usb_fifo.stall & fifosel & stallo & h2fready & h2fvalid & "1" when sw_i(4 downto 0) = "00110" else
+           d.fe                                                                                when sw_i(4 downto 0) = "00111" else
 
-  --         f2hready & f2hvalid & usb_fifo.stall & fifosel & stallo & h2fready & h2fvalid & "1" when sw_i(4 downto 0) = "00110" else
-  --         d.fe                                                                                when sw_i(4 downto 0) = "00111" else
+           d.off when sw_i(4 downto 0) = "01000" else
 
-  --         d.off when sw_i(4 downto 0) = "01000" else
+           d.dvistate when sw_i(4 downto 0) = "10000" else
+           d.p3       when sw_i(4 downto 0) = "10001" else
 
-  --         d.dvistate when sw_i(4 downto 0) = "10000" else
-  --         d.p3       when sw_i(4 downto 0) = "10001" else
+           d.p2state when sw_i(4 downto 0) = "10010" else
+           d.p2      when sw_i(4 downto 0) = "10011" else
 
-  --         d.p2state when sw_i(4 downto 0) = "10010" else
-  --         d.p2      when sw_i(4 downto 0) = "10011" else
+           d.p1state when sw_i(4 downto 0) = "10100" else
+           d.p1      when sw_i(4 downto 0) = "10101" else
+           (others => '1');
 
-  --         d.p1state when sw_i(4 downto 0) = "10100" else
-  --         d.p1      when sw_i(4 downto 0) = "10101" else
-  --         (others => '1');
-
-
---  d.off <= "00" & STD_LOGIC_VECTOR(disx+disy);  
 
   with chanaddr select f2hdata <=
-    dout                                           when "0100011",
+--    dout                                           when "0100011",
     std_logic_vector(to_unsigned(adr, 8))          when "1100000",
     "000000" & cfg(adr).identify & cfg(adr).enable when "1100001",
     inspect.identity                               when "1100010",
@@ -596,39 +589,38 @@ begin
 -------------------------------------------------------------------------------
 -- I2C
 -------------------------------------------------------------------------------
-  my_i2cfifo : entity work.i2cfifo
-    port map (
-      rst    => not i2c_en_a,           -- [IN]
-      wr_clk => fx2clk_int,             -- [IN]
-      rd_clk => fx2clk_int,             -- [IN]
-      din    => h2fdata,                -- [IN]
-      wr_en  => wr_en_c,                -- [IN]
-      rd_en  => rd_en_c,                -- [IN]
-      dout   => dout,                   -- [OUT]
-      full   => wr_full_c,              -- [OUT]
-      empty  => wr_empty_c);            -- [OUT]
+  --test : entity work.i2cfifo
+  --  port map (
+  --    rst    => not i2c_en_a,           -- [IN]
+  --    wr_clk => fx2clk_int,             -- [IN]
+  --    rd_clk => fx2clk_int,             -- [IN]
+  --    din    => h2fdata,                -- [IN]
+  --    wr_en  => wr_en_c,                -- [IN]
+  --    rd_en  => rd_en_c,                -- [IN]
+  --    dout   => dout,                   -- [OUT]
+  --    full   => wr_full_c,              -- [OUT]
+  --    empty  => wr_empty_c);            -- [OUT]
 
 
 
   i2c_sel_a <= '1' when chanaddr = "0100001" else '0';
   i2c_sel_b <= '1' when chanaddr = "0100010" else '0';
-  i2c_sel_c <= '1' when chanaddr = "0100011" else '0';
+--  i2c_sel_c <= '1' when chanaddr = "0100011" else '0';--
 
   wr_en_a <= '1' when i2c_sel_a = '1' and h2fvalid = '1' else '0';
   wr_en_b <= '1' when i2c_sel_b = '1' and h2fvalid = '1' else '0';
-  wr_en_c <= '1' when i2c_sel_c = '1' and h2fvalid = '1' else '0';
+--  wr_en_c <= '1' when i2c_sel_c = '1' and h2fvalid = '1' else '0';
 
-  rd_en_c <= '1' when f2hReady = '1' and i2c_sel_c = '1' else '0'; 
+--  rd_en_c <= '1' when f2hReady = '1' and i2c_sel_c = '1' else '0'; 
 --
 
-  h2fready <= '0' when (i2c_sel_c = '1' and wr_full_c = '1') or
-                       (i2c_sel_a = '1' and wr_full_a = '1') or
-                       (i2c_sel_b = '1' and wr_full_b = '1')
+  h2fready <= '0' when  --(i2c_sel_c = '1' and wr_full_c = '1') or
+              (i2c_sel_a = '1' and wr_full_a = '1') or
+              (i2c_sel_b = '1' and wr_full_b = '1')
               else '1';
 
-  --  h2fready <= '1';
-  du(0) <= t;
-  du(1) <= wr_en_a;
+  du(0) <= '0';
+  du(1) <= '0';
 -------------------------------------------------------------------------------
 -- COMM
 -------------------------------------------------------------------------------  
@@ -658,7 +650,7 @@ begin
         f2hdata_in   => f2hdata,
         f2hvalid_in  => f2hvalid,
         f2hready_out => f2hready,
-        s => open
+        s            => open
         );
 
   end generate comm;
