@@ -201,9 +201,9 @@ begin
           end if;
         end if;
 
-        if (reg(0)(0) = '1') then
-          twiNewMsg <= '1';
-        end if;
+        --if (reg(0)(0) = '1') then
+        --  twiNewMsg <= '1';
+        --end if;
         
       when stData2 =>
         twiDi  <= reg(4);

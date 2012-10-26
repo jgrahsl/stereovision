@@ -212,11 +212,17 @@ architecture behavioral of top is
   signal i2c_sel_b : std_logic;
 
   signal wr_en_a    : std_logic;
-  signal rd_en_a    : std_logic;
   signal wr_en_b    : std_logic;
+  signal wr_en_c    : std_logic;
+  
+  signal rd_en_c    : std_logic;
+  
   signal wr_full_a  : std_logic;
+  signal wr_full_b  : std_logic;  
+  signal wr_full_c  : std_logic;  
   signal wr_empty_a : std_logic;
-  signal wr_full_b  : std_logic;
+  signal wr_empty_b : std_logic;
+  signal wr_empty_c : std_logic;  
   signal dout       : std_logic_vector(7 downto 0);
 
 
@@ -591,22 +597,28 @@ begin
       wr_clk => fx2clk_int,                 -- [IN]
       rd_clk => fx2clk_int,                    -- [IN]
       din    => h2fdata,                -- [IN]
-      wr_en  => wr_en_a,                  -- [IN]
-      rd_en  => rd_en_a,                  -- [IN]
+      wr_en  => wr_en_c,                  -- [IN]
+      rd_en  => rd_en_c,                  -- [IN]
       dout   => dout,                   -- [OUT]
-      full   => open,                -- [OUT]
-      empty  => wr_empty_a);                 -- [OUT]
+      full   => wr_full_c,                -- [OUT]
+      empty  => wr_empty_c);                 -- [OUT]
  
 
   i2c_sel_a <= '1' when chanaddr = "0100001"                                    else '0';
   i2c_sel_b <= '1' when chanaddr = "0100010"                                    else '0';
+  i2c_sel_c <= '1' when chanaddr = "0100011"                                    else '0';
+  
   wr_en_a   <= '1' when i2c_sel_a = '1' and wr_full_a = '0' and h2fvalid = '1'  else '0';
-  rd_en_a   <= '1' when i2c_sel_a = '1' and wr_empty_aa = '0' and f2hready = '1' else '0';
+
+  wr_en_c   <= '1' when i2c_sel_c = '1' and wr_full_c = '0' and h2fvalid = '1'  else '0';
+  rd_en_c   <= '1' when i2c_sel_c = '1' and wr_empty_c = '0' and f2hready = '1' else '0';
+
   wr_en_b   <= '1' when i2c_sel_b = '1' and wr_full_b = '0' and h2fvalid = '1'  else '0';
   wr_data   <= h2fdata;
 
-  h2fready <= '0' when (i2c_sel_a = '1' and wr_full_a = '1') or (i2c_sel_b = '1' and wr_full_b = '1') else
-              '1';
+  h2fready <= '0' when (i2c_sel_a = '1' and wr_full_a = '1') or 
+                       (i2c_sel_b = '1' and wr_full_b = '1') or
+                       (i2c_sel_c = '1' and wr_full_c = '1') else '1';
   --  h2fready <= '1';
   du(0) <= cama_sda;
   du(1) <= cama_scl;
