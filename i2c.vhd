@@ -33,7 +33,7 @@ architecture rtl of i2c is
   constant IWR                         : std_logic                    := '0';  -- init write
   
   constant CMD_DELAY        : natural := 1;  --ms
-  constant CMD_DELAY_CYCLES : natural := 10; --00000;
+  constant CMD_DELAY_CYCLES : natural := 100000; --00000;
 
 
 
@@ -148,7 +148,7 @@ begin
         if empty = '0' then
 
           if octets = 4 then
-            nstate <= stDelay;
+            nstate <= stRegAddr1;
           end if;
           next_octets <= octets + 1;
 
@@ -197,7 +197,7 @@ begin
 
           if (twiErr = '1') then
             nstate <= stError;
-          else
+          else           
             nstate <= stData2;
           end if;
         end if;
@@ -217,7 +217,6 @@ begin
           if (twiErr = '1') then
             nstate <= stError;
           else
-            rd_en  <= '1';
             nstate <= stDelay;
           end if;
         end if;
@@ -230,9 +229,9 @@ begin
         
       when stError =>
 --        nstate <= stRegAddr1;
-
+        null;
       when others =>
-                                        --default values specifiec before case
+        null;                                        --default values specifiec before case
     end case;
 
     --initEn   <= '0';
