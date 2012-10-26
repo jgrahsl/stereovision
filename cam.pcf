@@ -1,5 +1,5 @@
 //! **************************************************************************
-// Written by: Map P.28xd on Thu Oct 25 17:31:09 2012
+// Written by: Map P.28xd on Fri Oct 26 22:21:32 2012
 //! **************************************************************************
 
 SCHEMATIC START;
@@ -138,10 +138,20 @@ PIN
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram"
         PINNAME CLKAWRCLK;
 PIN
+        my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<27>
+        = BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram"
+        PINNAME CLKBRDCLK;
+PIN
         my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<26>
         = BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram"
         PINNAME CLKAWRCLK;
+PIN
+        my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<27>
+        = BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram"
+        PINNAME CLKBRDCLK;
 PIN
         my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<26>
         = BEL
@@ -157,200 +167,200 @@ PIN
         = BEL
         "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM9.ram"
         PINNAME CLKBRDCLK;
-TIMEGRP fx2clk_in = BEL "cfg[0]_enable" BEL "cfg<0>_p_1_0" BEL "cfg<0>_p_1_1"
-        BEL "cfg<0>_p_1_2" BEL "cfg<0>_p_1_3" BEL "cfg<0>_p_1_4" BEL
-        "cfg<0>_p_1_5" BEL "cfg<0>_p_1_6" BEL "cfg<0>_p_1_7" BEL
-        "cfg[0]_identify" BEL "cfg<0>_p_0_0" BEL "cfg<0>_p_0_1" BEL
-        "cfg<0>_p_0_2" BEL "cfg<0>_p_0_3" BEL "cfg<0>_p_0_4" BEL
-        "cfg<0>_p_0_5" BEL "cfg<0>_p_0_6" BEL "cfg<0>_p_0_7" BEL
-        "cfg[1]_enable" BEL "cfg[1]_identify" BEL "cfg[2]_enable" BEL
-        "cfg<1>_p_0_0" BEL "cfg<1>_p_0_1" BEL "cfg<1>_p_0_2" BEL
-        "cfg<1>_p_0_3" BEL "cfg<1>_p_0_4" BEL "cfg<1>_p_0_5" BEL
-        "cfg<1>_p_0_6" BEL "cfg<1>_p_0_7" BEL "cfg<1>_p_1_0" BEL
+TIMEGRP fx2clk_in = BEL "cfg[0]_enable" BEL "cfg[0]_identify" BEL
+        "cfg<0>_p_0_0" BEL "cfg<0>_p_0_1" BEL "cfg<0>_p_0_2" BEL
+        "cfg<0>_p_0_3" BEL "cfg<0>_p_0_4" BEL "cfg<0>_p_0_5" BEL
+        "cfg<0>_p_0_6" BEL "cfg<0>_p_0_7" BEL "cfg<0>_p_1_0" BEL
+        "cfg<0>_p_1_1" BEL "cfg<0>_p_1_2" BEL "cfg<0>_p_1_3" BEL
+        "cfg<0>_p_1_4" BEL "cfg<0>_p_1_5" BEL "cfg<0>_p_1_6" BEL
+        "cfg<0>_p_1_7" BEL "cfg[1]_enable" BEL "cfg<1>_p_1_0" BEL
         "cfg<1>_p_1_1" BEL "cfg<1>_p_1_2" BEL "cfg<1>_p_1_3" BEL
         "cfg<1>_p_1_4" BEL "cfg<1>_p_1_5" BEL "cfg<1>_p_1_6" BEL
-        "cfg<1>_p_1_7" BEL "cfg[2]_identify" BEL "cfg<2>_p_0_0" BEL
-        "cfg<2>_p_0_1" BEL "cfg<2>_p_0_2" BEL "cfg<2>_p_0_3" BEL
-        "cfg<2>_p_0_4" BEL "cfg<2>_p_0_5" BEL "cfg<2>_p_0_6" BEL
-        "cfg<2>_p_0_7" BEL "cfg[3]_identify" BEL "cfg<2>_p_1_0" BEL
-        "cfg<2>_p_1_1" BEL "cfg<2>_p_1_2" BEL "cfg<2>_p_1_3" BEL
-        "cfg<2>_p_1_4" BEL "cfg<2>_p_1_5" BEL "cfg<2>_p_1_6" BEL
-        "cfg<2>_p_1_7" BEL "cfg[3]_enable" BEL "cfg<3>_p_0_0" BEL
-        "cfg<3>_p_0_1" BEL "cfg<3>_p_0_2" BEL "cfg<3>_p_0_3" BEL
-        "cfg<3>_p_0_4" BEL "cfg<3>_p_0_5" BEL "cfg<3>_p_0_6" BEL
-        "cfg<3>_p_0_7" BEL "cfg<3>_p_1_0" BEL "cfg<3>_p_1_1" BEL
-        "cfg<3>_p_1_2" BEL "cfg<3>_p_1_3" BEL "cfg<3>_p_1_4" BEL
-        "cfg<3>_p_1_5" BEL "cfg<3>_p_1_6" BEL "cfg<3>_p_1_7" BEL
+        "cfg<1>_p_1_7" BEL "cfg[1]_identify" BEL "cfg<1>_p_0_0" BEL
+        "cfg<1>_p_0_1" BEL "cfg<1>_p_0_2" BEL "cfg<1>_p_0_3" BEL
+        "cfg<1>_p_0_4" BEL "cfg<1>_p_0_5" BEL "cfg<1>_p_0_6" BEL
+        "cfg<1>_p_0_7" BEL "cfg[2]_enable" BEL "cfg[2]_identify" BEL
+        "cfg[3]_enable" BEL "cfg<2>_p_0_0" BEL "cfg<2>_p_0_1" BEL
+        "cfg<2>_p_0_2" BEL "cfg<2>_p_0_3" BEL "cfg<2>_p_0_4" BEL
+        "cfg<2>_p_0_5" BEL "cfg<2>_p_0_6" BEL "cfg<2>_p_0_7" BEL
+        "cfg<2>_p_1_0" BEL "cfg<2>_p_1_1" BEL "cfg<2>_p_1_2" BEL
+        "cfg<2>_p_1_3" BEL "cfg<2>_p_1_4" BEL "cfg<2>_p_1_5" BEL
+        "cfg<2>_p_1_6" BEL "cfg<2>_p_1_7" BEL "cfg[3]_identify" BEL
+        "cfg<3>_p_0_0" BEL "cfg<3>_p_0_1" BEL "cfg<3>_p_0_2" BEL
+        "cfg<3>_p_0_3" BEL "cfg<3>_p_0_4" BEL "cfg<3>_p_0_5" BEL
+        "cfg<3>_p_0_6" BEL "cfg<3>_p_0_7" BEL "cfg[4]_identify" BEL
+        "cfg<3>_p_1_0" BEL "cfg<3>_p_1_1" BEL "cfg<3>_p_1_2" BEL
+        "cfg<3>_p_1_3" BEL "cfg<3>_p_1_4" BEL "cfg<3>_p_1_5" BEL
+        "cfg<3>_p_1_6" BEL "cfg<3>_p_1_7" BEL "cfg[4]_enable" BEL
         "cfg<4>_p_0_0" BEL "cfg<4>_p_0_1" BEL "cfg<4>_p_0_2" BEL
         "cfg<4>_p_0_3" BEL "cfg<4>_p_0_4" BEL "cfg<4>_p_0_5" BEL
-        "cfg<4>_p_0_6" BEL "cfg<4>_p_0_7" BEL "cfg[4]_enable" BEL
-        "cfg[4]_identify" BEL "cfg<4>_p_1_0" BEL "cfg<4>_p_1_1" BEL
-        "cfg<4>_p_1_2" BEL "cfg<4>_p_1_3" BEL "cfg<4>_p_1_4" BEL
-        "cfg<4>_p_1_5" BEL "cfg<4>_p_1_6" BEL "cfg<4>_p_1_7" BEL
-        "cfg[5]_enable" BEL "cfg[5]_identify" BEL "cfg<5>_p_0_0" BEL
-        "cfg<5>_p_0_1" BEL "cfg<5>_p_0_2" BEL "cfg<5>_p_0_3" BEL
-        "cfg<5>_p_0_4" BEL "cfg<5>_p_0_5" BEL "cfg<5>_p_0_6" BEL
-        "cfg<5>_p_0_7" BEL "cfg<5>_p_1_0" BEL "cfg<5>_p_1_1" BEL
-        "cfg<5>_p_1_2" BEL "cfg<5>_p_1_3" BEL "cfg<5>_p_1_4" BEL
-        "cfg<5>_p_1_5" BEL "cfg<5>_p_1_6" BEL "cfg<5>_p_1_7" BEL
-        "cfg[6]_enable" BEL "cfg<6>_p_1_0" BEL "cfg<6>_p_1_1" BEL
-        "cfg<6>_p_1_2" BEL "cfg<6>_p_1_3" BEL "cfg<6>_p_1_4" BEL
-        "cfg<6>_p_1_5" BEL "cfg<6>_p_1_6" BEL "cfg<6>_p_1_7" BEL
-        "cfg[6]_identify" BEL "cfg<6>_p_0_0" BEL "cfg<6>_p_0_1" BEL
+        "cfg<4>_p_0_6" BEL "cfg<4>_p_0_7" BEL "cfg<4>_p_1_0" BEL
+        "cfg<4>_p_1_1" BEL "cfg<4>_p_1_2" BEL "cfg<4>_p_1_3" BEL
+        "cfg<4>_p_1_4" BEL "cfg<4>_p_1_5" BEL "cfg<4>_p_1_6" BEL
+        "cfg<4>_p_1_7" BEL "cfg[5]_enable" BEL "cfg[5]_identify" BEL
+        "cfg<5>_p_0_0" BEL "cfg<5>_p_0_1" BEL "cfg<5>_p_0_2" BEL
+        "cfg<5>_p_0_3" BEL "cfg<5>_p_0_4" BEL "cfg<5>_p_0_5" BEL
+        "cfg<5>_p_0_6" BEL "cfg<5>_p_0_7" BEL "cfg<5>_p_1_0" BEL
+        "cfg<5>_p_1_1" BEL "cfg<5>_p_1_2" BEL "cfg<5>_p_1_3" BEL
+        "cfg<5>_p_1_4" BEL "cfg<5>_p_1_5" BEL "cfg<5>_p_1_6" BEL
+        "cfg<5>_p_1_7" BEL "cfg<6>_p_0_0" BEL "cfg<6>_p_0_1" BEL
         "cfg<6>_p_0_2" BEL "cfg<6>_p_0_3" BEL "cfg<6>_p_0_4" BEL
         "cfg<6>_p_0_5" BEL "cfg<6>_p_0_6" BEL "cfg<6>_p_0_7" BEL
-        "cfg[7]_enable" BEL "cfg[7]_identify" BEL "cfg[8]_enable" BEL
-        "cfg<7>_p_0_0" BEL "cfg<7>_p_0_1" BEL "cfg<7>_p_0_2" BEL
-        "cfg<7>_p_0_3" BEL "cfg<7>_p_0_4" BEL "cfg<7>_p_0_5" BEL
-        "cfg<7>_p_0_6" BEL "cfg<7>_p_0_7" BEL "cfg<7>_p_1_0" BEL
+        "cfg[6]_enable" BEL "cfg[6]_identify" BEL "cfg<6>_p_1_0" BEL
+        "cfg<6>_p_1_1" BEL "cfg<6>_p_1_2" BEL "cfg<6>_p_1_3" BEL
+        "cfg<6>_p_1_4" BEL "cfg<6>_p_1_5" BEL "cfg<6>_p_1_6" BEL
+        "cfg<6>_p_1_7" BEL "cfg[7]_enable" BEL "cfg<7>_p_1_0" BEL
         "cfg<7>_p_1_1" BEL "cfg<7>_p_1_2" BEL "cfg<7>_p_1_3" BEL
         "cfg<7>_p_1_4" BEL "cfg<7>_p_1_5" BEL "cfg<7>_p_1_6" BEL
-        "cfg<7>_p_1_7" BEL "cfg[8]_identify" BEL "cfg<8>_p_0_0" BEL
-        "cfg<8>_p_0_1" BEL "cfg<8>_p_0_2" BEL "cfg<8>_p_0_3" BEL
-        "cfg<8>_p_0_4" BEL "cfg<8>_p_0_5" BEL "cfg<8>_p_0_6" BEL
-        "cfg<8>_p_0_7" BEL "cfg[9]_identify" BEL "cfg<8>_p_1_0" BEL
-        "cfg<8>_p_1_1" BEL "cfg<8>_p_1_2" BEL "cfg<8>_p_1_3" BEL
-        "cfg<8>_p_1_4" BEL "cfg<8>_p_1_5" BEL "cfg<8>_p_1_6" BEL
-        "cfg<8>_p_1_7" BEL "cfg[9]_enable" BEL "cfg<9>_p_0_0" BEL
-        "cfg<9>_p_0_1" BEL "cfg<9>_p_0_2" BEL "cfg<9>_p_0_3" BEL
-        "cfg<9>_p_0_4" BEL "cfg<9>_p_0_5" BEL "cfg<9>_p_0_6" BEL
-        "cfg<9>_p_0_7" BEL "cfg<9>_p_1_0" BEL "cfg<9>_p_1_1" BEL
-        "cfg<9>_p_1_2" BEL "cfg<9>_p_1_3" BEL "cfg<9>_p_1_4" BEL
-        "cfg<9>_p_1_5" BEL "cfg<9>_p_1_6" BEL "cfg<9>_p_1_7" BEL
-        "cfg[10]_enable" BEL "cfg[10]_identify" BEL "cfg<10>_p_0_0" BEL
-        "cfg<10>_p_0_1" BEL "cfg<10>_p_0_2" BEL "cfg<10>_p_0_3" BEL
-        "cfg<10>_p_0_4" BEL "cfg<10>_p_0_5" BEL "cfg<10>_p_0_6" BEL
-        "cfg<10>_p_0_7" BEL "cfg<10>_p_1_0" BEL "cfg<10>_p_1_1" BEL
-        "cfg<10>_p_1_2" BEL "cfg<10>_p_1_3" BEL "cfg<10>_p_1_4" BEL
-        "cfg<10>_p_1_5" BEL "cfg<10>_p_1_6" BEL "cfg<10>_p_1_7" BEL
+        "cfg<7>_p_1_7" BEL "cfg[7]_identify" BEL "cfg<7>_p_0_0" BEL
+        "cfg<7>_p_0_1" BEL "cfg<7>_p_0_2" BEL "cfg<7>_p_0_3" BEL
+        "cfg<7>_p_0_4" BEL "cfg<7>_p_0_5" BEL "cfg<7>_p_0_6" BEL
+        "cfg<7>_p_0_7" BEL "cfg[8]_enable" BEL "cfg[8]_identify" BEL
+        "cfg[9]_enable" BEL "cfg<8>_p_0_0" BEL "cfg<8>_p_0_1" BEL
+        "cfg<8>_p_0_2" BEL "cfg<8>_p_0_3" BEL "cfg<8>_p_0_4" BEL
+        "cfg<8>_p_0_5" BEL "cfg<8>_p_0_6" BEL "cfg<8>_p_0_7" BEL
+        "cfg<8>_p_1_0" BEL "cfg<8>_p_1_1" BEL "cfg<8>_p_1_2" BEL
+        "cfg<8>_p_1_3" BEL "cfg<8>_p_1_4" BEL "cfg<8>_p_1_5" BEL
+        "cfg<8>_p_1_6" BEL "cfg<8>_p_1_7" BEL "cfg[9]_identify" BEL
+        "cfg<9>_p_0_0" BEL "cfg<9>_p_0_1" BEL "cfg<9>_p_0_2" BEL
+        "cfg<9>_p_0_3" BEL "cfg<9>_p_0_4" BEL "cfg<9>_p_0_5" BEL
+        "cfg<9>_p_0_6" BEL "cfg<9>_p_0_7" BEL "cfg<9>_p_1_0" BEL
+        "cfg<9>_p_1_1" BEL "cfg<9>_p_1_2" BEL "cfg<9>_p_1_3" BEL
+        "cfg<9>_p_1_4" BEL "cfg<9>_p_1_5" BEL "cfg<9>_p_1_6" BEL
+        "cfg<9>_p_1_7" BEL "cfg[10]_enable" BEL "cfg[10]_identify" BEL
+        "cfg<10>_p_0_0" BEL "cfg<10>_p_0_1" BEL "cfg<10>_p_0_2" BEL
+        "cfg<10>_p_0_3" BEL "cfg<10>_p_0_4" BEL "cfg<10>_p_0_5" BEL
+        "cfg<10>_p_0_6" BEL "cfg<10>_p_0_7" BEL "cfg[11]_identify" BEL
+        "cfg<10>_p_1_0" BEL "cfg<10>_p_1_1" BEL "cfg<10>_p_1_2" BEL
+        "cfg<10>_p_1_3" BEL "cfg<10>_p_1_4" BEL "cfg<10>_p_1_5" BEL
+        "cfg<10>_p_1_6" BEL "cfg<10>_p_1_7" BEL "cfg[11]_enable" BEL
         "cfg<11>_p_0_0" BEL "cfg<11>_p_0_1" BEL "cfg<11>_p_0_2" BEL
         "cfg<11>_p_0_3" BEL "cfg<11>_p_0_4" BEL "cfg<11>_p_0_5" BEL
-        "cfg<11>_p_0_6" BEL "cfg<11>_p_0_7" BEL "cfg[11]_enable" BEL
-        "cfg[11]_identify" BEL "cfg<11>_p_1_0" BEL "cfg<11>_p_1_1" BEL
-        "cfg<11>_p_1_2" BEL "cfg<11>_p_1_3" BEL "cfg<11>_p_1_4" BEL
-        "cfg<11>_p_1_5" BEL "cfg<11>_p_1_6" BEL "cfg<11>_p_1_7" BEL
-        "cfg[12]_enable" BEL "cfg<12>_p_1_0" BEL "cfg<12>_p_1_1" BEL
-        "cfg<12>_p_1_2" BEL "cfg<12>_p_1_3" BEL "cfg<12>_p_1_4" BEL
-        "cfg<12>_p_1_5" BEL "cfg<12>_p_1_6" BEL "cfg<12>_p_1_7" BEL
-        "cfg[12]_identify" BEL "cfg<12>_p_0_0" BEL "cfg<12>_p_0_1" BEL
-        "cfg<12>_p_0_2" BEL "cfg<12>_p_0_3" BEL "cfg<12>_p_0_4" BEL
-        "cfg<12>_p_0_5" BEL "cfg<12>_p_0_6" BEL "cfg<12>_p_0_7" BEL
-        "cfg[13]_enable" BEL "cfg[13]_identify" BEL "cfg[14]_enable" BEL
-        "cfg<13>_p_0_0" BEL "cfg<13>_p_0_1" BEL "cfg<13>_p_0_2" BEL
-        "cfg<13>_p_0_3" BEL "cfg<13>_p_0_4" BEL "cfg<13>_p_0_5" BEL
-        "cfg<13>_p_0_6" BEL "cfg<13>_p_0_7" BEL "cfg<13>_p_1_0" BEL
+        "cfg<11>_p_0_6" BEL "cfg<11>_p_0_7" BEL "cfg<11>_p_1_0" BEL
+        "cfg<11>_p_1_1" BEL "cfg<11>_p_1_2" BEL "cfg<11>_p_1_3" BEL
+        "cfg<11>_p_1_4" BEL "cfg<11>_p_1_5" BEL "cfg<11>_p_1_6" BEL
+        "cfg<11>_p_1_7" BEL "cfg[12]_enable" BEL "cfg[12]_identify" BEL
+        "cfg<12>_p_0_0" BEL "cfg<12>_p_0_1" BEL "cfg<12>_p_0_2" BEL
+        "cfg<12>_p_0_3" BEL "cfg<12>_p_0_4" BEL "cfg<12>_p_0_5" BEL
+        "cfg<12>_p_0_6" BEL "cfg<12>_p_0_7" BEL "cfg<12>_p_1_0" BEL
+        "cfg<12>_p_1_1" BEL "cfg<12>_p_1_2" BEL "cfg<12>_p_1_3" BEL
+        "cfg<12>_p_1_4" BEL "cfg<12>_p_1_5" BEL "cfg<12>_p_1_6" BEL
+        "cfg<12>_p_1_7" BEL "cfg<13>_p_0_0" BEL "cfg<13>_p_0_1" BEL
+        "cfg<13>_p_0_2" BEL "cfg<13>_p_0_3" BEL "cfg<13>_p_0_4" BEL
+        "cfg<13>_p_0_5" BEL "cfg<13>_p_0_6" BEL "cfg<13>_p_0_7" BEL
+        "cfg[13]_enable" BEL "cfg[13]_identify" BEL "cfg<13>_p_1_0" BEL
         "cfg<13>_p_1_1" BEL "cfg<13>_p_1_2" BEL "cfg<13>_p_1_3" BEL
         "cfg<13>_p_1_4" BEL "cfg<13>_p_1_5" BEL "cfg<13>_p_1_6" BEL
-        "cfg<13>_p_1_7" BEL "cfg[14]_identify" BEL "cfg<14>_p_0_0" BEL
-        "cfg<14>_p_0_1" BEL "cfg<14>_p_0_2" BEL "cfg<14>_p_0_3" BEL
-        "cfg<14>_p_0_4" BEL "cfg<14>_p_0_5" BEL "cfg<14>_p_0_6" BEL
-        "cfg<14>_p_0_7" BEL "cfg<14>_p_1_0" BEL "cfg<14>_p_1_1" BEL
-        "cfg<14>_p_1_2" BEL "cfg<14>_p_1_3" BEL "cfg<14>_p_1_4" BEL
-        "cfg<14>_p_1_5" BEL "cfg<14>_p_1_6" BEL "cfg<14>_p_1_7" BEL
-        "cfg[15]_enable" BEL "cfg[15]_identify" BEL "cfg<15>_p_0_0" BEL
-        "cfg<15>_p_0_1" BEL "cfg<15>_p_0_2" BEL "cfg<15>_p_0_3" BEL
-        "cfg<15>_p_0_4" BEL "cfg<15>_p_0_5" BEL "cfg<15>_p_0_6" BEL
-        "cfg<15>_p_0_7" BEL "cfg[16]_identify" BEL "cfg<15>_p_1_0" BEL
+        "cfg<13>_p_1_7" BEL "cfg[14]_enable" BEL "cfg[14]_identify" BEL
+        "cfg<14>_p_0_0" BEL "cfg<14>_p_0_1" BEL "cfg<14>_p_0_2" BEL
+        "cfg<14>_p_0_3" BEL "cfg<14>_p_0_4" BEL "cfg<14>_p_0_5" BEL
+        "cfg<14>_p_0_6" BEL "cfg<14>_p_0_7" BEL "cfg<14>_p_1_0" BEL
+        "cfg<14>_p_1_1" BEL "cfg<14>_p_1_2" BEL "cfg<14>_p_1_3" BEL
+        "cfg<14>_p_1_4" BEL "cfg<14>_p_1_5" BEL "cfg<14>_p_1_6" BEL
+        "cfg<14>_p_1_7" BEL "cfg[15]_enable" BEL "cfg<15>_p_1_0" BEL
         "cfg<15>_p_1_1" BEL "cfg<15>_p_1_2" BEL "cfg<15>_p_1_3" BEL
         "cfg<15>_p_1_4" BEL "cfg<15>_p_1_5" BEL "cfg<15>_p_1_6" BEL
-        "cfg<15>_p_1_7" BEL "cfg[16]_enable" BEL "cfg<16>_p_0_0" BEL
-        "cfg<16>_p_0_1" BEL "cfg<16>_p_0_2" BEL "cfg<16>_p_0_3" BEL
-        "cfg<16>_p_0_4" BEL "cfg<16>_p_0_5" BEL "cfg<16>_p_0_6" BEL
-        "cfg<16>_p_0_7" BEL "cfg<16>_p_1_0" BEL "cfg<16>_p_1_1" BEL
-        "cfg<16>_p_1_2" BEL "cfg<16>_p_1_3" BEL "cfg<16>_p_1_4" BEL
-        "cfg<16>_p_1_5" BEL "cfg<16>_p_1_6" BEL "cfg<16>_p_1_7" BEL
+        "cfg<15>_p_1_7" BEL "cfg[15]_identify" BEL "cfg<15>_p_0_0" BEL
+        "cfg<15>_p_0_1" BEL "cfg<15>_p_0_2" BEL "cfg<15>_p_0_3" BEL
+        "cfg<15>_p_0_4" BEL "cfg<15>_p_0_5" BEL "cfg<15>_p_0_6" BEL
+        "cfg<15>_p_0_7" BEL "cfg[16]_enable" BEL "cfg[16]_identify" BEL
+        "cfg[17]_enable" BEL "cfg<16>_p_0_0" BEL "cfg<16>_p_0_1" BEL
+        "cfg<16>_p_0_2" BEL "cfg<16>_p_0_3" BEL "cfg<16>_p_0_4" BEL
+        "cfg<16>_p_0_5" BEL "cfg<16>_p_0_6" BEL "cfg<16>_p_0_7" BEL
+        "cfg<16>_p_1_0" BEL "cfg<16>_p_1_1" BEL "cfg<16>_p_1_2" BEL
+        "cfg<16>_p_1_3" BEL "cfg<16>_p_1_4" BEL "cfg<16>_p_1_5" BEL
+        "cfg<16>_p_1_6" BEL "cfg<16>_p_1_7" BEL "cfg[17]_identify" BEL
         "cfg<17>_p_0_0" BEL "cfg<17>_p_0_1" BEL "cfg<17>_p_0_2" BEL
         "cfg<17>_p_0_3" BEL "cfg<17>_p_0_4" BEL "cfg<17>_p_0_5" BEL
-        "cfg<17>_p_0_6" BEL "cfg<17>_p_0_7" BEL "cfg[17]_enable" BEL
-        "cfg[17]_identify" BEL "cfg<17>_p_1_0" BEL "cfg<17>_p_1_1" BEL
-        "cfg<17>_p_1_2" BEL "cfg<17>_p_1_3" BEL "cfg<17>_p_1_4" BEL
-        "cfg<17>_p_1_5" BEL "cfg<17>_p_1_6" BEL "cfg<17>_p_1_7" BEL
-        "cfg[18]_enable" BEL "cfg<18>_p_1_0" BEL "cfg<18>_p_1_1" BEL
-        "cfg<18>_p_1_2" BEL "cfg<18>_p_1_3" BEL "cfg<18>_p_1_4" BEL
-        "cfg<18>_p_1_5" BEL "cfg<18>_p_1_6" BEL "cfg<18>_p_1_7" BEL
-        "cfg[18]_identify" BEL "cfg<18>_p_0_0" BEL "cfg<18>_p_0_1" BEL
-        "cfg<18>_p_0_2" BEL "cfg<18>_p_0_3" BEL "cfg<18>_p_0_4" BEL
-        "cfg<18>_p_0_5" BEL "cfg<18>_p_0_6" BEL "cfg<18>_p_0_7" BEL
-        "cfg[19]_enable" BEL "cfg[19]_identify" BEL "cfg<19>_p_0_0" BEL
-        "cfg<19>_p_0_1" BEL "cfg<19>_p_0_2" BEL "cfg<19>_p_0_3" BEL
-        "cfg<19>_p_0_4" BEL "cfg<19>_p_0_5" BEL "cfg<19>_p_0_6" BEL
-        "cfg<19>_p_0_7" BEL "cfg<19>_p_1_0" BEL "cfg<19>_p_1_1" BEL
-        "cfg<19>_p_1_2" BEL "cfg<19>_p_1_3" BEL "cfg<19>_p_1_4" BEL
-        "cfg<19>_p_1_5" BEL "cfg<19>_p_1_6" BEL "cfg<19>_p_1_7" BEL
-        "cfg[20]_enable" BEL "cfg[20]_identify" BEL "cfg[21]_enable" BEL
-        "cfg<20>_p_0_0" BEL "cfg<20>_p_0_1" BEL "cfg<20>_p_0_2" BEL
-        "cfg<20>_p_0_3" BEL "cfg<20>_p_0_4" BEL "cfg<20>_p_0_5" BEL
-        "cfg<20>_p_0_6" BEL "cfg<20>_p_0_7" BEL "cfg<20>_p_1_0" BEL
+        "cfg<17>_p_0_6" BEL "cfg<17>_p_0_7" BEL "cfg[18]_identify" BEL
+        "cfg<17>_p_1_0" BEL "cfg<17>_p_1_1" BEL "cfg<17>_p_1_2" BEL
+        "cfg<17>_p_1_3" BEL "cfg<17>_p_1_4" BEL "cfg<17>_p_1_5" BEL
+        "cfg<17>_p_1_6" BEL "cfg<17>_p_1_7" BEL "cfg[18]_enable" BEL
+        "cfg<18>_p_0_0" BEL "cfg<18>_p_0_1" BEL "cfg<18>_p_0_2" BEL
+        "cfg<18>_p_0_3" BEL "cfg<18>_p_0_4" BEL "cfg<18>_p_0_5" BEL
+        "cfg<18>_p_0_6" BEL "cfg<18>_p_0_7" BEL "cfg<18>_p_1_0" BEL
+        "cfg<18>_p_1_1" BEL "cfg<18>_p_1_2" BEL "cfg<18>_p_1_3" BEL
+        "cfg<18>_p_1_4" BEL "cfg<18>_p_1_5" BEL "cfg<18>_p_1_6" BEL
+        "cfg<18>_p_1_7" BEL "cfg[19]_enable" BEL "cfg[19]_identify" BEL
+        "cfg<19>_p_0_0" BEL "cfg<19>_p_0_1" BEL "cfg<19>_p_0_2" BEL
+        "cfg<19>_p_0_3" BEL "cfg<19>_p_0_4" BEL "cfg<19>_p_0_5" BEL
+        "cfg<19>_p_0_6" BEL "cfg<19>_p_0_7" BEL "cfg<19>_p_1_0" BEL
+        "cfg<19>_p_1_1" BEL "cfg<19>_p_1_2" BEL "cfg<19>_p_1_3" BEL
+        "cfg<19>_p_1_4" BEL "cfg<19>_p_1_5" BEL "cfg<19>_p_1_6" BEL
+        "cfg<19>_p_1_7" BEL "cfg<20>_p_0_0" BEL "cfg<20>_p_0_1" BEL
+        "cfg<20>_p_0_2" BEL "cfg<20>_p_0_3" BEL "cfg<20>_p_0_4" BEL
+        "cfg<20>_p_0_5" BEL "cfg<20>_p_0_6" BEL "cfg<20>_p_0_7" BEL
+        "cfg[20]_enable" BEL "cfg[20]_identify" BEL "cfg<20>_p_1_0" BEL
         "cfg<20>_p_1_1" BEL "cfg<20>_p_1_2" BEL "cfg<20>_p_1_3" BEL
         "cfg<20>_p_1_4" BEL "cfg<20>_p_1_5" BEL "cfg<20>_p_1_6" BEL
-        "cfg<20>_p_1_7" BEL "cfg[21]_identify" BEL "cfg<21>_p_0_0" BEL
-        "cfg<21>_p_0_1" BEL "cfg<21>_p_0_2" BEL "cfg<21>_p_0_3" BEL
-        "cfg<21>_p_0_4" BEL "cfg<21>_p_0_5" BEL "cfg<21>_p_0_6" BEL
-        "cfg<21>_p_0_7" BEL "cfg[22]_identify" BEL "cfg<21>_p_1_0" BEL
+        "cfg<20>_p_1_7" BEL "cfg[21]_enable" BEL "cfg[21]_identify" BEL
+        "cfg<21>_p_0_0" BEL "cfg<21>_p_0_1" BEL "cfg<21>_p_0_2" BEL
+        "cfg<21>_p_0_3" BEL "cfg<21>_p_0_4" BEL "cfg<21>_p_0_5" BEL
+        "cfg<21>_p_0_6" BEL "cfg<21>_p_0_7" BEL "cfg<21>_p_1_0" BEL
         "cfg<21>_p_1_1" BEL "cfg<21>_p_1_2" BEL "cfg<21>_p_1_3" BEL
         "cfg<21>_p_1_4" BEL "cfg<21>_p_1_5" BEL "cfg<21>_p_1_6" BEL
-        "cfg<21>_p_1_7" BEL "cfg[22]_enable" BEL "cfg<22>_p_0_0" BEL
+        "cfg<21>_p_1_7" BEL "cfg[22]_enable" BEL "cfg<22>_p_1_0" BEL
+        "cfg<22>_p_1_1" BEL "cfg<22>_p_1_2" BEL "cfg<22>_p_1_3" BEL
+        "cfg<22>_p_1_4" BEL "cfg<22>_p_1_5" BEL "cfg<22>_p_1_6" BEL
+        "cfg<22>_p_1_7" BEL "cfg[22]_identify" BEL "cfg<22>_p_0_0" BEL
         "cfg<22>_p_0_1" BEL "cfg<22>_p_0_2" BEL "cfg<22>_p_0_3" BEL
         "cfg<22>_p_0_4" BEL "cfg<22>_p_0_5" BEL "cfg<22>_p_0_6" BEL
-        "cfg<22>_p_0_7" BEL "cfg<22>_p_1_0" BEL "cfg<22>_p_1_1" BEL
-        "cfg<22>_p_1_2" BEL "cfg<22>_p_1_3" BEL "cfg<22>_p_1_4" BEL
-        "cfg<22>_p_1_5" BEL "cfg<22>_p_1_6" BEL "cfg<22>_p_1_7" BEL
+        "cfg<22>_p_0_7" BEL "cfg[23]_enable" BEL "cfg[23]_identify" BEL
         "cfg<23>_p_0_0" BEL "cfg<23>_p_0_1" BEL "cfg<23>_p_0_2" BEL
         "cfg<23>_p_0_3" BEL "cfg<23>_p_0_4" BEL "cfg<23>_p_0_5" BEL
-        "cfg<23>_p_0_6" BEL "cfg<23>_p_0_7" BEL "cfg[23]_enable" BEL
-        "cfg[23]_identify" BEL "cfg<23>_p_1_0" BEL "cfg<23>_p_1_1" BEL
-        "cfg<23>_p_1_2" BEL "cfg<23>_p_1_3" BEL "cfg<23>_p_1_4" BEL
-        "cfg<23>_p_1_5" BEL "cfg<23>_p_1_6" BEL "cfg<23>_p_1_7" BEL
-        "cfg[24]_enable" BEL "cfg[24]_identify" BEL "cfg<24>_p_0_0" BEL
-        "cfg<24>_p_0_1" BEL "cfg<24>_p_0_2" BEL "cfg<24>_p_0_3" BEL
-        "cfg<24>_p_0_4" BEL "cfg<24>_p_0_5" BEL "cfg<24>_p_0_6" BEL
-        "cfg<24>_p_0_7" BEL "cfg<24>_p_1_0" BEL "cfg<24>_p_1_1" BEL
-        "cfg<24>_p_1_2" BEL "cfg<24>_p_1_3" BEL "cfg<24>_p_1_4" BEL
-        "cfg<24>_p_1_5" BEL "cfg<24>_p_1_6" BEL "cfg<24>_p_1_7" BEL
-        "cfg[25]_enable" BEL "cfg<25>_p_1_0" BEL "cfg<25>_p_1_1" BEL
-        "cfg<25>_p_1_2" BEL "cfg<25>_p_1_3" BEL "cfg<25>_p_1_4" BEL
-        "cfg<25>_p_1_5" BEL "cfg<25>_p_1_6" BEL "cfg<25>_p_1_7" BEL
-        "cfg[25]_identify" BEL "cfg<25>_p_0_0" BEL "cfg<25>_p_0_1" BEL
-        "cfg<25>_p_0_2" BEL "cfg<25>_p_0_3" BEL "cfg<25>_p_0_4" BEL
-        "cfg<25>_p_0_5" BEL "cfg<25>_p_0_6" BEL "cfg<25>_p_0_7" BEL
-        "cfg[26]_enable" BEL "cfg[26]_identify" BEL "cfg[27]_enable" BEL
+        "cfg<23>_p_0_6" BEL "cfg<23>_p_0_7" BEL "cfg<23>_p_1_0" BEL
+        "cfg<23>_p_1_1" BEL "cfg<23>_p_1_2" BEL "cfg<23>_p_1_3" BEL
+        "cfg<23>_p_1_4" BEL "cfg<23>_p_1_5" BEL "cfg<23>_p_1_6" BEL
+        "cfg<23>_p_1_7" BEL "cfg[24]_enable" BEL "cfg[24]_identify" BEL
+        "cfg[25]_enable" BEL "cfg<24>_p_0_0" BEL "cfg<24>_p_0_1" BEL
+        "cfg<24>_p_0_2" BEL "cfg<24>_p_0_3" BEL "cfg<24>_p_0_4" BEL
+        "cfg<24>_p_0_5" BEL "cfg<24>_p_0_6" BEL "cfg<24>_p_0_7" BEL
+        "cfg<24>_p_1_0" BEL "cfg<24>_p_1_1" BEL "cfg<24>_p_1_2" BEL
+        "cfg<24>_p_1_3" BEL "cfg<24>_p_1_4" BEL "cfg<24>_p_1_5" BEL
+        "cfg<24>_p_1_6" BEL "cfg<24>_p_1_7" BEL "cfg[25]_identify" BEL
+        "cfg<25>_p_0_0" BEL "cfg<25>_p_0_1" BEL "cfg<25>_p_0_2" BEL
+        "cfg<25>_p_0_3" BEL "cfg<25>_p_0_4" BEL "cfg<25>_p_0_5" BEL
+        "cfg<25>_p_0_6" BEL "cfg<25>_p_0_7" BEL "cfg[26]_identify" BEL
+        "cfg<25>_p_1_0" BEL "cfg<25>_p_1_1" BEL "cfg<25>_p_1_2" BEL
+        "cfg<25>_p_1_3" BEL "cfg<25>_p_1_4" BEL "cfg<25>_p_1_5" BEL
+        "cfg<25>_p_1_6" BEL "cfg<25>_p_1_7" BEL "cfg[26]_enable" BEL
         "cfg<26>_p_0_0" BEL "cfg<26>_p_0_1" BEL "cfg<26>_p_0_2" BEL
         "cfg<26>_p_0_3" BEL "cfg<26>_p_0_4" BEL "cfg<26>_p_0_5" BEL
         "cfg<26>_p_0_6" BEL "cfg<26>_p_0_7" BEL "cfg<26>_p_1_0" BEL
         "cfg<26>_p_1_1" BEL "cfg<26>_p_1_2" BEL "cfg<26>_p_1_3" BEL
         "cfg<26>_p_1_4" BEL "cfg<26>_p_1_5" BEL "cfg<26>_p_1_6" BEL
-        "cfg<26>_p_1_7" BEL "cfg[27]_identify" BEL "cfg<27>_p_0_0" BEL
-        "cfg<27>_p_0_1" BEL "cfg<27>_p_0_2" BEL "cfg<27>_p_0_3" BEL
-        "cfg<27>_p_0_4" BEL "cfg<27>_p_0_5" BEL "cfg<27>_p_0_6" BEL
-        "cfg<27>_p_0_7" BEL "cfg[28]_identify" BEL "cfg<27>_p_1_0" BEL
+        "cfg<26>_p_1_7" BEL "cfg<27>_p_0_0" BEL "cfg<27>_p_0_1" BEL
+        "cfg<27>_p_0_2" BEL "cfg<27>_p_0_3" BEL "cfg<27>_p_0_4" BEL
+        "cfg<27>_p_0_5" BEL "cfg<27>_p_0_6" BEL "cfg<27>_p_0_7" BEL
+        "cfg[27]_enable" BEL "cfg[27]_identify" BEL "cfg<27>_p_1_0" BEL
         "cfg<27>_p_1_1" BEL "cfg<27>_p_1_2" BEL "cfg<27>_p_1_3" BEL
         "cfg<27>_p_1_4" BEL "cfg<27>_p_1_5" BEL "cfg<27>_p_1_6" BEL
-        "cfg<27>_p_1_7" BEL "cfg[28]_enable" BEL "cfg<28>_p_0_0" BEL
-        "cfg<28>_p_0_1" BEL "cfg<28>_p_0_2" BEL "cfg<28>_p_0_3" BEL
-        "cfg<28>_p_0_4" BEL "cfg<28>_p_0_5" BEL "cfg<28>_p_0_6" BEL
-        "cfg<28>_p_0_7" BEL "cfg<28>_p_1_0" BEL "cfg<28>_p_1_1" BEL
-        "cfg<28>_p_1_2" BEL "cfg<28>_p_1_3" BEL "cfg<28>_p_1_4" BEL
-        "cfg<28>_p_1_5" BEL "cfg<28>_p_1_6" BEL "cfg<28>_p_1_7" BEL
-        "cfg[29]_enable" BEL "cfg[29]_identify" BEL "cfg<29>_p_0_0" BEL
+        "cfg<27>_p_1_7" BEL "cfg[28]_enable" BEL "cfg[28]_identify" BEL
+        "cfg<28>_p_0_0" BEL "cfg<28>_p_0_1" BEL "cfg<28>_p_0_2" BEL
+        "cfg<28>_p_0_3" BEL "cfg<28>_p_0_4" BEL "cfg<28>_p_0_5" BEL
+        "cfg<28>_p_0_6" BEL "cfg<28>_p_0_7" BEL "cfg<28>_p_1_0" BEL
+        "cfg<28>_p_1_1" BEL "cfg<28>_p_1_2" BEL "cfg<28>_p_1_3" BEL
+        "cfg<28>_p_1_4" BEL "cfg<28>_p_1_5" BEL "cfg<28>_p_1_6" BEL
+        "cfg<28>_p_1_7" BEL "cfg[29]_enable" BEL "cfg<29>_p_1_0" BEL
+        "cfg<29>_p_1_1" BEL "cfg<29>_p_1_2" BEL "cfg<29>_p_1_3" BEL
+        "cfg<29>_p_1_4" BEL "cfg<29>_p_1_5" BEL "cfg<29>_p_1_6" BEL
+        "cfg<29>_p_1_7" BEL "cfg[29]_identify" BEL "cfg<29>_p_0_0" BEL
         "cfg<29>_p_0_1" BEL "cfg<29>_p_0_2" BEL "cfg<29>_p_0_3" BEL
         "cfg<29>_p_0_4" BEL "cfg<29>_p_0_5" BEL "cfg<29>_p_0_6" BEL
-        "cfg<29>_p_0_7" BEL "cfg<29>_p_1_0" BEL "cfg<29>_p_1_1" BEL
-        "cfg<29>_p_1_2" BEL "cfg<29>_p_1_3" BEL "cfg<29>_p_1_4" BEL
-        "cfg<29>_p_1_5" BEL "cfg<29>_p_1_6" BEL "cfg<29>_p_1_7" BEL
+        "cfg<29>_p_0_7" BEL "cfg[30]_enable" BEL "cfg[30]_identify" BEL
         "cfg<30>_p_0_0" BEL "cfg<30>_p_0_1" BEL "cfg<30>_p_0_2" BEL
         "cfg<30>_p_0_3" BEL "cfg<30>_p_0_4" BEL "cfg<30>_p_0_5" BEL
-        "cfg<30>_p_0_6" BEL "cfg<30>_p_0_7" BEL "cfg[30]_enable" BEL
-        "cfg[30]_identify" BEL "cfg<30>_p_1_0" BEL "cfg<30>_p_1_1" BEL
-        "cfg<30>_p_1_2" BEL "cfg<30>_p_1_3" BEL "cfg<30>_p_1_4" BEL
-        "cfg<30>_p_1_5" BEL "cfg<30>_p_1_6" BEL "cfg<30>_p_1_7" BEL
-        "cfg[31]_enable" BEL "cfg<31>_p_1_0" BEL "cfg<31>_p_1_1" BEL
-        "cfg<31>_p_1_2" BEL "cfg<31>_p_1_3" BEL "cfg<31>_p_1_4" BEL
-        "cfg<31>_p_1_5" BEL "cfg<31>_p_1_6" BEL "cfg<31>_p_1_7" BEL
-        "cfg[31]_identify" BEL "cfg<31>_p_0_0" BEL "cfg<31>_p_0_1" BEL
-        "cfg<31>_p_0_2" BEL "cfg<31>_p_0_3" BEL "cfg<31>_p_0_4" BEL
-        "cfg<31>_p_0_5" BEL "cfg<31>_p_0_6" BEL "cfg<31>_p_0_7" BEL "adr_0"
-        BEL "adr_1" BEL "adr_2" BEL "adr_3" BEL "adr_4" BEL
-        "comm.comm_fpga_fx2/state_FSM_FFd2" BEL
+        "cfg<30>_p_0_6" BEL "cfg<30>_p_0_7" BEL "cfg<30>_p_1_0" BEL
+        "cfg<30>_p_1_1" BEL "cfg<30>_p_1_2" BEL "cfg<30>_p_1_3" BEL
+        "cfg<30>_p_1_4" BEL "cfg<30>_p_1_5" BEL "cfg<30>_p_1_6" BEL
+        "cfg<30>_p_1_7" BEL "cfg[31]_enable" BEL "cfg[31]_identify" BEL
+        "adr_0" BEL "adr_1" BEL "adr_2" BEL "adr_3" BEL "adr_4" BEL
+        "cfg<31>_p_0_0" BEL "cfg<31>_p_0_1" BEL "cfg<31>_p_0_2" BEL
+        "cfg<31>_p_0_3" BEL "cfg<31>_p_0_4" BEL "cfg<31>_p_0_5" BEL
+        "cfg<31>_p_0_6" BEL "cfg<31>_p_0_7" BEL "cfg<31>_p_1_0" BEL
+        "cfg<31>_p_1_1" BEL "cfg<31>_p_1_2" BEL "cfg<31>_p_1_3" BEL
+        "cfg<31>_p_1_4" BEL "cfg<31>_p_1_5" BEL "cfg<31>_p_1_6" BEL
+        "cfg<31>_p_1_7" BEL "comm.comm_fpga_fx2/state_FSM_FFd2" BEL
         "comm.comm_fpga_fx2/state_FSM_FFd3" BEL
         "comm.comm_fpga_fx2/state_FSM_FFd1" BEL
         "comm.comm_fpga_fx2/state_FSM_FFd4" BEL "comm.comm_fpga_fx2/count_31"
@@ -374,9 +384,113 @@ TIMEGRP fx2clk_in = BEL "cfg[0]_enable" BEL "cfg<0>_p_1_0" BEL "cfg<0>_p_1_1"
         BEL "comm.comm_fpga_fx2/chanAddr_4" BEL
         "comm.comm_fpga_fx2/chanAddr_3" BEL "comm.comm_fpga_fx2/chanAddr_2"
         BEL "comm.comm_fpga_fx2/chanAddr_1" BEL
-        "comm.comm_fpga_fx2/chanAddr_0" BEL "comm.comm_fpga_fx2/isAligned" BEL
+        "comm.comm_fpga_fx2/chanAddr_0" BEL "my_i2c_b/state_FSM_FFd1" BEL
+        "my_i2c_b/state_FSM_FFd2" BEL "my_i2c_b/state_FSM_FFd3" BEL
+        "my_i2c_b/state_FSM_FFd4" BEL "my_i2c_b/octets_2" BEL
+        "my_i2c_b/octets_1" BEL "my_i2c_b/octets_0" BEL "my_i2c_b/waitCnt_3"
+        BEL "my_i2c_b/waitCnt_2" BEL "my_i2c_b/waitCnt_1" BEL
+        "my_i2c_b/waitCnt_0" BEL "my_i2c_b/reg_4_7" BEL "my_i2c_b/reg_4_6" BEL
+        "my_i2c_b/reg_4_5" BEL "my_i2c_b/reg_4_4" BEL "my_i2c_b/reg_4_3" BEL
+        "my_i2c_b/reg_4_2" BEL "my_i2c_b/reg_4_1" BEL "my_i2c_b/reg_4_0" BEL
+        "my_i2c_b/reg_3_7" BEL "my_i2c_b/reg_3_6" BEL "my_i2c_b/reg_3_5" BEL
+        "my_i2c_b/reg_3_4" BEL "my_i2c_b/reg_3_3" BEL "my_i2c_b/reg_3_2" BEL
+        "my_i2c_b/reg_3_1" BEL "my_i2c_b/reg_3_0" BEL "my_i2c_b/reg_2_7" BEL
+        "my_i2c_b/reg_2_6" BEL "my_i2c_b/reg_2_5" BEL "my_i2c_b/reg_2_4" BEL
+        "my_i2c_b/reg_2_3" BEL "my_i2c_b/reg_2_2" BEL "my_i2c_b/reg_2_1" BEL
+        "my_i2c_b/reg_2_0" BEL "my_i2c_b/reg_1_7" BEL "my_i2c_b/reg_1_6" BEL
+        "my_i2c_b/reg_1_5" BEL "my_i2c_b/reg_1_4" BEL "my_i2c_b/reg_1_3" BEL
+        "my_i2c_b/reg_1_2" BEL "my_i2c_b/reg_1_1" BEL "my_i2c_b/reg_1_0" BEL
+        "my_i2c_a/state_FSM_FFd1" BEL "my_i2c_a/state_FSM_FFd2" BEL
+        "my_i2c_a/state_FSM_FFd3" BEL "my_i2c_a/state_FSM_FFd4" BEL
+        "my_i2c_a/octets_2" BEL "my_i2c_a/octets_1" BEL "my_i2c_a/octets_0"
+        BEL "my_i2c_a/waitCnt_3" BEL "my_i2c_a/waitCnt_2" BEL
+        "my_i2c_a/waitCnt_1" BEL "my_i2c_a/waitCnt_0" BEL "my_i2c_a/reg_4_7"
+        BEL "my_i2c_a/reg_4_6" BEL "my_i2c_a/reg_4_5" BEL "my_i2c_a/reg_4_4"
+        BEL "my_i2c_a/reg_4_3" BEL "my_i2c_a/reg_4_2" BEL "my_i2c_a/reg_4_1"
+        BEL "my_i2c_a/reg_4_0" BEL "my_i2c_a/reg_3_7" BEL "my_i2c_a/reg_3_6"
+        BEL "my_i2c_a/reg_3_5" BEL "my_i2c_a/reg_3_4" BEL "my_i2c_a/reg_3_3"
+        BEL "my_i2c_a/reg_3_2" BEL "my_i2c_a/reg_3_1" BEL "my_i2c_a/reg_3_0"
+        BEL "my_i2c_a/reg_2_7" BEL "my_i2c_a/reg_2_6" BEL "my_i2c_a/reg_2_5"
+        BEL "my_i2c_a/reg_2_4" BEL "my_i2c_a/reg_2_3" BEL "my_i2c_a/reg_2_2"
+        BEL "my_i2c_a/reg_2_1" BEL "my_i2c_a/reg_2_0" BEL "my_i2c_a/reg_1_7"
+        BEL "my_i2c_a/reg_1_6" BEL "my_i2c_a/reg_1_5" BEL "my_i2c_a/reg_1_4"
+        BEL "my_i2c_a/reg_1_3" BEL "my_i2c_a/reg_1_2" BEL "my_i2c_a/reg_1_1"
+        BEL "my_i2c_a/reg_1_0" BEL "my_i2c_a/Inst_TWICtl/subState_1" BEL
+        "my_i2c_a/Inst_TWICtl/subState_0" BEL
+        "my_i2c_a/Inst_TWICtl/busFreeCnt_7" BEL
+        "my_i2c_a/Inst_TWICtl/busFreeCnt_6" BEL
+        "my_i2c_a/Inst_TWICtl/busFreeCnt_5" BEL
+        "my_i2c_a/Inst_TWICtl/busFreeCnt_4" BEL
+        "my_i2c_a/Inst_TWICtl/busFreeCnt_3" BEL
+        "my_i2c_a/Inst_TWICtl/busFreeCnt_2" BEL
+        "my_i2c_a/Inst_TWICtl/busFreeCnt_1" BEL
+        "my_i2c_a/Inst_TWICtl/busFreeCnt_0" BEL
+        "my_i2c_a/Inst_TWICtl/bitCount_2" BEL
+        "my_i2c_a/Inst_TWICtl/bitCount_1" BEL
+        "my_i2c_a/Inst_TWICtl/bitCount_0" BEL "my_i2c_a/Inst_TWICtl/sclCnt_7"
+        BEL "my_i2c_a/Inst_TWICtl/sclCnt_6" BEL
+        "my_i2c_a/Inst_TWICtl/sclCnt_5" BEL "my_i2c_a/Inst_TWICtl/sclCnt_4"
+        BEL "my_i2c_a/Inst_TWICtl/sclCnt_3" BEL
+        "my_i2c_a/Inst_TWICtl/sclCnt_2" BEL "my_i2c_a/Inst_TWICtl/sclCnt_1"
+        BEL "my_i2c_a/Inst_TWICtl/sclCnt_0" BEL
+        "my_i2c_a/Inst_TWICtl/state_FSM_FFd1" BEL
+        "my_i2c_a/Inst_TWICtl/state_FSM_FFd3" BEL
+        "my_i2c_a/Inst_TWICtl/state_FSM_FFd2" BEL "my_i2c_a/Inst_TWICtl/dScl"
+        BEL "my_i2c_a/Inst_TWICtl/dataByte_6" BEL
+        "my_i2c_a/Inst_TWICtl/dataByte_5" BEL
+        "my_i2c_a/Inst_TWICtl/dataByte_4" BEL
+        "my_i2c_a/Inst_TWICtl/dataByte_3" BEL "my_i2c_a/Inst_TWICtl/ddSda" BEL
+        "my_i2c_a/Inst_TWICtl/dSda" BEL "my_i2c_b/Inst_TWICtl/subState_1" BEL
+        "my_i2c_b/Inst_TWICtl/subState_0" BEL
+        "my_i2c_b/Inst_TWICtl/busFreeCnt_7" BEL
+        "my_i2c_b/Inst_TWICtl/busFreeCnt_6" BEL
+        "my_i2c_b/Inst_TWICtl/busFreeCnt_5" BEL
+        "my_i2c_b/Inst_TWICtl/busFreeCnt_4" BEL
+        "my_i2c_b/Inst_TWICtl/busFreeCnt_3" BEL
+        "my_i2c_b/Inst_TWICtl/busFreeCnt_2" BEL
+        "my_i2c_b/Inst_TWICtl/busFreeCnt_1" BEL
+        "my_i2c_b/Inst_TWICtl/busFreeCnt_0" BEL
+        "my_i2c_b/Inst_TWICtl/bitCount_2" BEL
+        "my_i2c_b/Inst_TWICtl/bitCount_1" BEL
+        "my_i2c_b/Inst_TWICtl/bitCount_0" BEL "my_i2c_b/Inst_TWICtl/sclCnt_7"
+        BEL "my_i2c_b/Inst_TWICtl/sclCnt_6" BEL
+        "my_i2c_b/Inst_TWICtl/sclCnt_5" BEL "my_i2c_b/Inst_TWICtl/sclCnt_4"
+        BEL "my_i2c_b/Inst_TWICtl/sclCnt_3" BEL
+        "my_i2c_b/Inst_TWICtl/sclCnt_2" BEL "my_i2c_b/Inst_TWICtl/sclCnt_1"
+        BEL "my_i2c_b/Inst_TWICtl/sclCnt_0" BEL
+        "my_i2c_b/Inst_TWICtl/state_FSM_FFd1" BEL
+        "my_i2c_b/Inst_TWICtl/state_FSM_FFd3" BEL
+        "my_i2c_b/Inst_TWICtl/state_FSM_FFd2" BEL "my_i2c_b/Inst_TWICtl/dScl"
+        BEL "my_i2c_b/Inst_TWICtl/dataByte_6" BEL
+        "my_i2c_b/Inst_TWICtl/dataByte_5" BEL
+        "my_i2c_b/Inst_TWICtl/dataByte_4" BEL
+        "my_i2c_b/Inst_TWICtl/dataByte_3" BEL "my_i2c_b/Inst_TWICtl/ddSda" BEL
+        "my_i2c_b/Inst_TWICtl/dSda" BEL "my_i2c_a/Inst_LocalRst/RstQ_4" BEL
+        "my_i2c_a/Inst_LocalRst/RstQ_3" BEL "my_i2c_a/Inst_LocalRst/RstQ_2"
+        BEL "my_i2c_a/Inst_LocalRst/RstQ_1" BEL
+        "my_i2c_b/Inst_LocalRst/RstQ_4" BEL "my_i2c_b/Inst_LocalRst/RstQ_3"
+        BEL "my_i2c_b/Inst_LocalRst/RstQ_2" BEL
+        "my_i2c_b/Inst_LocalRst/RstQ_1" BEL "my_i2c_a/Inst_TWICtl/DONE_O" BEL
+        "my_i2c_a/Inst_TWICtl/ERR_O" BEL "my_i2c_b/Inst_TWICtl/DONE_O" BEL
+        "my_i2c_b/Inst_TWICtl/ERR_O" BEL "my_i2c_a/Inst_TWICtl/rSda" BEL
+        "my_i2c_b/Inst_TWICtl/rSda" BEL "comm.comm_fpga_fx2/isAligned" BEL
+        "my_i2c_a/Inst_TWICtl/rScl" BEL "my_i2c_a/Inst_TWICtl/addrNData" BEL
+        "my_i2c_b/Inst_TWICtl/rScl" BEL "my_i2c_b/Inst_TWICtl/addrNData" BEL
+        "my_i2c_a/Inst_TWICtl/int_Rst" BEL "my_i2c_b/Inst_TWICtl/int_Rst" BEL
+        "my_i2c_a/Inst_TWICtl/busState_1" BEL
+        "my_i2c_a/Inst_TWICtl/busState_0" BEL
+        "my_i2c_b/Inst_TWICtl/busState_1" BEL
+        "my_i2c_b/Inst_TWICtl/busState_0" BEL
+        "my_i2c_a/Inst_TWICtl/dataByte_7" BEL
+        "my_i2c_a/Inst_TWICtl/dataByte_2" BEL
+        "my_i2c_a/Inst_TWICtl/dataByte_1" BEL
+        "my_i2c_a/Inst_TWICtl/dataByte_0" BEL
+        "my_i2c_b/Inst_TWICtl/dataByte_7" BEL
+        "my_i2c_b/Inst_TWICtl/dataByte_2" BEL
+        "my_i2c_b/Inst_TWICtl/dataByte_1" BEL
+        "my_i2c_b/Inst_TWICtl/dataByte_0" BEL
         "comm.comm_fpga_fx2/chanAddr_0_1" BEL
-        "comm.comm_fpga_fx2/state_FSM_FFd3_1" BEL "fx2clk_int_BUFG" BEL
+        "comm.comm_fpga_fx2/chanAddr_0_2" BEL "fx2clk_int_BUFG" BEL
         "my_inspect_sync/Mshreg_inspect_2_identity_3" BEL
         "my_inspect_sync/inspect_2_identity_3" BEL
         "my_inspect_sync/Mshreg_inspect_2_identity_2" BEL
@@ -393,6 +507,14 @@ TIMEGRP fx2clk_in = BEL "cfg[0]_enable" BEL "cfg<0>_p_1_0" BEL "cfg<0>_p_1_1"
         BEL
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_3"
         BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_0"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_1"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_2"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_3"
+        BEL
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin_0"
         BEL
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin_1"
@@ -400,6 +522,30 @@ TIMEGRP fx2clk_in = BEL "cfg[0]_enable" BEL "cfg<0>_p_1_0" BEL "cfg<0>_p_1_1"
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin_2"
         BEL
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin_3"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_0"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_1"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_2"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_3"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_3"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_2"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_1"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_0"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_3"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_2"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_1"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_0"
         BEL
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_3"
         BEL
@@ -435,6 +581,56 @@ TIMEGRP fx2clk_in = BEL "cfg[0]_enable" BEL "cfg<0>_p_1_0" BEL "cfg<0>_p_1_1"
         BEL
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc0.count_d2_3"
         BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/user_valid"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/curr_fwft_state_FSM_FFd1"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/curr_fwft_state_FSM_FFd2"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_0"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_1"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_2"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_3"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_1"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_2"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_3"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.grdc2.rdc/rd_dc_i_0"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.grdc2.rdc/rd_dc_i_1"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.grdc2.rdc/rd_dc_i_2"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.grdc2.rdc/rd_dc_i_3"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.grdc2.rdc/rd_dc_i_4"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_0"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_1"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_2"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_3"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_4"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_5"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_6"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_7"
+        BEL
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/grstd1.grst_full.rst_d1"
         BEL
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/wr_rst_asreg_d1"
@@ -443,21 +639,37 @@ TIMEGRP fx2clk_in = BEL "cfg[0]_enable" BEL "cfg<0>_p_1_0" BEL "cfg<0>_p_1_1"
         BEL
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_1"
         BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/rd_rst_asreg_d1"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_1"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2"
+        BEL
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/grstd1.grst_full.rst_d2"
         BEL
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/wr_rst_asreg_d2"
         BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/rd_rst_asreg_d2"
+        BEL
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/grstd1.grst_full.rst_d3"
         BEL
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/wr_rst_asreg"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/rd_rst_asreg"
         BEL
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/RST_FULL_GEN"
         BEL
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i"
         BEL
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i"
+        BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gras.rsts/ram_empty_fb_i"
         PIN
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<26>"
+        PIN
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<27>"
         BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_0"
         BEL
@@ -467,6 +679,14 @@ TIMEGRP fx2clk_in = BEL "cfg[0]_enable" BEL "cfg<0>_p_1_0" BEL "cfg<0>_p_1_1"
         BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_3"
         BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_0"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_1"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_2"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_3"
+        BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin_0"
         BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin_1"
@@ -474,6 +694,30 @@ TIMEGRP fx2clk_in = BEL "cfg[0]_enable" BEL "cfg<0>_p_1_0" BEL "cfg<0>_p_1_1"
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin_2"
         BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin_3"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_0"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_1"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_2"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_3"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_3"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_2"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_1"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_0"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_3"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_2"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_1"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_0"
         BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_3"
         BEL
@@ -509,6 +753,44 @@ TIMEGRP fx2clk_in = BEL "cfg[0]_enable" BEL "cfg<0>_p_1_0" BEL "cfg<0>_p_1_1"
         BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc0.count_d2_3"
         BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/curr_fwft_state_FSM_FFd1"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/curr_fwft_state_FSM_FFd2"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_0"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_1"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_2"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_3"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_1"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_2"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_3"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_0"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_1"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_2"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_3"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_4"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_5"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_6"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_7"
+        BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/grstd1.grst_full.rst_d1"
         BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/wr_rst_asreg_d1"
@@ -517,21 +799,37 @@ TIMEGRP fx2clk_in = BEL "cfg[0]_enable" BEL "cfg<0>_p_1_0" BEL "cfg<0>_p_1_1"
         BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_1"
         BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/rd_rst_asreg_d1"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_1"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2"
+        BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/grstd1.grst_full.rst_d2"
         BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/wr_rst_asreg_d2"
         BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/rd_rst_asreg_d2"
+        BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/grstd1.grst_full.rst_d3"
         BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/wr_rst_asreg"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/rd_rst_asreg"
         BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/RST_FULL_GEN"
         BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i"
         BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gras.rsts/ram_empty_fb_i"
         PIN
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<26>"
+        PIN
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<27>"
         BEL
         "my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_0"
         BEL
@@ -684,6 +982,8 @@ TIMEGRP fx2clk_in = BEL "cfg[0]_enable" BEL "cfg<0>_p_1_0" BEL "cfg<0>_p_1_1"
         "my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/RST_FULL_GEN"
         BEL
         "my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i"
+        BEL
+        "my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i"
         BEL
         "my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gras.rsts/ram_empty_fb_i"
         PIN
@@ -3146,126 +3446,19 @@ TIMEGRP inst_syscon_ddr2clk_2x = PIN
         PIN
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/ioi_ck_0/N_pins<0>"
         PIN "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/ioi_ck_0_pins<0>";
+TIMEGRP RESET_SINK = BEL "inst_fbctl/inst_localrstalg/RstQ_4" BEL
+        "inst_fbctl/inst_localrstalg/RstQ_3" BEL
+        "inst_fbctl/inst_localrstalg/RstQ_2" BEL
+        "inst_fbctl/inst_localrstalg/RstQ_1";
+TIMEGRP RSTQ_SOURCE = BEL "inst_fbctl/inst_localrstc/RstQ_4" BEL
+        "inst_fbctl/inst_localrstc/RstQ_3" BEL
+        "inst_fbctl/inst_localrstc/RstQ_2" BEL
+        "inst_fbctl/inst_localrstc/RstQ_1";
 PIN inst_camctlb/Inst_ODDR2_MCLK_FORWARD_pins<1> = BEL
         "inst_camctlb/Inst_ODDR2_MCLK_FORWARD" PINNAME CK0;
 PIN inst_camctla/Inst_ODDR2_MCLK_FORWARD_pins<1> = BEL
         "inst_camctla/Inst_ODDR2_MCLK_FORWARD" PINNAME CK0;
-PIN
-        my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<27>
-        = BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram"
-        PINNAME CLKBRDCLK;
-PIN
-        my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<27>
-        = BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram"
-        PINNAME CLKBRDCLK;
-TIMEGRP inst_syscon_Inst_dcm_fixed_clkout0 = BEL "my_i2c_b/state_FSM_FFd1" BEL
-        "my_i2c_b/state_FSM_FFd2" BEL "my_i2c_b/state_FSM_FFd3" BEL
-        "my_i2c_b/state_FSM_FFd4" BEL "my_i2c_b/octets_2" BEL
-        "my_i2c_b/octets_1" BEL "my_i2c_b/octets_0" BEL "my_i2c_b/waitCnt_23"
-        BEL "my_i2c_b/waitCnt_22" BEL "my_i2c_b/waitCnt_21" BEL
-        "my_i2c_b/waitCnt_20" BEL "my_i2c_b/waitCnt_19" BEL
-        "my_i2c_b/waitCnt_18" BEL "my_i2c_b/waitCnt_17" BEL
-        "my_i2c_b/waitCnt_16" BEL "my_i2c_b/waitCnt_15" BEL
-        "my_i2c_b/waitCnt_14" BEL "my_i2c_b/waitCnt_13" BEL
-        "my_i2c_b/waitCnt_12" BEL "my_i2c_b/waitCnt_11" BEL
-        "my_i2c_b/waitCnt_10" BEL "my_i2c_b/waitCnt_9" BEL
-        "my_i2c_b/waitCnt_8" BEL "my_i2c_b/waitCnt_7" BEL "my_i2c_b/waitCnt_6"
-        BEL "my_i2c_b/waitCnt_5" BEL "my_i2c_b/waitCnt_4" BEL
-        "my_i2c_b/waitCnt_3" BEL "my_i2c_b/waitCnt_2" BEL "my_i2c_b/waitCnt_1"
-        BEL "my_i2c_b/waitCnt_0" BEL "my_i2c_b/reg_4_7" BEL "my_i2c_b/reg_4_6"
-        BEL "my_i2c_b/reg_4_5" BEL "my_i2c_b/reg_4_4" BEL "my_i2c_b/reg_4_3"
-        BEL "my_i2c_b/reg_4_2" BEL "my_i2c_b/reg_4_1" BEL "my_i2c_b/reg_4_0"
-        BEL "my_i2c_b/reg_2_7" BEL "my_i2c_b/reg_2_6" BEL "my_i2c_b/reg_2_5"
-        BEL "my_i2c_b/reg_2_4" BEL "my_i2c_b/reg_2_3" BEL "my_i2c_b/reg_2_2"
-        BEL "my_i2c_b/reg_2_1" BEL "my_i2c_b/reg_2_0" BEL "my_i2c_b/reg_1_7"
-        BEL "my_i2c_b/reg_1_6" BEL "my_i2c_b/reg_1_5" BEL "my_i2c_b/reg_1_4"
-        BEL "my_i2c_b/reg_1_3" BEL "my_i2c_b/reg_1_2" BEL "my_i2c_b/reg_1_1"
-        BEL "my_i2c_b/reg_1_0" BEL "my_i2c_b/reg_3_7" BEL "my_i2c_b/reg_3_6"
-        BEL "my_i2c_b/reg_3_5" BEL "my_i2c_b/reg_3_4" BEL "my_i2c_b/reg_3_3"
-        BEL "my_i2c_b/reg_3_2" BEL "my_i2c_b/reg_3_1" BEL "my_i2c_b/reg_3_0"
-        BEL "my_i2c_a/state_FSM_FFd1" BEL "my_i2c_a/state_FSM_FFd2" BEL
-        "my_i2c_a/state_FSM_FFd3" BEL "my_i2c_a/state_FSM_FFd4" BEL
-        "my_i2c_a/octets_2" BEL "my_i2c_a/octets_1" BEL "my_i2c_a/octets_0"
-        BEL "my_i2c_a/waitCnt_23" BEL "my_i2c_a/waitCnt_22" BEL
-        "my_i2c_a/waitCnt_21" BEL "my_i2c_a/waitCnt_20" BEL
-        "my_i2c_a/waitCnt_19" BEL "my_i2c_a/waitCnt_18" BEL
-        "my_i2c_a/waitCnt_17" BEL "my_i2c_a/waitCnt_16" BEL
-        "my_i2c_a/waitCnt_15" BEL "my_i2c_a/waitCnt_14" BEL
-        "my_i2c_a/waitCnt_13" BEL "my_i2c_a/waitCnt_12" BEL
-        "my_i2c_a/waitCnt_11" BEL "my_i2c_a/waitCnt_10" BEL
-        "my_i2c_a/waitCnt_9" BEL "my_i2c_a/waitCnt_8" BEL "my_i2c_a/waitCnt_7"
-        BEL "my_i2c_a/waitCnt_6" BEL "my_i2c_a/waitCnt_5" BEL
-        "my_i2c_a/waitCnt_4" BEL "my_i2c_a/waitCnt_3" BEL "my_i2c_a/waitCnt_2"
-        BEL "my_i2c_a/waitCnt_1" BEL "my_i2c_a/waitCnt_0" BEL
-        "my_i2c_a/reg_4_7" BEL "my_i2c_a/reg_4_6" BEL "my_i2c_a/reg_4_5" BEL
-        "my_i2c_a/reg_4_4" BEL "my_i2c_a/reg_4_3" BEL "my_i2c_a/reg_4_2" BEL
-        "my_i2c_a/reg_4_1" BEL "my_i2c_a/reg_4_0" BEL "my_i2c_a/reg_2_7" BEL
-        "my_i2c_a/reg_2_6" BEL "my_i2c_a/reg_2_5" BEL "my_i2c_a/reg_2_4" BEL
-        "my_i2c_a/reg_2_3" BEL "my_i2c_a/reg_2_2" BEL "my_i2c_a/reg_2_1" BEL
-        "my_i2c_a/reg_2_0" BEL "my_i2c_a/reg_1_7" BEL "my_i2c_a/reg_1_6" BEL
-        "my_i2c_a/reg_1_5" BEL "my_i2c_a/reg_1_4" BEL "my_i2c_a/reg_1_3" BEL
-        "my_i2c_a/reg_1_2" BEL "my_i2c_a/reg_1_1" BEL "my_i2c_a/reg_1_0" BEL
-        "my_i2c_a/reg_3_7" BEL "my_i2c_a/reg_3_6" BEL "my_i2c_a/reg_3_5" BEL
-        "my_i2c_a/reg_3_4" BEL "my_i2c_a/reg_3_3" BEL "my_i2c_a/reg_3_2" BEL
-        "my_i2c_a/reg_3_1" BEL "my_i2c_a/reg_3_0" BEL
-        "my_i2c_a/Inst_TWICtl/subState_1" BEL
-        "my_i2c_a/Inst_TWICtl/subState_0" BEL
-        "my_i2c_a/Inst_TWICtl/busFreeCnt_7" BEL
-        "my_i2c_a/Inst_TWICtl/busFreeCnt_6" BEL
-        "my_i2c_a/Inst_TWICtl/busFreeCnt_5" BEL
-        "my_i2c_a/Inst_TWICtl/busFreeCnt_4" BEL
-        "my_i2c_a/Inst_TWICtl/busFreeCnt_3" BEL
-        "my_i2c_a/Inst_TWICtl/busFreeCnt_2" BEL
-        "my_i2c_a/Inst_TWICtl/busFreeCnt_1" BEL
-        "my_i2c_a/Inst_TWICtl/busFreeCnt_0" BEL
-        "my_i2c_a/Inst_TWICtl/bitCount_2" BEL
-        "my_i2c_a/Inst_TWICtl/bitCount_1" BEL
-        "my_i2c_a/Inst_TWICtl/bitCount_0" BEL "my_i2c_a/Inst_TWICtl/sclCnt_7"
-        BEL "my_i2c_a/Inst_TWICtl/sclCnt_6" BEL
-        "my_i2c_a/Inst_TWICtl/sclCnt_5" BEL "my_i2c_a/Inst_TWICtl/sclCnt_4"
-        BEL "my_i2c_a/Inst_TWICtl/sclCnt_3" BEL
-        "my_i2c_a/Inst_TWICtl/sclCnt_2" BEL "my_i2c_a/Inst_TWICtl/sclCnt_1"
-        BEL "my_i2c_a/Inst_TWICtl/sclCnt_0" BEL
-        "my_i2c_a/Inst_TWICtl/state_FSM_FFd1" BEL
-        "my_i2c_a/Inst_TWICtl/state_FSM_FFd3" BEL
-        "my_i2c_a/Inst_TWICtl/state_FSM_FFd2" BEL "my_i2c_a/Inst_TWICtl/dScl"
-        BEL "my_i2c_a/Inst_TWICtl/dataByte_6" BEL
-        "my_i2c_a/Inst_TWICtl/dataByte_5" BEL
-        "my_i2c_a/Inst_TWICtl/dataByte_4" BEL
-        "my_i2c_a/Inst_TWICtl/dataByte_3" BEL "my_i2c_a/Inst_TWICtl/ddSda" BEL
-        "my_i2c_a/Inst_TWICtl/dSda" BEL "my_i2c_b/Inst_TWICtl/subState_1" BEL
-        "my_i2c_b/Inst_TWICtl/subState_0" BEL
-        "my_i2c_b/Inst_TWICtl/busFreeCnt_7" BEL
-        "my_i2c_b/Inst_TWICtl/busFreeCnt_6" BEL
-        "my_i2c_b/Inst_TWICtl/busFreeCnt_5" BEL
-        "my_i2c_b/Inst_TWICtl/busFreeCnt_4" BEL
-        "my_i2c_b/Inst_TWICtl/busFreeCnt_3" BEL
-        "my_i2c_b/Inst_TWICtl/busFreeCnt_2" BEL
-        "my_i2c_b/Inst_TWICtl/busFreeCnt_1" BEL
-        "my_i2c_b/Inst_TWICtl/busFreeCnt_0" BEL
-        "my_i2c_b/Inst_TWICtl/bitCount_2" BEL
-        "my_i2c_b/Inst_TWICtl/bitCount_1" BEL
-        "my_i2c_b/Inst_TWICtl/bitCount_0" BEL "my_i2c_b/Inst_TWICtl/sclCnt_7"
-        BEL "my_i2c_b/Inst_TWICtl/sclCnt_6" BEL
-        "my_i2c_b/Inst_TWICtl/sclCnt_5" BEL "my_i2c_b/Inst_TWICtl/sclCnt_4"
-        BEL "my_i2c_b/Inst_TWICtl/sclCnt_3" BEL
-        "my_i2c_b/Inst_TWICtl/sclCnt_2" BEL "my_i2c_b/Inst_TWICtl/sclCnt_1"
-        BEL "my_i2c_b/Inst_TWICtl/sclCnt_0" BEL
-        "my_i2c_b/Inst_TWICtl/state_FSM_FFd1" BEL
-        "my_i2c_b/Inst_TWICtl/state_FSM_FFd3" BEL
-        "my_i2c_b/Inst_TWICtl/state_FSM_FFd2" BEL "my_i2c_b/Inst_TWICtl/dScl"
-        BEL "my_i2c_b/Inst_TWICtl/dataByte_6" BEL
-        "my_i2c_b/Inst_TWICtl/dataByte_5" BEL
-        "my_i2c_b/Inst_TWICtl/dataByte_4" BEL
-        "my_i2c_b/Inst_TWICtl/dataByte_3" BEL "my_i2c_b/Inst_TWICtl/ddSda" BEL
-        "my_i2c_b/Inst_TWICtl/dSda" BEL "my_i2c_a/Inst_LocalRst/RstQ_4" BEL
-        "my_i2c_a/Inst_LocalRst/RstQ_3" BEL "my_i2c_a/Inst_LocalRst/RstQ_2"
-        BEL "my_i2c_a/Inst_LocalRst/RstQ_1" BEL
-        "my_i2c_b/Inst_LocalRst/RstQ_4" BEL "my_i2c_b/Inst_LocalRst/RstQ_3"
-        BEL "my_i2c_b/Inst_LocalRst/RstQ_2" BEL
-        "my_i2c_b/Inst_LocalRst/RstQ_1" BEL "inst_camctlb/rstCnt_0" BEL
+TIMEGRP inst_syscon_Inst_dcm_fixed_clkout0 = BEL "inst_camctlb/rstCnt_0" BEL
         "inst_camctlb/rstCnt_1" BEL "inst_camctlb/rstCnt_2" BEL
         "inst_camctlb/rstCnt_3" BEL "inst_camctlb/rstCnt_4" BEL
         "inst_camctlb/rstCnt_5" BEL "inst_camctlb/rstCnt_6" BEL
@@ -3301,217 +3494,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout0 = BEL "my_i2c_b/state_FSM_FFd1" BEL
         "inst_camctla/Inst_LocalRst/RstQ_1" BEL "inst_camctla/intRst" BEL
         "inst_camctla/I2C_EN" BEL "inst_camctla/RST_O" PIN
         "inst_camctla/Inst_ODDR2_MCLK_FORWARD_pins<1>" BEL
-        "inst_syscon/Inst_dcm_fixed/clkout1_buf" BEL
-        "my_i2c_a/Inst_TWICtl/DONE_O" BEL "my_i2c_a/Inst_TWICtl/ERR_O" BEL
-        "my_i2c_b/Inst_TWICtl/DONE_O" BEL "my_i2c_b/Inst_TWICtl/ERR_O" BEL
-        "my_i2c_a/Inst_TWICtl/rSda" BEL "my_i2c_b/Inst_TWICtl/rSda" BEL
-        "my_i2c_b/reg_0_0" BEL "my_i2c_a/reg_0_0" BEL
-        "my_i2c_a/Inst_TWICtl/rScl" BEL "my_i2c_a/Inst_TWICtl/addrNData" BEL
-        "my_i2c_b/Inst_TWICtl/rScl" BEL "my_i2c_b/Inst_TWICtl/addrNData" BEL
-        "my_i2c_a/Inst_TWICtl/int_Rst" BEL "my_i2c_b/Inst_TWICtl/int_Rst" BEL
-        "my_i2c_a/Inst_TWICtl/busState_1" BEL
-        "my_i2c_a/Inst_TWICtl/busState_0" BEL
-        "my_i2c_b/Inst_TWICtl/busState_1" BEL
-        "my_i2c_b/Inst_TWICtl/busState_0" BEL
-        "my_i2c_a/Inst_TWICtl/dataByte_7" BEL
-        "my_i2c_a/Inst_TWICtl/dataByte_2" BEL
-        "my_i2c_a/Inst_TWICtl/dataByte_1" BEL
-        "my_i2c_a/Inst_TWICtl/dataByte_0" BEL
-        "my_i2c_b/Inst_TWICtl/dataByte_7" BEL
-        "my_i2c_b/Inst_TWICtl/dataByte_2" BEL
-        "my_i2c_b/Inst_TWICtl/dataByte_1" BEL
-        "my_i2c_b/Inst_TWICtl/dataByte_0" BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_0"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_1"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_2"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_3"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_0"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_1"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_2"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_3"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_3"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_2"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_1"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_0"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_3"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_2"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_1"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_0"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/user_valid"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/curr_fwft_state_FSM_FFd1"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/curr_fwft_state_FSM_FFd2"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_0"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_1"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_2"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_3"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_1"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_2"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_3"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.grdc2.rdc/rd_dc_i_0"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.grdc2.rdc/rd_dc_i_1"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.grdc2.rdc/rd_dc_i_2"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.grdc2.rdc/rd_dc_i_3"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.grdc2.rdc/rd_dc_i_4"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_0"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_1"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_2"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_3"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_4"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_5"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_6"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_7"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/rd_rst_asreg_d1"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_1"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/rd_rst_asreg_d2"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/rd_rst_asreg"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gras.rsts/ram_empty_fb_i"
-        PIN
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<27>"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_0"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_1"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_2"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_3"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_0"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_1"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_2"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_3"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_3"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_2"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_1"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_0"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_3"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_2"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_1"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_0"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/curr_fwft_state_FSM_FFd1"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/curr_fwft_state_FSM_FFd2"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_0"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_1"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_2"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_3"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_1"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_2"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_3"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_0"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_1"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_2"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_3"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_4"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_5"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_6"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_7"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/rd_rst_asreg_d1"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_1"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/rd_rst_asreg_d2"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/rd_rst_asreg"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gras.rsts/ram_empty_fb_i"
-        PIN
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<27>";
-TIMEGRP RESET_SINK = BEL "inst_fbctl/inst_localrstalg/RstQ_4" BEL
-        "inst_fbctl/inst_localrstalg/RstQ_3" BEL
-        "inst_fbctl/inst_localrstalg/RstQ_2" BEL
-        "inst_fbctl/inst_localrstalg/RstQ_1";
-TIMEGRP RSTQ_SOURCE = BEL "inst_fbctl/inst_localrstc/RstQ_4" BEL
-        "inst_fbctl/inst_localrstc/RstQ_3" BEL
-        "inst_fbctl/inst_localrstc/RstQ_2" BEL
-        "inst_fbctl/inst_localrstc/RstQ_1";
+        "inst_syscon/Inst_dcm_fixed/clkout1_buf";
 PIN inst_camctlb/Inst_ODDR2_MCLK_FORWARD_pins<2> = BEL
         "inst_camctlb/Inst_ODDR2_MCLK_FORWARD" PINNAME CK1;
 PIN inst_camctla/Inst_ODDR2_MCLK_FORWARD_pins<2> = BEL

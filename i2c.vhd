@@ -19,7 +19,8 @@ entity i2c is
     wr_data : in  std_logic_vector(7 downto 0);
     wr_en   : in  std_logic;
     wr_full : out std_logic;
-    c : out std_logic_vector(7 downto 0)
+    c : out std_logic_vector(7 downto 0);
+    t : out std_logic
     );
 end i2c;
 
@@ -32,7 +33,7 @@ architecture rtl of i2c is
   constant IWR                         : std_logic                    := '0';  -- init write
   
   constant CMD_DELAY        : natural := 1;  --ms
-  constant CMD_DELAY_CYCLES : natural := 10000000;
+  constant CMD_DELAY_CYCLES : natural := 10; --00000;
 
 
 
@@ -56,9 +57,9 @@ architecture rtl of i2c is
   signal rd_en       : std_logic;
   signal dout        : std_logic_vector(7 downto 0);
   signal empty       : std_logic;
-  signal octets      : natural range 0 to 5;
-  signal next_octets : natural range 0 to 5;
-  type   reg_t is array (0 to 4) of std_logic_vector(7 downto 0);
+  signal octets      : natural range 0 to 6;
+  signal next_octets : natural range 0 to 6;
+  type   reg_t is array (0 to 5) of std_logic_vector(7 downto 0);
   signal reg         : reg_t;
   signal count : std_logic_vector(4 downto 0);
   signal next_reg : reg_t;
@@ -99,7 +100,7 @@ begin
       SDA       => SDA,
       SCL       => SCL
       );
-
+  t <= rd_en;
   Wait_CNT : process (CLK)
   begin
     if Rising_Edge(CLK) then
@@ -141,7 +142,7 @@ begin
     case (state) is
       when stIdle =>
         next_octets <= 0;
-        nstate      <= stR;
+        nstate <= stR;
         
       when stR =>
         if empty = '0' then

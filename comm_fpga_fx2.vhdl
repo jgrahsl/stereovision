@@ -46,7 +46,10 @@ entity comm_fpga_fx2 is
 		-- Host << FPGA pipe:
 		f2hData_in     : in    std_logic_vector(7 downto 0);  -- data lines used when the host reads from a channel
 		f2hValid_in    : in    std_logic;                     -- channel logic can drive this low to say "I don't have data ready for you"
-		f2hReady_out   : out   std_logic                      -- '1' means "on the next clock rising edge, put your next byte of data on f2hData_in"
+		f2hReady_out   : out   std_logic;                      -- '1' means "on the next clock rising edge, put your next byte of data on f2hData_in"
+
+
+      s : out std_logic_vector(7 downto 0)
 	);
 end comm_fpga_fx2;
 
@@ -111,7 +114,8 @@ begin
 
 		case state is
 			when S_GET_COUNT0 =>
-				fx2FifoSel_out <= OUT_FIFO;  -- Reading from FX2
+           s <= "10000000";
+           fx2FifoSel_out <= OUT_FIFO;  -- Reading from FX2
 				if ( fx2GotData_in = '1' ) then
 					-- The count high word high byte will be available on the next clock edge.
 					count_next(31 downto 24) <= unsigned(fx2Data_io);
@@ -119,6 +123,7 @@ begin
 				end if;
 
 			when S_GET_COUNT1 =>
+           s <= "01000000";           
 				fx2FifoSel_out <= OUT_FIFO;  -- Reading from FX2
 				if ( fx2GotData_in = '1' ) then
 					-- The count high word low byte will be available on the next clock edge.
@@ -127,6 +132,7 @@ begin
 				end if;
 
 			when S_GET_COUNT2 =>
+           s <= "01000000";                      
 				fx2FifoSel_out <= OUT_FIFO;  -- Reading from FX2
 				if ( fx2GotData_in = '1' ) then
 					-- The count low word high byte will be available on the next clock edge.
@@ -135,6 +141,7 @@ begin
 				end if;
 
 			when S_GET_COUNT3 =>
+           s <= "00100000";                      
 				fx2FifoSel_out <= OUT_FIFO;  -- Reading from FX2
 				if ( fx2GotData_in = '1' ) then
 					-- The count low word low byte will be available on the next clock edge.
@@ -147,6 +154,7 @@ begin
 				end if;
 
 			when S_BEGIN_WRITE =>
+           s <= "00010000";                                                                  
 				fx2FifoSel_out <= IN_FIFO;   -- Writing to FX2
 				fifoOp <= FIFO_NOP;
 				if ( count(8 downto 0) = "000000000" ) then
@@ -157,6 +165,7 @@ begin
 				state_next <= S_WRITE;
 
 			when S_WRITE =>
+           s <= "00001000";                                                       
 				fx2FifoSel_out <= IN_FIFO;   -- Writing to FX2
 				if ( fx2GotRoom_in = '1' ) then
 					f2hReady_out <= '1';
@@ -178,17 +187,20 @@ begin
 				end if;
 
 			when S_END_WRITE_ALIGNED =>
+           s <= "00000100";                                                       
 				fx2FifoSel_out <= IN_FIFO;   -- Writing to FX2
 				fifoOp <= FIFO_NOP;
 				state_next <= S_IDLE;
 
 			when S_END_WRITE_NONALIGNED =>
+           s <= "00000100";                                            
 				fx2FifoSel_out <= IN_FIFO;   -- Writing to FX2
 				fifoOp <= FIFO_NOP;
 				fx2PktEnd_out <= '0';        -- Active: FPGA commits the packet early.
 				state_next <= S_IDLE;
 
 			when S_READ =>
+           s <= "00000010";                                 
 				fx2FifoSel_out <= OUT_FIFO;  -- Reading from FX2
 				if ( fx2GotData_in = '1' and h2fReady_in = '1') then
 					-- A data byte will be available on the next clock edge
@@ -203,7 +215,8 @@ begin
 
 			-- S_IDLE and others
 			when others =>
-				fx2FifoSel_out <= OUT_FIFO;  -- Reading from FX2
+           s <= "00000001";                      
+           fx2FifoSel_out <= OUT_FIFO;  -- Reading from FX2
 				if ( fx2GotData_in = '1' ) then
 					-- The read/write flag and a seven-bit channel address will be available on the
 					-- next clock edge.

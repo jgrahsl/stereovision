@@ -5,7 +5,7 @@ from fpgalink2 import *
 from PIL import Image
 vp = "1443:0007"
 handle = None
-
+adr= 0x21
 
 #                IRD & x"30001580", -- Chip version. Default 0x1580
 
@@ -79,7 +79,7 @@ try:
         print "Attempting to open connection to FPGALink device %s ..." % vp
         handle = flOpen(vp)
 
-        flWriteChannel(handle, 1000, 0x21,0)
+        flWriteChannel(handle, 1000, 0,0)
 
 except FLException, ex:
 #    print str(ex)
@@ -94,32 +94,38 @@ print "-"
 #    readpic()
 
 def tx(ba):
-    flWriteChannel(handle, 1000, 0x21,ba)
+    flWriteChannel(handle, 1000, adr,ba)
 
 def rx(ba):
-    l = 5
-    a = flReadChannel(handle,2000, 0x21,l)
+    l = len(ba)
+    a = flReadChannel(handle,2000, adr,l)
     for i in range(l):
         print hex(a[i]),
         if a[i] != ba[i]:
-            print "err"
+            print "ERROR !!!"
+            flClose(handle)
+            exit(1)
         else:
             print "ok"
 
 
 def fill(s):
-    ba = bytearray(5)
-    ba[0] = 0x78
-    ba[1] = int(s[0:2],16)
-    ba[2] = int(s[2:4],16)
-    ba[3] = int(s[4:6],16)
-    ba[4] = int(s[6:8],16)  
+    c = len(s)/2
+    ba = bytearray(c)
+    for i in range(c):
+        ba[i] = int(s[2*i:2*i+2],16)
     return ba
 
 def issue(s):
     ba = fill(s)
     tx(ba)
-    rx(ba)
+#    rx(ba)
+
+issue("78338600007833860000")
+#issue("7833860000")
+#issue("33860000")
+flClose(handle)
+exit()
 
 for i in range(len(init)/2):
     print i
@@ -127,13 +133,7 @@ for i in range(len(init)/2):
     sys.stdin.readline()
 
 issue(init2[0])
-
-    
-#    rx()
-#    sys.stdin.readline()
-
-flClose(handle)
-exit()
+   
 
 #tx()
 #tx2()
