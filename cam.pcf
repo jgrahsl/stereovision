@@ -1,5 +1,5 @@
 //! **************************************************************************
-// Written by: Map P.28xd on Fri Oct 26 22:21:32 2012
+// Written by: Map P.28xd on Fri Oct 26 22:39:14 2012
 //! **************************************************************************
 
 SCHEMATIC START;
@@ -132,26 +132,6 @@ COMP "tmds_tx_2_p" LOCATE = SITE "B8" LEVEL 1;
 COMP "tmds_tx_sda" LOCATE = SITE "C9" LEVEL 1;
 COMP "tmds_tx_scl" LOCATE = SITE "D9" LEVEL 1;
 COMP "mcb3_dram_udqs_n" LOCATE = SITE "P1" LEVEL 1;
-PIN
-        my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<26>
-        = BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram"
-        PINNAME CLKAWRCLK;
-PIN
-        my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<27>
-        = BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram"
-        PINNAME CLKBRDCLK;
-PIN
-        my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<26>
-        = BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram"
-        PINNAME CLKAWRCLK;
-PIN
-        my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<27>
-        = BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram"
-        PINNAME CLKBRDCLK;
 PIN
         my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<26>
         = BEL
@@ -385,110 +365,19 @@ TIMEGRP fx2clk_in = BEL "cfg[0]_enable" BEL "cfg[0]_identify" BEL
         "comm.comm_fpga_fx2/chanAddr_3" BEL "comm.comm_fpga_fx2/chanAddr_2"
         BEL "comm.comm_fpga_fx2/chanAddr_1" BEL
         "comm.comm_fpga_fx2/chanAddr_0" BEL "my_i2c_b/state_FSM_FFd1" BEL
-        "my_i2c_b/state_FSM_FFd2" BEL "my_i2c_b/state_FSM_FFd3" BEL
-        "my_i2c_b/state_FSM_FFd4" BEL "my_i2c_b/octets_2" BEL
+        "my_i2c_b/state_FSM_FFd2" BEL "my_i2c_b/octets_2" BEL
         "my_i2c_b/octets_1" BEL "my_i2c_b/octets_0" BEL "my_i2c_b/waitCnt_3"
         BEL "my_i2c_b/waitCnt_2" BEL "my_i2c_b/waitCnt_1" BEL
-        "my_i2c_b/waitCnt_0" BEL "my_i2c_b/reg_4_7" BEL "my_i2c_b/reg_4_6" BEL
-        "my_i2c_b/reg_4_5" BEL "my_i2c_b/reg_4_4" BEL "my_i2c_b/reg_4_3" BEL
-        "my_i2c_b/reg_4_2" BEL "my_i2c_b/reg_4_1" BEL "my_i2c_b/reg_4_0" BEL
-        "my_i2c_b/reg_3_7" BEL "my_i2c_b/reg_3_6" BEL "my_i2c_b/reg_3_5" BEL
-        "my_i2c_b/reg_3_4" BEL "my_i2c_b/reg_3_3" BEL "my_i2c_b/reg_3_2" BEL
-        "my_i2c_b/reg_3_1" BEL "my_i2c_b/reg_3_0" BEL "my_i2c_b/reg_2_7" BEL
-        "my_i2c_b/reg_2_6" BEL "my_i2c_b/reg_2_5" BEL "my_i2c_b/reg_2_4" BEL
-        "my_i2c_b/reg_2_3" BEL "my_i2c_b/reg_2_2" BEL "my_i2c_b/reg_2_1" BEL
-        "my_i2c_b/reg_2_0" BEL "my_i2c_b/reg_1_7" BEL "my_i2c_b/reg_1_6" BEL
-        "my_i2c_b/reg_1_5" BEL "my_i2c_b/reg_1_4" BEL "my_i2c_b/reg_1_3" BEL
-        "my_i2c_b/reg_1_2" BEL "my_i2c_b/reg_1_1" BEL "my_i2c_b/reg_1_0" BEL
-        "my_i2c_a/state_FSM_FFd1" BEL "my_i2c_a/state_FSM_FFd2" BEL
-        "my_i2c_a/state_FSM_FFd3" BEL "my_i2c_a/state_FSM_FFd4" BEL
-        "my_i2c_a/octets_2" BEL "my_i2c_a/octets_1" BEL "my_i2c_a/octets_0"
-        BEL "my_i2c_a/waitCnt_3" BEL "my_i2c_a/waitCnt_2" BEL
-        "my_i2c_a/waitCnt_1" BEL "my_i2c_a/waitCnt_0" BEL "my_i2c_a/reg_4_7"
-        BEL "my_i2c_a/reg_4_6" BEL "my_i2c_a/reg_4_5" BEL "my_i2c_a/reg_4_4"
-        BEL "my_i2c_a/reg_4_3" BEL "my_i2c_a/reg_4_2" BEL "my_i2c_a/reg_4_1"
-        BEL "my_i2c_a/reg_4_0" BEL "my_i2c_a/reg_3_7" BEL "my_i2c_a/reg_3_6"
-        BEL "my_i2c_a/reg_3_5" BEL "my_i2c_a/reg_3_4" BEL "my_i2c_a/reg_3_3"
-        BEL "my_i2c_a/reg_3_2" BEL "my_i2c_a/reg_3_1" BEL "my_i2c_a/reg_3_0"
-        BEL "my_i2c_a/reg_2_7" BEL "my_i2c_a/reg_2_6" BEL "my_i2c_a/reg_2_5"
-        BEL "my_i2c_a/reg_2_4" BEL "my_i2c_a/reg_2_3" BEL "my_i2c_a/reg_2_2"
-        BEL "my_i2c_a/reg_2_1" BEL "my_i2c_a/reg_2_0" BEL "my_i2c_a/reg_1_7"
-        BEL "my_i2c_a/reg_1_6" BEL "my_i2c_a/reg_1_5" BEL "my_i2c_a/reg_1_4"
-        BEL "my_i2c_a/reg_1_3" BEL "my_i2c_a/reg_1_2" BEL "my_i2c_a/reg_1_1"
-        BEL "my_i2c_a/reg_1_0" BEL "my_i2c_a/Inst_TWICtl/subState_1" BEL
-        "my_i2c_a/Inst_TWICtl/subState_0" BEL
-        "my_i2c_a/Inst_TWICtl/busFreeCnt_7" BEL
-        "my_i2c_a/Inst_TWICtl/busFreeCnt_6" BEL
-        "my_i2c_a/Inst_TWICtl/busFreeCnt_5" BEL
-        "my_i2c_a/Inst_TWICtl/busFreeCnt_4" BEL
-        "my_i2c_a/Inst_TWICtl/busFreeCnt_3" BEL
-        "my_i2c_a/Inst_TWICtl/busFreeCnt_2" BEL
-        "my_i2c_a/Inst_TWICtl/busFreeCnt_1" BEL
-        "my_i2c_a/Inst_TWICtl/busFreeCnt_0" BEL
-        "my_i2c_a/Inst_TWICtl/bitCount_2" BEL
-        "my_i2c_a/Inst_TWICtl/bitCount_1" BEL
-        "my_i2c_a/Inst_TWICtl/bitCount_0" BEL "my_i2c_a/Inst_TWICtl/sclCnt_7"
-        BEL "my_i2c_a/Inst_TWICtl/sclCnt_6" BEL
-        "my_i2c_a/Inst_TWICtl/sclCnt_5" BEL "my_i2c_a/Inst_TWICtl/sclCnt_4"
-        BEL "my_i2c_a/Inst_TWICtl/sclCnt_3" BEL
-        "my_i2c_a/Inst_TWICtl/sclCnt_2" BEL "my_i2c_a/Inst_TWICtl/sclCnt_1"
-        BEL "my_i2c_a/Inst_TWICtl/sclCnt_0" BEL
-        "my_i2c_a/Inst_TWICtl/state_FSM_FFd1" BEL
-        "my_i2c_a/Inst_TWICtl/state_FSM_FFd3" BEL
-        "my_i2c_a/Inst_TWICtl/state_FSM_FFd2" BEL "my_i2c_a/Inst_TWICtl/dScl"
-        BEL "my_i2c_a/Inst_TWICtl/dataByte_6" BEL
-        "my_i2c_a/Inst_TWICtl/dataByte_5" BEL
-        "my_i2c_a/Inst_TWICtl/dataByte_4" BEL
-        "my_i2c_a/Inst_TWICtl/dataByte_3" BEL "my_i2c_a/Inst_TWICtl/ddSda" BEL
-        "my_i2c_a/Inst_TWICtl/dSda" BEL "my_i2c_b/Inst_TWICtl/subState_1" BEL
-        "my_i2c_b/Inst_TWICtl/subState_0" BEL
-        "my_i2c_b/Inst_TWICtl/busFreeCnt_7" BEL
-        "my_i2c_b/Inst_TWICtl/busFreeCnt_6" BEL
-        "my_i2c_b/Inst_TWICtl/busFreeCnt_5" BEL
-        "my_i2c_b/Inst_TWICtl/busFreeCnt_4" BEL
-        "my_i2c_b/Inst_TWICtl/busFreeCnt_3" BEL
-        "my_i2c_b/Inst_TWICtl/busFreeCnt_2" BEL
-        "my_i2c_b/Inst_TWICtl/busFreeCnt_1" BEL
-        "my_i2c_b/Inst_TWICtl/busFreeCnt_0" BEL
-        "my_i2c_b/Inst_TWICtl/bitCount_2" BEL
-        "my_i2c_b/Inst_TWICtl/bitCount_1" BEL
-        "my_i2c_b/Inst_TWICtl/bitCount_0" BEL "my_i2c_b/Inst_TWICtl/sclCnt_7"
-        BEL "my_i2c_b/Inst_TWICtl/sclCnt_6" BEL
-        "my_i2c_b/Inst_TWICtl/sclCnt_5" BEL "my_i2c_b/Inst_TWICtl/sclCnt_4"
-        BEL "my_i2c_b/Inst_TWICtl/sclCnt_3" BEL
-        "my_i2c_b/Inst_TWICtl/sclCnt_2" BEL "my_i2c_b/Inst_TWICtl/sclCnt_1"
-        BEL "my_i2c_b/Inst_TWICtl/sclCnt_0" BEL
-        "my_i2c_b/Inst_TWICtl/state_FSM_FFd1" BEL
-        "my_i2c_b/Inst_TWICtl/state_FSM_FFd3" BEL
-        "my_i2c_b/Inst_TWICtl/state_FSM_FFd2" BEL "my_i2c_b/Inst_TWICtl/dScl"
-        BEL "my_i2c_b/Inst_TWICtl/dataByte_6" BEL
-        "my_i2c_b/Inst_TWICtl/dataByte_5" BEL
-        "my_i2c_b/Inst_TWICtl/dataByte_4" BEL
-        "my_i2c_b/Inst_TWICtl/dataByte_3" BEL "my_i2c_b/Inst_TWICtl/ddSda" BEL
-        "my_i2c_b/Inst_TWICtl/dSda" BEL "my_i2c_a/Inst_LocalRst/RstQ_4" BEL
+        "my_i2c_b/waitCnt_0" BEL "my_i2c_a/state_FSM_FFd1" BEL
+        "my_i2c_a/state_FSM_FFd2" BEL "my_i2c_a/octets_2" BEL
+        "my_i2c_a/octets_1" BEL "my_i2c_a/octets_0" BEL "my_i2c_a/waitCnt_3"
+        BEL "my_i2c_a/waitCnt_2" BEL "my_i2c_a/waitCnt_1" BEL
+        "my_i2c_a/waitCnt_0" BEL "my_i2c_a/Inst_LocalRst/RstQ_4" BEL
         "my_i2c_a/Inst_LocalRst/RstQ_3" BEL "my_i2c_a/Inst_LocalRst/RstQ_2"
         BEL "my_i2c_a/Inst_LocalRst/RstQ_1" BEL
         "my_i2c_b/Inst_LocalRst/RstQ_4" BEL "my_i2c_b/Inst_LocalRst/RstQ_3"
         BEL "my_i2c_b/Inst_LocalRst/RstQ_2" BEL
-        "my_i2c_b/Inst_LocalRst/RstQ_1" BEL "my_i2c_a/Inst_TWICtl/DONE_O" BEL
-        "my_i2c_a/Inst_TWICtl/ERR_O" BEL "my_i2c_b/Inst_TWICtl/DONE_O" BEL
-        "my_i2c_b/Inst_TWICtl/ERR_O" BEL "my_i2c_a/Inst_TWICtl/rSda" BEL
-        "my_i2c_b/Inst_TWICtl/rSda" BEL "comm.comm_fpga_fx2/isAligned" BEL
-        "my_i2c_a/Inst_TWICtl/rScl" BEL "my_i2c_a/Inst_TWICtl/addrNData" BEL
-        "my_i2c_b/Inst_TWICtl/rScl" BEL "my_i2c_b/Inst_TWICtl/addrNData" BEL
-        "my_i2c_a/Inst_TWICtl/int_Rst" BEL "my_i2c_b/Inst_TWICtl/int_Rst" BEL
-        "my_i2c_a/Inst_TWICtl/busState_1" BEL
-        "my_i2c_a/Inst_TWICtl/busState_0" BEL
-        "my_i2c_b/Inst_TWICtl/busState_1" BEL
-        "my_i2c_b/Inst_TWICtl/busState_0" BEL
-        "my_i2c_a/Inst_TWICtl/dataByte_7" BEL
-        "my_i2c_a/Inst_TWICtl/dataByte_2" BEL
-        "my_i2c_a/Inst_TWICtl/dataByte_1" BEL
-        "my_i2c_a/Inst_TWICtl/dataByte_0" BEL
-        "my_i2c_b/Inst_TWICtl/dataByte_7" BEL
-        "my_i2c_b/Inst_TWICtl/dataByte_2" BEL
-        "my_i2c_b/Inst_TWICtl/dataByte_1" BEL
-        "my_i2c_b/Inst_TWICtl/dataByte_0" BEL
+        "my_i2c_b/Inst_LocalRst/RstQ_1" BEL "comm.comm_fpga_fx2/isAligned" BEL
         "comm.comm_fpga_fx2/chanAddr_0_1" BEL
         "comm.comm_fpga_fx2/chanAddr_0_2" BEL "fx2clk_int_BUFG" BEL
         "my_inspect_sync/Mshreg_inspect_2_identity_3" BEL
@@ -615,22 +504,6 @@ TIMEGRP fx2clk_in = BEL "cfg[0]_enable" BEL "cfg[0]_identify" BEL
         BEL
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.grdc2.rdc/rd_dc_i_4"
         BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_0"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_1"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_2"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_3"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_4"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_5"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_6"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_7"
-        BEL
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/grstd1.grst_full.rst_d1"
         BEL
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/wr_rst_asreg_d1"
@@ -640,8 +513,6 @@ TIMEGRP fx2clk_in = BEL "cfg[0]_enable" BEL "cfg[0]_identify" BEL
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_1"
         BEL
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/rd_rst_asreg_d1"
-        BEL
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0"
         BEL
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_1"
         BEL
@@ -666,10 +537,6 @@ TIMEGRP fx2clk_in = BEL "cfg[0]_enable" BEL "cfg[0]_identify" BEL
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i"
         BEL
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gras.rsts/ram_empty_fb_i"
-        PIN
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<26>"
-        PIN
-        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<27>"
         BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_0"
         BEL
@@ -775,22 +642,6 @@ TIMEGRP fx2clk_in = BEL "cfg[0]_enable" BEL "cfg[0]_identify" BEL
         BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_3"
         BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_0"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_1"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_2"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_3"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_4"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_5"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_6"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_7"
-        BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/grstd1.grst_full.rst_d1"
         BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/wr_rst_asreg_d1"
@@ -800,8 +651,6 @@ TIMEGRP fx2clk_in = BEL "cfg[0]_enable" BEL "cfg[0]_identify" BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_1"
         BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/rd_rst_asreg_d1"
-        BEL
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0"
         BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_1"
         BEL
@@ -826,10 +675,6 @@ TIMEGRP fx2clk_in = BEL "cfg[0]_enable" BEL "cfg[0]_identify" BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i"
         BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gras.rsts/ram_empty_fb_i"
-        PIN
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<26>"
-        PIN
-        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<27>"
         BEL
         "my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_0"
         BEL

@@ -148,7 +148,7 @@ begin
         if empty = '0' then
 
           if octets = 4 then
-            nstate <= stRegAddr1;
+            nstate <= stDelay;
           end if;
           next_octets <= octets + 1;
 
