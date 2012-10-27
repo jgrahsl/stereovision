@@ -1,5 +1,5 @@
 //! **************************************************************************
-// Written by: Map P.28xd on Sat Oct 27 09:18:27 2012
+// Written by: Map P.28xd on Sat Oct 27 17:55:25 2012
 //! **************************************************************************
 
 SCHEMATIC START;
@@ -3012,44 +3012,55 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout0 = BEL "my_i2c_b/state_FSM_FFd1" BEL
         BEL "my_i2c_b/waitCnt_6" BEL "my_i2c_b/waitCnt_5" BEL
         "my_i2c_b/waitCnt_4" BEL "my_i2c_b/waitCnt_3" BEL "my_i2c_b/waitCnt_2"
         BEL "my_i2c_b/waitCnt_1" BEL "my_i2c_b/waitCnt_0" BEL
-        "my_i2c_b/reg_4_7" BEL "my_i2c_b/reg_4_6" BEL "my_i2c_b/reg_4_5" BEL
-        "my_i2c_b/reg_4_4" BEL "my_i2c_b/reg_4_3" BEL "my_i2c_b/reg_4_2" BEL
-        "my_i2c_b/reg_4_1" BEL "my_i2c_b/reg_4_0" BEL "my_i2c_b/reg_3_7" BEL
-        "my_i2c_b/reg_3_6" BEL "my_i2c_b/reg_3_5" BEL "my_i2c_b/reg_3_4" BEL
-        "my_i2c_b/reg_3_3" BEL "my_i2c_b/reg_3_2" BEL "my_i2c_b/reg_3_1" BEL
-        "my_i2c_b/reg_3_0" BEL "my_i2c_b/reg_2_7" BEL "my_i2c_b/reg_2_6" BEL
-        "my_i2c_b/reg_2_5" BEL "my_i2c_b/reg_2_4" BEL "my_i2c_b/reg_2_3" BEL
-        "my_i2c_b/reg_2_2" BEL "my_i2c_b/reg_2_1" BEL "my_i2c_b/reg_2_0" BEL
+        "my_i2c_b/reg2_7" BEL "my_i2c_b/reg2_6" BEL "my_i2c_b/reg2_5" BEL
+        "my_i2c_b/reg2_4" BEL "my_i2c_b/reg2_3" BEL "my_i2c_b/reg2_2" BEL
+        "my_i2c_b/reg2_1" BEL "my_i2c_b/reg2_0" BEL "my_i2c_b/reg1_7" BEL
+        "my_i2c_b/reg1_6" BEL "my_i2c_b/reg1_5" BEL "my_i2c_b/reg1_4" BEL
+        "my_i2c_b/reg1_3" BEL "my_i2c_b/reg1_2" BEL "my_i2c_b/reg1_1" BEL
+        "my_i2c_b/reg1_0" BEL "my_i2c_b/reg_3_7" BEL "my_i2c_b/reg_3_6" BEL
+        "my_i2c_b/reg_3_5" BEL "my_i2c_b/reg_3_4" BEL "my_i2c_b/reg_3_3" BEL
+        "my_i2c_b/reg_3_2" BEL "my_i2c_b/reg_3_1" BEL "my_i2c_b/reg_3_0" BEL
+        "my_i2c_b/reg_2_7" BEL "my_i2c_b/reg_2_6" BEL "my_i2c_b/reg_2_5" BEL
+        "my_i2c_b/reg_2_4" BEL "my_i2c_b/reg_2_3" BEL "my_i2c_b/reg_2_2" BEL
+        "my_i2c_b/reg_2_1" BEL "my_i2c_b/reg_2_0" BEL "my_i2c_b/reg_4_7" BEL
+        "my_i2c_b/reg_4_6" BEL "my_i2c_b/reg_4_5" BEL "my_i2c_b/reg_4_4" BEL
+        "my_i2c_b/reg_4_3" BEL "my_i2c_b/reg_4_2" BEL "my_i2c_b/reg_4_1" BEL
+        "my_i2c_b/reg_4_0" BEL "my_i2c_b/reg_0_7" BEL "my_i2c_b/reg_0_6" BEL
+        "my_i2c_b/reg_0_5" BEL "my_i2c_b/reg_0_4" BEL "my_i2c_b/reg_0_3" BEL
+        "my_i2c_b/reg_0_2" BEL "my_i2c_b/reg_0_1" BEL "my_i2c_b/reg_0_0" BEL
         "my_i2c_b/reg_1_7" BEL "my_i2c_b/reg_1_6" BEL "my_i2c_b/reg_1_5" BEL
         "my_i2c_b/reg_1_4" BEL "my_i2c_b/reg_1_3" BEL "my_i2c_b/reg_1_2" BEL
-        "my_i2c_b/reg_1_1" BEL "my_i2c_b/reg_1_0" BEL "my_i2c_b/reg_0_7" BEL
-        "my_i2c_b/reg_0_6" BEL "my_i2c_b/reg_0_5" BEL "my_i2c_b/reg_0_4" BEL
-        "my_i2c_b/reg_0_3" BEL "my_i2c_b/reg_0_2" BEL "my_i2c_b/reg_0_1" BEL
-        "my_i2c_b/reg_0_0" BEL "my_i2c_a/state_FSM_FFd1" BEL
-        "my_i2c_a/state_FSM_FFd2" BEL "my_i2c_a/state_FSM_FFd3" BEL
-        "my_i2c_a/state_FSM_FFd4" BEL "my_i2c_a/octets_2" BEL
-        "my_i2c_a/octets_1" BEL "my_i2c_a/octets_0" BEL "my_i2c_a/waitCnt_16"
-        BEL "my_i2c_a/waitCnt_15" BEL "my_i2c_a/waitCnt_14" BEL
-        "my_i2c_a/waitCnt_13" BEL "my_i2c_a/waitCnt_12" BEL
-        "my_i2c_a/waitCnt_11" BEL "my_i2c_a/waitCnt_10" BEL
-        "my_i2c_a/waitCnt_9" BEL "my_i2c_a/waitCnt_8" BEL "my_i2c_a/waitCnt_7"
-        BEL "my_i2c_a/waitCnt_6" BEL "my_i2c_a/waitCnt_5" BEL
-        "my_i2c_a/waitCnt_4" BEL "my_i2c_a/waitCnt_3" BEL "my_i2c_a/waitCnt_2"
-        BEL "my_i2c_a/waitCnt_1" BEL "my_i2c_a/waitCnt_0" BEL
-        "my_i2c_a/reg_4_7" BEL "my_i2c_a/reg_4_6" BEL "my_i2c_a/reg_4_5" BEL
-        "my_i2c_a/reg_4_4" BEL "my_i2c_a/reg_4_3" BEL "my_i2c_a/reg_4_2" BEL
-        "my_i2c_a/reg_4_1" BEL "my_i2c_a/reg_4_0" BEL "my_i2c_a/reg_3_7" BEL
+        "my_i2c_b/reg_1_1" BEL "my_i2c_b/reg_1_0" BEL
+        "my_i2c_a/state_FSM_FFd1" BEL "my_i2c_a/state_FSM_FFd2" BEL
+        "my_i2c_a/state_FSM_FFd3" BEL "my_i2c_a/state_FSM_FFd4" BEL
+        "my_i2c_a/octets_2" BEL "my_i2c_a/octets_1" BEL "my_i2c_a/octets_0"
+        BEL "my_i2c_a/waitCnt_16" BEL "my_i2c_a/waitCnt_15" BEL
+        "my_i2c_a/waitCnt_14" BEL "my_i2c_a/waitCnt_13" BEL
+        "my_i2c_a/waitCnt_12" BEL "my_i2c_a/waitCnt_11" BEL
+        "my_i2c_a/waitCnt_10" BEL "my_i2c_a/waitCnt_9" BEL
+        "my_i2c_a/waitCnt_8" BEL "my_i2c_a/waitCnt_7" BEL "my_i2c_a/waitCnt_6"
+        BEL "my_i2c_a/waitCnt_5" BEL "my_i2c_a/waitCnt_4" BEL
+        "my_i2c_a/waitCnt_3" BEL "my_i2c_a/waitCnt_2" BEL "my_i2c_a/waitCnt_1"
+        BEL "my_i2c_a/waitCnt_0" BEL "my_i2c_a/reg2_7" BEL "my_i2c_a/reg2_6"
+        BEL "my_i2c_a/reg2_5" BEL "my_i2c_a/reg2_4" BEL "my_i2c_a/reg2_3" BEL
+        "my_i2c_a/reg2_2" BEL "my_i2c_a/reg2_1" BEL "my_i2c_a/reg2_0" BEL
+        "my_i2c_a/reg1_7" BEL "my_i2c_a/reg1_6" BEL "my_i2c_a/reg1_5" BEL
+        "my_i2c_a/reg1_4" BEL "my_i2c_a/reg1_3" BEL "my_i2c_a/reg1_2" BEL
+        "my_i2c_a/reg1_1" BEL "my_i2c_a/reg1_0" BEL "my_i2c_a/reg_3_7" BEL
         "my_i2c_a/reg_3_6" BEL "my_i2c_a/reg_3_5" BEL "my_i2c_a/reg_3_4" BEL
         "my_i2c_a/reg_3_3" BEL "my_i2c_a/reg_3_2" BEL "my_i2c_a/reg_3_1" BEL
         "my_i2c_a/reg_3_0" BEL "my_i2c_a/reg_2_7" BEL "my_i2c_a/reg_2_6" BEL
         "my_i2c_a/reg_2_5" BEL "my_i2c_a/reg_2_4" BEL "my_i2c_a/reg_2_3" BEL
         "my_i2c_a/reg_2_2" BEL "my_i2c_a/reg_2_1" BEL "my_i2c_a/reg_2_0" BEL
-        "my_i2c_a/reg_1_7" BEL "my_i2c_a/reg_1_6" BEL "my_i2c_a/reg_1_5" BEL
-        "my_i2c_a/reg_1_4" BEL "my_i2c_a/reg_1_3" BEL "my_i2c_a/reg_1_2" BEL
-        "my_i2c_a/reg_1_1" BEL "my_i2c_a/reg_1_0" BEL "my_i2c_a/reg_0_7" BEL
+        "my_i2c_a/reg_4_7" BEL "my_i2c_a/reg_4_6" BEL "my_i2c_a/reg_4_5" BEL
+        "my_i2c_a/reg_4_4" BEL "my_i2c_a/reg_4_3" BEL "my_i2c_a/reg_4_2" BEL
+        "my_i2c_a/reg_4_1" BEL "my_i2c_a/reg_4_0" BEL "my_i2c_a/reg_0_7" BEL
         "my_i2c_a/reg_0_6" BEL "my_i2c_a/reg_0_5" BEL "my_i2c_a/reg_0_4" BEL
         "my_i2c_a/reg_0_3" BEL "my_i2c_a/reg_0_2" BEL "my_i2c_a/reg_0_1" BEL
-        "my_i2c_a/reg_0_0" BEL "my_i2c_a/Inst_TWICtl/subState_1" BEL
+        "my_i2c_a/reg_0_0" BEL "my_i2c_a/reg_1_7" BEL "my_i2c_a/reg_1_6" BEL
+        "my_i2c_a/reg_1_5" BEL "my_i2c_a/reg_1_4" BEL "my_i2c_a/reg_1_3" BEL
+        "my_i2c_a/reg_1_2" BEL "my_i2c_a/reg_1_1" BEL "my_i2c_a/reg_1_0" BEL
+        "my_i2c_a/Inst_TWICtl/subState_1" BEL
         "my_i2c_a/Inst_TWICtl/subState_0" BEL
         "my_i2c_a/Inst_TWICtl/bitCount_2" BEL
         "my_i2c_a/Inst_TWICtl/bitCount_1" BEL

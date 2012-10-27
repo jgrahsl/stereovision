@@ -5,14 +5,14 @@ Parameter TMPDIR set to /tmp/
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.08 secs
+Total CPU time to Xst completion: 0.05 secs
  
 --> 
 Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.08 secs
+Total CPU time to Xst completion: 0.05 secs
  
 --> 
 WARNING:Xst:1583 - You are using an internal switch '-use_new_parser'.
@@ -468,17 +468,23 @@ INFO:HDLCompiler:679 - "/home/julian/stereovision/remote_sources/_/lib/digilent/
 INFO:HDLCompiler:679 - "/home/julian/stereovision/remote_sources/_/lib/digilent/TWICtl.vhd" Line 393. Case statement is complete. others clause is never selected
 INFO:HDLCompiler:679 - "/home/julian/stereovision/remote_sources/_/lib/digilent/TWICtl.vhd" Line 411. Case statement is complete. others clause is never selected
 INFO:HDLCompiler:679 - "/home/julian/stereovision/remote_sources/_/lib/digilent/TWICtl.vhd" Line 429. Case statement is complete. others clause is never selected
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 130: octets should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 131: reg should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 139: empty should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 141: octets should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 144: octets should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 147: dout should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 151: reg should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 167: reg should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 182: reg should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 201: reg should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 217: waitcnt should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 137: octets should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 138: reg should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 139: reg1 should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 140: reg2 should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 147: empty should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 149: octets should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 152: octets should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 155: dout should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 159: reg should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 175: reg should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 190: reg should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 196: twido should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 204: reg should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 209: reg should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 215: twido should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 225: waitcnt should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 226: reg should be on the sensitivity list of the process
 WARNING:HDLCompiler:1127 - "/home/julian/stereovision/top.vhd" Line 483: Assignment to rd ignored, since the identifier is never used
 
 Elaborating entity <inspect_sync> (architecture <myrtl>) from library <work>.
@@ -2831,9 +2837,8 @@ Unit <CamCtl> synthesized.
 
 Synthesizing Unit <i2c>.
     Related source file is "/home/julian/stereovision/i2c.vhd".
-INFO:Xst:3210 - "/home/julian/stereovision/i2c.vhd" line 58: Output port <rd_data_count> of the instance <my_i2cfifo> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/i2c.vhd" line 79: Output port <D_O> of the instance <Inst_TWICtl> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/i2c.vhd" line 79: Output port <ERRTYPE_O> of the instance <Inst_TWICtl> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/i2c.vhd" line 63: Output port <rd_data_count> of the instance <my_i2cfifo> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/i2c.vhd" line 84: Output port <ERRTYPE_O> of the instance <Inst_TWICtl> is unconnected or connected to loadless signal.
     Found 4-bit register for signal <state>.
     Found 8-bit register for signal <reg<0>>.
     Found 8-bit register for signal <reg<1>>.
@@ -2841,13 +2846,15 @@ INFO:Xst:3210 - "/home/julian/stereovision/i2c.vhd" line 79: Output port <ERRTYP
     Found 8-bit register for signal <reg<3>>.
     Found 8-bit register for signal <reg<4>>.
     Found 3-bit register for signal <octets>.
+    Found 8-bit register for signal <reg1>.
+    Found 8-bit register for signal <reg2>.
     Found 17-bit register for signal <waitCnt>.
 INFO:Xst:1799 - State stdone is never reached in FSM <state>.
     Found finite state machine <FSM_8> for signal <state>.
     -----------------------------------------------------------------------
     | States             | 9                                              |
-    | Transitions        | 19                                             |
-    | Inputs             | 5                                              |
+    | Transitions        | 20                                             |
+    | Inputs             | 6                                              |
     | Outputs            | 7                                              |
     | Clock              | CLK (rising_edge)                              |
     | Reset              | intRst (positive)                              |
@@ -2857,12 +2864,15 @@ INFO:Xst:1799 - State stdone is never reached in FSM <state>.
     | Encoding           | auto                                           |
     | Implementation     | LUT                                            |
     -----------------------------------------------------------------------
-    Found 3-bit adder for signal <octets[2]_GND_1070_o_add_24_OUT> created at line 144.
-    Found 17-bit subtractor for signal <GND_1070_o_GND_1070_o_sub_1_OUT<16:0>> created at line 101.
+    Found 3-bit adder for signal <octets[2]_GND_1070_o_add_28_OUT> created at line 152.
+    Found 17-bit subtractor for signal <GND_1070_o_GND_1070_o_sub_1_OUT<16:0>> created at line 106.
+    Found 8-bit comparator equal for signal <reg[3][7]_reg1[7]_equal_56_o> created at line 226
+    Found 8-bit comparator equal for signal <reg[4][7]_reg2[7]_equal_57_o> created at line 226
     Summary:
 	inferred   2 Adder/Subtractor(s).
-	inferred  60 D-type flip-flop(s).
-	inferred   9 Multiplexer(s).
+	inferred  76 D-type flip-flop(s).
+	inferred   2 Comparator(s).
+	inferred  10 Multiplexer(s).
 	inferred   1 Finite State Machine(s).
 Unit <i2c> synthesized.
 
@@ -2991,7 +3001,7 @@ Macro Statistics
  8-bit addsub                                          : 1
  8-bit subtractor                                      : 7
  9-bit adder                                           : 1
-# Registers                                            : 883
+# Registers                                            : 887
  1-bit register                                        : 493
  10-bit register                                       : 8
  100-bit register                                      : 1
@@ -3008,9 +3018,9 @@ Macro Statistics
  5-bit register                                        : 18
  6-bit register                                        : 5
  7-bit register                                        : 3
- 8-bit register                                        : 304
+ 8-bit register                                        : 308
  9-bit register                                        : 4
-# Comparators                                          : 64
+# Comparators                                          : 68
  10-bit comparator greater                             : 7
  10-bit comparator lessequal                           : 1
  23-bit comparator greater                             : 2
@@ -3025,11 +3035,12 @@ Macro Statistics
  6-bit comparator lessequal                            : 2
  7-bit comparator equal                                : 1
  7-bit comparator greater                              : 10
+ 8-bit comparator equal                                : 4
  8-bit comparator greater                              : 10
  8-bit comparator lessequal                            : 2
  8-bit comparator not equal                            : 2
-# Multiplexers                                         : 388
- 1-bit 2-to-1 multiplexer                              : 234
+# Multiplexers                                         : 390
+ 1-bit 2-to-1 multiplexer                              : 236
  1-bit 3-to-1 multiplexer                              : 1
  1-bit 32-to-1 multiplexer                             : 2
  10-bit 2-to-1 multiplexer                             : 9
@@ -3353,9 +3364,9 @@ Macro Statistics
  9-bit up counter                                      : 1
 # Accumulators                                         : 3
  5-bit up loadable accumulator                         : 3
-# Registers                                            : 3568
- Flip-Flops                                            : 3568
-# Comparators                                          : 64
+# Registers                                            : 3600
+ Flip-Flops                                            : 3600
+# Comparators                                          : 68
  10-bit comparator greater                             : 7
  10-bit comparator lessequal                           : 1
  23-bit comparator greater                             : 2
@@ -3370,11 +3381,12 @@ Macro Statistics
  6-bit comparator lessequal                            : 2
  7-bit comparator equal                                : 1
  7-bit comparator greater                              : 10
+ 8-bit comparator equal                                : 4
  8-bit comparator greater                              : 10
  8-bit comparator lessequal                            : 2
  8-bit comparator not equal                            : 2
-# Multiplexers                                         : 407
- 1-bit 2-to-1 multiplexer                              : 264
+# Multiplexers                                         : 437
+ 1-bit 2-to-1 multiplexer                              : 298
  1-bit 3-to-1 multiplexer                              : 1
  1-bit 32-to-1 multiplexer                             : 18
  10-bit 2-to-1 multiplexer                             : 9
@@ -3388,7 +3400,7 @@ Macro Statistics
  5-bit 2-to-1 multiplexer                              : 10
  6-bit 2-to-1 multiplexer                              : 9
  7-bit 2-to-1 multiplexer                              : 4
- 8-bit 2-to-1 multiplexer                              : 45
+ 8-bit 2-to-1 multiplexer                              : 41
  9-bit 2-to-1 multiplexer                              : 4
 # FSMs                                                 : 13
 # Xors                                                 : 47
@@ -5738,8 +5750,8 @@ Unit <top> processed.
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 1833
- Flip-Flops                                            : 1833
+# Registers                                            : 1865
+ Flip-Flops                                            : 1865
 # Shift Registers                                      : 20
  2-bit shift register                                  : 4
  3-bit shift register                                  : 15
@@ -5766,25 +5778,25 @@ Top Level Output File Name         : cam.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 4319
+# BELS                             : 4336
 #      GND                         : 18
 #      INV                         : 96
 #      LUT1                        : 271
-#      LUT2                        : 360
+#      LUT2                        : 362
 #      LUT3                        : 295
 #      LUT4                        : 366
-#      LUT5                        : 379
-#      LUT6                        : 1583
+#      LUT5                        : 385
+#      LUT6                        : 1594
 #      MULT_AND                    : 6
 #      MUXCY                       : 430
-#      MUXF7                       : 60
+#      MUXF7                       : 58
 #      VCC                         : 4
 #      XORCY                       : 451
-# FlipFlops/Latches                : 2568
+# FlipFlops/Latches                : 2600
 #      FD                          : 241
 #      FDC                         : 175
 #      FDCE                        : 237
-#      FDE                         : 897
+#      FDE                         : 929
 #      FDP                         : 159
 #      FDPE                        : 9
 #      FDR                         : 158
@@ -5829,18 +5841,18 @@ Selected Device : 6slx45csg324-3
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:            2568  out of  54576     4%  
- Number of Slice LUTs:                 3373  out of  27288    12%  
-    Number used as Logic:              3350  out of  27288    12%  
+ Number of Slice Registers:            2600  out of  54576     4%  
+ Number of Slice LUTs:                 3392  out of  27288    12%  
+    Number used as Logic:              3369  out of  27288    12%  
     Number used as Memory:               23  out of   6408     0%  
        Number used as SRL:               23
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:   4121
-   Number with an unused Flip Flop:    1553  out of   4121    37%  
-   Number with an unused LUT:           748  out of   4121    18%  
-   Number of fully used LUT-FF pairs:  1820  out of   4121    44%  
-   Number of unique control sets:       227
+ Number of LUT Flip Flop pairs used:   4169
+   Number with an unused Flip Flop:    1569  out of   4169    37%  
+   Number with an unused LUT:           777  out of   4169    18%  
+   Number of fully used LUT-FF pairs:  1823  out of   4169    43%  
+   Number of unique control sets:       231
 
 IO Utilization: 
  Number of IOs:                         128
@@ -5879,7 +5891,7 @@ cama_pclk_i                                     | IBUF+BUFG              | 84   
 inst_syscon/Inst_10_1_pll/CLKOUT2               | BUFG                   | 192   |
 inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT2| BUFG                   | 758   |
 inst_syscon/Inst_pll_mcb/CLKOUT2                | BUFG                   | 241   |
-inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT0| BUFG                   | 401   |
+inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT0| BUFG                   | 433   |
 inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT1| BUFG                   | 2     |
 clk_i                                           | IBUFG                  | 43    |
 inst_syscon/Inst_10_1_pll/CLKOUT3               | BUFG                   | 17    |
@@ -5894,7 +5906,7 @@ Timing Summary:
 Speed Grade: -3
 
    Minimum period: 7.105ns (Maximum Frequency: 140.752MHz)
-   Minimum input arrival time before clock: 6.294ns
+   Minimum input arrival time before clock: 6.420ns
    Maximum output required time after clock: 10.393ns
    Maximum combinational path delay: 9.467ns
 
@@ -5909,21 +5921,21 @@ Timing constraint: Default period analysis for Clock 'fx2clk_in'
 -------------------------------------------------------------------------
 Delay:               6.533ns (Levels of Logic = 5)
   Source:            my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i (FF)
-  Destination:       cfg[4]_enable (FF)
+  Destination:       cfg[8]_identify (FF)
   Source Clock:      fx2clk_in rising
   Destination Clock: fx2clk_in rising
 
-  Data Path: my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i to cfg[4]_enable
+  Data Path: my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i to cfg[8]_identify
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
      FDP:C->Q              1   0.447   0.827  U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i (full)
      end scope: 'my_i2c_b/my_i2cfifo:full'
-     LUT4:I0->O            1   0.203   0.580  h2fready_SW0 (N62)
+     LUT4:I0->O            1   0.203   0.580  h2fready_SW0 (N60)
      LUT6:I5->O            9   0.205   0.830  h2fready (h2fready)
      LUT6:I5->O          525   0.205   2.094  comm.comm_fpga_fx2/Mmux_h2fValid_out11_1 (comm.comm_fpga_fx2/Mmux_h2fValid_out11)
-     LUT5:I4->O            2   0.205   0.616  _n1323_inv1 (_n1323_inv)
-     FDE:CE                    0.322          cfg[12]_identify
+     LUT5:I4->O            2   0.205   0.616  _n1269_inv1 (_n1269_inv)
+     FDE:CE                    0.322          cfg[10]_enable
     ----------------------------------------
     Total                      6.533ns (1.587ns logic, 4.946ns route)
                                        (24.3% logic, 75.7% route)
@@ -5992,7 +6004,7 @@ Delay:               5.866ns (Levels of Logic = 5)
      FD:C->Q              14   0.447   1.302  inst_dvitransmitter/Inst_TMDSEncoder_green/n0_q_m_3 (inst_dvitransmitter/Inst_TMDSEncoder_green/n0_q_m_3)
      LUT5:I0->O            2   0.203   0.721  inst_dvitransmitter/Inst_TMDSEncoder_green/cond_not_balanced2 (inst_dvitransmitter/Inst_TMDSEncoder_green/cond_not_balanced2)
      LUT6:I4->O           12   0.203   0.909  inst_dvitransmitter/Inst_TMDSEncoder_green/cond_not_balanced3 (inst_dvitransmitter/Inst_TMDSEncoder_green/cond_not_balanced)
-     LUT6:I5->O            1   0.205   0.684  inst_dvitransmitter/Inst_TMDSEncoder_green/Maccum_cnt_t_1_lut<3>2_SW0 (N295)
+     LUT6:I5->O            1   0.205   0.684  inst_dvitransmitter/Inst_TMDSEncoder_green/Maccum_cnt_t_1_lut<3>2_SW0 (N289)
      LUT5:I3->O            1   0.203   0.684  inst_dvitransmitter/Inst_TMDSEncoder_green/Maccum_cnt_t_1_lut<3>31 (inst_dvitransmitter/Inst_TMDSEncoder_green/Maccum_cnt_t_1_lut<3>)
      LUT6:I4->O            1   0.203   0.000  inst_dvitransmitter/Inst_TMDSEncoder_green/Maccum_cnt_t_1_xor<4>11 (inst_dvitransmitter/Inst_TMDSEncoder_green/Result<4>)
      FDR:D                     0.102          inst_dvitransmitter/Inst_TMDSEncoder_green/cnt_t_1_4
@@ -6032,7 +6044,7 @@ Delay:               7.105ns (Levels of Logic = 7)
 =========================================================================
 Timing constraint: Default period analysis for Clock 'inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT0'
   Clock period: 5.600ns (frequency: 178.570MHz)
-  Total number of paths / destination ports: 8658 / 765
+  Total number of paths / destination ports: 9064 / 829
 -------------------------------------------------------------------------
 Delay:               5.600ns (Levels of Logic = 4)
   Source:            my_i2c_a/Inst_TWICtl/sclCnt_7 (FF)
@@ -6070,10 +6082,10 @@ Delay:               6.049ns (Levels of Logic = 5)
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
      FDRE:C->Q            22   0.447   1.362  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Max_Value_int_7 (inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Max_Value_int_7)
-     LUT6:I3->O            3   0.205   0.755  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Max_Value_int[7]_Max_Value_Previous[7]_LessThan_180_o1_SW0 (N350)
+     LUT6:I3->O            3   0.205   0.755  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Max_Value_int[7]_Max_Value_Previous[7]_LessThan_180_o1_SW0 (N340)
      LUT5:I3->O           13   0.203   0.933  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/_n1315_inv11 (inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/_n1315_inv11)
-     LUT5:I4->O            6   0.205   0.745  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/_n1315_inv13_SW6 (N523)
-     LUT6:I5->O            1   0.205   0.684  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/_n1436_inv4_rstpot_SW17 (N547)
+     LUT5:I4->O            6   0.205   0.745  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/_n1315_inv13_SW6 (N513)
+     LUT6:I5->O            1   0.205   0.684  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/_n1436_inv4_rstpot_SW17 (N537)
      LUT6:I4->O            1   0.203   0.000  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/TARGET_DQS_DELAY_5_dpot (inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/TARGET_DQS_DELAY_5_dpot)
      FDRE:D                    0.102          inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/TARGET_DQS_DELAY_5
     ----------------------------------------
@@ -6129,7 +6141,7 @@ Delay:               1.861ns (Levels of Logic = 1)
 Timing constraint: Default OFFSET IN BEFORE for Clock 'fx2clk_in'
   Total number of paths / destination ports: 1405 / 1327
 -------------------------------------------------------------------------
-Offset:              6.294ns (Levels of Logic = 5)
+Offset:              6.420ns (Levels of Logic = 5)
   Source:            fx2gotdata_in (PAD)
   Destination:       my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc0.count_d2_3 (FF)
   Destination Clock: fx2clk_in rising
@@ -6139,14 +6151,14 @@ Offset:              6.294ns (Levels of Logic = 5)
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
      IBUF:I->O            38   1.222   1.741  fx2gotdata_in_IBUF (fx2gotdata_in_IBUF)
-     LUT6:I0->O            2   0.203   0.721  comm.comm_fpga_fx2/Mmux_h2fValid_out11_SW0 (N444)
-     LUT6:I4->O            2   0.203   0.721  wr_en_a1 (wr_en_a)
+     LUT6:I0->O            2   0.203   0.845  comm.comm_fpga_fx2/Mmux_h2fValid_out11_SW0 (N434)
+     LUT6:I3->O            2   0.205   0.721  wr_en_a1 (wr_en_a)
      begin scope: 'my_i2c_a/my_i2cfifo:wr_en'
      LUT2:I0->O           14   0.203   0.957  U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1 (U0/xst_fifo_generator/gconvfifo.rf/grf.rf/ram_wr_en)
      FDPE:CE                   0.322          U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc0.count_1
     ----------------------------------------
-    Total                      6.294ns (2.153ns logic, 4.141ns route)
-                                       (34.2% logic, 65.8% route)
+    Total                      6.420ns (2.155ns logic, 4.265ns route)
+                                       (33.6% logic, 66.4% route)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'camb_pclk_i'
@@ -6229,7 +6241,7 @@ Offset:              2.528ns (Levels of Logic = 3)
     ----------------------------------------  ------------
     MCB:P3RDDATA6          3   0.000   0.898  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0 (inst_fbctl/p3_rd_data<6>)
      LUT5:I1->O            2   0.203   0.981  inst_dvitransmitter/Inst_TMDSEncoder_green/ADDERTREE_INTERNAL_Madd_xor<0>21 (inst_dvitransmitter/Inst_TMDSEncoder_green/ADDERTREE_INTERNAL_Madd_1)
-     LUT6:I0->O            1   0.203   0.000  inst_dvitransmitter/Inst_TMDSEncoder_green/ADDERTREE_INTERNAL_Madd2_xor<2>11_G (N739)
+     LUT6:I0->O            1   0.203   0.000  inst_dvitransmitter/Inst_TMDSEncoder_green/ADDERTREE_INTERNAL_Madd2_xor<2>11_G (N725)
      MUXF7:I1->O           1   0.140   0.000  inst_dvitransmitter/Inst_TMDSEncoder_green/ADDERTREE_INTERNAL_Madd2_xor<2>11 (inst_dvitransmitter/Inst_TMDSEncoder_green/ADDERTREE_INTERNAL_Madd_22)
      FD:D                      0.102          inst_dvitransmitter/Inst_TMDSEncoder_green/n1_d_2
     ----------------------------------------
@@ -6250,10 +6262,10 @@ Offset:              5.350ns (Levels of Logic = 6)
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
      IOBUF:IO->O           2   1.222   0.961  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/IOBUF_RZQ (inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/RZQ_IN)
-     LUT5:I0->O            1   0.203   0.684  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/RZQ_IN_P_Term[5]_OR_84_o1_SW0 (N469)
+     LUT5:I0->O            1   0.203   0.684  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/RZQ_IN_P_Term[5]_OR_84_o1_SW0 (N459)
      LUT6:I4->O            1   0.203   0.808  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/STATE_FSM_FFd6-In7 (inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/STATE_FSM_FFd6-In7)
      LUT6:I3->O            2   0.205   0.617  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/STATE_FSM_FFd6-In13 (inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/STATE_FSM_FFd6-In14)
-     LUT6:I5->O            1   0.205   0.000  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/STATE_FSM_FFd6-In19_G (N755)
+     LUT6:I5->O            1   0.205   0.000  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/STATE_FSM_FFd6-In19_G (N741)
      MUXF7:I1->O           1   0.140   0.000  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/STATE_FSM_FFd6-In19 (inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/STATE_FSM_FFd6-In)
      FDR:D                     0.102          inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/STATE_FSM_FFd6
     ----------------------------------------
@@ -6295,7 +6307,7 @@ Offset:              4.152ns (Levels of Logic = 3)
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
      IBUF:I->O             2   1.222   0.845  reset_i_IBUF (reset_i_IBUF)
-     LUT6:I3->O            1   0.205   0.580  inst_syscon/RstDbnc_RstQ[99]_OR_1_o_SW0 (N223)
+     LUT6:I3->O            1   0.205   0.580  inst_syscon/RstDbnc_RstQ[99]_OR_1_o_SW0 (N217)
      LUT6:I5->O            7   0.205   0.773  inst_syscon/RstDbnc_RstQ[99]_OR_1_o (inst_syscon/RstDbnc_RstQ[99]_OR_1_o)
      FDE:CE                    0.322          inst_syscon/RstQ_97
     ----------------------------------------
@@ -6328,7 +6340,7 @@ Offset:              7.978ns (Levels of Logic = 6)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'fx2clk_in'
-  Total number of paths / destination ports: 1442 / 19
+  Total number of paths / destination ports: 1456 / 19
 -------------------------------------------------------------------------
 Offset:              10.393ns (Levels of Logic = 7)
   Source:            adr_1 (FF)
@@ -6344,7 +6356,7 @@ Offset:              10.393ns (Levels of Logic = 7)
      LUT6:I2->O            1   0.203   0.000  Mmux_adr[4]_cfg[31]_identify_Mux_364_o_3 (Mmux_adr[4]_cfg[31]_identify_Mux_364_o_3)
      MUXF7:I1->O           1   0.140   0.808  Mmux_adr[4]_cfg[31]_identify_Mux_364_o_2_f7 (adr[4]_cfg[31]_identify_Mux_364_o)
      LUT6:I3->O            1   0.205   0.944  comm.comm_fpga_fx2/Mmux_dataOut24 (comm.comm_fpga_fx2/Mmux_dataOut23)
-     LUT6:I0->O            1   0.203   0.684  comm.comm_fpga_fx2/Mmux_dataOut26_SW0 (N700)
+     LUT6:I0->O            1   0.203   0.684  comm.comm_fpga_fx2/Mmux_dataOut26_SW0 (N686)
      LUT6:I4->O            1   0.203   0.579  comm.comm_fpga_fx2/Mmux_dataOut26 (comm.comm_fpga_fx2/dataOut<1>)
      IOBUF:I->IO               2.571          fx2data_io_1_IOBUF (fx2data_io<1>)
     ----------------------------------------
@@ -6499,7 +6511,7 @@ Offset:              1.161ns (Levels of Logic = 0)
 
 =========================================================================
 Timing constraint: Default path analysis
-  Total number of paths / destination ports: 986 / 743
+  Total number of paths / destination ports: 988 / 745
 -------------------------------------------------------------------------
 Delay:               9.467ns (Levels of Logic = 6)
   Source:            fx2gotdata_in (PAD)
@@ -6617,15 +6629,15 @@ inst_syscon/Inst_pll_mcb/CLKOUT2|    6.049|         |         |         |
 =========================================================================
 
 
-Total REAL time to Xst completion: 47.00 secs
-Total CPU time to Xst completion: 40.95 secs
+Total REAL time to Xst completion: 46.00 secs
+Total CPU time to Xst completion: 40.99 secs
  
 --> 
 
 
-Total memory usage is 192696 kilobytes
+Total memory usage is 192208 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings : 2830 (   0 filtered)
-Number of infos    :  455 (   0 filtered)
+Number of warnings : 2836 (   0 filtered)
+Number of infos    :  454 (   0 filtered)
 

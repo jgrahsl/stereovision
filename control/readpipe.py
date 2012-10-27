@@ -5,6 +5,7 @@ from fpgalink2 import *
 from PIL import Image
 
 caminit = [
+"7930001580", "Read chipversion",
 "7833860501", "MCU Reset",
 "7833860500", "MCU Release from reset",
 "7832140D85", "Slew rate control, PCLK 5, D 5",
@@ -44,8 +45,10 @@ caminit = [
 "78338CA223", "Capture mode options",
 "7833900000", "Integration time                                         ",
 "78338CA103", "Refresh Sequencer Mode",
-"7833900002", "Capture"]
-camrun = ["78301A02CC","reset/output control; parallel enable, drive pins, start streaming"]
+"7833900002", "Capture",
+"7933900000", "Wait until seq in mode 0(run)",
+"78301A02CC","reset/output control; parallel enable, drive pins, start streaming"
+]
 
 I2CA = 0x21
 I2CB = 0x22
@@ -180,12 +183,8 @@ def cfg(addr):
 #        print i
         flwr(addr,hex2ba(caminit[2*i]))
 def i2c():
-    time.sleep(0.5)
     cfg(I2CA)
     cfg(I2CB)
-    time.sleep(1)
-    flwr(I2CA, hex2ba(camrun[0]))
-    flwr(I2CB, hex2ba(camrun[0]))
 
 if need_init:
     i2c()

@@ -54,6 +54,11 @@ architecture rtl of i2c is
   signal reg         : reg_t;
   signal count : std_logic_vector(4 downto 0);
   signal next_reg : reg_t;
+
+  signal reg1 : std_logic_vector(7 downto 0);
+  signal reg2 : std_logic_vector(7 downto 0);  
+  signal nreg1 : std_logic_vector(7 downto 0);
+  signal nreg2 : std_logic_vector(7 downto 0);  
 begin
   my_i2cfifo : entity work.i2cfifo
     port map (
@@ -112,6 +117,8 @@ begin
         state  <= nstate;
         reg    <= next_reg;
         octets <= next_octets;
+        reg1 <= nreg1;
+        reg2 <= nreg2;
       end if;
     end if;
   end process;
@@ -129,7 +136,8 @@ begin
     waitCntEn <= '0';
     next_octets <= octets;
     next_reg    <= reg;
-
+    nreg1 <= reg1;
+    nreg2 <= reg2;    
     case (state) is
       when stIdle =>
         next_octets <= 0;
@@ -185,7 +193,7 @@ begin
         if (twiDone = '1') then
           twiStb    <= '0';
           twiNewMsg <= '0';
-
+          nreg1 <= twiDo;
           if (twiErr = '1') then
             nstate <= stError;
           else           
@@ -193,9 +201,9 @@ begin
           end if;
         end if;
 
-        --if (reg(0)(0) = '1') then
-        --  twiNewMsg <= '1';
-        --end if;
+        if (reg(0)(0) = '1') then
+          twiNewMsg <= '1';
+        end if;
         
       when stData2 =>
         twiDi  <= reg(4);
@@ -204,7 +212,7 @@ begin
         if (twiDone = '1') then
           twiStb    <= '0';
           twiNewMsg <= '0';
-
+          nreg2 <= twiDo;
           if (twiErr = '1') then
             nstate <= stError;
           else
@@ -215,7 +223,11 @@ begin
       when stDelay =>
         waitCntEn <= '1';
         if (waitCnt = 0) then
-          nstate <= stIdle;
+          if reg(0)(0) = '0' or (reg(0)(0) = '1' and reg1 = reg(3) and reg2 = reg(4)) then
+            nstate <= stIdle;            
+          else
+            nstate <= stRegAddr1; 
+          end if;
         end if;
         
       when stError =>
