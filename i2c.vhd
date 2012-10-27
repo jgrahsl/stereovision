@@ -116,8 +116,8 @@ begin
     end if;
   end process;
 
-  twiAddr(7 downto 1) <= "0111100"; --reg(0)(7 downto 1);
-  twiAddr(0)          <= '0'; --reg(0)(0) when state = stData1 or state = stData2 else '0';
+  twiAddr(7 downto 1) <= reg(0)(7 downto 1);  --"0111100"; --
+  twiAddr(0)          <= reg(0)(0) when state = stData1 or state = stData2 else '0';
 
   OUTPUT_DECODE : process (state, twiDone, twiErr)
   begin
