@@ -179,6 +179,8 @@ architecture behavioral of top is
   signal f2hready : std_logic;  -- '1' means "on the next clock rising edge, put your next byte of data on f2hdata"
   signal fx2read  : std_logic;
 
+  signal p_f2hvalid : std_logic;  -- channel logic can drive this low to say "i don't have data ready for you"
+  signal p_f2hdata  : std_logic_vector(7 downto 0);  -- data lines used when the host reads from a channel  
 ------------------------------------------------------------------------------------------------
 -- registers implementing the channels
 -------------------------------------------------------------------------------
@@ -487,10 +489,43 @@ begin
   fifoen      <= '1' when fifosel = '1' and usb_fifo.stall = '0' and f2hready = '1' else '0';
   usb_fifo.en <= fifoen;
 
-  f2hvalid <= '1' when fifoen = '1' else
+  process (fx2clk_int)
+  begin  -- process
+    if fx2clk_int'event and fx2clk_int = '1' then     -- rising clock edge
+
+      f2hvalid <= p_f2hvalid;
+      f2hdata <= p_f2hdata;
+      
+    end if;
+  end process;
+
+  p_f2hvalid <= '1' when fifoen = '1' else
               '0' when fifosel = '1' and usb_fifo.stall = '1' and f2hready = '1' else
               '1' when f2hready = '1'                                            else
               '0';
+
+  
+  with chanaddr select p_f2hdata <=
+    std_logic_vector(to_unsigned(adr, 8))          when "1100000",
+    "000000" & cfg(adr).identify & cfg(adr).enable when "1100001",
+    inspect.identity                               when "1100010",
+
+    cfg(adr).p(0)             when "1110000",
+    cfg(adr).p(1)             when "1110001",
+--    cfg(adr).p(2)             when "1110010",
+--    cfg(adr).p(3)             when "1110011",
+--    cfg(adr).p(4)             when "1110100",
+--    cfg(adr).p(5)             when "1110101",
+    --cfg(adr).p(6)               when "1110110",
+    --cfg(adr).p(7)               when "1110111",
+    --
+    usb_fifo.data(7 downto 0) when "0100000",
+--    "0000000" & usb_fifo.stall   when "0100001",    
+--    usb_fifo.count(7 downto 0)   when "0100010",
+    x"aa"                     when others;
+
+
+  
   
   led_o <= d.pr_count when sw_i(4 downto 0) = "00000" else
            d.pw_count   when sw_i(4 downto 0) = "00001" else
@@ -518,24 +553,6 @@ begin
 
 --  d.off <= "00" & STD_LOGIC_VECTOR(disx+disy);  
 
-  with chanaddr select f2hdata <=
-    std_logic_vector(to_unsigned(adr, 8))          when "1100000",
-    "000000" & cfg(adr).identify & cfg(adr).enable when "1100001",
-    inspect.identity                               when "1100010",
-
-    cfg(adr).p(0)             when "1110000",
-    cfg(adr).p(1)             when "1110001",
---    cfg(adr).p(2)             when "1110010",
---    cfg(adr).p(3)             when "1110011",
---    cfg(adr).p(4)             when "1110100",
---    cfg(adr).p(5)             when "1110101",
-    --cfg(adr).p(6)               when "1110110",
-    --cfg(adr).p(7)               when "1110111",
-    --
-    usb_fifo.data(7 downto 0) when "0100000",
---    "0000000" & usb_fifo.stall   when "0100001",    
---    usb_fifo.count(7 downto 0)   when "0100010",
-    x"aa"                     when others;
 
   comm : if fpgalink = 1 generate
     h2fready <= '1';

@@ -15,3 +15,5 @@ let PIC=PIC+1
 
 
 done
+./stereo_calibrate list.txt 9 6 2.54
+./stat.sh

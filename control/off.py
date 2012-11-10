@@ -12,14 +12,14 @@ while c != "":
             if sys.argv[1] == "x":
                 off = x - float(i)
                 if x < 319:
-                    print str(off) + ",",
+                    print str(off) + ","
                 else:
                     print str(off) + ","
 
             if sys.argv[1] == "y":
                 off = y - float(i)
                 if x < 319:
-                    print str(off) + ",",
+                    print str(off) + ","
                 else:
                     print str(off) + ","
 

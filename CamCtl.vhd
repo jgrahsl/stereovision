@@ -144,13 +144,13 @@ attribute BUFFER_TYPE of PCLK_I: signal is "BUFG";
 		IWR & x"338C2709", -- Output height; Context B
 		IWR & x"339000F0", -- 1200
 		IWR & x"338C275F", -- Crop X0; Context B
-		IWR & x"33900000", -- 0
+		IWR & x"33900100", -- 0
 		IWR & x"338C2763", -- Crop Y0; Context B
-		IWR & x"33900000", -- 0
+		IWR & x"33900100", -- 0
 		IWR & x"338C2761", -- Crop X1; Context B
-		IWR & x"33900640", -- 1600
+		IWR & x"33900540", -- 1600
 		IWR & x"338C2765", -- Crop Y1; Context B
-		IWR & x"339004B0", -- 1200
+		IWR & x"339003B0", -- 1200
       IWR & x"338C2741", -- Sensor_Fine_IT_min B
 		IWR & x"33900169", -- 361 		
 
