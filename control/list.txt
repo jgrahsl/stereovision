@@ -1,6 +1,6 @@
-l_140.tiff
-r_140.tiff
-l_141.tiff
-r_141.tiff
-l_142.tiff
-r_142.tiff
+l_300.tiff
+r_300.tiff
+l_301.tiff
+r_301.tiff
+l_302.tiff
+r_302.tiff

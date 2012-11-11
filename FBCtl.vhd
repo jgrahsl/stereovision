@@ -565,12 +565,6 @@ architecture Behavioral of FBCtl is
   -- ALG
   signal clkalg   : std_logic;
   signal rstalg   : std_logic;
-  signal cfg      : cfg_set_t;
-  signal pipe     : pipe_set_t;
-  signal hist_row : natural range 0 to 2047;
-
-  signal mono_1d : mono_1d_t;
-  signal mono_2d : mono_2d_t;
 
   signal pra_fifo  : mcb_fifo_t;
   signal prb_fifo  : mcb_fifo_t;
@@ -667,15 +661,9 @@ architecture Behavioral of FBCtl is
   signal my_pixel_wr_addr : natural range 0 to 2**24-1 := 0;
   signal my_aux_wr_addr   : natural range 0 to 2**24-1 := 0;
 
-  signal reg0 : std_logic_vector(7 downto 0);
-  signal reg1 : std_logic_vector(7 downto 0);
-  signal reg2 : std_logic_vector(7 downto 0);
-  signal reg3 : std_logic_vector(7 downto 0);
-
+  signal cfg      : cfg_set_t;
+  signal pipe     : pipe_set_t; 
   signal stall : std_logic_vector(MAX_PIPE-1 downto 0);
-
-  signal gray8_2d : gray8_2d_t;
-  signal out_fifo : pixel_fifo_t;
 
 
   constant AUX_OFFSET  : natural := 2**24;
@@ -687,10 +675,6 @@ architecture Behavioral of FBCtl is
   constant WIDTH  : natural := 320;
   constant HEIGHT : natural := 240;
   constant SIZE   : natural := WIDTH*HEIGHT*2;
-
-  signal rgb565_2d : rgb565_2d_t;
-  signal mono_2d_l : mono_2d_t;
-  signal mono_2d_r : mono_2d_t;
 
   signal done_b           : std_logic;
   signal camb_trigger     : std_logic;
@@ -709,31 +693,9 @@ architecture Behavioral of FBCtl is
   signal src_b : natural range 0 to 2400;
   signal src_c : natural range 0 to 2400;
 
+  constant KERNEL : natural := 15;
 
-  signal abcd       : abcd_t;
-  signal abcd_1     : abcd_t;
-  signal abcd_2     : abcd_t;
-  signal abcd_3     : abcd_t;
-  signal abcd2      : abcd2_t;
-  signal gray8_2d_1 : gray8_2d_t;
-  signal gray8_2d_2 : gray8_2d_t;
-  signal gray8_2d_3 : gray8_2d_t;
-  signal gray8_2d_4 : gray8_2d_t;
-  signal ox_1       : signed((ABCD_BITS/2)+SUBGRID_BITS-1 downto 0);
-  signal ox_2       : signed((ABCD_BITS/2)+SUBGRID_BITS-1 downto 0);
-  signal oy         : signed((ABCD_BITS/2)+SUBGRID_BITS-1 downto 0);
-
-
-  attribute keep_hierarchy               : string;
---  attribute keep_hierarchy of inst_bi2_x: label is "yes";
---  attribute keep_hierarchy of inst_bi2_y: label is "yes";
-  attribute keep_hierarchy of inst_bi2_c : label is "yes";
-
-  constant KERNEL : natural := 15;  
-  constant HALF_KERNEL : natural := (KERNEL-1)/2;
-  constant T_W         : natural := HALF_KERNEL;
-  constant T_H         : natural := HALF_KERNEL;
-  signal gray8_1d      : gray8_1d_t;
+  signal out_fifo : pixel_fifo_t;  
 begin
 ----------------------------------------------------------------------------------
 -- mcb instantiation
@@ -1726,114 +1688,17 @@ begin
 -------------------------------------------------------------------------------
 --
 -------------------------------------------------------------------------------
-  my_translate : entity work.translate
+  my_distort: entity work.distort
     generic map (
-      ID       => (10),
-      WIDTH    => WIDTH,
-      HEIGHT   => HEIGHT,
-      CUT_W    => 0,
-      CUT_H    => 0,
-      APPEND_W => T_W,
-      APPEND_H => T_H
-      )
-    port map (
-      pipe_in   => pipe(1),             -- [in]
-      pipe_out  => pipe(2),
-      stall_in  => stall(2),
-      stall_out => stall(1)
-      );                                -- [out]
-
-  my_filter0_buffer : entity work.line_buffer_gray8
-    generic map (
-      ID        => (11),
-      NUM_LINES => KERNEL,
-      HEIGHT    => HEIGHT+T_H,
-      WIDTH     => WIDTH+T_W)
-    port map (
-      pipe_in      => pipe(2),
-      pipe_out_1   => pipe(3),
-      pipe_out_2   => pipe(6),
-      stall_in_1   => stall(3),
-      stall_in_2   => stall(6),
-      stall_out    => stall(2),
-      gray8_1d_out => gray8_1d
-      );
-
-  my_filter0_window : entity work.window_gray8
-    generic map (
-      ID       => (12),
-      NUM_COLS => KERNEL,
-      HEIGHT   => HEIGHT+T_H,
-      WIDTH    => WIDTH+T_W)
-    port map (
-      pipe_in      => pipe(3),
-      pipe_out   => pipe(4),
-      stall_in   => stall(4),
-      stall_out    => stall(3),
-      gray8_1d_in  => gray8_1d,
-      gray8_2d_out => gray8_2d_1
-      );
-
-  my_translatea : entity work.translate_win_gray8
-    generic map (
-      ID       => (13),
-      WIDTH    => WIDTH+T_W,
-      HEIGHT   => HEIGHT+T_H,
-      CUT_W    => T_W,
-      CUT_H    => T_H,
-      APPEND_W => 0,
-      APPEND_H => 0)      
-    port map (
-      pipe_in      => pipe(4),          -- [in]
-      pipe_out     => pipe(5),
-      stall_in     => stall(5),
-      stall_out    => stall(4),
-      gray8_2d_in  => gray8_2d_1,
-      gray8_2d_out => gray8_2d_2
-      );                                -- [out]
-
-  bitest : entity work.bi
-    generic map (
-      ID     => 15,
-      WIDTH  => WIDTH,
-      HEIGHT => HEIGHT)
-    port map (
-      pipe_in    => pipe(6),          -- [in]
-      pipe_out     => pipe(7),
-      stall_in     => stall(7),
-      stall_out     => stall(6),      
-      abcd         => abcd_1
-      );                                -- [inout]
-
-  inst_bi2_c : entity work.bi2
-    generic map (
-      ID     => 16,
+      ID     => 10,
       KERNEL => KERNEL,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (
-      pipe_in_1    => pipe(5),          -- [in]
-      pipe_in_2    => pipe(7),          -- [in]      
-      pipe_out    => pipe(8),           -- [out]
-      stall_in    => stall(8),          -- [in]
-      stall_out_1  => stall(5),
-      stall_out_2  => stall(7),
-      abcd        => abcd_1,
-      gray8_2d_in => gray8_2d_2,
-      abcd2       => abcd2);            -- [out]         
-
-  bitest3 : entity work.bi3
-    generic map (
-      ID     => 17,
-      WIDTH  => WIDTH,
-      HEIGHT => HEIGHT)
-    port map (
-      pipe_in   => pipe(8),             -- [in]
-      pipe_out  => pipe(9),
-      stall_in  => stall(9),
-      stall_out => stall(8),
-      abcd2     => abcd2
-      );                                -- [inout]
+      pipe_in   => pipe(1),             -- [in]
+      pipe_out  => pipe(9),            -- [out]
+      stall_in  => stall(9),            -- [in]
+      stall_out => stall(1));          -- [out]
   
 -------------------------------------------------------------------------------
 -- ---
