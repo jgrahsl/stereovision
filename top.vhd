@@ -548,10 +548,15 @@ begin
     end if;
   end process;
  
-  p_f2hvalid <= '0' when i2c_sel_a = '1' and wr_empty_a = '1' else
-               '0' when i2c_sel_b = '1' and wr_empty_b = '1'   else
-               '0' when fifosel = '1' and usb_fifo.stall = '1' else
+  p_f2hvalid <= '0' when fifosel = '1' and usb_fifo.stall = '1' else
                '1';  
+  --p_f2hvalid <= '1' when fifoen = '1' else
+  --            '0' when fifosel = '1' and usb_fifo.stall = '1' and f2hready = '1' else
+  --            '1' when f2hready = '1'                                            else
+  --            '0';
+
+
+
   
   with chanaddr select p_f2hdata <=
     std_logic_vector(to_unsigned(adr, 8))          when "1100000",

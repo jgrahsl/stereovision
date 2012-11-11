@@ -1,4 +1,2 @@
-l_50.tiff
-r_50.tiff
-l_51.tiff
-r_51.tiff
+l_110.tiff
+r_110.tiff

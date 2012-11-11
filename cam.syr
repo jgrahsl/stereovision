@@ -516,8 +516,6 @@ Elaborating entity <inspect_sync> (architecture <myrtl>) from library <work>.
 
 Elaborating entity <comm_fpga_fx2> (architecture <behavioural>) from library <work>.
 WARNING:HDLCompiler:634 - "/home/julian/stereovision/top.vhd" Line 196: Net <cfg[0]_p[2][7]> does not have a driver.
-WARNING:HDLCompiler:634 - "/home/julian/stereovision/top.vhd" Line 226: Net <wr_empty_a> does not have a driver.
-WARNING:HDLCompiler:634 - "/home/julian/stereovision/top.vhd" Line 227: Net <wr_empty_b> does not have a driver.
 
 =========================================================================
 *                           HDL Synthesis                               *
@@ -542,7 +540,7 @@ INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 274: Output port <VCNT_
 INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 288: Output port <LED_O> of the instance <inst_fbctl> is unconnected or connected to loadless signal.
 INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 288: Output port <d_off2> of the instance <inst_fbctl> is unconnected or connected to loadless signal.
 INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 393: Output port <VDDEN_O> of the instance <inst_camctla> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 648: Output port <s> of the instance <comm.comm_fpga_fx2> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 653: Output port <s> of the instance <comm.comm_fpga_fx2> is unconnected or connected to loadless signal.
 WARNING:Xst:653 - Signal <cfg<0>_p<2>> is used but never assigned. This sourceless signal will be automatically connected to value GND.
 WARNING:Xst:653 - Signal <cfg<0>_p<3>> is used but never assigned. This sourceless signal will be automatically connected to value GND.
 WARNING:Xst:653 - Signal <cfg<0>_p<4>> is used but never assigned. This sourceless signal will be automatically connected to value GND.
@@ -671,8 +669,6 @@ WARNING:Xst:653 - Signal <cfg<31>_p<2>> is used but never assigned. This sourcel
 WARNING:Xst:653 - Signal <cfg<31>_p<3>> is used but never assigned. This sourceless signal will be automatically connected to value GND.
 WARNING:Xst:653 - Signal <cfg<31>_p<4>> is used but never assigned. This sourceless signal will be automatically connected to value GND.
 WARNING:Xst:653 - Signal <cfg<31>_p<5>> is used but never assigned. This sourceless signal will be automatically connected to value GND.
-WARNING:Xst:653 - Signal <wr_empty_a> is used but never assigned. This sourceless signal will be automatically connected to value GND.
-WARNING:Xst:653 - Signal <wr_empty_b> is used but never assigned. This sourceless signal will be automatically connected to value GND.
     Found 1-bit register for signal <cfg[0]_enable>.
     Found 1-bit register for signal <cfg[0]_identify>.
     Found 8-bit register for signal <cfg<0>_p<0>>.
@@ -804,10 +800,10 @@ WARNING:Xst:653 - Signal <wr_empty_b> is used but never assigned. This sourceles
     Found 1-bit register for signal <f2hvalid>.
     Found 8-bit register for signal <f2hdata>.
     Found 5-bit register for signal <adr>.
-    Found 1-bit 32-to-1 multiplexer for signal <adr[4]_cfg[31]_identify_Mux_335_o> created at line 558.
-    Found 1-bit 32-to-1 multiplexer for signal <adr[4]_cfg[31]_enable_Mux_342_o> created at line 558.
-    Found 8-bit 32-to-1 multiplexer for signal <adr[4]_cfg[31]_p[0][7]_wide_mux_352_OUT> created at line 561.
-    Found 8-bit 32-to-1 multiplexer for signal <adr[4]_cfg[31]_p[1][7]_wide_mux_361_OUT> created at line 562.
+    Found 1-bit 32-to-1 multiplexer for signal <adr[4]_cfg[31]_identify_Mux_335_o> created at line 563.
+    Found 1-bit 32-to-1 multiplexer for signal <adr[4]_cfg[31]_enable_Mux_342_o> created at line 563.
+    Found 8-bit 32-to-1 multiplexer for signal <adr[4]_cfg[31]_p[0][7]_wide_mux_352_OUT> created at line 566.
+    Found 8-bit 32-to-1 multiplexer for signal <adr[4]_cfg[31]_p[1][7]_wide_mux_361_OUT> created at line 567.
 INFO:Xst:2774 - HDL ADVISOR - S property attached to signal dummya_t may hinder XST clustering optimizations.
 INFO:Xst:2774 - HDL ADVISOR - S property attached to signal dummyb_t may hinder XST clustering optimizations.
     Summary:
@@ -7901,15 +7897,15 @@ inst_syscon/Inst_pll_mcb/CLKOUT2|    8.023|         |         |         |
 =========================================================================
 
 
-Total REAL time to Xst completion: 77.00 secs
-Total CPU time to Xst completion: 76.22 secs
+Total REAL time to Xst completion: 82.00 secs
+Total CPU time to Xst completion: 75.59 secs
  
 --> 
 
 
-Total memory usage is 255656 kilobytes
+Total memory usage is 255368 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings : 3330 (   0 filtered)
+Number of warnings : 3326 (   0 filtered)
 Number of infos    :  469 (   0 filtered)
 
