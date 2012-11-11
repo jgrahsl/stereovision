@@ -53,8 +53,8 @@ using namespace std;
 static void
 StereoCalib(const char* imageList, int nx, int ny, int useUncalibrated, float _squareSize)
 {
-    int displayCorners = 1;
-    int showUndistorted = 1;
+    int displayCorners = 0;
+    int showUndistorted = 0;
     bool isVerticalStereo = false;//OpenCV can handle left-right
                                       //or up-down camera arrangements
     const int maxScale = 1;
@@ -101,7 +101,7 @@ StereoCalib(const char* imageList, int nx, int ny, int useUncalibrated, float _s
         while( len > 0 && isspace(buf[len-1]))
             buf[--len] = '\0';
         if( buf[0] == '#')
-            continue;
+             continue;
         IplImage* img = cvLoadImage( buf, 0 );
         if( !img )
             break;
@@ -192,9 +192,11 @@ StereoCalib(const char* imageList, int nx, int ny, int useUncalibrated, float _s
         imageSize, &_R, &_T, &_E, &_F,
         cvTermCriteria(CV_TERMCRIT_ITER+
         CV_TERMCRIT_EPS, 100, 1e-5),
-        CV_CALIB_FIX_ASPECT_RATIO +
-        CV_CALIB_ZERO_TANGENT_DIST +
-        CV_CALIB_SAME_FOCAL_LENGTH );
+                       //                               CV_CALIB_FIX_ASPECT_RATIO +
+                               CV_CALIB_ZERO_TANGENT_DIST +
+                               CV_CALIB_SAME_FOCAL_LENGTH +
+0
+);
     printf(" done\n");
 // CALIBRATION QUALITY CHECK
 // because the output fundamental matrix implicitly
@@ -266,6 +268,8 @@ StereoCalib(const char* imageList, int nx, int ny, int useUncalibrated, float _s
             cvInitUndistortRectifyMap(&_M2,&_D2,&_R2,&_P2,mx2,my2);
             
     //Save parameters
+            cvSave("T.xml",&_T);
+            cvSave("R.xml",&_R);
             cvSave("M1.xml",&_M1);
             cvSave("D1.xml",&_D1);
             cvSave("R1.xml",&_R1);
