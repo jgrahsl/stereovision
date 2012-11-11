@@ -4,6 +4,13 @@ import sys
 x = 0
 y = 0
 c = sys.stdin.readline().strip()
+csv = False
+
+if len(sys.argv) > 2:
+    if sys.argv[2] == "csv":
+        csv = True
+
+
 while c != "":
 
     l  = c.split()
@@ -12,16 +19,28 @@ while c != "":
             if sys.argv[1] == "x":
                 off = x - float(i)
                 if x < 319:
-                    print str(off) + ",",
+                    if csv:
+                        print str(off) + ",",
+                    else:
+                        print str(off) + ","
                 else:
-                    print str(off) + ","
+                    if csv:
+                        print str(off)
+                    else:
+                        print str(off) + ","
 
             if sys.argv[1] == "y":
                 off = y - float(i)
                 if x < 319:
-                    print str(off) + ",",
+                    if csv:
+                        print str(off) + ",",
+                    else:
+                        print str(off) + ","
                 else:
-                    print str(off) + ","
+                    if csv:
+                        print str(off)
+                    else:
+                        print str(off) + ","
 
             if x < (320-1):
                 x = x + 1

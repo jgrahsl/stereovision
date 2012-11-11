@@ -76,7 +76,6 @@ architecture Behavioral of CamCtl is
   constant ADDR_WIDTH   : natural := natural(ceil(log(real(INIT_VECTORS), 2.0)));
 
 
-
   signal rstCnt : natural range 0 to RST_T1_CYCLES + RST_T4_CYCLES + 2*VMODCAM_RST_RISETIME_CYCLES +
     VMODCAM_VDD_FALLTIME_CYCLES + VMODCAM_VDD_RISETIME_CYCLES := 0;
   signal intRst, SRst : std_logic := '1';

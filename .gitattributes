@@ -1,0 +1,9 @@
+*.bit -diff
+*.xsvf -diff
+*.ngc -diff
+*.ngd -diff
+*.syr -diff
+*.par -diff
+*.pcf -diff
+*.xco -diff
+*.mrp -diff

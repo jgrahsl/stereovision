@@ -4,15 +4,15 @@ Copyright (c) 1995-2012 Xilinx, Inc.  All rights reserved.
 Parameter TMPDIR set to /tmp/
 
 
-Total REAL time to Xst completion: 1.00 secs
-Total CPU time to Xst completion: 0.05 secs
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.06 secs
  
 --> 
 Parameter xsthdpdir set to xst
 
 
-Total REAL time to Xst completion: 1.00 secs
-Total CPU time to Xst completion: 0.05 secs
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.06 secs
  
 --> 
 WARNING:Xst:1583 - You are using an internal switch '-use_new_parser'.
@@ -320,11 +320,11 @@ Parsing architecture <Behavioral> of entity <camctl>.
 Parsing VHDL file "/home/julian/stereovision/top.vhd" into library work
 Parsing entity <top>.
 Parsing architecture <behavioral> of entity <top>.
-WARNING:HDLCompiler:946 - "/home/julian/stereovision/top.vhd" Line 368: Actual for formal port red_i is neither a static name nor a globally static expression
-WARNING:HDLCompiler:946 - "/home/julian/stereovision/top.vhd" Line 369: Actual for formal port green_i is neither a static name nor a globally static expression
-WARNING:HDLCompiler:946 - "/home/julian/stereovision/top.vhd" Line 370: Actual for formal port blue_i is neither a static name nor a globally static expression
-WARNING:HDLCompiler:946 - "/home/julian/stereovision/top.vhd" Line 433: Actual for formal port rst_i is neither a static name nor a globally static expression
-WARNING:HDLCompiler:946 - "/home/julian/stereovision/top.vhd" Line 444: Actual for formal port rst_i is neither a static name nor a globally static expression
+WARNING:HDLCompiler:946 - "/home/julian/stereovision/top.vhd" Line 370: Actual for formal port red_i is neither a static name nor a globally static expression
+WARNING:HDLCompiler:946 - "/home/julian/stereovision/top.vhd" Line 371: Actual for formal port green_i is neither a static name nor a globally static expression
+WARNING:HDLCompiler:946 - "/home/julian/stereovision/top.vhd" Line 372: Actual for formal port blue_i is neither a static name nor a globally static expression
+WARNING:HDLCompiler:946 - "/home/julian/stereovision/top.vhd" Line 435: Actual for formal port rst_i is neither a static name nor a globally static expression
+WARNING:HDLCompiler:946 - "/home/julian/stereovision/top.vhd" Line 446: Actual for formal port rst_i is neither a static name nor a globally static expression
 
 =========================================================================
 *                            HDL Elaboration                            *
@@ -510,14 +510,14 @@ WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 209: reg shoul
 WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 215: twido should be on the sensitivity list of the process
 WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 225: waitcnt should be on the sensitivity list of the process
 WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 226: reg should be on the sensitivity list of the process
-WARNING:HDLCompiler:1127 - "/home/julian/stereovision/top.vhd" Line 483: Assignment to rd ignored, since the identifier is never used
+WARNING:HDLCompiler:1127 - "/home/julian/stereovision/top.vhd" Line 485: Assignment to rd ignored, since the identifier is never used
 
 Elaborating entity <inspect_sync> (architecture <myrtl>) from library <work>.
 
 Elaborating entity <comm_fpga_fx2> (architecture <behavioural>) from library <work>.
-WARNING:HDLCompiler:634 - "/home/julian/stereovision/top.vhd" Line 194: Net <cfg[0]_p[2][7]> does not have a driver.
-WARNING:HDLCompiler:634 - "/home/julian/stereovision/top.vhd" Line 224: Net <wr_empty_a> does not have a driver.
-WARNING:HDLCompiler:634 - "/home/julian/stereovision/top.vhd" Line 225: Net <wr_empty_b> does not have a driver.
+WARNING:HDLCompiler:634 - "/home/julian/stereovision/top.vhd" Line 196: Net <cfg[0]_p[2][7]> does not have a driver.
+WARNING:HDLCompiler:634 - "/home/julian/stereovision/top.vhd" Line 226: Net <wr_empty_a> does not have a driver.
+WARNING:HDLCompiler:634 - "/home/julian/stereovision/top.vhd" Line 227: Net <wr_empty_b> does not have a driver.
 
 =========================================================================
 *                           HDL Synthesis                               *
@@ -535,14 +535,14 @@ Synthesizing Unit <top>.
     Set property "S = TRUE" for signal <camb_pclk_i>.
     Set property "S = TRUE" for signal <dummya_t>.
     Set property "S = TRUE" for signal <dummyb_t>.
-INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 246: Output port <RSEL_O> of the instance <inst_syscon> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 246: Output port <CLK_O> of the instance <inst_syscon> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 272: Output port <HCNT_O> of the instance <inst_videotimingctl> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 272: Output port <VCNT_O> of the instance <inst_videotimingctl> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 286: Output port <LED_O> of the instance <inst_fbctl> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 286: Output port <d_off2> of the instance <inst_fbctl> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 391: Output port <VDDEN_O> of the instance <inst_camctla> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 633: Output port <s> of the instance <comm.comm_fpga_fx2> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 248: Output port <RSEL_O> of the instance <inst_syscon> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 248: Output port <CLK_O> of the instance <inst_syscon> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 274: Output port <HCNT_O> of the instance <inst_videotimingctl> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 274: Output port <VCNT_O> of the instance <inst_videotimingctl> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 288: Output port <LED_O> of the instance <inst_fbctl> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 288: Output port <d_off2> of the instance <inst_fbctl> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 393: Output port <VDDEN_O> of the instance <inst_camctla> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 648: Output port <s> of the instance <comm.comm_fpga_fx2> is unconnected or connected to loadless signal.
 WARNING:Xst:653 - Signal <cfg<0>_p<2>> is used but never assigned. This sourceless signal will be automatically connected to value GND.
 WARNING:Xst:653 - Signal <cfg<0>_p<3>> is used but never assigned. This sourceless signal will be automatically connected to value GND.
 WARNING:Xst:653 - Signal <cfg<0>_p<4>> is used but never assigned. This sourceless signal will be automatically connected to value GND.
@@ -801,15 +801,17 @@ WARNING:Xst:653 - Signal <wr_empty_b> is used but never assigned. This sourceles
     Found 1-bit register for signal <cfg[31]_identify>.
     Found 8-bit register for signal <cfg<31>_p<0>>.
     Found 8-bit register for signal <cfg<31>_p<1>>.
+    Found 1-bit register for signal <f2hvalid>.
+    Found 8-bit register for signal <f2hdata>.
     Found 5-bit register for signal <adr>.
-    Found 1-bit 32-to-1 multiplexer for signal <adr[4]_cfg[31]_identify_Mux_364_o> created at line 573.
-    Found 1-bit 32-to-1 multiplexer for signal <adr[4]_cfg[31]_enable_Mux_371_o> created at line 573.
-    Found 8-bit 32-to-1 multiplexer for signal <adr[4]_cfg[31]_p[0][7]_wide_mux_381_OUT> created at line 576.
-    Found 8-bit 32-to-1 multiplexer for signal <adr[4]_cfg[31]_p[1][7]_wide_mux_390_OUT> created at line 577.
+    Found 1-bit 32-to-1 multiplexer for signal <adr[4]_cfg[31]_identify_Mux_335_o> created at line 558.
+    Found 1-bit 32-to-1 multiplexer for signal <adr[4]_cfg[31]_enable_Mux_342_o> created at line 558.
+    Found 8-bit 32-to-1 multiplexer for signal <adr[4]_cfg[31]_p[0][7]_wide_mux_352_OUT> created at line 561.
+    Found 8-bit 32-to-1 multiplexer for signal <adr[4]_cfg[31]_p[1][7]_wide_mux_361_OUT> created at line 562.
 INFO:Xst:2774 - HDL ADVISOR - S property attached to signal dummya_t may hinder XST clustering optimizations.
 INFO:Xst:2774 - HDL ADVISOR - S property attached to signal dummyb_t may hinder XST clustering optimizations.
     Summary:
-	inferred 581 D-type flip-flop(s).
+	inferred 590 D-type flip-flop(s).
 	inferred  23 Multiplexer(s).
 Unit <top> synthesized.
 
@@ -3659,8 +3661,8 @@ Synthesizing Unit <CamCtl>.
     Found 1-bit register for signal <cam_data_sel>.
     Found 16-bit register for signal <D_O>.
     Found 1-bit register for signal <RST_O>.
-    Found 23-bit adder for signal <rstCnt[22]_GND_1086_o_add_5_OUT> created at line 132.
-    Found 23-bit comparator greater for signal <rstCnt[22]_PWR_178_o_LessThan_5_o> created at line 130
+    Found 23-bit adder for signal <rstCnt[22]_GND_1086_o_add_5_OUT> created at line 131.
+    Found 23-bit comparator greater for signal <rstCnt[22]_PWR_178_o_LessThan_5_o> created at line 129
     Summary:
 	inferred   1 Adder/Subtractor(s).
 	inferred  45 D-type flip-flop(s).
@@ -3845,8 +3847,8 @@ Macro Statistics
  8-bit addsub                                          : 1
  8-bit subtractor                                      : 7
  9-bit adder                                           : 6
-# Registers                                            : 1231
- 1-bit register                                        : 514
+# Registers                                            : 1233
+ 1-bit register                                        : 515
  10-bit register                                       : 24
  100-bit register                                      : 1
  11-bit register                                       : 1
@@ -3862,7 +3864,7 @@ Macro Statistics
  5-bit register                                        : 18
  6-bit register                                        : 5
  7-bit register                                        : 3
- 8-bit register                                        : 579
+ 8-bit register                                        : 580
  9-bit register                                        : 13
 # Comparators                                          : 91
  10-bit comparator greater                             : 9
@@ -4319,8 +4321,8 @@ Macro Statistics
  9-bit up counter                                      : 6
 # Accumulators                                         : 3
  5-bit up loadable accumulator                         : 3
-# Registers                                            : 6201
- Flip-Flops                                            : 6201
+# Registers                                            : 6210
+ Flip-Flops                                            : 6210
 # Comparators                                          : 91
  10-bit comparator greater                             : 9
  10-bit comparator lessequal                           : 5
@@ -4342,8 +4344,8 @@ Macro Statistics
  8-bit comparator not equal                            : 2
  9-bit comparator greater                              : 2
  9-bit comparator lessequal                            : 1
-# Multiplexers                                         : 478
- 1-bit 2-to-1 multiplexer                              : 314
+# Multiplexers                                         : 485
+ 1-bit 2-to-1 multiplexer                              : 322
  1-bit 3-to-1 multiplexer                              : 1
  1-bit 32-to-1 multiplexer                             : 18
  10-bit 2-to-1 multiplexer                             : 9
@@ -4357,7 +4359,7 @@ Macro Statistics
  5-bit 2-to-1 multiplexer                              : 10
  6-bit 2-to-1 multiplexer                              : 9
  7-bit 2-to-1 multiplexer                              : 4
- 8-bit 2-to-1 multiplexer                              : 50
+ 8-bit 2-to-1 multiplexer                              : 49
  9-bit 2-to-1 multiplexer                              : 4
  9-bit 230-to-1 multiplexer                            : 4
 # FSMs                                                 : 13
@@ -6980,8 +6982,8 @@ Unit <top> processed.
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 4287
- Flip-Flops                                            : 4287
+# Registers                                            : 4296
+ Flip-Flops                                            : 4296
 # Shift Registers                                      : 37
  2-bit shift register                                  : 4
  3-bit shift register                                  : 32
@@ -7008,23 +7010,23 @@ Top Level Output File Name         : cam.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 7719
+# BELS                             : 7718
 #      GND                         : 19
 #      INV                         : 109
 #      LUT1                        : 359
-#      LUT2                        : 396
-#      LUT3                        : 415
-#      LUT4                        : 393
-#      LUT5                        : 512
-#      LUT6                        : 2971
+#      LUT2                        : 398
+#      LUT3                        : 431
+#      LUT4                        : 408
+#      LUT5                        : 412
+#      LUT6                        : 3037
 #      MULT_AND                    : 6
 #      MUXCY                       : 553
 #      MUXF7                       : 942
 #      MUXF8                       : 448
 #      VCC                         : 5
 #      XORCY                       : 591
-# FlipFlops/Latches                : 5039
-#      FD                          : 219
+# FlipFlops/Latches                : 5048
+#      FD                          : 228
 #      FDC                         : 175
 #      FDCE                        : 237
 #      FDE                         : 984
@@ -7074,17 +7076,17 @@ Selected Device : 6slx45csg324-3
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:            5039  out of  54576     9%  
- Number of Slice LUTs:                 5195  out of  27288    19%  
-    Number used as Logic:              5155  out of  27288    18%  
+ Number of Slice Registers:            5048  out of  54576     9%  
+ Number of Slice LUTs:                 5194  out of  27288    19%  
+    Number used as Logic:              5154  out of  27288    18%  
     Number used as Memory:               40  out of   6408     0%  
        Number used as SRL:               40
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:   8621
-   Number with an unused Flip Flop:    3582  out of   8621    41%  
-   Number with an unused LUT:          3426  out of   8621    39%  
-   Number of fully used LUT-FF pairs:  1613  out of   8621    18%  
+ Number of LUT Flip Flop pairs used:   8713
+   Number with an unused Flip Flop:    3665  out of   8713    42%  
+   Number with an unused LUT:          3519  out of   8713    40%  
+   Number of fully used LUT-FF pairs:  1529  out of   8713    17%  
    Number of unique control sets:       366
 
 IO Utilization: 
@@ -7119,7 +7121,7 @@ Clock Information:
 ------------------------------------------------+-------------------------------------------------------------+-------+
 Clock Signal                                    | Clock buffer(FF name)                                       | Load  |
 ------------------------------------------------+-------------------------------------------------------------+-------+
-fx2clk_in                                       | IBUFG+BUFG                                                  | 782   |
+fx2clk_in                                       | IBUFG+BUFG                                                  | 791   |
 camb_pclk_i                                     | IBUF+BUFG                                                   | 84    |
 cama_pclk_i                                     | IBUF+BUFG                                                   | 84    |
 inst_syscon/Inst_10_1_pll/CLKOUT2               | BUFG                                                        | 192   |
@@ -7143,7 +7145,7 @@ Timing Summary:
 Speed Grade: -3
 
    Minimum period: 27.364ns (Maximum Frequency: 36.544MHz)
-   Minimum input arrival time before clock: 7.591ns
+   Minimum input arrival time before clock: 7.477ns
    Maximum output required time after clock: 12.302ns
    Maximum combinational path delay: 9.868ns
 
@@ -7153,10 +7155,10 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'fx2clk_in'
-  Clock period: 8.433ns (frequency: 118.583MHz)
-  Total number of paths / destination ports: 17967 / 977
+  Clock period: 8.237ns (frequency: 121.404MHz)
+  Total number of paths / destination ports: 18806 / 986
 -------------------------------------------------------------------------
-Delay:               8.433ns (Levels of Logic = 6)
+Delay:               8.237ns (Levels of Logic = 5)
   Source:            comm.comm_fpga_fx2/chanAddr_0 (FF)
   Destination:       my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc0.count_d2_3 (FF)
   Source Clock:      fx2clk_in rising
@@ -7166,17 +7168,16 @@ Delay:               8.433ns (Levels of Logic = 6)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDE:C->Q             24   0.447   1.420  comm.comm_fpga_fx2/chanAddr_0 (comm.comm_fpga_fx2/chanAddr_0)
-     LUT4:I0->O            1   0.203   0.580  h2fready_SW0 (N60)
-     LUT6:I5->O            6   0.205   0.745  h2fready (h2fready)
-     LUT6:I5->O          100   0.205   2.222  comm.comm_fpga_fx2/Mmux_h2fValid_out11 (h2fvalid)
-     LUT6:I1->O            2   0.203   0.721  wr_en_a1 (wr_en_a)
+     FDE:C->Q             82   0.447   2.123  comm.comm_fpga_fx2/chanAddr_0 (comm.comm_fpga_fx2/chanAddr_0)
+     LUT6:I0->O            6   0.203   0.745  h2fready (h2fready)
+     LUT6:I5->O          100   0.205   2.106  comm.comm_fpga_fx2/Mmux_h2fValid_out11 (h2fvalid)
+     LUT5:I2->O            2   0.205   0.721  wr_en_a2 (wr_en_a)
      begin scope: 'my_i2c_a/my_i2cfifo:wr_en'
      LUT2:I0->O           14   0.203   0.957  U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1 (U0/xst_fifo_generator/gconvfifo.rf/grf.rf/ram_wr_en)
      FDPE:CE                   0.322          U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc0.count_1
     ----------------------------------------
-    Total                      8.433ns (1.788ns logic, 6.645ns route)
-                                       (21.2% logic, 78.8% route)
+    Total                      8.237ns (1.585ns logic, 6.652ns route)
+                                       (19.2% logic, 80.8% route)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'camb_pclk_i'
@@ -7333,7 +7334,7 @@ Delay:               8.023ns (Levels of Logic = 8)
      LUT2:I0->O            1   0.203   0.000  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Msub_Max_Value_Delta_Up_lut<0> (inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Msub_Max_Value_Delta_Up_lut<0>)
      MUXCY:S->O            1   0.172   0.000  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Msub_Max_Value_Delta_Up_cy<0> (inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Msub_Max_Value_Delta_Up_cy<0>)
      XORCY:CI->O           1   0.180   0.808  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Msub_Max_Value_Delta_Up_xor<1> (inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Max_Value_Delta_Up<1>)
-     LUT3:I0->O            1   0.205   0.580  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/n02211_SW0 (N117)
+     LUT3:I0->O            1   0.205   0.580  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/n02211_SW0 (N185)
      LUT6:I5->O            4   0.205   1.048  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/n02211 (inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/n0221)
      LUT6:I0->O            1   0.203   0.684  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/_n1436_inv1 (inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/_n1436_inv1)
      LUT6:I4->O            1   0.203   0.827  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/_n1436_inv2 (inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/_n1436_inv2)
@@ -7394,7 +7395,7 @@ Delay:               1.861ns (Levels of Logic = 1)
 Timing constraint: Default OFFSET IN BEFORE for Clock 'fx2clk_in'
   Total number of paths / destination ports: 1393 / 1323
 -------------------------------------------------------------------------
-Offset:              7.591ns (Levels of Logic = 5)
+Offset:              7.477ns (Levels of Logic = 5)
   Source:            fx2gotdata_in (PAD)
   Destination:       my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc0.count_d2_3 (FF)
   Destination Clock: fx2clk_in rising
@@ -7404,14 +7405,14 @@ Offset:              7.591ns (Levels of Logic = 5)
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
      IBUF:I->O            42   1.222   1.538  fx2gotdata_in_IBUF (fx2gotdata_in_IBUF)
-     LUT6:I4->O          100   0.203   2.222  comm.comm_fpga_fx2/Mmux_h2fValid_out11 (h2fvalid)
-     LUT6:I1->O            2   0.203   0.721  wr_en_a1 (wr_en_a)
+     LUT6:I4->O          100   0.203   2.106  comm.comm_fpga_fx2/Mmux_h2fValid_out11 (h2fvalid)
+     LUT5:I2->O            2   0.205   0.721  wr_en_a2 (wr_en_a)
      begin scope: 'my_i2c_a/my_i2cfifo:wr_en'
      LUT2:I0->O           14   0.203   0.957  U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1 (U0/xst_fifo_generator/gconvfifo.rf/grf.rf/ram_wr_en)
      FDPE:CE                   0.322          U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc0.count_1
     ----------------------------------------
-    Total                      7.591ns (2.153ns logic, 5.438ns route)
-                                       (28.4% logic, 71.6% route)
+    Total                      7.477ns (2.155ns logic, 5.322ns route)
+                                       (28.8% logic, 71.2% route)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'camb_pclk_i'
@@ -7586,7 +7587,7 @@ Offset:              12.302ns (Levels of Logic = 9)
      LUT3:I0->O           29   0.205   1.250  stall_out_11 (stall_out_1)
      end scope: 'inst_fbctl/inst_bi2_c:stall_out_1'
      LUT5:I4->O            7   0.205   1.118  inst_fbctl/my_translate/stall_out1 (d_off<7>)
-     LUT5:I0->O            1   0.203   0.000  Mmux_led_o126_F (N305)
+     LUT5:I0->O            1   0.203   0.000  Mmux_led_o126_F (N375)
      MUXF7:I0->O           1   0.131   0.580  Mmux_led_o126 (Mmux_led_o126)
      LUT6:I5->O            1   0.205   0.579  Mmux_led_o127 (led_o_3_OBUF)
      OBUF:I->O                 2.571          led_o_3_OBUF (led_o<3>)
@@ -7596,9 +7597,9 @@ Offset:              12.302ns (Levels of Logic = 9)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'fx2clk_in'
-  Total number of paths / destination ports: 1448 / 19
+  Total number of paths / destination ports: 162 / 19
 -------------------------------------------------------------------------
-Offset:              10.709ns (Levels of Logic = 7)
+Offset:              10.627ns (Levels of Logic = 6)
   Source:            comm.comm_fpga_fx2/chanAddr_0 (FF)
   Destination:       led_o<1> (PAD)
   Source Clock:      fx2clk_in rising
@@ -7607,17 +7608,16 @@ Offset:              10.709ns (Levels of Logic = 7)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDE:C->Q             24   0.447   1.420  comm.comm_fpga_fx2/chanAddr_0 (comm.comm_fpga_fx2/chanAddr_0)
-     LUT4:I0->O            1   0.203   0.580  h2fready_SW0 (N60)
-     LUT6:I5->O            6   0.205   0.745  h2fready (h2fready)
+     FDE:C->Q             82   0.447   2.123  comm.comm_fpga_fx2/chanAddr_0 (comm.comm_fpga_fx2/chanAddr_0)
+     LUT6:I0->O            6   0.203   0.745  h2fready (h2fready)
      LUT6:I5->O          100   0.205   1.878  comm.comm_fpga_fx2/Mmux_h2fValid_out11 (h2fvalid)
      LUT5:I4->O            1   0.205   0.580  Mmux_led_o65 (Mmux_led_o64)
      LUT6:I5->O            1   0.205   0.684  Mmux_led_o66 (Mmux_led_o65)
      LUT6:I4->O            1   0.203   0.579  Mmux_led_o67 (led_o_1_OBUF)
      OBUF:I->O                 2.571          led_o_1_OBUF (led_o<1>)
     ----------------------------------------
-    Total                     10.709ns (4.244ns logic, 6.465ns route)
-                                       (39.6% logic, 60.4% route)
+    Total                     10.627ns (4.039ns logic, 6.588ns route)
+                                       (38.0% logic, 62.0% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'camb_pclk_i'
@@ -7767,7 +7767,7 @@ Offset:              1.161ns (Levels of Logic = 0)
 
 =========================================================================
 Timing constraint: Default path analysis
-  Total number of paths / destination ports: 985 / 745
+  Total number of paths / destination ports: 983 / 745
 -------------------------------------------------------------------------
 Delay:               9.868ns (Levels of Logic = 6)
   Source:            fx2gotdata_in (PAD)
@@ -7829,7 +7829,7 @@ Clock to Setup on destination clock fx2clk_in
                                                 | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock                                    |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ------------------------------------------------+---------+---------+---------+---------+
-fx2clk_in                                       |    8.433|         |         |         |
+fx2clk_in                                       |    8.237|         |         |         |
 inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT0|    2.555|         |         |         |
 inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT2|    3.340|         |         |         |
 ------------------------------------------------+---------+---------+---------+---------+
@@ -7902,12 +7902,12 @@ inst_syscon/Inst_pll_mcb/CLKOUT2|    8.023|         |         |         |
 
 
 Total REAL time to Xst completion: 77.00 secs
-Total CPU time to Xst completion: 75.52 secs
+Total CPU time to Xst completion: 76.22 secs
  
 --> 
 
 
-Total memory usage is 255740 kilobytes
+Total memory usage is 255656 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings : 3330 (   0 filtered)

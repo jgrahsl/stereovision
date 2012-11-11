@@ -1,0 +1,9 @@
+[core]
+  autocrlf = false
+  safecrlf = false
+[color]
+  ui = true
+[core]
+  excludesfile = ~/.gitignore
+  ignorecase = true
+

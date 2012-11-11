@@ -1,5 +1,5 @@
 //! **************************************************************************
-// Written by: Map P.28xd on Sun Nov 11 15:20:00 2012
+// Written by: Map P.28xd on Sun Nov 11 15:44:49 2012
 //! **************************************************************************
 
 SCHEMATIC START;
@@ -147,7 +147,9 @@ PIN
         = BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram"
         PINNAME CLKAWRCLK;
-TIMEGRP fx2clk_in = BEL "cfg<0>_p_0_0" BEL "cfg<0>_p_0_1" BEL "cfg<0>_p_0_2"
+TIMEGRP fx2clk_in = BEL "f2hdata_0" BEL "f2hdata_1" BEL "f2hdata_2" BEL
+        "f2hdata_3" BEL "f2hdata_4" BEL "f2hdata_5" BEL "f2hdata_6" BEL
+        "f2hdata_7" BEL "cfg<0>_p_0_0" BEL "cfg<0>_p_0_1" BEL "cfg<0>_p_0_2"
         BEL "cfg<0>_p_0_3" BEL "cfg<0>_p_0_4" BEL "cfg<0>_p_0_5" BEL
         "cfg<0>_p_0_6" BEL "cfg<0>_p_0_7" BEL "cfg[0]_enable" BEL
         "cfg[0]_identify" BEL "cfg<0>_p_1_0" BEL "cfg<0>_p_1_1" BEL
@@ -321,25 +323,25 @@ TIMEGRP fx2clk_in = BEL "cfg<0>_p_0_0" BEL "cfg<0>_p_0_1" BEL "cfg<0>_p_0_2"
         "cfg<28>_p_0_7" BEL "cfg[29]_identify" BEL "cfg<28>_p_1_0" BEL
         "cfg<28>_p_1_1" BEL "cfg<28>_p_1_2" BEL "cfg<28>_p_1_3" BEL
         "cfg<28>_p_1_4" BEL "cfg<28>_p_1_5" BEL "cfg<28>_p_1_6" BEL
-        "cfg<28>_p_1_7" BEL "cfg[29]_enable" BEL "cfg<29>_p_0_0" BEL
-        "cfg<29>_p_0_1" BEL "cfg<29>_p_0_2" BEL "cfg<29>_p_0_3" BEL
-        "cfg<29>_p_0_4" BEL "cfg<29>_p_0_5" BEL "cfg<29>_p_0_6" BEL
-        "cfg<29>_p_0_7" BEL "cfg<29>_p_1_0" BEL "cfg<29>_p_1_1" BEL
-        "cfg<29>_p_1_2" BEL "cfg<29>_p_1_3" BEL "cfg<29>_p_1_4" BEL
-        "cfg<29>_p_1_5" BEL "cfg<29>_p_1_6" BEL "cfg<29>_p_1_7" BEL
-        "cfg<30>_p_0_0" BEL "cfg<30>_p_0_1" BEL "cfg<30>_p_0_2" BEL
-        "cfg<30>_p_0_3" BEL "cfg<30>_p_0_4" BEL "cfg<30>_p_0_5" BEL
-        "cfg<30>_p_0_6" BEL "cfg<30>_p_0_7" BEL "cfg[30]_enable" BEL
-        "cfg[30]_identify" BEL "cfg<30>_p_1_0" BEL "cfg<30>_p_1_1" BEL
+        "cfg<28>_p_1_7" BEL "cfg[29]_enable" BEL "cfg[30]_enable" BEL
+        "cfg<29>_p_0_0" BEL "cfg<29>_p_0_1" BEL "cfg<29>_p_0_2" BEL
+        "cfg<29>_p_0_3" BEL "cfg<29>_p_0_4" BEL "cfg<29>_p_0_5" BEL
+        "cfg<29>_p_0_6" BEL "cfg<29>_p_0_7" BEL "cfg<29>_p_1_0" BEL
+        "cfg<29>_p_1_1" BEL "cfg<29>_p_1_2" BEL "cfg<29>_p_1_3" BEL
+        "cfg<29>_p_1_4" BEL "cfg<29>_p_1_5" BEL "cfg<29>_p_1_6" BEL
+        "cfg<29>_p_1_7" BEL "cfg<30>_p_1_0" BEL "cfg<30>_p_1_1" BEL
         "cfg<30>_p_1_2" BEL "cfg<30>_p_1_3" BEL "cfg<30>_p_1_4" BEL
         "cfg<30>_p_1_5" BEL "cfg<30>_p_1_6" BEL "cfg<30>_p_1_7" BEL
-        "cfg[31]_enable" BEL "cfg<31>_p_1_0" BEL "cfg<31>_p_1_1" BEL
+        "cfg[30]_identify" BEL "cfg<30>_p_0_0" BEL "cfg<30>_p_0_1" BEL
+        "cfg<30>_p_0_2" BEL "cfg<30>_p_0_3" BEL "cfg<30>_p_0_4" BEL
+        "cfg<30>_p_0_5" BEL "cfg<30>_p_0_6" BEL "cfg<30>_p_0_7" BEL
+        "cfg[31]_enable" BEL "cfg[31]_identify" BEL "adr_0" BEL "adr_1" BEL
+        "adr_2" BEL "adr_3" BEL "adr_4" BEL "cfg<31>_p_0_0" BEL
+        "cfg<31>_p_0_1" BEL "cfg<31>_p_0_2" BEL "cfg<31>_p_0_3" BEL
+        "cfg<31>_p_0_4" BEL "cfg<31>_p_0_5" BEL "cfg<31>_p_0_6" BEL
+        "cfg<31>_p_0_7" BEL "cfg<31>_p_1_0" BEL "cfg<31>_p_1_1" BEL
         "cfg<31>_p_1_2" BEL "cfg<31>_p_1_3" BEL "cfg<31>_p_1_4" BEL
         "cfg<31>_p_1_5" BEL "cfg<31>_p_1_6" BEL "cfg<31>_p_1_7" BEL
-        "cfg[31]_identify" BEL "cfg<31>_p_0_0" BEL "cfg<31>_p_0_1" BEL
-        "cfg<31>_p_0_2" BEL "cfg<31>_p_0_3" BEL "cfg<31>_p_0_4" BEL
-        "cfg<31>_p_0_5" BEL "cfg<31>_p_0_6" BEL "cfg<31>_p_0_7" BEL "adr_0"
-        BEL "adr_1" BEL "adr_2" BEL "adr_3" BEL "adr_4" BEL
         "comm.comm_fpga_fx2/state_FSM_FFd2" BEL
         "comm.comm_fpga_fx2/state_FSM_FFd3" BEL
         "comm.comm_fpga_fx2/state_FSM_FFd1" BEL
@@ -364,9 +366,10 @@ TIMEGRP fx2clk_in = BEL "cfg<0>_p_0_0" BEL "cfg<0>_p_0_1" BEL "cfg<0>_p_0_2"
         BEL "comm.comm_fpga_fx2/chanAddr_4" BEL
         "comm.comm_fpga_fx2/chanAddr_3" BEL "comm.comm_fpga_fx2/chanAddr_2"
         BEL "comm.comm_fpga_fx2/chanAddr_1" BEL
-        "comm.comm_fpga_fx2/chanAddr_0" BEL "comm.comm_fpga_fx2/isAligned" BEL
-        "fx2clk_int_BUFG" BEL "my_inspect_sync/Mshreg_inspect_2_identity_3"
-        BEL "my_inspect_sync/inspect_2_identity_3" BEL
+        "comm.comm_fpga_fx2/chanAddr_0" BEL "f2hvalid" BEL
+        "comm.comm_fpga_fx2/isAligned" BEL "fx2clk_int_BUFG" BEL
+        "my_inspect_sync/Mshreg_inspect_2_identity_3" BEL
+        "my_inspect_sync/inspect_2_identity_3" BEL
         "my_inspect_sync/Mshreg_inspect_2_identity_4" BEL
         "my_inspect_sync/inspect_2_identity_4" BEL
         "my_inspect_sync/Mshreg_inspect_2_identity_2" BEL

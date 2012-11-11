@@ -1,0 +1,14 @@
+h=figure;
+x = csvread('mx1.csv');
+y = csvread('my1.csv');
+xx = (abs(x)>10).*(x);
+yy = (abs(y)>10).*(y);
+subplot(2,1,1);
+quiver(xx,yy);
+x = csvread('mx2.csv');
+y = csvread('my2.csv');
+xx = (abs(x)>10).*(x);
+yy = (abs(y)>10).*(y);
+subplot(2,1,2);
+quiver(xx,yy);
+saveas(h,'file.tiff');
