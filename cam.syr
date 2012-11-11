@@ -7011,10 +7011,10 @@ Primitive and Black Box Usage:
 #      INV                         : 109
 #      LUT1                        : 359
 #      LUT2                        : 398
-#      LUT3                        : 430
-#      LUT4                        : 410
+#      LUT3                        : 431
+#      LUT4                        : 408
 #      LUT5                        : 412
-#      LUT6                        : 3036
+#      LUT6                        : 3037
 #      MULT_AND                    : 6
 #      MUXCY                       : 553
 #      MUXF7                       : 942
@@ -7152,7 +7152,7 @@ All values displayed in nanoseconds (ns)
 =========================================================================
 Timing constraint: Default period analysis for Clock 'fx2clk_in'
   Clock period: 8.237ns (frequency: 121.404MHz)
-  Total number of paths / destination ports: 18810 / 986
+  Total number of paths / destination ports: 18806 / 986
 -------------------------------------------------------------------------
 Delay:               8.237ns (Levels of Logic = 5)
   Source:            comm.comm_fpga_fx2/chanAddr_0 (FF)
@@ -7389,7 +7389,7 @@ Delay:               1.861ns (Levels of Logic = 1)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'fx2clk_in'
-  Total number of paths / destination ports: 1394 / 1324
+  Total number of paths / destination ports: 1393 / 1323
 -------------------------------------------------------------------------
 Offset:              7.477ns (Levels of Logic = 5)
   Source:            fx2gotdata_in (PAD)
@@ -7565,7 +7565,7 @@ Offset:              4.874ns (Levels of Logic = 4)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT2'
-  Total number of paths / destination ports: 591 / 68
+  Total number of paths / destination ports: 588 / 68
 -------------------------------------------------------------------------
 Offset:              12.302ns (Levels of Logic = 9)
   Source:            inst_fbctl/inst_localrstalg/RstQ_4 (FF)
@@ -7593,7 +7593,7 @@ Offset:              12.302ns (Levels of Logic = 9)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'fx2clk_in'
-  Total number of paths / destination ports: 166 / 19
+  Total number of paths / destination ports: 162 / 19
 -------------------------------------------------------------------------
 Offset:              10.627ns (Levels of Logic = 6)
   Source:            comm.comm_fpga_fx2/chanAddr_0 (FF)
@@ -7763,7 +7763,7 @@ Offset:              1.161ns (Levels of Logic = 0)
 
 =========================================================================
 Timing constraint: Default path analysis
-  Total number of paths / destination ports: 987 / 745
+  Total number of paths / destination ports: 983 / 745
 -------------------------------------------------------------------------
 Delay:               9.868ns (Levels of Logic = 6)
   Source:            fx2gotdata_in (PAD)
@@ -7898,12 +7898,12 @@ inst_syscon/Inst_pll_mcb/CLKOUT2|    8.023|         |         |         |
 
 
 Total REAL time to Xst completion: 83.00 secs
-Total CPU time to Xst completion: 76.24 secs
+Total CPU time to Xst completion: 76.96 secs
  
 --> 
 
 
-Total memory usage is 255560 kilobytes
+Total memory usage is 255420 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings : 3326 (   0 filtered)

@@ -548,12 +548,13 @@ begin
     end if;
   end process;
  
-   --p_f2hvalid <= '0' when fifosel = '1' and usb_fifo.stall = '1' else
-   --            '1';  
+  --p_f2hvalid <= '0' when fifosel = '1' and usb_fifo.stall = '1' else
+  --            '1';  NOT WORKIN
+  
   p_f2hvalid <= '1' when fifoen = '1' else
               '0' when fifosel = '1' and usb_fifo.stall = '1' and f2hready = '1' else
               '1' when f2hready = '1'                                            else
-              '0';
+              '0';                      -- WORKING
 
 
 
