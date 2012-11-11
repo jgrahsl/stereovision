@@ -124,8 +124,9 @@ entity top is
     -- when ep8in selected:
     fx2write_out  : out std_logic;  -- asserted (active-low) when writing to fx2
     fx2gotroom_in : in  std_logic;  -- asserted (active-high) when fx2 has room for more data from us
-    fx2pktend_out : out std_logic  -- asserted (active-low) when a host read needs to be committed early
+    fx2pktend_out : out std_logic;  -- asserted (active-low) when a host read needs to be committed early
 
+    du : out std_logic_vector(1 downto 0)
     );
 end top;
 
@@ -203,6 +204,36 @@ architecture behavioral of top is
   signal stallo   : std_logic;
   signal cam_rst  : std_logic;
   signal clk10mhz : std_logic;
+
+  signal i2c_en_a : std_logic;
+  signal i2c_en_b : std_logic;
+
+  signal i2c_sel_a : std_logic;
+  signal i2c_sel_b : std_logic;
+  signal i2c_sel_c : std_logic;
+
+  signal wr_en_a : std_logic;
+  signal wr_en_b : std_logic;
+  signal wr_en_c : std_logic;
+
+  signal rd_en_c : std_logic;
+
+  signal wr_full_a  : std_logic;
+  signal wr_full_b  : std_logic;
+  signal wr_full_c  : std_logic;
+  signal wr_empty_a : std_logic;
+  signal wr_empty_b : std_logic;
+  signal wr_empty_c : std_logic;
+  signal dout       : std_logic_vector(7 downto 0);
+
+
+  attribute keep_hierarchy                 : string;
+  attribute keep_hierarchy of inst_camctla : label is "yes";
+  attribute keep_hierarchy of inst_camctlb : label is "yes";
+--  attribute keep_hierarchy of my_i2c_a: label is "yes";
+--  attribute keep_hierarchy of my_i2c_b: label is "yes";  
+--  attribute keep_hierarchy of inst_bi2_c: label is "yes";    
+  signal t                                 : std_logic;
 begin
 ----------------------------------------------------------------------------------
 -- system control unit
@@ -231,7 +262,7 @@ begin
     pll_ce_90_o      => pll_ce_90,
     pll_lock         => pll_lock,
     async_rst        => async_rst,
-    clk10mhz => clk10mhz
+    clk10mhz         => clk10mhz
     );
 
 ----------------------------------------------------------------------------------
@@ -309,7 +340,7 @@ begin
       usb_fifo   => usb_fifo,
       stallo     => stallo,
       d          => d,
-      clk10mhz => clk10mhz
+      clk10mhz   => clk10mhz
       );
 
   fbrden  <= vtcvde;
@@ -365,16 +396,14 @@ begin
       rst_i   => cam_rst,
       clk     => camclk,
       clk_180 => camclk_180,
-      sda     => cama_sda,
-      scl     => cama_scl,
       d_i     => cama_d_i,
       pclk_i  => int_cama_pclk_i,
       mclk_o  => cama_mclk_o,
       lv_i    => cama_lv_i,
-      fv_i    => cama_fv_i,
       rst_o   => cama_rst_o,
       pwdn_o  => cama_pwdn_o,
-      vdden_o => camavdden
+      vdden_o => camavdden,
+      i2c_en  => i2c_en_a
       );
   camx_vdden_o <= cambvdden;
 ----------------------------------------------------------------------------------
@@ -388,18 +417,38 @@ begin
       rst_i   => cam_rst,
       clk     => camclk,
       clk_180 => camclk_180,
-      sda     => camb_sda,
-      scl     => camb_scl,
       d_i     => camb_d_i,
       pclk_i  => int_camb_pclk_i,
       mclk_o  => camb_mclk_o,
       lv_i    => camb_lv_i,
-      fv_i    => camb_fv_i,
       rst_o   => camb_rst_o,
       pwdn_o  => camb_pwdn_o,
-      vdden_o => cambvdden
+      vdden_o => cambvdden,
+      i2c_en  => i2c_en_b
       );
 
+
+  my_i2c_a : entity work.i2c
+    port map (
+      RST_I   => not i2c_en_a,                    -- [in]
+      CLK     => camclk,                      -- [in]
+      SDA     => cama_sda,                        -- [inout]
+      SCL     => cama_scl,                        -- [inout]
+      wr_clk  => fx2clk_int,                      -- [in]
+      wr_data => h2fdata,                         -- [in]
+      wr_en   => wr_en_a,                         -- [in]
+      wr_full => wr_full_a);  -- [out]
+
+  my_i2c_b : entity work.i2c
+    port map (
+      RST_I   => not i2c_en_b,                      -- [in]
+      CLK     => camclk,                        -- [in]
+      SDA     => camb_sda,                          -- [inout]
+      SCL     => camb_scl,                          -- [inout]
+      wr_clk  => fx2clk_int,                        -- [in]
+      wr_data => h2fdata,                           -- [in]
+      wr_en   => wr_en_b,                           -- [in]
+      wr_full => wr_full_b);  -- [out]
 
   cam_rst <= async_rst or sup_rst;
 ----------------------------------------------------------------------------------
@@ -487,11 +536,13 @@ begin
   fifoen      <= '1' when fifosel = '1' and usb_fifo.stall = '0' and f2hready = '1' else '0';
   usb_fifo.en <= fifoen;
 
-  f2hvalid <= '1' when fifoen = '1' else
-              '0' when fifosel = '1' and usb_fifo.stall = '1' and f2hready = '1' else
-              '1' when f2hready = '1'                                            else
-              '0';
-  
+
+  f2hvalid <= '0' when i2c_sel_a = '1' and wr_empty_a = '1' else
+               '0' when i2c_sel_b = '1' and wr_empty_b = '1'   else
+--               '0' when i2c_sel_c = '1' and wr_empty_c = '1' else
+               '0' when fifosel = '1' and usb_fifo.stall = '1' else
+               '1';
+
   led_o <= d.pr_count when sw_i(4 downto 0) = "00000" else
            d.pw_count   when sw_i(4 downto 0) = "00001" else
            d.auxr_count when sw_i(4 downto 0) = "00010" else
@@ -516,9 +567,8 @@ begin
            (others => '1');
 
 
---  d.off <= "00" & STD_LOGIC_VECTOR(disx+disy);  
-
   with chanaddr select f2hdata <=
+--    dout                                           when "0100011",
     std_logic_vector(to_unsigned(adr, 8))          when "1100000",
     "000000" & cfg(adr).identify & cfg(adr).enable when "1100001",
     inspect.identity                               when "1100010",
@@ -533,12 +583,48 @@ begin
     --cfg(adr).p(7)               when "1110111",
     --
     usb_fifo.data(7 downto 0) when "0100000",
---    "0000000" & usb_fifo.stall   when "0100001",    
---    usb_fifo.count(7 downto 0)   when "0100010",
-    x"aa"                     when others;
+    x"da"                     when others;
 
+
+-------------------------------------------------------------------------------
+-- I2C
+-------------------------------------------------------------------------------
+  --test : entity work.i2cfifo
+  --  port map (
+  --    rst    => not i2c_en_a,           -- [IN]
+  --    wr_clk => fx2clk_int,             -- [IN]
+  --    rd_clk => fx2clk_int,             -- [IN]
+  --    din    => h2fdata,                -- [IN]
+  --    wr_en  => wr_en_c,                -- [IN]
+  --    rd_en  => rd_en_c,                -- [IN]
+  --    dout   => dout,                   -- [OUT]
+  --    full   => wr_full_c,              -- [OUT]
+  --    empty  => wr_empty_c);            -- [OUT]
+
+
+
+  i2c_sel_a <= '1' when chanaddr = "0100001" else '0';
+  i2c_sel_b <= '1' when chanaddr = "0100010" else '0';
+--  i2c_sel_c <= '1' when chanaddr = "0100011" else '0';--
+
+  wr_en_a <= '1' when i2c_sel_a = '1' and h2fvalid = '1' else '0';
+  wr_en_b <= '1' when i2c_sel_b = '1' and h2fvalid = '1' else '0';
+--  wr_en_c <= '1' when i2c_sel_c = '1' and h2fvalid = '1' else '0';
+
+--  rd_en_c <= '1' when f2hReady = '1' and i2c_sel_c = '1' else '0'; 
+--
+
+  h2fready <= '0' when  --(i2c_sel_c = '1' and wr_full_c = '1') or
+              (i2c_sel_a = '1' and wr_full_a = '1') or
+              (i2c_sel_b = '1' and wr_full_b = '1')
+              else '1';
+
+  du(0) <= cama_sda;
+  du(1) <= cama_scl;
+-------------------------------------------------------------------------------
+-- COMM
+-------------------------------------------------------------------------------  
   comm : if fpgalink = 1 generate
-    h2fready <= '1';
 
     fx2read_out    <= fx2read;
     fx2oe_out      <= fx2read;
@@ -563,7 +649,8 @@ begin
         h2fready_in  => h2fready,
         f2hdata_in   => f2hdata,
         f2hvalid_in  => f2hvalid,
-        f2hready_out => f2hready
+        f2hready_out => f2hready,
+        s            => open
         );
 
   end generate comm;
