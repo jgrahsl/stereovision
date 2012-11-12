@@ -70,8 +70,8 @@ begin
       rd_en  => rd_en,                  -- [IN]
       dout   => dout,                   -- [OUT]
       full   => wr_full,                -- [OUT]
-      empty  => empty,
-    rd_data_count => count
+      almost_full => open,--wr_full,
+      empty  => empty
       );                 -- [OUT]
 
 

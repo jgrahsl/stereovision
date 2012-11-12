@@ -50,8 +50,8 @@ ENTITY i2cfifo IS
     rd_en : IN STD_LOGIC;
     dout : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
     full : OUT STD_LOGIC;
-    empty : OUT STD_LOGIC;
-    rd_data_count : OUT STD_LOGIC_VECTOR(4 DOWNTO 0)
+    almost_full : OUT STD_LOGIC;
+    empty : OUT STD_LOGIC
   );
 END i2cfifo;
 
@@ -67,8 +67,8 @@ COMPONENT wrapped_i2cfifo
     rd_en : IN STD_LOGIC;
     dout : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
     full : OUT STD_LOGIC;
-    empty : OUT STD_LOGIC;
-    rd_data_count : OUT STD_LOGIC_VECTOR(4 DOWNTO 0)
+    almost_full : OUT STD_LOGIC;
+    empty : OUT STD_LOGIC
   );
 END COMPONENT;
 
@@ -123,7 +123,7 @@ END COMPONENT;
       c_family => "spartan6",
       c_full_flags_rst_val => 1,
       c_has_almost_empty => 0,
-      c_has_almost_full => 0,
+      c_has_almost_full => 1,
       c_has_axi_aruser => 0,
       c_has_axi_awuser => 0,
       c_has_axi_buser => 0,
@@ -157,7 +157,7 @@ END COMPONENT;
       c_has_prog_flags_wach => 0,
       c_has_prog_flags_wdch => 0,
       c_has_prog_flags_wrch => 0,
-      c_has_rd_data_count => 1,
+      c_has_rd_data_count => 0,
       c_has_rd_rst => 0,
       c_has_rst => 1,
       c_has_slave_ce => 0,
@@ -215,7 +215,7 @@ END COMPONENT;
       c_prog_full_type_wdch => 0,
       c_prog_full_type_wrch => 0,
       c_rach_type => 0,
-      c_rd_data_count_width => 5,
+      c_rd_data_count_width => 4,
       c_rd_depth => 16,
       c_rd_freq => 1,
       c_rd_pntr_width => 4,
@@ -241,12 +241,12 @@ END COMPONENT;
       c_use_ecc_wrch => 0,
       c_use_embedded_reg => 0,
       c_use_fifo16_flags => 0,
-      c_use_fwft_data_count => 1,
+      c_use_fwft_data_count => 0,
       c_valid_low => 0,
       c_wach_type => 0,
       c_wdch_type => 0,
       c_wr_ack_low => 0,
-      c_wr_data_count_width => 5,
+      c_wr_data_count_width => 4,
       c_wr_depth => 16,
       c_wr_depth_axis => 1024,
       c_wr_depth_rach => 16,
@@ -278,8 +278,8 @@ U0 : wrapped_i2cfifo
     rd_en => rd_en,
     dout => dout,
     full => full,
-    empty => empty,
-    rd_data_count => rd_data_count
+    almost_full => almost_full,
+    empty => empty
   );
 -- synthesis translate_on
 
