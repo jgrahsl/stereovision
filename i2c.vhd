@@ -77,7 +77,7 @@ begin
       empty  => empty
       );                 -- [OUT]
 
-  wr_full <= awr_full or fwr_full;
+  wr_full <= awr_full;-- or fwr_full;
   
   Inst_LocalRst : entity digilent.LocalRst port map(
     RST_I  => RST_I,
