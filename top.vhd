@@ -450,7 +450,7 @@ begin
       SDA     => camb_sda,                          -- [inout]
       SCL     => camb_scl,                          -- [inout]
       wr_clk  => fx2clk_int,                        -- [in]
-      wr_data => p_h2fdata,                           -- [in]
+      wr_data => h2fdata,                           -- [in]
       wr_en   => wr_en_b,                           -- [in]
       wr_full => wr_full_b);  -- [out]
 
@@ -546,11 +546,11 @@ begin
 
       f2hvalid <= p_f2hvalid;
       f2hdata <= p_f2hdata;
-
+      h2fready <= p_h2fready;
 --      p_h2fdata <= h2fdata;
     end if;
   end process;
-      h2fready <= p_h2fready;
+
   
   --p_f2hvalid <= '0' when fifosel = '1' and usb_fifo.stall = '1' else
   --            '1';  NOT WORKIN
@@ -632,8 +632,8 @@ begin
   i2c_sel_b <= '1' when chanaddr = "0100010" else '0';
 --  i2c_sel_c <= '1' when chanaddr = "0100011" else '0';--
 
-  wr_en_a <= '1' when i2c_sel_a = '1' and h2fvalid = '1'  else '0';
-  wr_en_b <= '1' when i2c_sel_b = '1' and h2fvalid = '1'  else '0';
+  wr_en_a <= '1' when i2c_sel_a = '1' and h2fvalid = '1' and h2fready = '1' else '0';
+  wr_en_b <= '1' when i2c_sel_b = '1' and h2fvalid = '1'  and h2fready = '1' else '0';
 --  wr_en_c <= '1' when i2c_sel_c = '1' and h2fvalid = '1' else '0';
 
 --  rd_en_c <= '1' when f2hReady = '1' and i2c_sel_c = '1' else '0'; 

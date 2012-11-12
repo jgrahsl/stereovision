@@ -69,8 +69,8 @@ begin
       wr_en  => wr_en,                  -- [IN]
       rd_en  => rd_en,                  -- [IN]
       dout   => dout,                   -- [OUT]
-      full   => wr_full,                -- [OUT]
-      almost_full => open,--wr_full,
+      full   => open,                -- [OUT]
+      almost_full => wr_full,
       empty  => empty
       );                 -- [OUT]
 
