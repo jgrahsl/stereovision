@@ -1,6 +1,8 @@
-l_300.tiff
-r_300.tiff
-l_301.tiff
-r_301.tiff
-l_302.tiff
-r_302.tiff
+l_0.tiff
+r_0.tiff
+l_1.tiff
+r_1.tiff
+l_2.tiff
+r_2.tiff
+l_3.tiff
+r_3.tiff

@@ -180,7 +180,7 @@ def hex2ba(s):
     return ba
 def cfg(addr):
     for i in range(len(caminit)/2):
-        print i
+#        print i
         flwr(addr,hex2ba(caminit[2*i]))
 def i2c():
     cfg(I2CA)
