@@ -1,7 +1,7 @@
 Release 14.2 par P.28xd (lin)
 Copyright (c) 1995-2012 Xilinx, Inc.  All rights reserved.
 
-newt::  Mon Nov 12 14:23:20 2012
+newt::  Mon Nov 12 15:20:02 2012
 
 par -w -intstyle ise -ol high -mt 2 cam_map.ncd cam.ncd cam.pcf 
 
@@ -133,19 +133,19 @@ Phase  1  : 90796 unrouted;      REAL time: 21 secs
 
 Phase  2  : 85165 unrouted;      REAL time: 26 secs 
 
-Phase  3  : 60562 unrouted;      REAL time: 1 mins 14 secs 
+Phase  3  : 60562 unrouted;      REAL time: 1 mins 13 secs 
 
-Phase  4  : 60581 unrouted; (Setup:1668, Hold:281730, Component Switching Limit:0)     REAL time: 1 mins 23 secs 
+Phase  4  : 60581 unrouted; (Setup:1668, Hold:281730, Component Switching Limit:0)     REAL time: 1 mins 22 secs 
 
 Updating file: cam.ncd with current fully routed design.
 
-Phase  5  : 0 unrouted; (Setup:1222, Hold:248767, Component Switching Limit:0)     REAL time: 3 mins 10 secs 
+Phase  5  : 0 unrouted; (Setup:1222, Hold:248767, Component Switching Limit:0)     REAL time: 3 mins 11 secs 
 
 Phase  6  : 0 unrouted; (Setup:1222, Hold:248767, Component Switching Limit:0)     REAL time: 3 mins 14 secs 
 
-Phase  7  : 0 unrouted; (Setup:303, Hold:246315, Component Switching Limit:0)     REAL time: 4 mins 14 secs 
+Phase  7  : 0 unrouted; (Setup:303, Hold:246315, Component Switching Limit:0)     REAL time: 4 mins 15 secs 
 
-Phase  8  : 0 unrouted; (Setup:303, Hold:246315, Component Switching Limit:0)     REAL time: 4 mins 14 secs 
+Phase  8  : 0 unrouted; (Setup:303, Hold:246315, Component Switching Limit:0)     REAL time: 4 mins 15 secs 
 WARNING:Route:466 - Unusually high hold time violation detected among 35 connections. The top 20 such instances are printed below. The
    router will continue and try to fix it
 	inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1<4>:AQ ->
@@ -199,9 +199,9 @@ inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_
 
 Phase  9  : 0 unrouted; (Setup:303, Hold:0, Component Switching Limit:0)     REAL time: 4 mins 25 secs 
 
-Phase 10  : 0 unrouted; (Setup:303, Hold:0, Component Switching Limit:0)     REAL time: 4 mins 30 secs 
-Total REAL time to Router completion: 4 mins 30 secs 
-Total CPU time to Router completion (all processors): 6 mins 1 secs 
+Phase 10  : 0 unrouted; (Setup:303, Hold:0, Component Switching Limit:0)     REAL time: 4 mins 31 secs 
+Total REAL time to Router completion: 4 mins 31 secs 
+Total CPU time to Router completion (all processors): 6 mins 2 secs 
 
 Generating "PAR" statistics.
 
@@ -420,10 +420,10 @@ All signals are completely routed.
 
 WARNING:Par:283 - There are 5 loadless signals in this design. This design will cause Bitgen to issue DRC warnings.
 
-Total REAL time to PAR completion: 4 mins 37 secs 
-Total CPU time to PAR completion (all processors): 6 mins 8 secs 
+Total REAL time to PAR completion: 4 mins 38 secs 
+Total CPU time to PAR completion (all processors): 6 mins 9 secs 
 
-Peak Memory Usage:  484 MB
+Peak Memory Usage:  505 MB
 
 Placer: Placement generated during map.
 Routing: Completed - No errors found.
