@@ -5,14 +5,14 @@ Parameter TMPDIR set to /tmp/
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.05 secs
+Total CPU time to Xst completion: 0.06 secs
  
 --> 
 Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.05 secs
+Total CPU time to Xst completion: 0.06 secs
  
 --> 
 WARNING:Xst:1583 - You are using an internal switch '-use_new_parser'.
@@ -499,23 +499,23 @@ INFO:HDLCompiler:679 - "/home/julian/stereovision/remote_sources/_/lib/digilent/
 INFO:HDLCompiler:679 - "/home/julian/stereovision/remote_sources/_/lib/digilent/TWICtl.vhd" Line 393. Case statement is complete. others clause is never selected
 INFO:HDLCompiler:679 - "/home/julian/stereovision/remote_sources/_/lib/digilent/TWICtl.vhd" Line 411. Case statement is complete. others clause is never selected
 INFO:HDLCompiler:679 - "/home/julian/stereovision/remote_sources/_/lib/digilent/TWICtl.vhd" Line 429. Case statement is complete. others clause is never selected
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 137: octets should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 138: reg should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 139: reg1 should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 140: reg2 should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 147: empty should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 149: octets should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 152: octets should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 155: dout should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 159: reg should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 175: reg should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 190: reg should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 196: twido should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 204: reg should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 209: reg should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 215: twido should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 225: waitcnt should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 226: reg should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 141: octets should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 142: reg should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 143: reg1 should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 144: reg2 should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 151: empty should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 153: octets should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 156: octets should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 159: dout should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 163: reg should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 179: reg should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 194: reg should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 200: twido should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 208: reg should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 213: reg should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 219: twido should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 229: waitcnt should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/i2c.vhd" Line 230: reg should be on the sensitivity list of the process
 WARNING:HDLCompiler:1127 - "/home/julian/stereovision/top.vhd" Line 487: Assignment to rd ignored, since the identifier is never used
 
 Elaborating entity <inspect_sync> (architecture <myrtl>) from library <work>.
@@ -546,7 +546,7 @@ INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 276: Output port <VCNT_
 INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 290: Output port <LED_O> of the instance <inst_fbctl> is unconnected or connected to loadless signal.
 INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 290: Output port <d_off2> of the instance <inst_fbctl> is unconnected or connected to loadless signal.
 INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 395: Output port <VDDEN_O> of the instance <inst_camctla> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 658: Output port <s> of the instance <comm.comm_fpga_fx2> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/top.vhd" line 657: Output port <s> of the instance <comm.comm_fpga_fx2> is unconnected or connected to loadless signal.
 WARNING:Xst:653 - Signal <cfg<0>_p<2>> is used but never assigned. This sourceless signal will be automatically connected to value GND.
 WARNING:Xst:653 - Signal <cfg<0>_p<3>> is used but never assigned. This sourceless signal will be automatically connected to value GND.
 WARNING:Xst:653 - Signal <cfg<0>_p<4>> is used but never assigned. This sourceless signal will be automatically connected to value GND.
@@ -807,10 +807,10 @@ WARNING:Xst:653 - Signal <cfg<31>_p<5>> is used but never assigned. This sourcel
     Found 8-bit register for signal <f2hdata>.
     Found 1-bit register for signal <h2fready>.
     Found 5-bit register for signal <adr>.
-    Found 1-bit 32-to-1 multiplexer for signal <adr[4]_cfg[31]_identify_Mux_335_o> created at line 568.
-    Found 1-bit 32-to-1 multiplexer for signal <adr[4]_cfg[31]_enable_Mux_342_o> created at line 568.
-    Found 8-bit 32-to-1 multiplexer for signal <adr[4]_cfg[31]_p[0][7]_wide_mux_352_OUT> created at line 571.
-    Found 8-bit 32-to-1 multiplexer for signal <adr[4]_cfg[31]_p[1][7]_wide_mux_361_OUT> created at line 572.
+    Found 1-bit 32-to-1 multiplexer for signal <adr[4]_cfg[31]_identify_Mux_335_o> created at line 567.
+    Found 1-bit 32-to-1 multiplexer for signal <adr[4]_cfg[31]_enable_Mux_342_o> created at line 567.
+    Found 8-bit 32-to-1 multiplexer for signal <adr[4]_cfg[31]_p[0][7]_wide_mux_352_OUT> created at line 570.
+    Found 8-bit 32-to-1 multiplexer for signal <adr[4]_cfg[31]_p[1][7]_wide_mux_361_OUT> created at line 571.
 INFO:Xst:2774 - HDL ADVISOR - S property attached to signal dummya_t may hinder XST clustering optimizations.
 INFO:Xst:2774 - HDL ADVISOR - S property attached to signal dummyb_t may hinder XST clustering optimizations.
     Summary:
@@ -4391,8 +4391,7 @@ Unit <CamCtl> synthesized.
 
 Synthesizing Unit <i2c>.
     Related source file is "/home/julian/stereovision/i2c.vhd".
-INFO:Xst:3210 - "/home/julian/stereovision/i2c.vhd" line 63: Output port <full> of the instance <my_i2cfifo> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/i2c.vhd" line 84: Output port <ERRTYPE_O> of the instance <Inst_TWICtl> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/i2c.vhd" line 88: Output port <ERRTYPE_O> of the instance <Inst_TWICtl> is unconnected or connected to loadless signal.
     Found 4-bit register for signal <state>.
     Found 8-bit register for signal <reg<0>>.
     Found 8-bit register for signal <reg<1>>.
@@ -4418,10 +4417,10 @@ INFO:Xst:1799 - State stdone is never reached in FSM <state>.
     | Encoding           | auto                                           |
     | Implementation     | LUT                                            |
     -----------------------------------------------------------------------
-    Found 3-bit adder for signal <octets[2]_GND_1091_o_add_28_OUT> created at line 152.
-    Found 17-bit subtractor for signal <GND_1091_o_GND_1091_o_sub_1_OUT<16:0>> created at line 106.
-    Found 8-bit comparator equal for signal <reg[3][7]_reg1[7]_equal_56_o> created at line 226
-    Found 8-bit comparator equal for signal <reg[4][7]_reg2[7]_equal_57_o> created at line 226
+    Found 3-bit adder for signal <octets[2]_GND_1091_o_add_28_OUT> created at line 156.
+    Found 17-bit subtractor for signal <GND_1091_o_GND_1091_o_sub_1_OUT<16:0>> created at line 110.
+    Found 8-bit comparator equal for signal <reg[3][7]_reg1[7]_equal_56_o> created at line 230
+    Found 8-bit comparator equal for signal <reg[4][7]_reg2[7]_equal_57_o> created at line 230
     Summary:
 	inferred   2 Adder/Subtractor(s).
 	inferred  76 D-type flip-flop(s).
@@ -7744,7 +7743,7 @@ Top Level Output File Name         : cam.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 14040
+# BELS                             : 14041
 #      GND                         : 19
 #      INV                         : 109
 #      LUT1                        : 359
@@ -7752,7 +7751,7 @@ Primitive and Black Box Usage:
 #      LUT3                        : 456
 #      LUT4                        : 391
 #      LUT5                        : 531
-#      LUT6                        : 10574
+#      LUT6                        : 10575
 #      MULT_AND                    : 6
 #      MUXCY                       : 553
 #      MUXF7                       : 51
@@ -7810,16 +7809,16 @@ Selected Device : 6slx45csg324-3
 
 Slice Logic Utilization: 
  Number of Slice Registers:           10563  out of  54576    19%  
- Number of Slice LUTs:                12855  out of  27288    47%  
-    Number used as Logic:             12815  out of  27288    46%  
+ Number of Slice LUTs:                12856  out of  27288    47%  
+    Number used as Logic:             12816  out of  27288    46%  
     Number used as Memory:               40  out of   6408     0%  
        Number used as SRL:               40
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:  21891
-   Number with an unused Flip Flop:   11328  out of  21891    51%  
-   Number with an unused LUT:          9036  out of  21891    41%  
-   Number of fully used LUT-FF pairs:  1527  out of  21891     6%  
+ Number of LUT Flip Flop pairs used:  21892
+   Number with an unused Flip Flop:   11329  out of  21892    51%  
+   Number with an unused LUT:          9036  out of  21892    41%  
+   Number of fully used LUT-FF pairs:  1527  out of  21892     6%  
    Number of unique control sets:       385
 
 IO Utilization: 
@@ -7889,7 +7888,7 @@ All values displayed in nanoseconds (ns)
 =========================================================================
 Timing constraint: Default period analysis for Clock 'fx2clk_in'
   Clock period: 7.416ns (frequency: 134.840MHz)
-  Total number of paths / destination ports: 13885 / 1005
+  Total number of paths / destination ports: 13887 / 1005
 -------------------------------------------------------------------------
 Delay:               7.416ns (Levels of Logic = 5)
   Source:            comm.comm_fpga_fx2/state_FSM_FFd3 (FF)
@@ -8067,7 +8066,7 @@ Delay:               8.023ns (Levels of Logic = 8)
      LUT2:I0->O            1   0.203   0.000  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Msub_Max_Value_Delta_Up_lut<0> (inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Msub_Max_Value_Delta_Up_lut<0>)
      MUXCY:S->O            1   0.172   0.000  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Msub_Max_Value_Delta_Up_cy<0> (inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Msub_Max_Value_Delta_Up_cy<0>)
      XORCY:CI->O           1   0.180   0.808  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Msub_Max_Value_Delta_Up_xor<1> (inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/Max_Value_Delta_Up<1>)
-     LUT3:I0->O            1   0.205   0.580  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/n02211_SW0 (N175)
+     LUT3:I0->O            1   0.205   0.580  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/n02211_SW0 (N177)
      LUT6:I5->O            4   0.205   1.048  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/n02211 (inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/n0221)
      LUT6:I0->O            1   0.203   0.684  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/_n1436_inv1 (inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/_n1436_inv1)
      LUT6:I4->O            1   0.203   0.827  inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/_n1436_inv2 (inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/_n1436_inv2)
@@ -8321,7 +8320,7 @@ Offset:              13.598ns (Levels of Logic = 9)
      LUT3:I0->O           29   0.205   1.250  stall_out_11 (stall_out_1)
      end scope: 'inst_fbctl/my_distort/inst_bi2_c:stall_out_1'
      LUT4:I3->O            7   0.205   1.118  inst_fbctl/my_distort/my_translate/stall_out1 (d_off<7>)
-     LUT5:I0->O            1   0.203   0.000  Mmux_led_o126_F (N373)
+     LUT5:I0->O            1   0.203   0.000  Mmux_led_o126_F (N375)
      MUXF7:I0->O           1   0.131   0.580  Mmux_led_o126 (Mmux_led_o126)
      LUT6:I5->O            1   0.205   0.579  Mmux_led_o127 (led_o_3_OBUF)
      OBUF:I->O                 2.571          led_o_3_OBUF (led_o<3>)
@@ -8635,14 +8634,14 @@ inst_syscon/Inst_pll_mcb/CLKOUT2|    8.023|         |         |         |
 
 
 Total REAL time to Xst completion: 131.00 secs
-Total CPU time to Xst completion: 124.47 secs
+Total CPU time to Xst completion: 124.11 secs
  
 --> 
 
 
-Total memory usage is 314392 kilobytes
+Total memory usage is 311608 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings : 3328 (   0 filtered)
-Number of infos    :  465 (   0 filtered)
+Number of infos    :  464 (   0 filtered)
 

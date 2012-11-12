@@ -185,7 +185,6 @@ def cfg(addr):
 def i2c():
     cfg(I2CA)
     cfg(I2CB)
-
 if need_init:
     i2c()
 

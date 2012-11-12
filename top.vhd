@@ -547,7 +547,6 @@ begin
       f2hvalid <= p_f2hvalid;
       f2hdata <= p_f2hdata;
       h2fready <= p_h2fready;
---      p_h2fdata <= h2fdata;
     end if;
   end process;
 

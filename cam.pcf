@@ -1,5 +1,5 @@
 //! **************************************************************************
-// Written by: Map P.28xd on Mon Nov 12 12:34:00 2012
+// Written by: Map P.28xd on Mon Nov 12 13:55:51 2012
 //! **************************************************************************
 
 SCHEMATIC START;
@@ -560,6 +560,8 @@ TIMEGRP fx2clk_in = BEL "f2hdata_0" BEL "f2hdata_1" BEL "f2hdata_2" BEL
         BEL
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i"
         BEL
+        "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i"
+        BEL
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_almost_full_i"
         BEL
         "my_i2c_a/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/grstd1.grst_full.rst_d1"
@@ -637,6 +639,8 @@ TIMEGRP fx2clk_in = BEL "f2hdata_0" BEL "f2hdata_1" BEL "f2hdata_2" BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d3_3"
         BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i"
+        BEL
+        "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i"
         BEL
         "my_i2c_b/my_i2cfifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_almost_full_i"
         BEL
@@ -11952,7 +11956,7 @@ OFFSET = IN 1.25 ns VALID 7.5 ns BEFORE COMP "cama_pclk_i" "RISING";
 OFFSET = IN 1.25 ns VALID 7.5 ns BEFORE COMP "camb_pclk_i" "RISING";
 TIMEGRP "fx2out" OFFSET = OUT 13 ns AFTER COMP "fx2clk_in";
 TIMEGRP "fx2out_data" OFFSET = OUT 22 ns AFTER COMP "fx2clk_in";
-TIMEGRP "fx2in" OFFSET = IN 9.5 ns AFTER COMP "fx2clk_in";
+TIMEGRP "fx2in" OFFSET = IN 10.5 ns AFTER COMP "fx2clk_in";
 TIMEGRP "fx2data_in" OFFSET = IN 11 ns AFTER COMP "fx2clk_in";
 SCHEMATIC END;
 

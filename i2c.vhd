@@ -58,7 +58,10 @@ architecture rtl of i2c is
   signal reg1 : std_logic_vector(7 downto 0);
   signal reg2 : std_logic_vector(7 downto 0);  
   signal nreg1 : std_logic_vector(7 downto 0);
-  signal nreg2 : std_logic_vector(7 downto 0);  
+  signal nreg2 : std_logic_vector(7 downto 0);
+
+  signal fwr_full : std_logic;
+  signal awr_full : std_logic;  
 begin
   my_i2cfifo : entity work.i2cfifo
     port map (
@@ -69,12 +72,13 @@ begin
       wr_en  => wr_en,                  -- [IN]
       rd_en  => rd_en,                  -- [IN]
       dout   => dout,                   -- [OUT]
-      full   => open,                -- [OUT]
-      almost_full => wr_full,
+      full   => fwr_full,                -- [OUT]
+      almost_full => awr_full,
       empty  => empty
       );                 -- [OUT]
 
-
+  wr_full <= awr_full or fwr_full;
+  
   Inst_LocalRst : entity digilent.LocalRst port map(
     RST_I  => RST_I,
     CLK_I  => CLK,
