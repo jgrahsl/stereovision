@@ -59,8 +59,8 @@ architecture impl of bi2 is
 
   signal x_pixel : unsigned((ABCD_BITS/2)-1 downto 0);
   signal y_pixel : unsigned((ABCD_BITS/2)-1 downto 0);  
-  signal x_frac : unsigned(SUBGRID_BITS-1 downto 0);
-  signal y_frac : unsigned(SUBGRID_BITS-1 downto 0);
+  signal x_frac : unsigned(SUBGRID_BITS-1+1 downto 0);
+  signal y_frac : unsigned(SUBGRID_BITS-1+1 downto 0);
 
   signal abcd2_next : abcd2_t;
 begin 
@@ -97,10 +97,10 @@ begin
       ry => y(SUBGRID_BITS-1 downto 0),
       o  => oy);
 
-  x_pixel <= unsigned(std_logic_vector(ox(ox'high downto ox'high-(ABCD_BITS/2)+1)));
-  y_pixel <= unsigned(std_logic_vector(oy(oy'high downto oy'high-(ABCD_BITS/2)+1)));
-  x_frac <= unsigned(std_logic_vector(ox(SUBGRID_BITS-1 downto 0)));
-  y_frac <= unsigned(std_logic_vector(oy(SUBGRID_BITS-1 downto 0)));
+  x_pixel <= "0" & unsigned(std_logic_vector(ox(ox'high downto ox'high-(ABCD_BITS/2)+1+COMMA)));
+  y_pixel <= "0" & unsigned(std_logic_vector(oy(oy'high downto oy'high-(ABCD_BITS/2)+1+COMMA)));
+  x_frac <= unsigned(std_logic_vector(ox(SUBGRID_BITS-1+COMMA downto 0)));
+  y_frac <= unsigned(std_logic_vector(oy(SUBGRID_BITS-1+COMMA downto 0)));
    
   process(pipe_in_1, r, rst, src_valid, gray8_2d_in, y_pixel, x_frac, y_frac, x_pixel)
     variable v : reg_t;

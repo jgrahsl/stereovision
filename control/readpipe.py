@@ -125,10 +125,12 @@ def show1():
 
 def reqpic():
     set_reg(4,PEN,1)
-    if (get_reg(4,P0) & 1): 
+    if (get_reg(4,P0) & 1):
+        print "s1"
         set_reg(4,P0,0)
     else:
         set_reg(4,P0,1)
+        print "s0"
 
 def readpic():
     reqpic()

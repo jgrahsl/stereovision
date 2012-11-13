@@ -43,7 +43,7 @@ architecture impl of bi3 is
     v.rows := 0;
   end init;
 
-  signal o : signed(gray8_t'length+1+SUBGRID_BITS-1 downto 0);
+  signal o : signed(gray8_t'length+1+COMMA+SUBGRID_BITS-1 downto 0);
   signal x : gray8_t;
 begin 
   issue <= '0';
@@ -53,7 +53,7 @@ begin
   bilinear_1 : entity work.bilinear
     generic map (
       REF_BITS  => (gray8_t'length+1),
-      FRAC_BITS => SUBGRID_BITS)
+      FRAC_BITS => SUBGRID_BITS+COMMA)
     port map (
       a  => signed(abcd2.a),
       b  => signed(abcd2.b),

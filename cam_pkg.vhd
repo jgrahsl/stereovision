@@ -12,7 +12,8 @@ package cam_pkg is
   -----------------------------------------------------------------------------
   -- Bilinear
   -----------------------------------------------------------------------------
-  constant ABCD_BITS    : natural := 10;
+  constant COMMA    : natural := 2;
+  constant ABCD_BITS    : natural := 12;
   constant GRIDX_BITS   : natural := 2;
   constant GRIDY_BITS   : natural := 2;  -- MS bits taken from pixel counter
                                          -- for rom adr
@@ -163,8 +164,8 @@ package cam_pkg is
     b      : std_logic_vector(8 downto 0);
     c      : std_logic_vector(8 downto 0);
     d      : std_logic_vector(8 downto 0);
-    x_frac : unsigned(SUBGRID_BITS-1 downto 0);
-    y_frac : unsigned(SUBGRID_BITS-1 downto 0);
+    x_frac : unsigned(SUBGRID_BITS-1+COMMA downto 0);
+    y_frac : unsigned(SUBGRID_BITS-1+COMMA downto 0);
   end record;
 
 

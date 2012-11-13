@@ -693,7 +693,7 @@ architecture Behavioral of FBCtl is
   signal src_b : natural range 0 to 2400;
   signal src_c : natural range 0 to 2400;
 
-  constant KERNEL : natural := 30;
+  constant KERNEL : natural := 15;
 
   signal out_fifo : pixel_fifo_t;  
 begin

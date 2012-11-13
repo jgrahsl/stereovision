@@ -579,7 +579,7 @@ begin
     usb_fifo.data(7 downto 0) when "0100000",
 --    "0000000" & usb_fifo.stall   when "0100001",    
 --    usb_fifo.count(7 downto 0)   when "0100010",
-    x"aa"                     when others;
+    x"ca"                     when others;
 
 
   
