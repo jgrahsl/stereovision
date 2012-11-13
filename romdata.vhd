@@ -13,7 +13,7 @@ entity romdata is
 end romdata;
 
 architecture rtl of romdata is
-  ATTRIBUTE ram_extract: string;
+    ATTRIBUTE ram_extract: string;
     ATTRIBUTE ram_extract OF q: SIGNAL IS "yes";
     ATTRIBUTE ram_style: string;
     ATTRIBUTE ram_style OF q: SIGNAL IS "block";

@@ -5,7 +5,7 @@ Parameter TMPDIR set to /tmp/
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.06 secs
+Total CPU time to Xst completion: 0.05 secs
  
 --> 
 Parameter xsthdpdir set to xst
@@ -230,9 +230,6 @@ Parsing architecture <impl> of entity <bi2_x>.
 Parsing VHDL file "/home/julian/stereovision/bi2_y.vhd" into library work
 Parsing entity <bi2_y>.
 Parsing architecture <impl> of entity <bi2_y>.
-Parsing VHDL file "/home/julian/stereovision/bi2_combine.vhd" into library work
-Parsing entity <bi2_c>.
-Parsing architecture <impl> of entity <bi2_c>.
 Parsing VHDL file "/home/julian/stereovision/bi3.vhd" into library work
 Parsing entity <bi3>.
 Parsing architecture <impl> of entity <bi3>.
@@ -3859,11 +3856,11 @@ Unit <rom> synthesized.
 Synthesizing Unit <romdata>.
     Related source file is "/home/julian/stereovision/romdata.vhd".
         ADR_BITS = 4
-        DATA_BITS = 12
+        DATA_BITS = 14
     Set property "ram_extract = yes" for signal <q>.
     Set property "ram_style = block" for signal <q>.
     Found 4-bit register for signal <areg>.
-    Found 16x12-bit Read Only RAM for signal <q>
+    Found 16x14-bit Read Only RAM for signal <q>
     Summary:
 	inferred   1 RAM(s).
 	inferred   4 D-type flip-flop(s).
@@ -4154,49 +4151,49 @@ WARNING:Xst:647 - Input <pipe_in_2_ctrl_stall> is never used. This port will be 
     Found 9-bit register for signal <abcd2_b>.
     Found 9-bit register for signal <abcd2_c>.
     Found 9-bit register for signal <abcd2_d>.
-    Found 5-bit register for signal <abcd2_x_frac>.
-    Found 5-bit register for signal <abcd2_y_frac>.
+    Found 6-bit register for signal <abcd2_x_frac>.
+    Found 6-bit register for signal <abcd2_y_frac>.
     Found 1-bit register for signal <pipe_out_stage_valid>.
-    Found 12-bit adder for signal <n1442[11:0]> created at line 116.
-    Found 12-bit adder for signal <n1443[11:0]> created at line 1241.
-    Found 6-bit adder for signal <y_pixel[5]_GND_1031_o_add_22_OUT> created at line 1241.
-    Found 12-bit adder for signal <n1445[11:0]> created at line 123.
-    Found 12-bit adder for signal <n1449[11:0]> created at line 1241.
+    Found 10-bit adder for signal <n1491> created at line 116.
+    Found 10-bit adder for signal <GND_1031_o_GND_1031_o_add_15_OUT> created at line 1241.
+    Found 5-bit adder for signal <y_pixel[4]_GND_1031_o_add_22_OUT> created at line 1241.
+    Found 10-bit adder for signal <n1498> created at line 123.
+    Found 10-bit adder for signal <GND_1031_o_GND_1031_o_add_35_OUT> created at line 1241.
     Found 8-bit adder for signal <r_rows[7]_GND_1031_o_add_40_OUT> created at line 143.
     Found 9-bit adder for signal <r_cols[8]_GND_1031_o_add_42_OUT> created at line 146.
-    Found 6x4-bit multiplier for signal <y_pixel[5]_PWR_146_o_MuLt_6_OUT> created at line 1399.
-    Found 6x4-bit multiplier for signal <y_pixel[5]_PWR_146_o_MuLt_23_OUT> created at line 1399.
-    Found 9-bit 905-to-1 multiplexer for signal <n1489> created at line 164.
-    Found 9-bit 905-to-1 multiplexer for signal <n1484> created at line 117.
-    Found 9-bit 905-to-1 multiplexer for signal <n1487> created at line 122.
-    Found 9-bit 905-to-1 multiplexer for signal <n1488> created at line 127.
-    Found 12-bit comparator lessequal for signal <GND_1031_o_GND_1031_o_LessThan_13_o> created at line 117
-    Found 12-bit comparator lessequal for signal <GND_1031_o_GND_1031_o_LessThan_22_o> created at line 122
-    Found 12-bit comparator lessequal for signal <GND_1031_o_GND_1031_o_LessThan_32_o> created at line 127
+    Found 5x4-bit multiplier for signal <y_pixel[4]_PWR_146_o_MuLt_6_OUT> created at line 1399.
+    Found 5x4-bit multiplier for signal <y_pixel[4]_PWR_146_o_MuLt_23_OUT> created at line 1399.
+    Found 9-bit 905-to-1 multiplexer for signal <n1487> created at line 164.
+    Found 9-bit 905-to-1 multiplexer for signal <n1482> created at line 117.
+    Found 9-bit 905-to-1 multiplexer for signal <n1485> created at line 122.
+    Found 9-bit 905-to-1 multiplexer for signal <n1486> created at line 127.
+    Found 10-bit comparator lessequal for signal <GND_1031_o_GND_1031_o_LessThan_13_o> created at line 117
+    Found 10-bit comparator lessequal for signal <GND_1031_o_GND_1031_o_LessThan_22_o> created at line 122
+    Found 10-bit comparator lessequal for signal <GND_1031_o_GND_1031_o_LessThan_32_o> created at line 127
     Summary:
 	inferred   2 Multiplier(s).
 	inferred   7 Adder/Subtractor(s).
-	inferred 154 D-type flip-flop(s).
+	inferred 156 D-type flip-flop(s).
 	inferred   3 Comparator(s).
 	inferred   5 Multiplexer(s).
 Unit <bi2> synthesized.
 
 Synthesizing Unit <bilinear_1>.
     Related source file is "/home/julian/stereovision/bilinear.vhd".
-        REF_BITS = 6
+        REF_BITS = 7
         FRAC_BITS = 4
-    Found 7-bit adder for signal <dabc> created at line 52.
-    Found 12-bit adder for signal <n0054> created at line 59.
-    Found 12-bit adder for signal <n0057> created at line 59.
-    Found 12-bit adder for signal <res> created at line 59.
-    Found 7-bit subtractor for signal <ba> created at line 29.
-    Found 7-bit subtractor for signal <ca> created at line 30.
-    Found 7-bit subtractor for signal <a[5]_b[5]_sub_6_OUT<6:0>> created at line 52.
-    Found 7-bit subtractor for signal <n0048> created at line 0.
+    Found 8-bit adder for signal <dabc> created at line 52.
+    Found 13-bit adder for signal <n0054> created at line 59.
+    Found 13-bit adder for signal <n0057> created at line 59.
+    Found 13-bit adder for signal <res> created at line 59.
+    Found 8-bit subtractor for signal <ba> created at line 29.
+    Found 8-bit subtractor for signal <ca> created at line 30.
+    Found 8-bit subtractor for signal <a[6]_b[6]_sub_6_OUT<7:0>> created at line 52.
+    Found 8-bit subtractor for signal <n0048> created at line 0.
     Found 5x5-bit multiplier for signal <signed_rxry> created at line 47.
-    Found 7x5-bit multiplier for signal <s1> created at line 54.
-    Found 7x5-bit multiplier for signal <s2> created at line 55.
-    Found 7x10-bit multiplier for signal <s3> created at line 57.
+    Found 8x5-bit multiplier for signal <s1> created at line 54.
+    Found 8x5-bit multiplier for signal <s2> created at line 55.
+    Found 8x10-bit multiplier for signal <s3> created at line 57.
     Summary:
 	inferred   4 Multiplier(s).
 	inferred   8 Adder/Subtractor(s).
@@ -4223,19 +4220,19 @@ Unit <bi3> synthesized.
 Synthesizing Unit <bilinear_2>.
     Related source file is "/home/julian/stereovision/bilinear.vhd".
         REF_BITS = 9
-        FRAC_BITS = 5
+        FRAC_BITS = 6
     Found 10-bit adder for signal <dabc> created at line 52.
-    Found 16-bit adder for signal <n0054> created at line 59.
-    Found 16-bit adder for signal <n0057> created at line 59.
-    Found 16-bit adder for signal <res> created at line 59.
+    Found 17-bit adder for signal <n0054> created at line 59.
+    Found 17-bit adder for signal <n0057> created at line 59.
+    Found 17-bit adder for signal <res> created at line 59.
     Found 10-bit subtractor for signal <ba> created at line 29.
     Found 10-bit subtractor for signal <ca> created at line 30.
     Found 10-bit subtractor for signal <a[8]_b[8]_sub_6_OUT<9:0>> created at line 52.
     Found 10-bit subtractor for signal <n0048> created at line 0.
-    Found 6x6-bit multiplier for signal <signed_rxry> created at line 47.
-    Found 10x6-bit multiplier for signal <s1> created at line 54.
-    Found 10x6-bit multiplier for signal <s2> created at line 55.
-    Found 10x12-bit multiplier for signal <s3> created at line 57.
+    Found 7x7-bit multiplier for signal <signed_rxry> created at line 47.
+    Found 10x7-bit multiplier for signal <s1> created at line 54.
+    Found 10x7-bit multiplier for signal <s2> created at line 55.
+    Found 10x14-bit multiplier for signal <s3> created at line 57.
     Summary:
 	inferred   4 Multiplier(s).
 	inferred   8 Adder/Subtractor(s).
@@ -4397,7 +4394,7 @@ Synthesizing Unit <CamCtl>.
     Found 16-bit register for signal <D_O>.
     Found 1-bit register for signal <RST_O>.
     Found 23-bit adder for signal <rstCnt[22]_GND_1088_o_add_5_OUT> created at line 131.
-    Found 23-bit comparator greater for signal <rstCnt[22]_PWR_181_o_LessThan_5_o> created at line 129
+    Found 23-bit comparator greater for signal <rstCnt[22]_PWR_180_o_LessThan_5_o> created at line 129
     Summary:
 	inferred   1 Adder/Subtractor(s).
 	inferred  45 D-type flip-flop(s).
@@ -4547,22 +4544,24 @@ HDL Synthesis Report
 Macro Statistics
 # RAMs                                                 : 18
  1024x8-bit dual-port RAM                              : 14
- 16x12-bit single-port Read Only RAM                   : 4
+ 16x14-bit single-port Read Only RAM                   : 4
 # Multipliers                                          : 14
- 10x6-bit multiplier                                   : 2
  10x7-bit multiplier                                   : 2
- 12x10-bit multiplier                                  : 1
+ 10x8-bit multiplier                                   : 2
+ 14x10-bit multiplier                                  : 1
+ 5x4-bit multiplier                                    : 2
  5x5-bit multiplier                                    : 2
- 6x4-bit multiplier                                    : 2
- 6x6-bit multiplier                                    : 1
- 7x5-bit multiplier                                    : 4
+ 7x7-bit multiplier                                    : 1
+ 8x5-bit multiplier                                    : 4
 # Adders/Subtractors                                   : 186
- 10-bit adder                                          : 21
+ 10-bit adder                                          : 25
  10-bit subtractor                                     : 4
  11-bit adder                                          : 1
- 12-bit adder                                          : 13
+ 12-bit adder                                          : 3
+ 13-bit adder                                          : 6
  15-bit adder                                          : 6
- 16-bit adder                                          : 4
+ 16-bit adder                                          : 1
+ 17-bit adder                                          : 3
  17-bit subtractor                                     : 2
  2-bit adder                                           : 4
  23-bit adder                                          : 4
@@ -4574,15 +4573,14 @@ Macro Statistics
  30-bit adder                                          : 2
  32-bit subtractor                                     : 1
  4-bit adder                                           : 1
- 5-bit adder                                           : 51
+ 5-bit adder                                           : 52
  5-bit subtractor                                      : 15
- 6-bit adder                                           : 5
+ 6-bit adder                                           : 4
  6-bit subtractor                                      : 2
- 7-bit adder                                           : 3
- 7-bit subtractor                                      : 8
- 8-bit adder                                           : 8
+ 7-bit adder                                           : 1
+ 8-bit adder                                           : 10
  8-bit addsub                                          : 1
- 8-bit subtractor                                      : 7
+ 8-bit subtractor                                      : 15
  9-bit adder                                           : 6
 # Registers                                            : 1924
  1-bit register                                        : 516
@@ -4598,15 +4596,14 @@ Macro Statistics
  3-bit register                                        : 7
  32-bit register                                       : 11
  4-bit register                                        : 6
- 5-bit register                                        : 20
- 6-bit register                                        : 5
+ 5-bit register                                        : 18
+ 6-bit register                                        : 7
  7-bit register                                        : 3
  8-bit register                                        : 1270
  9-bit register                                        : 13
 # Comparators                                          : 91
  10-bit comparator greater                             : 9
- 10-bit comparator lessequal                           : 2
- 12-bit comparator lessequal                           : 3
+ 10-bit comparator lessequal                           : 5
  23-bit comparator greater                             : 2
  31-bit comparator greater                             : 2
  31-bit comparator lessequal                           : 1
@@ -10292,9 +10289,8 @@ Unit <bi> synthesized (advanced).
 Synthesizing (advanced) Unit <bi2>.
 The following registers are absorbed into counter <r_cols>: 1 register on signal <r_cols>.
 The following registers are absorbed into counter <r_rows>: 1 register on signal <r_rows>.
-	Multiplier <Mmult_y_pixel[5]_PWR_146_o_MuLt_23_OUT> in block <bi2> and adder/subtractor <Madd_n1445[11:0]> in block <bi2> are combined into a MAC<Maddsub_y_pixel[5]_PWR_146_o_MuLt_23_OUT>.
-	Multiplier <Mmult_y_pixel[5]_PWR_146_o_MuLt_6_OUT> in block <bi2> and adder/subtractor <Madd_n1442[11:0]> in block <bi2> are combined into a MAC<Maddsub_y_pixel[5]_PWR_146_o_MuLt_6_OUT>.
-	Adder/Subtractor <Madd_y_pixel[5]_GND_1031_o_add_22_OUT> in block <bi2> and  <Maddsub_y_pixel[5]_PWR_146_o_MuLt_23_OUT> in block <bi2> are combined into a MAC with pre-adder <Maddsub_y_pixel[5]_PWR_146_o_MuLt_23_OUT1>.
+	Multiplier <Mmult_y_pixel[4]_PWR_146_o_MuLt_23_OUT> in block <bi2> and adder/subtractor <Madd_n1498> in block <bi2> are combined into a MAC<Maddsub_y_pixel[4]_PWR_146_o_MuLt_23_OUT>.
+	Multiplier <Mmult_y_pixel[4]_PWR_146_o_MuLt_6_OUT> in block <bi2> and adder/subtractor <Madd_n1491> in block <bi2> are combined into a MAC<Maddsub_y_pixel[4]_PWR_146_o_MuLt_6_OUT>.
 Unit <bi2> synthesized (advanced).
 
 Synthesizing (advanced) Unit <bilinear_1>.
@@ -10352,7 +10348,7 @@ INFO:Xst:3226 - The RAM <Mram_q> will be implemented as a BLOCK RAM, absorbing t
     | ram_type           | Block                               |          |
     -----------------------------------------------------------------------
     | Port A                                                              |
-    |     aspect ratio   | 16-word x 12-bit                    |          |
+    |     aspect ratio   | 16-word x 14-bit                    |          |
     |     mode           | write-first                         |          |
     |     clkA           | connected to signal <clk>           | rise     |
     |     weA            | connected to signal <GND>           | high     |
@@ -10412,37 +10408,34 @@ Advanced HDL Synthesis Report
 Macro Statistics
 # RAMs                                                 : 18
  1024x8-bit dual-port block RAM                        : 14
- 16x12-bit single-port block Read Only RAM             : 4
+ 16x14-bit single-port block Read Only RAM             : 4
 # MACs                                                 : 8
- 4x6-to-12-bit MAC with pre-adder                      : 1
- 5x7-to-10-bit MAC with pre-adder                      : 4
- 6x10-to-14-bit MAC with pre-adder                     : 2
- 6x4-to-12-bit MAC                                     : 1
+ 5x4-to-10-bit MAC                                     : 2
+ 5x8-to-11-bit MAC with pre-adder                      : 4
+ 7x10-to-15-bit MAC with pre-adder                     : 2
 # Multipliers                                          : 6
- 10x7-bit multiplier                                   : 2
- 12x10-bit multiplier                                  : 1
+ 10x8-bit multiplier                                   : 2
+ 14x10-bit multiplier                                  : 1
  5x5-bit multiplier                                    : 2
- 6x6-bit multiplier                                    : 1
-# Adders/Subtractors                                   : 73
+ 7x7-bit multiplier                                    : 1
+# Adders/Subtractors                                   : 74
  10-bit adder                                          : 6
  10-bit subtractor                                     : 2
- 11-bit adder                                          : 1
- 12-bit adder                                          : 2
- 14-bit adder                                          : 1
+ 11-bit adder                                          : 3
+ 15-bit adder                                          : 1
  2-bit adder                                           : 2
  24-bit adder                                          : 6
  25-bit adder                                          : 3
  26-bit adder                                          : 2
  30-bit adder                                          : 2
  32-bit subtractor                                     : 1
- 5-bit adder                                           : 12
+ 5-bit adder                                           : 13
  5-bit subtractor                                      : 15
  6-bit adder                                           : 1
  6-bit subtractor                                      : 2
- 7-bit adder                                           : 3
- 7-bit subtractor                                      : 4
- 8-bit adder                                           : 2
- 8-bit subtractor                                      : 3
+ 7-bit adder                                           : 1
+ 8-bit adder                                           : 4
+ 8-bit subtractor                                      : 7
  9-bit adder                                           : 3
 # Adder Trees                                          : 6
  5-bit / 4-inputs adder tree                           : 6
@@ -10464,12 +10457,11 @@ Macro Statistics
  9-bit up counter                                      : 6
 # Accumulators                                         : 3
  5-bit up loadable accumulator                         : 3
-# Registers                                            : 11733
- Flip-Flops                                            : 11733
+# Registers                                            : 11735
+ Flip-Flops                                            : 11735
 # Comparators                                          : 91
  10-bit comparator greater                             : 9
- 10-bit comparator lessequal                           : 2
- 12-bit comparator lessequal                           : 3
+ 10-bit comparator lessequal                           : 5
  23-bit comparator greater                             : 2
  31-bit comparator greater                             : 2
  31-bit comparator lessequal                           : 1
@@ -16307,8 +16299,8 @@ WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <stage_data_888_16> 
 WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <stage_data_888_17> (without init value) has a constant value of 0 in block <mcb_feed_dual>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <stage_data_888_18> (without init value) has a constant value of 0 in block <mcb_feed_dual>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1710 - FF/Latch <abcd2_a_8> (without init value) has a constant value of 0 in block <bi2>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <abcd2_c_8> (without init value) has a constant value of 0 in block <bi2>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <abcd2_b_8> (without init value) has a constant value of 0 in block <bi2>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <abcd2_c_8> (without init value) has a constant value of 0 in block <bi2>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <abcd2_d_8> (without init value) has a constant value of 0 in block <bi2>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1710 - FF/Latch <n1_d_4> (without init value) has a constant value of 0 in block <TMDSEncoder>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <n1_q_m_4> (without init value) has a constant value of 0 in block <TMDSEncoder>. This FF/Latch will be trimmed during the optimization process.
@@ -18652,8 +18644,8 @@ Unit <top> processed.
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 4299
- Flip-Flops                                            : 4299
+# Registers                                            : 4301
+ Flip-Flops                                            : 4301
 # Shift Registers                                      : 37
  2-bit shift register                                  : 4
  3-bit shift register                                  : 32
@@ -18680,25 +18672,25 @@ Top Level Output File Name         : cam.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 6937
+# BELS                             : 7001
 #      GND                         : 19
-#      INV                         : 108
+#      INV                         : 109
 #      LUT1                        : 359
-#      LUT2                        : 405
-#      LUT3                        : 500
-#      LUT4                        : 381
-#      LUT5                        : 464
-#      LUT6                        : 3452
+#      LUT2                        : 413
+#      LUT3                        : 505
+#      LUT4                        : 398
+#      LUT5                        : 463
+#      LUT6                        : 3444
 #      MULT_AND                    : 6
-#      MUXCY                       : 574
+#      MUXCY                       : 594
 #      MUXF7                       : 50
 #      VCC                         : 5
-#      XORCY                       : 614
-# FlipFlops/Latches                : 5045
+#      XORCY                       : 636
+# FlipFlops/Latches                : 5047
 #      FD                          : 229
 #      FDC                         : 163
 #      FDCE                        : 241
-#      FDE                         : 986
+#      FDE                         : 988
 #      FDP                         : 161
 #      FDPE                        : 9
 #      FDR                         : 161
@@ -18745,17 +18737,17 @@ Selected Device : 6slx45csg324-3
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:            5045  out of  54576     9%  
- Number of Slice LUTs:                 5709  out of  27288    20%  
-    Number used as Logic:              5669  out of  27288    20%  
+ Number of Slice Registers:            5047  out of  54576     9%  
+ Number of Slice LUTs:                 5731  out of  27288    21%  
+    Number used as Logic:              5691  out of  27288    20%  
     Number used as Memory:               40  out of   6408     0%  
        Number used as SRL:               40
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:   9229
-   Number with an unused Flip Flop:    4184  out of   9229    45%  
-   Number with an unused LUT:          3520  out of   9229    38%  
-   Number of fully used LUT-FF pairs:  1525  out of   9229    16%  
+ Number of LUT Flip Flop pairs used:   9253
+   Number with an unused Flip Flop:    4206  out of   9253    45%  
+   Number with an unused LUT:          3522  out of   9253    38%  
+   Number of fully used LUT-FF pairs:  1525  out of   9253    16%  
    Number of unique control sets:       370
 
 IO Utilization: 
@@ -18787,22 +18779,22 @@ NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
 
 Clock Information:
 ------------------
-------------------------------------------------+------------------------------------------------------------------------+-------+
-Clock Signal                                    | Clock buffer(FF name)                                                  | Load  |
-------------------------------------------------+------------------------------------------------------------------------+-------+
-fx2clk_in                                       | IBUFG+BUFG                                                             | 798   |
-camb_pclk_i                                     | IBUF+BUFG                                                              | 84    |
-cama_pclk_i                                     | IBUF+BUFG                                                              | 84    |
-inst_syscon/Inst_10_1_pll/CLKOUT2               | BUFG                                                                   | 192   |
-inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT2| BUFG                                                                   | 3232  |
-inst_syscon/Inst_pll_mcb/CLKOUT2                | BUFG                                                                   | 241   |
-inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT0| BUFG                                                                   | 421   |
-inspect_unsync_identity<5>                      | NONE(inst_fbctl/my_distort/bitest3/bilinear_1/ADDER_FOR_MULTADD_Madd21)| 1     |
-inst_fbctl/my_distort/inst_bi2_c/abcd2_d<8>     | NONE(inst_fbctl/my_distort/inst_bi2_c/Madd_n1443[11:0]1)               | 4     |
-inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT1| BUFG                                                                   | 2     |
-clk_i                                           | IBUFG                                                                  | 43    |
-inst_syscon/Inst_10_1_pll/CLKOUT3               | BUFG                                                                   | 17    |
-------------------------------------------------+------------------------------------------------------------------------+-------+
+------------------------------------------------+------------------------------------------------------------------------------+-------+
+Clock Signal                                    | Clock buffer(FF name)                                                        | Load  |
+------------------------------------------------+------------------------------------------------------------------------------+-------+
+fx2clk_in                                       | IBUFG+BUFG                                                                   | 798   |
+camb_pclk_i                                     | IBUF+BUFG                                                                    | 84    |
+cama_pclk_i                                     | IBUF+BUFG                                                                    | 84    |
+inst_syscon/Inst_10_1_pll/CLKOUT2               | BUFG                                                                         | 192   |
+inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT2| BUFG                                                                         | 3234  |
+inst_syscon/Inst_pll_mcb/CLKOUT2                | BUFG                                                                         | 241   |
+inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT0| BUFG                                                                         | 421   |
+inspect_unsync_identity<5>                      | NONE(inst_fbctl/my_distort/bitest3/bilinear_1/ADDER_FOR_MULTADD_Madd21)      | 1     |
+inst_fbctl/my_distort/inst_bi2_c/abcd2_d<8>     | NONE(inst_fbctl/my_distort/inst_bi2_c/Madd_GND_1031_o_GND_1031_o_add_15_OUT1)| 4     |
+inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT1| BUFG                                                                         | 2     |
+clk_i                                           | IBUFG                                                                        | 43    |
+inst_syscon/Inst_10_1_pll/CLKOUT3               | BUFG                                                                         | 17    |
+------------------------------------------------+------------------------------------------------------------------------------+-------+
 INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
 
 Asynchronous Control Signals Information:
@@ -18813,7 +18805,7 @@ Timing Summary:
 ---------------
 Speed Grade: -3
 
-   Minimum period: 29.662ns (Maximum Frequency: 33.713MHz)
+   Minimum period: 28.878ns (Maximum Frequency: 34.629MHz)
    Minimum input arrival time before clock: 7.778ns
    Maximum output required time after clock: 12.302ns
    Maximum combinational path delay: 9.868ns
@@ -18912,7 +18904,7 @@ Delay:               7.561ns (Levels of Logic = 6)
      FD:C->Q              17   0.447   1.132  inst_dvitransmitter/Inst_TMDSEncoder_green/n0_q_m_1 (inst_dvitransmitter/Inst_TMDSEncoder_green/n0_q_m_1)
      LUT2:I0->O            5   0.203   1.059  inst_dvitransmitter/Inst_TMDSEncoder_green/Msub_dc_bias_lut<1>11 (inst_dvitransmitter/Inst_TMDSEncoder_green/Msub_dc_bias_lut<1>)
      LUT6:I1->O           14   0.203   1.062  inst_dvitransmitter/Inst_TMDSEncoder_green/cond_balanced (inst_dvitransmitter/Inst_TMDSEncoder_green/cond_balanced)
-     LUT2:I0->O            3   0.203   1.015  inst_dvitransmitter/Inst_TMDSEncoder_green/cond_balanced_q_m_d[8]_AND_641_o1 (inst_dvitransmitter/Inst_TMDSEncoder_green/cond_balanced_q_m_d[8]_AND_641_o)
+     LUT2:I0->O            3   0.203   1.015  inst_dvitransmitter/Inst_TMDSEncoder_green/cond_balanced_q_m_d[8]_AND_710_o1 (inst_dvitransmitter/Inst_TMDSEncoder_green/cond_balanced_q_m_d[8]_AND_710_o)
      LUT6:I0->O            1   0.203   0.580  inst_dvitransmitter/Inst_TMDSEncoder_green/Maccum_cnt_t_1_lut<4>2 (inst_dvitransmitter/Inst_TMDSEncoder_green/Maccum_cnt_t_1_lut<4>2)
      LUT6:I5->O            1   0.205   0.944  inst_dvitransmitter/Inst_TMDSEncoder_green/Maccum_cnt_t_1_lut<4>3 (inst_dvitransmitter/Inst_TMDSEncoder_green/Maccum_cnt_t_1_lut<4>)
      LUT6:I0->O            1   0.203   0.000  inst_dvitransmitter/Inst_TMDSEncoder_green/Maccum_cnt_t_1_xor<4>11 (inst_dvitransmitter/Inst_TMDSEncoder_green/Result<4>)
@@ -18923,10 +18915,10 @@ Delay:               7.561ns (Levels of Logic = 6)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT2'
-  Clock period: 29.662ns (frequency: 33.713MHz)
-  Total number of paths / destination ports: 291047483224 / 9847
+  Clock period: 28.878ns (frequency: 34.629MHz)
+  Total number of paths / destination ports: 516353583114 / 9851
 -------------------------------------------------------------------------
-Delay:               29.662ns (Levels of Logic = 11)
+Delay:               28.878ns (Levels of Logic = 12)
   Source:            inst_fbctl/my_distort/bitest/my_rom/roms[0].romdata_1/Mram_q1 (RAM)
   Destination:       inst_fbctl/my_distort/inst_bi2_c/abcd2_d_0 (FF)
   Source Clock:      inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT2 rising
@@ -18936,22 +18928,23 @@ Delay:               29.662ns (Levels of Logic = 11)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     RAMB8BWER:CLKAWRCLK->DOADO11   67   1.650   1.659  inst_fbctl/my_distort/bitest/my_rom/roms[0].romdata_1/Mram_q1 (inst_fbctl/my_distort/abcd_1_ay<5>)
-     begin scope: 'inst_fbctl/my_distort/inst_bi2_c:abcd_ay<5>'
-     DSP48A1:B5->PCOUT47    1   6.270   0.000  bilinear_2/Maddsub_s11 (bilinear_2/Maddsub_s11_PCOUT_to_Maddsub_s21_PCIN_47)
+     RAMB8BWER:CLKAWRCLK->DOADO13   66   1.650   1.653  inst_fbctl/my_distort/bitest/my_rom/roms[0].romdata_1/Mram_q1 (inst_fbctl/my_distort/abcd_1_ay<6>)
+     begin scope: 'inst_fbctl/my_distort/inst_bi2_c:abcd_ay<6>'
+     DSP48A1:B6->PCOUT47    1   6.270   0.000  bilinear_2/Maddsub_s11 (bilinear_2/Maddsub_s11_PCOUT_to_Maddsub_s21_PCIN_47)
      DSP48A1:PCIN47->PCOUT47    1   2.265   0.000  bilinear_2/Maddsub_s21 (bilinear_2/Maddsub_s21_PCOUT_to_ADDER_FOR_MULTADD_Madd21_PCIN_47)
-     DSP48A1:PCIN47->P9    2   2.264   0.616  bilinear_2/ADDER_FOR_MULTADD_Madd21 (oy<9>)
-     DSP48A1:D4->PCOUT47    1   6.305   0.000  Maddsub_y_pixel[5]_PWR_146_o_MuLt_23_OUT1 (Maddsub_y_pixel[5]_PWR_146_o_MuLt_23_OUT1_PCOUT_to_Madd_n1449[11:0]1_PCIN_47)
-     DSP48A1:PCIN47->P1  457   2.264   2.190  Madd_n1449[11:0]1 (n1449[11:0]<1>)
-     LUT6:I4->O            1   0.203   0.827  Mmux_n1488_21399 (Mmux_n1488_21399)
-     LUT6:I2->O            1   0.203   0.827  Mmux_n1488_16109 (Mmux_n1488_16109)
-     LUT6:I2->O            1   0.203   0.827  Mmux_n1488_1129 (Mmux_n1488_1129)
-     LUT6:I2->O            1   0.203   0.580  Mmux_n1488_67 (Mmux_n1488_67)
-     LUT3:I2->O            1   0.205   0.000  n1449[11:0]<9>71 (n1488<7>)
+     DSP48A1:PCIN47->P10    2   2.264   0.961  bilinear_2/ADDER_FOR_MULTADD_Madd21 (Madd_y_pixel[4]_GND_1031_o_add_22_OUT_lut<4>)
+     LUT5:I0->O            1   0.203   0.579  Madd_y_pixel[4]_GND_1031_o_add_22_OUT_xor<4>11 (y_pixel[4]_GND_1031_o_add_22_OUT<4>)
+     DSP48A1:B4->PCOUT47    1   4.400   0.000  Maddsub_y_pixel[4]_PWR_146_o_MuLt_23_OUT (Maddsub_y_pixel[4]_PWR_146_o_MuLt_23_OUT_PCOUT_to_Madd_GND_1031_o_GND_1031_o_add_35_OUT1_PCIN_47)
+     DSP48A1:PCIN47->P1  457   2.264   2.190  Madd_GND_1031_o_GND_1031_o_add_35_OUT1 (GND_1031_o_GND_1031_o_add_35_OUT<1>)
+     LUT6:I4->O            1   0.203   0.827  GND_1031_o_GND_1031_o_add_35_OUT<9>_21344 (GND_1031_o_GND_1031_o_add_35_OUT<9>_21344)
+     LUT6:I2->O            1   0.203   0.827  GND_1031_o_GND_1031_o_add_35_OUT<9>_1694 (GND_1031_o_GND_1031_o_add_35_OUT<9>_1694)
+     LUT6:I2->O            1   0.203   0.827  GND_1031_o_GND_1031_o_add_35_OUT<9>_1125 (GND_1031_o_GND_1031_o_add_35_OUT<9>_1125)
+     LUT6:I2->O            1   0.203   0.580  GND_1031_o_GND_1031_o_add_35_OUT<9>_66 (GND_1031_o_GND_1031_o_add_35_OUT<9>_66)
+     LUT3:I2->O            1   0.205   0.000  GND_1031_o_GND_1031_o_add_35_OUT<9>71 (n1486<7>)
      FDRE:D                    0.102          abcd2_d_7
     ----------------------------------------
-    Total                     29.662ns (22.137ns logic, 7.525ns route)
-                                       (74.6% logic, 25.4% route)
+    Total                     28.878ns (20.435ns logic, 8.443ns route)
+                                       (70.8% logic, 29.2% route)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT0'
@@ -19255,7 +19248,7 @@ Offset:              12.302ns (Levels of Logic = 9)
      LUT3:I0->O           29   0.205   1.250  stall_out_11 (stall_out_1)
      end scope: 'inst_fbctl/my_distort/inst_bi2_c:stall_out_1'
      LUT5:I4->O            7   0.205   1.118  inst_fbctl/my_distort/my_translate/stall_out1 (d_off<7>)
-     LUT5:I0->O            1   0.203   0.000  Mmux_led_o126_F (N369)
+     LUT5:I0->O            1   0.203   0.000  Mmux_led_o126_F (N367)
      MUXF7:I0->O           1   0.131   0.580  Mmux_led_o126 (Mmux_led_o126)
      LUT6:I5->O            1   0.205   0.579  Mmux_led_o127 (led_o_3_OBUF)
      OBUF:I->O                 2.571          led_o_3_OBUF (led_o<3>)
@@ -19506,7 +19499,7 @@ Clock to Setup on destination clock inspect_unsync_identity<5>
                                                 | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock                                    |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ------------------------------------------------+---------+---------+---------+---------+
-inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT2|   13.035|         |         |         |
+inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT2|   14.450|         |         |         |
 ------------------------------------------------+---------+---------+---------+---------+
 
 Clock to Setup on destination clock inst_fbctl/my_distort/inst_bi2_c/abcd2_d<8>
@@ -19514,7 +19507,7 @@ Clock to Setup on destination clock inst_fbctl/my_distort/inst_bi2_c/abcd2_d<8>
                                                 | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock                                    |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ------------------------------------------------+---------+---------+---------+---------+
-inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT2|   22.476|         |         |         |
+inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT2|   21.692|         |         |         |
 ------------------------------------------------+---------+---------+---------+---------+
 
 Clock to Setup on destination clock inst_syscon/Inst_10_1_pll/CLKOUT2
@@ -19553,7 +19546,7 @@ Source Clock                                    |Dest:Rise|Dest:Rise|Dest:Fall|D
 ------------------------------------------------+---------+---------+---------+---------+
 fx2clk_in                                       |    1.128|         |         |         |
 inst_syscon/Inst_10_1_pll/CLKOUT2               |    1.858|         |         |         |
-inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT2|   29.662|         |         |         |
+inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT2|   28.878|         |         |         |
 ------------------------------------------------+---------+---------+---------+---------+
 
 Clock to Setup on destination clock inst_syscon/Inst_pll_mcb/CLKOUT2
@@ -19568,13 +19561,13 @@ inst_syscon/Inst_pll_mcb/CLKOUT2|    8.023|         |         |         |
 =========================================================================
 
 
-Total REAL time to Xst completion: 144.00 secs
-Total CPU time to Xst completion: 112.75 secs
+Total REAL time to Xst completion: 146.00 secs
+Total CPU time to Xst completion: 112.13 secs
  
 --> 
 
 
-Total memory usage is 306496 kilobytes
+Total memory usage is 305568 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings : 14279 (   0 filtered)

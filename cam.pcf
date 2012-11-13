@@ -1,5 +1,5 @@
 //! **************************************************************************
-// Written by: Map P.28xd on Tue Nov 13 13:20:38 2012
+// Written by: Map P.28xd on Tue Nov 13 19:58:16 2012
 //! **************************************************************************
 
 SCHEMATIC START;
@@ -1837,11 +1837,13 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/my_distort/inst_bi2_c/abcd2_x_frac_2" BEL
         "inst_fbctl/my_distort/inst_bi2_c/abcd2_x_frac_3" BEL
         "inst_fbctl/my_distort/inst_bi2_c/abcd2_x_frac_4" BEL
+        "inst_fbctl/my_distort/inst_bi2_c/abcd2_x_frac_5" BEL
         "inst_fbctl/my_distort/inst_bi2_c/abcd2_y_frac_0" BEL
         "inst_fbctl/my_distort/inst_bi2_c/abcd2_y_frac_1" BEL
         "inst_fbctl/my_distort/inst_bi2_c/abcd2_y_frac_2" BEL
         "inst_fbctl/my_distort/inst_bi2_c/abcd2_y_frac_3" BEL
         "inst_fbctl/my_distort/inst_bi2_c/abcd2_y_frac_4" BEL
+        "inst_fbctl/my_distort/inst_bi2_c/abcd2_y_frac_5" BEL
         "inst_fbctl/my_distort/inst_bi2_c/abcd2_a_0" BEL
         "inst_fbctl/my_distort/inst_bi2_c/abcd2_a_1" BEL
         "inst_fbctl/my_distort/inst_bi2_c/abcd2_a_2" BEL
@@ -1850,14 +1852,6 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/my_distort/inst_bi2_c/abcd2_a_5" BEL
         "inst_fbctl/my_distort/inst_bi2_c/abcd2_a_6" BEL
         "inst_fbctl/my_distort/inst_bi2_c/abcd2_a_7" BEL
-        "inst_fbctl/my_distort/inst_bi2_c/abcd2_c_0" BEL
-        "inst_fbctl/my_distort/inst_bi2_c/abcd2_c_1" BEL
-        "inst_fbctl/my_distort/inst_bi2_c/abcd2_c_2" BEL
-        "inst_fbctl/my_distort/inst_bi2_c/abcd2_c_3" BEL
-        "inst_fbctl/my_distort/inst_bi2_c/abcd2_c_4" BEL
-        "inst_fbctl/my_distort/inst_bi2_c/abcd2_c_5" BEL
-        "inst_fbctl/my_distort/inst_bi2_c/abcd2_c_6" BEL
-        "inst_fbctl/my_distort/inst_bi2_c/abcd2_c_7" BEL
         "inst_fbctl/my_distort/inst_bi2_c/abcd2_b_0" BEL
         "inst_fbctl/my_distort/inst_bi2_c/abcd2_b_1" BEL
         "inst_fbctl/my_distort/inst_bi2_c/abcd2_b_2" BEL
@@ -1866,6 +1860,14 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/my_distort/inst_bi2_c/abcd2_b_5" BEL
         "inst_fbctl/my_distort/inst_bi2_c/abcd2_b_6" BEL
         "inst_fbctl/my_distort/inst_bi2_c/abcd2_b_7" BEL
+        "inst_fbctl/my_distort/inst_bi2_c/abcd2_c_0" BEL
+        "inst_fbctl/my_distort/inst_bi2_c/abcd2_c_1" BEL
+        "inst_fbctl/my_distort/inst_bi2_c/abcd2_c_2" BEL
+        "inst_fbctl/my_distort/inst_bi2_c/abcd2_c_3" BEL
+        "inst_fbctl/my_distort/inst_bi2_c/abcd2_c_4" BEL
+        "inst_fbctl/my_distort/inst_bi2_c/abcd2_c_5" BEL
+        "inst_fbctl/my_distort/inst_bi2_c/abcd2_c_6" BEL
+        "inst_fbctl/my_distort/inst_bi2_c/abcd2_c_7" BEL
         "inst_fbctl/my_distort/inst_bi2_c/abcd2_d_0" BEL
         "inst_fbctl/my_distort/inst_bi2_c/abcd2_d_1" BEL
         "inst_fbctl/my_distort/inst_bi2_c/abcd2_d_2" BEL
@@ -1886,9 +1888,9 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/my_distort/inst_bi2_c/r_rows_1" BEL
         "inst_fbctl/my_distort/inst_bi2_c/r_rows_2" BEL
         "inst_fbctl/my_distort/inst_bi2_c/r_rows_4" BEL
-        "inst_fbctl/my_distort/inst_bi2_c/r_rows_7" BEL
         "inst_fbctl/my_distort/inst_bi2_c/r_rows_5" BEL
         "inst_fbctl/my_distort/inst_bi2_c/r_rows_6" BEL
+        "inst_fbctl/my_distort/inst_bi2_c/r_rows_7" BEL
         "inst_fbctl/my_distort/inst_bi2_c/r_cols_3" BEL
         "inst_fbctl/my_distort/inst_bi2_c/r_rows_3" BEL
         "inst_fbctl/my_distort/inst_bi2_c/stage_identity_2" BEL

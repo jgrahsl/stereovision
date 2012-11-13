@@ -13,7 +13,7 @@ package cam_pkg is
   -- Bilinear
   -----------------------------------------------------------------------------
   constant COMMA    : natural := 2;
-  constant ABCD_BITS    : natural := 12;
+  constant ABCD_BITS    : natural := 14;
   constant GRIDX_BITS   : natural := 2;
   constant GRIDY_BITS   : natural := 2;  -- MS bits taken from pixel counter
                                          -- for rom adr
