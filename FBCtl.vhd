@@ -1155,10 +1155,11 @@ begin
   p2_wr_mask               <= "0000";
 
   p2_cmd_clk       <= clkcam_a;
-  p2_cmd_instr     <= mcb_cmd_wr;       -- port 1 write-only
+  p2_cmd_instr     <= mcb_cmd_wr;
   p2_cmd_byte_addr <= std_logic_vector(to_unsigned(snk_a*(wr_batch*4)+(CAMA_OFFSET), 30)) when snk_sel = 0 else
                       std_logic_vector(to_unsigned(snk_b*(wr_batch*4)+(CAMB_OFFSET), 30)) when snk_sel = 1 else
-                      std_logic_vector(to_unsigned(snk_c*(wr_batch*4)+(DVI_OFFSET), 30))  when snk_sel = 2 else (others => '0');
+                      --std_logic_vector(to_unsigned(snk_c*(wr_batch*4)+(DVI_OFFSET), 30))  when snk_sel = 2 else
+                      (others => '0');
   p2_cmd_bl        <= std_logic_vector(to_unsigned(pa_wr_cnt-1, 6)) when pa_int_rst = '1' else
                       std_logic_vector(to_unsigned(wr_batch-1, 6));
 
@@ -1175,7 +1176,9 @@ begin
         end if;
       when stwrcmd =>
         d.p2state(1) <= '1';
-        p2_cmd_en    <= '1';
+--        if snk_sel = 0 or snk_sel = 1 then
+          p2_cmd_en    <= '1';
+--        end if;
         nstatewra    <= stwrcmdwait;
       when stwrcmdwait =>
         d.p2state(2) <= '1';

@@ -1,25 +1,9 @@
 //! **************************************************************************
-// Written by: Map P.28xd on Fri Nov 16 16:40:41 2012
+// Written by: Map P.28xd on Fri Nov 16 16:58:27 2012
 //! **************************************************************************
 
 SCHEMATIC START;
 CONFIG VCCAUX = "3.3";
-COMP "fx2clk_in" LOCATE = SITE "C10" LEVEL 1;
-COMP "fx2oe_out" LOCATE = SITE "A15" LEVEL 1;
-COMP "mcb3_dram_a<0>" LOCATE = SITE "J7" LEVEL 1;
-COMP "mcb3_dram_a<1>" LOCATE = SITE "J6" LEVEL 1;
-COMP "mcb3_dram_a<2>" LOCATE = SITE "H5" LEVEL 1;
-COMP "mcb3_dram_a<3>" LOCATE = SITE "L7" LEVEL 1;
-COMP "mcb3_dram_a<4>" LOCATE = SITE "F3" LEVEL 1;
-COMP "mcb3_dram_a<5>" LOCATE = SITE "H4" LEVEL 1;
-COMP "mcb3_dram_a<6>" LOCATE = SITE "H3" LEVEL 1;
-COMP "mcb3_dram_a<7>" LOCATE = SITE "H6" LEVEL 1;
-COMP "mcb3_dram_a<8>" LOCATE = SITE "D2" LEVEL 1;
-COMP "mcb3_dram_a<9>" LOCATE = SITE "D1" LEVEL 1;
-COMP "mcb3_dram_ck_n" LOCATE = SITE "G1" LEVEL 1;
-COMP "mcb3_dram_we_n" LOCATE = SITE "E3" LEVEL 1;
-COMP "fx2addr_out<0>" LOCATE = SITE "A14" LEVEL 1;
-COMP "fx2addr_out<1>" LOCATE = SITE "B14" LEVEL 1;
 COMP "mcb3_dram_udqs" LOCATE = SITE "P2" LEVEL 1;
 COMP "tmds_tx_clk_n" LOCATE = SITE "A6" LEVEL 1;
 COMP "tmds_tx_clk_p" LOCATE = SITE "B6" LEVEL 1;
@@ -105,6 +89,22 @@ COMP "tmds_tx_2_p" LOCATE = SITE "B8" LEVEL 1;
 COMP "tmds_tx_sda" LOCATE = SITE "C9" LEVEL 1;
 COMP "tmds_tx_scl" LOCATE = SITE "D9" LEVEL 1;
 COMP "mcb3_dram_udqs_n" LOCATE = SITE "P1" LEVEL 1;
+COMP "fx2clk_in" LOCATE = SITE "C10" LEVEL 1;
+COMP "fx2oe_out" LOCATE = SITE "A15" LEVEL 1;
+COMP "mcb3_dram_a<0>" LOCATE = SITE "J7" LEVEL 1;
+COMP "mcb3_dram_a<1>" LOCATE = SITE "J6" LEVEL 1;
+COMP "mcb3_dram_a<2>" LOCATE = SITE "H5" LEVEL 1;
+COMP "mcb3_dram_a<3>" LOCATE = SITE "L7" LEVEL 1;
+COMP "mcb3_dram_a<4>" LOCATE = SITE "F3" LEVEL 1;
+COMP "mcb3_dram_a<5>" LOCATE = SITE "H4" LEVEL 1;
+COMP "mcb3_dram_a<6>" LOCATE = SITE "H3" LEVEL 1;
+COMP "mcb3_dram_a<7>" LOCATE = SITE "H6" LEVEL 1;
+COMP "mcb3_dram_a<8>" LOCATE = SITE "D2" LEVEL 1;
+COMP "mcb3_dram_a<9>" LOCATE = SITE "D1" LEVEL 1;
+COMP "mcb3_dram_ck_n" LOCATE = SITE "G1" LEVEL 1;
+COMP "mcb3_dram_we_n" LOCATE = SITE "E3" LEVEL 1;
+COMP "fx2addr_out<0>" LOCATE = SITE "A14" LEVEL 1;
+COMP "fx2addr_out<1>" LOCATE = SITE "B14" LEVEL 1;
 PIN
         inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM9.ram_pins<27>
         = BEL
@@ -395,17 +395,17 @@ TIMEGRP inst_syscon_pllout_x1 = BEL "inst_fbctl/x_0" BEL "inst_fbctl/y_0" BEL
         "inst_fbctl/src_b_11" BEL "inst_fbctl/src_c_1" BEL
         "inst_fbctl/src_b_10" BEL "inst_fbctl/src_b_9" BEL
         "inst_fbctl/src_b_7" BEL "inst_fbctl/src_b_6" BEL "inst_fbctl/src_b_8"
-        BEL "inst_fbctl/src_b_4" BEL "inst_fbctl/src_b_3" BEL
-        "inst_fbctl/src_b_5" BEL "inst_fbctl/src_b_1" BEL "inst_fbctl/src_b_0"
-        BEL "inst_fbctl/src_b_2" BEL "inst_fbctl/src_a_11" BEL
-        "inst_fbctl/src_a_10" BEL "inst_fbctl/src_a_8" BEL
-        "inst_fbctl/src_a_7" BEL "inst_fbctl/src_a_9" BEL "inst_fbctl/src_a_6"
-        BEL "inst_fbctl/src_a_5" BEL "inst_fbctl/src_a_3" BEL
-        "inst_fbctl/src_a_2" BEL "inst_fbctl/src_a_4" BEL "inst_fbctl/src_a_1"
+        BEL "inst_fbctl/src_b_5" BEL "inst_fbctl/src_b_4" BEL
+        "inst_fbctl/src_b_2" BEL "inst_fbctl/src_b_1" BEL "inst_fbctl/src_b_3"
+        BEL "inst_fbctl/src_b_0" BEL "inst_fbctl/src_a_10" BEL
+        "inst_fbctl/src_a_9" BEL "inst_fbctl/src_a_11" BEL
+        "inst_fbctl/src_a_7" BEL "inst_fbctl/src_a_6" BEL "inst_fbctl/src_a_8"
+        BEL "inst_fbctl/src_a_4" BEL "inst_fbctl/src_a_3" BEL
+        "inst_fbctl/src_a_5" BEL "inst_fbctl/src_a_2" BEL "inst_fbctl/src_a_1"
         BEL "inst_fbctl/src_a_0" BEL "inst_fbctl/stateRd_FSM_FFd1" BEL
         "inst_fbctl/stateRd_FSM_FFd2" BEL "inst_fbctl/stateRd_FSM_FFd4" BEL
-        "inst_fbctl/y_8" BEL "inst_fbctl/y_7" BEL "inst_fbctl/y_5" BEL
-        "inst_fbctl/y_4" BEL "inst_fbctl/y_6" BEL "inst_fbctl/y_2" BEL
+        "inst_fbctl/y_7" BEL "inst_fbctl/y_6" BEL "inst_fbctl/y_8" BEL
+        "inst_fbctl/y_5" BEL "inst_fbctl/y_4" BEL "inst_fbctl/y_2" BEL
         "inst_fbctl/y_1" BEL "inst_fbctl/y_3" BEL
         "inst_fbctl/inst_localrstc/RstQ_1" BEL
         "inst_fbctl/inst_localrstc/RstQ_2" BEL
