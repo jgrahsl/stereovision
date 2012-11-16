@@ -4,14 +4,9 @@ TIMESPEC TS_CLK_I = PERIOD "CLK_I" 100 MHz HIGH 50 %; #ISE 13.1 bug workaround, 
 #Created by Constraints Editor (xc6slx45-csg324-3) - 2011/04/06
 NET "Inst_SysCon/ASYNC_RST" TIG;
 
-NET "camapclk" TNM_NET = "camapclk";
-TIMESPEC TS_camapclk = PERIOD "camapclk" 80 MHz HIGH 50 %;
-OFFSET = IN 1.25 ns VALID 7.5 ns BEFORE "cama_pclk_i" RISING;
-
-NET "cambpclk" TNM_NET = "cambpclk";
-TIMESPEC TS_cambpclk = PERIOD "cambpclk" 80 MHz HIGH 50 %;
-OFFSET = IN 1.25 ns VALID 7.5 ns BEFORE "camb_pclk_i" RISING;
-
+#NET "camapclk" TNM_NET = "camapclk";
+#TIMESPEC TS_camapclk = PERIOD "camapclk" 80 MHz HIGH 50 %;
+#OFFSET = IN 1.25 ns VALID 7.5 ns BEFORE "cama_pclk_i" RISING;
 
 #Created by Constraints Editor (xc6slx45-csg324-3) - 2012/07/23
 INST "Inst_FBCtl/inst_localrstc/RstQ_*" TNM = RSTQ_SOURCE;

@@ -81,13 +81,6 @@ entity FBCtl is
     rstcam_a         : in    std_logic;  --asynchronous port reset
     dcam_a           : in    std_logic_vector (colordepth - 1 downto 0);  --data output
     clkcam_a         : in    std_logic;  --port clock
-------------------------------------------------------------------------------------
--- CAM B
-------------------------------------------------------------------------------------
-    encam_b          : in    std_logic;  --port enable
-    rstcam_b         : in    std_logic;  --asynchronous port reset
-    dcam_b           : in    std_logic_vector (colordepth - 1 downto 0);  --data output
-    clkcam_b         : in    std_logic;  --port clock
 -------------------------------------------------------------------------------    
     clk24            : in    std_logic;  --port clock
 ---------------------------------------------------------------------------------      
@@ -685,14 +678,20 @@ architecture Behavioral of FBCtl is
   signal cama_trigger_old : std_logic;
 
   signal sel : natural range 0 to 3;
+  signal snk_sel : natural range 0 to 3;
 
   signal x : unsigned(9 downto 0);
   signal y : unsigned(9 downto 0);
-
   signal src_a : natural range 0 to 2400;
   signal src_b : natural range 0 to 2400;
   signal src_c : natural range 0 to 2400;
 
+  signal x2 : unsigned(9 downto 0);
+  signal y2 : unsigned(9 downto 0);
+  signal snk_a : natural range 0 to 2400;
+  signal snk_b : natural range 0 to 2400;
+  signal snk_c : natural range 0 to 2400;
+  
   constant KERNEL : natural := 29;
 
   signal out_fifo : pixel_fifo_t;  
@@ -1044,6 +1043,12 @@ begin
       if (srstcam_a = '1') then
         pa_int_rst <= '1';
 
+        x2           <= (others => '0');
+        y2           <= (others => '0');
+        snk_a       <= 0;
+        snk_b       <= 0;
+        snk_c       <= 0;
+        
         if cama_trigger = '1' then
           done_a <= '1';
         else
@@ -1079,12 +1084,43 @@ begin
       if (pa_int_rst = '1' and p2_wr_empty = '1') then
         pa_wr_addr <= 0;
       elsif (statewra = stwrcmd) then
-        if (pa_wr_addr = SIZE/(wr_batch*4)-1) then
-          pa_wr_addr <= 0;
-        else
-          pa_wr_addr <= pa_wr_addr + 1;
-        end if;
-      end if;
+        --if (pa_wr_addr = SIZE/(wr_batch*4)-1) then
+        --  pa_wr_addr <= 0;
+        --else
+        --  pa_wr_addr <= pa_wr_addr + 1;
+        --end if;
+
+          if x2 < 20-1 then
+            x2 <= x2 + 1;
+          else
+            x2 <= (others => '0');
+            if y2 < 480-1 then
+              y2 <= y2 + 1;
+            else
+              y2 <= (others => '0');
+
+              x2     <= (others => '0');
+              y2     <= (others => '0');
+              snk_a <= 0;
+              snk_b <= 0;
+              snk_c <= 0;
+              
+            end if;
+          end if;
+
+          if x2 < 10 and y2 < 240 then
+            snk_a <= snk_a + 1;
+          end if;
+
+          if x2 >= 10 and x2 < 20 and y2 < 240 then
+            snk_b <= snk_b + 1;
+          end if;
+
+          if x2 < 10 and y2 >= 240 and y2 < 480 then
+            snk_c <= snk_c + 1;
+          end if;
+
+      end if;      
 -------------------------------------------------------------------------------
 -- STATE
 -------------------------------------------------------------------------------
@@ -1109,6 +1145,10 @@ begin
     end if;
   end process;
 
+  snk_sel <= 0 when x2 < 10 and y2 < 240 else
+             1 when x2 >= 10 and x2 < 20 and y2 < 240  else
+             2 when x2 < 10 and y2 >= 240 and y2 < 480 else 3;
+
   p2_wr_clk                <= clkcam_a;
   p2_wr_en                 <= pa_wr_data_sel and encam_a and done_a;
   p2_wr_data(31 downto 16) <= dcam_a;
@@ -1116,7 +1156,9 @@ begin
 
   p2_cmd_clk       <= clkcam_a;
   p2_cmd_instr     <= mcb_cmd_wr;       -- port 1 write-only
-  p2_cmd_byte_addr <= std_logic_vector(to_unsigned(pa_wr_addr * (wr_batch*4)+CAMA_OFFSET, 30));
+  p2_cmd_byte_addr <= std_logic_vector(to_unsigned(snk_a*(wr_batch*4)+(CAMA_OFFSET), 30)) when snk_sel = 0 else
+                      std_logic_vector(to_unsigned(snk_b*(wr_batch*4)+(CAMB_OFFSET), 30)) when snk_sel = 1 else
+                      std_logic_vector(to_unsigned(snk_c*(wr_batch*4)+(DVI_OFFSET), 30))  when snk_sel = 2 else (others => '0');
   p2_cmd_bl        <= std_logic_vector(to_unsigned(pa_wr_cnt-1, 6)) when pa_int_rst = '1' else
                       std_logic_vector(to_unsigned(wr_batch-1, 6));
 
@@ -1149,140 +1191,6 @@ begin
     end case;
   end process;
   d.p2 <= p2_wr_empty & p2_wr_full & p2_wr_underrun & p2_wr_error & p2_wr_en & p2_cmd_en & "00";
------------------------------------------------------------------------------
--- CAMERA B
------------------------------------------------------------------------------
-  inst_localrstb1_b : entity digilent.localrst port map(
-    rst_i  => rstcam_b_int,
-    clk_i  => clkcam_b,
-    srst_o => srstcam_b
-    );
-  rstcam_b_int <= rstcam_b or not calib_done;
-  
-  inst_localrstb2_b : entity digilent.localrst port map(
-    rst_i  => calib_done,
-    clk_i  => clkcam_b,
-    srst_o => scalibdoneb
-    );
-
-  inst_inputsync_fvb : entity digilent.inputsync port map(
-    d_i   => cfg(2).p(1)(0),
-    d_o   => camb_trigger,
-    clk_i => clkcam_b
-    );
-
-  portarst_proc_b : process(clkcam_b)
-  begin
-    if rising_edge(clkcam_b) then
-      if (srstcam_b = '1') then
-        pb_int_rst <= '1';
-
-        if camb_trigger = '1' then
-          done_b <= '1';
-        else
-          done_b <= '0';
-        end if;
-
-        --if camb_trigger /= camb_trigger_old then
-        --  done_b <= '1';
-        --  camb_trigger_old <= camb_trigger;
-        --end if;       
-      elsif (p1_wr_empty = '1') then
-        pb_int_rst <= '0';
-      end if;
-
--------------------------------------------------------------------------------
--- SELECTOR
--------------------------------------------------------------------------------
-      if (srstcam_b = '1') then
-        pb_wr_data_sel <= '0';
-      elsif (encam_b = '1') then
-        pb_wr_data_sel <= not pb_wr_data_sel;
-      end if;
-
-      if (encam_b = '1') then
-        if (pb_wr_data_sel = '0') then
-          p1_wr_data(15 downto 0) <= dcam_b;
-        end if;
-      end if;
--------------------------------------------------------------------------------
--- ADR COUNT
--------------------------------------------------------------------------------
-      if (pb_int_rst = '1' and p1_wr_empty = '1') then
-        pb_wr_addr <= 0;
-      elsif (statewrb = stwrcmd) then
-        if (pb_wr_addr = SIZE/(wr_batch*4)-1) then
-          pb_wr_addr <= 0;
---          done_b <= '0';
-        else
-          pb_wr_addr <= pb_wr_addr + 1;
-        end if;
-      end if;
--------------------------------------------------------------------------------
---  STATE
--------------------------------------------------------------------------------      
-      if (scalibdoneb = '0' or p1_wr_empty = '1') then
-        statewrb <= stwridle;
-      else
-        statewrb <= nstatewrb;
-      end if;
--------------------------------------------------------------------------------
---  WR COUNT
--------------------------------------------------------------------------------
-      if (statewrb = stwrcmd) then
-        if (p1_wr_en = '1' and pb_int_rst = '0') then
-          pb_wr_cnt <= 1;
-        else
-          pb_wr_cnt <= 0;
-        end if;
-      elsif (p1_wr_en = '1' and pb_int_rst = '0') then
-        pb_wr_cnt <= pb_wr_cnt + 1;
-      end if;
-      
-    end if;
-  end process;
-
-  p1_wr_clk                <= clkcam_b;
-  p1_wr_en                 <= pb_wr_data_sel and encam_b and done_b;
-  p1_wr_data(31 downto 16) <= dcam_b;
-  p1_wr_mask               <= "0000";
-
-  p1_cmd_clk       <= clkcam_b;
-  p1_cmd_instr     <= mcb_cmd_wr;       -- port 1 write-only
-  p1_cmd_byte_addr <= std_logic_vector(to_unsigned(pb_wr_addr * (wr_batch*4)+CAMB_OFFSET, 30));
-  p1_cmd_bl        <= std_logic_vector(to_unsigned(pb_wr_cnt-1, 6)) when pb_int_rst = '1' else
-                      std_logic_vector(to_unsigned(wr_batch-1, 6));
-
-  wrnext_state_decode_b : process (statewrb, p1_wr_count, p1_wr_error, pb_int_rst, p1_wr_empty, pb_wr_cnt)
-  begin
-    nstatewrb <= statewrb;              --default is to stay in current state
-    p1_cmd_en <= '0';
-    d.p1state <= (others => '0');
-    case (statewrb) is
-      when stwridle =>
-        d.p1state(0) <= '1';
-        if (pb_wr_cnt >= wr_batch or pb_int_rst = '1') then
-          nstatewrb <= stwrcmd;
-        end if;
-      when stwrcmd =>
-        d.p1state(1) <= '1';
-        p1_cmd_en    <= '1';
-        nstatewrb    <= stwrcmdwait;
-      when stwrcmdwait =>
-        d.p1state(2) <= '1';
-        if (p1_wr_error = '1') then
-          nstatewrb <= stwrerr;         --the write fifo got empty
-        elsif ((pb_int_rst = '0' and p1_wr_count < wr_batch) or
-               (pb_int_rst = '1' and p1_wr_empty = '1')) then  -- data got transferred from the fifo
-          nstatewrb <= stwridle;
-        end if;
-      when stwrerr =>
-        d.p1state(3) <= '1';
-        null;
-    end case;
-  end process;
-  d.p1 <= p1_wr_empty & p1_wr_full & p1_wr_underrun & p1_wr_error & p1_wr_en & p1_cmd_en & "00";
-
 -------------------------------------------------------------------------------
 -- ALGO on P0 and P1
 -------------------------------------------------------------------------------
@@ -1688,17 +1596,17 @@ begin
 -------------------------------------------------------------------------------
 --
 -------------------------------------------------------------------------------
-  my_distort: entity work.distort
-    generic map (
-      ID     => 10,
-      KERNEL => KERNEL,
-      WIDTH  => WIDTH,
-      HEIGHT => HEIGHT)
-    port map (
-      pipe_in   => pipe(1),             -- [in]
-      pipe_out  => pipe(9),            -- [out]
-      stall_in  => stall(9),            -- [in]
-      stall_out => stall(1));          -- [out]
+  --my_distort: entity work.distort
+  --  generic map (
+  --    ID     => 10,
+  --    KERNEL => KERNEL,
+  --    WIDTH  => WIDTH,
+  --    HEIGHT => HEIGHT)
+  --  port map (
+  --    pipe_in   => pipe(1),             -- [in]
+  --    pipe_out  => pipe(9),            -- [out]
+  --    stall_in  => stall(9),            -- [in]
+  --    stall_out => stall(1));          -- [out]
   
 -------------------------------------------------------------------------------
 -- ---
@@ -1709,10 +1617,10 @@ begin
       ID   => 3,
       MODE => 2)      
     port map (
-      pipe_in   => pipe(9),             -- [in]
+      pipe_in   => pipe(1),             -- [in]
       pipe_out  => pipe(10),
       stall_in  => stall(10),
-      stall_out => stall(9));           -- [inout]
+      stall_out => stall(1));           -- [inout]
 
   my_fifo_sink : entity work.fifo_sink
     generic map (

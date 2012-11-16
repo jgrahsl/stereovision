@@ -1,6 +1,7 @@
 set -tmpdir "/tmp/"
 set -xsthdpdir "xst"
 run
+-change_error_to_warning "HDLCompiler:1511"
 -ifn cam.prj
 -ofn cam
 -ofmt NGC

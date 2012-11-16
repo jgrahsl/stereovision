@@ -64,27 +64,16 @@ entity top is
     clk_i         : in    std_logic;
     reset_i       : in    std_logic;
     sup_rst       : in    std_logic;
-    camx_vdden_o  : out   std_logic;  -- common power supply enable (can do power cycle)
 
-    cama_sda    : inout std_logic;
-    cama_scl    : inout std_logic;
-    cama_d_i    : in    std_logic_vector (7 downto 0);
-    cama_pclk_i : inout std_logic;
-    cama_mclk_o : out   std_logic;
-    cama_lv_i   : in    std_logic;
-    cama_fv_i   : in    std_logic;
-    cama_rst_o  : out   std_logic;      --reset active low
-    cama_pwdn_o : out   std_logic;      --power-down active high           
 
-    camb_sda    : inout std_logic;
-    camb_scl    : inout std_logic;
-    camb_d_i    : in    std_logic_vector (7 downto 0);
-    camb_pclk_i : inout std_logic;
-    camb_mclk_o : out   std_logic;
-    camb_lv_i   : in    std_logic;
-    camb_fv_i   : in    std_logic;
-    camb_rst_o  : out   std_logic;      --reset active low
-    camb_pwdn_o : out   std_logic;      --power-down active high           
+    tmdsclk_p : in  std_logic;
+    tmdsclk_n : in  std_logic;
+    blue_p    : in  std_logic;
+    green_p   : in  std_logic;
+    red_p     : in  std_logic;
+    blue_n    : in  std_logic;
+    green_n   : in  std_logic;
+    red_n     : in  std_logic;
 
 ----------------------------------------------------------------------------------
 -- ddr2 interface
@@ -142,16 +131,6 @@ architecture behavioral of top is
   signal camapclk, camadv, camavdden, fbwrarst, int_fva : std_logic;
   signal camad                                          : std_logic_vector(15 downto 0);
   signal dummya_t, int_cama_pclk_i                      : std_logic;
-  attribute s                                           : string;
-  attribute s of cama_pclk_i                            : signal is "true";
-  attribute s of dummya_t                               : signal is "true";
-  --
-  signal cambpclk, cambdv, cambvdden, fbwrbrst, int_fvb : std_logic;
-  signal cambd                                          : std_logic_vector(15 downto 0);
-  signal dummyb_t, int_camb_pclk_i                      : std_logic;
-  attribute s of camb_pclk_i                            : signal is "true";
-  attribute s of dummyb_t                               : signal is "true";
-
   --
 
   signal ddr2clk_2x, ddr2clk_2x_180, mcb_drp_clk, pll_ce_0, pll_ce_90, pll_lock, async_rst : std_logic;
@@ -231,13 +210,28 @@ architecture behavioral of top is
   signal dout       : std_logic_vector(7 downto 0);
 
 
-  attribute keep_hierarchy                 : string;
-  attribute keep_hierarchy of inst_camctla : label is "yes";
-  attribute keep_hierarchy of inst_camctlb : label is "yes";
---  attribute keep_hierarchy of my_i2c_a: label is "yes";
---  attribute keep_hierarchy of my_i2c_b: label is "yes";  
---  attribute keep_hierarchy of inst_bi2_c: label is "yes";    
   signal t                                 : std_logic;
+
+
+  signal dec_exrst    : std_logic;                     -- [in]
+  signal dec_rx_reset : std_logic;                     -- [out]
+  signal dec_pclk     : std_logic;                     -- [out]
+  signal dec_pclkx2   : std_logic;                     -- [out]
+  signal dec_pclkx10  : std_logic;                     -- [out]
+  signal dec_pllclk0  : std_logic;
+  signal dec_pllclk1  : std_logic;
+  signal dec_pllclk2  : std_logic;
+  signal dec_plllckd  : std_logic;  
+  signal dec_hsync    : std_logic;                     -- [out]
+  signal old_dec_vsync    : std_logic;                     -- [out]
+  signal dec_vsync    : std_logic;                     -- [out]
+  signal dec_vsync_event    : std_logic;                     -- [out]  
+  signal dec_de       : std_logic;                     -- [out]
+  signal dec_red      : std_logic_vector(7 downto 0);  -- [out]
+  signal dec_green    : std_logic_vector(7 downto 0);  -- [out]
+  signal dec_blue     : std_logic_vector(7 downto 0);  -- [out]
+
+
 begin
 ----------------------------------------------------------------------------------
 -- system control unit
@@ -300,15 +294,10 @@ begin
       clkc    => fbrdclk,
       rd_mode => sw_i,
 
-      encam_a  => camadv,
+      encam_a  => dec_de,
       rstcam_a => fbwrarst,
-      dcam_a   => camad,
-      clkcam_a => camapclk,
-
-      encam_b  => cambdv,
-      rstcam_b => fbwrbrst,
-      dcam_b   => cambd,
-      clkcam_b => cambpclk,
+      dcam_a   => dec_red & dec_blue,
+      clkcam_a => dec_pclk,
 
       clk24 => camclk,
 
@@ -350,20 +339,19 @@ begin
   fbrden  <= vtcvde;
   fbrdrst <= async_rst;
   fbrdclk <= pclk;
-  
-  inst_inputsync_fva : entity digilent.inputsync port map(
-    d_i   => cama_fv_i,
-    d_o   => int_fva,
-    clk_i => camapclk
-    );
-  fbwrarst <= async_rst or not int_fva;
 
-  inst_inputsync_fvb : entity digilent.inputsync port map(
-    d_i   => camb_fv_i,
-    d_o   => int_fvb,
-    clk_i => cambpclk
-    );
-  fbwrbrst <= async_rst or not int_fvb;
+  process (dec_pclk)
+  begin  -- process
+    if dec_pclk'event and dec_pclk = '1' then     -- rising clock edge
+      old_dec_vsync <= dec_vsync;
+      dec_vsync_event <= '0';      
+      if old_dec_vsync = '0' and dec_vsync = '1' then
+        dec_vsync_event <= '1';
+      end if;
+    end if;
+  end process;
+  
+  fbwrarst <= async_rst or dec_vsync_event;
 
 ----------------------------------------------------------------------------------
 -- dvi transmitter
@@ -392,100 +380,38 @@ begin
 ----------------------------------------------------------------------------------
 -- camera a controller
 ----------------------------------------------------------------------------------
-  inst_camctla : entity work.camctl
-    port map (
-      d_o     => camad,
-      pclk_o  => camapclk,
-      dv_o    => camadv,
-      rst_i   => cam_rst,
-      clk     => camclk,
-      clk_180 => camclk_180,
-      d_i     => cama_d_i,
-      pclk_i  => int_cama_pclk_i,
-      mclk_o  => cama_mclk_o,
-      lv_i    => cama_lv_i,
-      rst_o   => cama_rst_o,
-      pwdn_o  => cama_pwdn_o,
-      vdden_o => camavdden,
-      i2c_en  => i2c_en_a
-      );
-  camx_vdden_o <= cambvdden;
-----------------------------------------------------------------------------------
--- camera b controller
-----------------------------------------------------------------------------------
-  inst_camctlb : entity work.camctl
-    port map (
-      d_o     => cambd,
-      pclk_o  => cambpclk,
-      dv_o    => cambdv,
-      rst_i   => cam_rst,
-      clk     => camclk,
-      clk_180 => camclk_180,
-      d_i     => camb_d_i,
-      pclk_i  => int_camb_pclk_i,
-      mclk_o  => camb_mclk_o,
-      lv_i    => camb_lv_i,
-      rst_o   => camb_rst_o,
-      pwdn_o  => camb_pwdn_o,
-      vdden_o => cambvdden,
-      i2c_en  => i2c_en_b
-      );
 
-
-  my_i2c_a : entity work.i2c
+  my_dvi_decoder : entity work.dvi_decoder
     port map (
-      RST_I   => not i2c_en_a,                    -- [in]
-      CLK     => camclk,                      -- [in]
-      SDA     => cama_sda,                        -- [inout]
-      SCL     => cama_scl,                        -- [inout]
-      wr_clk  => fx2clk_int,                      -- [in]
-      wr_data => h2fdata,                         -- [in]
-      wr_en   => wr_en_a,                         -- [in]
-      wr_full => wr_full_a);  -- [out]
-
-  my_i2c_b : entity work.i2c
-    port map (
-      RST_I   => not i2c_en_b,                      -- [in]
-      CLK     => camclk,                        -- [in]
-      SDA     => camb_sda,                          -- [inout]
-      SCL     => camb_scl,                          -- [inout]
-      wr_clk  => fx2clk_int,                        -- [in]
-      wr_data => h2fdata,                           -- [in]
-      wr_en   => wr_en_b,                           -- [in]
-      wr_full => wr_full_b);  -- [out]
-
-  cam_rst <= async_rst or sup_rst;
-----------------------------------------------------------------------------------
--- workaround for in_term bug ar#   40818
-----------------------------------------------------------------------------------
-  inst_iobuf_cama_pclk : iobuf
-    generic map (
-      drive      => 12,
-      iostandard => "default",
-      slew       => "slow")
-    port map (
-      o  => int_cama_pclk_i,            -- buffer output
-      io => cama_pclk_i,  -- buffer inout port (connect directly to top-level port)
-      i  => '0',                        -- buffer input
-      t  => dummya_t      -- 3-state enable input, high=input, low=output 
-      ); 
-  inst_iobuf_camb_pclk : iobuf
-    generic map (
-      drive      => 12,
-      iostandard => "default",
-      slew       => "slow")
-    port map (
-      o  => int_camb_pclk_i,            -- buffer output
-      io => camb_pclk_i,  -- buffer inout port (connect directly to top-level port)
-      i  => '0',                        -- buffer input
-      t  => dummyb_t      -- 3-state enable input, high=input, low=output 
-      ); 
-
-  dummya_t <= '1';
-  dummyb_t <= '1';
+      tmdsclk_p => tmdsclk_p,           -- [in]
+      tmdsclk_n => tmdsclk_n,           -- [in]
+      blue_p    => blue_p,              -- [in]
+      green_p   => green_p,             -- [in]
+      red_p     => red_p,               -- [in]
+      blue_n    => blue_n,              -- [in]
+      green_n   => green_n,             -- [in]
+      red_n     => red_n,               -- [in]
+      exrst     => '0',               -- [in]
+      reset     => dec_rx_reset,            -- [out]
+      pclk      => dec_pclk,                -- [out]
+      myclk     => open,
+      pclkx2    => dec_pclkx2,              -- [out]
+      pclkx10   => dec_pclkx10,             -- [out]
+      pllclk0   => dec_pllclk0,             -- [out]
+      pllclk1   => dec_pllclk1,             -- [out]
+      pllclk2   => dec_pllclk2,  -- [out]                                              --
+      pll_lckd  => dec_plllckd,            --      
+      hsync     => dec_hsync,               -- [out]
+      vsync     => dec_vsync,               -- [out]
+      de        => dec_de,                  -- [out]
+      psalgnerr => open,
+      red       => dec_red,                 -- [out]
+      green     => dec_green,               -- [out]
+      blue      => dec_blue);               -- [out]
 
   rd <= '0';
 
+--  my_fx2: entity work.fx2 port map (CLK_IN1  => fx2clk_in,CLK_OUT1 => fx2clk_int);  
   ibufg_inst : ibufg generic map (iostandard => "default")port map (o => fx2clk_int, i => fx2clk_in);
 --  fx2clk_in <= fx2clk_int;
 -------------------------------------------------------------------------------
@@ -593,7 +519,7 @@ begin
            d.state(15 downto 8) when sw_i(4 downto 0) = "00101" else
 
            f2hready & f2hvalid & usb_fifo.stall & fifosel & stallo & h2fready & h2fvalid & "1" when sw_i(4 downto 0) = "00110" else
-           d.fe                                                                                when sw_i(4 downto 0) = "00111" else
+           std_logic_vector(to_unsigned(adr,8))                                                                                when sw_i(4 downto 0) = "00111" else
 
            d.off when sw_i(4 downto 0) = "01000" else
 
@@ -638,13 +564,7 @@ begin
 --  rd_en_c <= '1' when f2hReady = '1' and i2c_sel_c = '1' else '0'; 
 --
 
-  p_h2fready <= '0' when  --(i2c_sel_c = '1' and wr_full_c = '1') or
-              (i2c_sel_a = '1' and wr_full_a = '1') or
-              (i2c_sel_b = '1' and wr_full_b = '1')
-              else '1';
-
-  du(0) <= cama_sda;
-  du(1) <= cama_scl;
+  p_h2fready <= '1';
 -------------------------------------------------------------------------------
 -- COMM
 -------------------------------------------------------------------------------  

@@ -1,9 +1,6 @@
 #Net rxd LOC=A16  |  IOSTANDARD=LVCMOS33;
 #Net txd LOC=B16  |  IOSTANDARD=LVCMOS33;
 
-NET "DU[0]" LOC = T3 | IOSTANDARD=LVCMOS33;
-NET "DU[1]" LOC = N5 | IOSTANDARD=LVCMOS33;
-
 NET "CLK_I" LOC = L15;
 NET "RESET_I" LOC = T15;
 NET "TMDS_TX_0_P" LOC = D8;
@@ -32,6 +29,26 @@ NET "TMDS_TX_SCL" IOSTANDARD = I2C;
 NET "TMDS_TX_SDA" IOSTANDARD = I2C;
 
 NET "SUP_RST" LOC = N4 |IOSTANDARD = LVCMOS33;
+
+
+# onboard HDMI IN2
+# Bank = 1, Pin name = IO_L43P_GCLK5_M1DQ4, Sch name = TMDS-RX-CLK_P
+NET "tmdsclk_p" LOC = H17;
+# Bank = 1, Pin name = IO_L43N_GCLK4_M1DQ5, Sch name = TMDS-RX-CLK_N
+NET "tmdsclk_n" LOC = H18;
+# Bank = 1, Pin name = IO_L45P_A1_M1LDQS,   Sch name = TMDS-RX-0_P
+NET "blue_p" LOC = K17;
+## Bank = 1, Pin name = IO_L45N_A0_M1LDQSN,  Sch name = TMDS-RX-0_N
+NET "blue_n" LOC = K18;
+# Bank = 1, Pin name = IO_L46P_FCS_B_M1DQ2, Sch name = TMDS-RX-1_P
+NET "green_p" LOC = L17;
+# Bank = 1, Pin name = IO_L46N_FOE_B_M1DQ3, Sch name = TMDS-RX-1_N
+NET "green_n" LOC = L18;
+# Bank = 1, Pin name = IO_L44P_A3_M1DQ6,    Sch name = TMDS-RX-2_P
+NET "red_p" LOC = J16;
+# Bank = 1, Pin name = IO_L44N_A2_M1DQ7,    Sch name = TMDS-RX-2_N
+NET "red_n" LOC = J18;
+
 
 # PlanAhead Generated physical constraints 
 NET "SW_I[0]" LOC = A10 |IOSTANDARD = LVCMOS33;

@@ -106,8 +106,8 @@ INST "fx2data_io[7]" TNM = "fx2out_data";
 TIMEGRP "fx2out" OFFSET = OUT 13 ns AFTER "fx2clk_in";
 TIMEGRP "fx2out_data" OFFSET = OUT 22 ns AFTER "fx2clk_in";
 
-TIMEGRP "fx2in" OFFSET = IN 10.5 ns  AFTER "fx2clk_in";
-TIMEGRP "fx2data_in" OFFSET = IN 11 ns  AFTER "fx2clk_in";
+TIMEGRP "fx2in" OFFSET = IN 10.5 ns  AFTER "fx2clk_in" VALID 15 ns;
+TIMEGRP "fx2data_in" OFFSET = IN 11 ns  AFTER "fx2clk_in"  VALID 15 ns;
 
 #TIMEGRP "fx2in" OFFSET = IN 9.5 ns  AFTER "fx2clk_in" RISING;
 #TIMEGRP "fx2data_in" OFFSET = IN 11 ns AFTER "fx2clk_in" RISING;
