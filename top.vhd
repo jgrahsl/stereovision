@@ -296,7 +296,7 @@ begin
 
       encam_a  => dec_de,
       rstcam_a => fbwrarst,
-      dcam_a   => dec_red & dec_blue,
+      dcam_a   => dec_red(7 downto 3) & dec_green(7 downto 2) & dec_blue(7 downto 3),
       clkcam_a => dec_pclk,
 
       clk24 => camclk,

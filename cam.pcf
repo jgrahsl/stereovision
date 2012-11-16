@@ -1,5 +1,5 @@
 //! **************************************************************************
-// Written by: Map P.28xd on Fri Nov 16 16:12:29 2012
+// Written by: Map P.28xd on Fri Nov 16 16:40:41 2012
 //! **************************************************************************
 
 SCHEMATIC START;
@@ -380,9 +380,9 @@ TIMEGRP fx2clk_in = BEL "f2hdata_0" BEL "f2hdata_1" BEL "f2hdata_2" BEL
         "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_1"
         PIN
         "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM9.ram_pins<27>";
-PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<379> = BEL
+PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<380> = BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0" PINNAME P3CLK;
-PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<401> = BEL
+PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<402> = BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0" PINNAME
         P3CMDCLK;
 TIMEGRP inst_syscon_pllout_x1 = BEL "inst_fbctl/x_0" BEL "inst_fbctl/y_0" BEL
@@ -411,10 +411,10 @@ TIMEGRP inst_syscon_pllout_x1 = BEL "inst_fbctl/x_0" BEL "inst_fbctl/y_0" BEL
         "inst_fbctl/inst_localrstc/RstQ_2" BEL
         "inst_fbctl/inst_localrstc/RstQ_3" BEL
         "inst_fbctl/inst_localrstc/RstQ_4" PIN
-        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<379>" PIN
-        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<401>" PIN
-        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<379>" PIN
-        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<401>" BEL
+        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<380>" PIN
+        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<402>" PIN
+        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<380>" PIN
+        "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<402>" BEL
         "inst_syscon/BUFG_inst1" BEL "inst_videotimingctl/VCnt_0" BEL
         "inst_videotimingctl/VCnt_8" BEL "inst_videotimingctl/VCnt_7" BEL
         "inst_videotimingctl/VCnt_6" BEL "inst_videotimingctl/VCnt_5" BEL
@@ -1876,13 +1876,13 @@ TIMEGRP RESET_SINK = BEL "inst_fbctl/inst_localrstalg/RstQ_1" BEL
         "inst_fbctl/inst_localrstalg/RstQ_2" BEL
         "inst_fbctl/inst_localrstalg/RstQ_3" BEL
         "inst_fbctl/inst_localrstalg/RstQ_4";
-PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<678> = BEL
+PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<679> = BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0" PINNAME UICLK;
 TIMEGRP inst_syscon_mcb_drp_clk_bfg = BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/IODRP2_RZQ"
         BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/gen_zio.IODRP2_ZIO"
-        PIN "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<678>"
+        PIN "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<679>"
         BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/syn_uiclk_pll_lock"
         BEL
@@ -2451,7 +2451,7 @@ PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/ioi_ldm_0_pins<0> = BEL
 PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/ioi_udm_0_pins<0> = BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/ioi_udm_0" PINNAME
         CLK0;
-PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<660> = BEL
+PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<661> = BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0" PINNAME
         PLLCLK1;
 TIMEGRP inst_syscon_ddr2clk_2x_180 = PIN
@@ -2488,7 +2488,7 @@ TIMEGRP inst_syscon_ddr2clk_2x_180 = PIN
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_dq[0].oserdes2_dq_0_pins<0>"
         PIN "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/ioi_ldm_0_pins<0>"
         PIN "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/ioi_udm_0_pins<0>"
-        PIN "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<660>";
+        PIN "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<661>";
 PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/oserdes2_udqsn_0_pins<0> =
         BEL "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/oserdes2_udqsn_0"
         PINNAME CLK0;
@@ -2596,7 +2596,7 @@ PIN
         = BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_addr_oserdes2[0].ioi_addr_0"
         PINNAME CLK0;
-PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<659> = BEL
+PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<660> = BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0" PINNAME
         PLLCLK0;
 PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/ioi_ck_0/N_pins<0> = BEL
@@ -2651,7 +2651,7 @@ TIMEGRP inst_syscon_ddr2clk_2x = PIN
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_addr_oserdes2[1].ioi_addr_0_pins<0>"
         PIN
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_addr_oserdes2[0].ioi_addr_0_pins<0>"
-        PIN "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<659>"
+        PIN "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<660>"
         PIN
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/ioi_ck_0/N_pins<0>"
         PIN "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/ioi_ck_0_pins<0>";
@@ -2805,7 +2805,7 @@ TS_inst_syscon_pllout_xs = PERIOD TIMEGRP "inst_syscon_pllout_xs"
         TS_inst_syscon_Inst_dcm_recfg_clkfx * 10 HIGH 50%;
 TS_inst_syscon_pllout_x1 = PERIOD TIMEGRP "inst_syscon_pllout_x1"
         TS_inst_syscon_Inst_dcm_recfg_clkfx HIGH 50%;
-PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<665> = BEL
+PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<666> = BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0" PINNAME
         SELFREFRESHMODE;
 PIN inst_syscon/BUFPLL_MCB_INST_pins<3> = BEL "inst_syscon/BUFPLL_MCB_INST"
@@ -2816,7 +2816,7 @@ PIN
         = BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/gen_term_calib.mcb_soft_calibration_top_inst/mcb_soft_calibration_inst/CKE_Train"
         PINNAME Q;
-PIN "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<665>" TIG;
+PIN "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<666>" TIG;
 PIN "inst_syscon/BUFPLL_MCB_INST_pins<3>" TIG;
 PIN "inst_syscon/ASYNC_RST1_pins<2>" TIG;
 PIN

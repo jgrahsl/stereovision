@@ -436,7 +436,7 @@ architecture Behavioral of FBCtl is
   constant MCB_CMD_WR : std_logic_vector(2 downto 0) := "000";
 
   constant RD_BATCH            : natural := 16;
-  constant WR_BATCH            : natural := 32;
+  constant WR_BATCH            : natural := 16;
   --memory address space reserved for a video memory (one for each camera)
   constant VMEM_SIZE           : natural := 2**23;
   type     stateRd_type is (stRdIdle, stRdCmd, stRdCmdWait, stRdErr);
