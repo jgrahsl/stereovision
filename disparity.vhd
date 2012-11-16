@@ -83,11 +83,13 @@ begin
 -------------------------------------------------------------------------------
 -- Logic
 -------------------------------------------------------------------------------
-    for b in 0 to MAX_DISPARITY-2 loop
-      v.delay(b+1) := r.delay(b);
-    end loop;  -- b
-    v.delay(0) := mono_2d_r;
-
+    if src_valid = '1' then     
+      for b in 0 to MAX_DISPARITY-2 loop
+        v.delay(b+1) := r.delay(b);
+      end loop;  -- b
+      v.delay(0) := mono_2d_r;
+    end if;
+    
     minimum       := KERNEL*KERNEL;
     minimum_index := MAX_DISPARITY-1;
 

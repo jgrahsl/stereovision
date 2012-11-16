@@ -79,8 +79,8 @@ vhdl work "win_test_gray8.vhd"
 vhdl work "win_test_rgb565.vhd"
 
 vhdl work "window_mono.vhd"
-#vhdl work "window_gray8.vhd"
-#vhdl work "window_rgb565.vhd"
+vhdl work "window_gray8.vhd"
+vhdl work "window_rgb565.vhd"
 
 vhdl work "morph_kernel.vhd"
 vhdl work "morph_new.vhd"
@@ -91,9 +91,10 @@ vhdl work "morph_set.vhd"
 
 #vhdl work "motion.vhd"
 
-vhdl work "distort.vhd"
-#vhdl work "disparity.vhd"
-#vhdl work "census.vhd"
+vhdl work "kernel_gray8.vhd"
+#vhdl work "distort.vhd"
+vhdl work "disparity.vhd"
+vhdl work "census.vhd"
 
 vhdl work "cfg_sync.vhd"
 vhdl work "inspect_sync.vhd"

@@ -694,7 +694,13 @@ architecture Behavioral of FBCtl is
   
   constant KERNEL : natural := 29;
 
-  signal out_fifo : pixel_fifo_t;  
+  signal out_fifo : pixel_fifo_t;
+  signal rgb565_2d : rgb565_2d_t;
+  signal gray8_2d : gray8_2d_t;  
+
+  signal mono_2d_l : mono_2d_t;
+  signal mono_2d_r : mono_2d_t;
+  
 begin
 ----------------------------------------------------------------------------------
 -- mcb instantiation
@@ -1610,6 +1616,78 @@ begin
   --    pipe_out  => pipe(9),            -- [out]
   --    stall_in  => stall(9),            -- [in]
   --    stall_out => stall(1));          -- [out]
+-------------------------------------------------------------------------------
+-- Disparity
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+  dut : entity work.win_rgb565
+    generic map (
+      ID     => 5,
+      KERNEL => 9,
+      WIDTH  => WIDTH,
+      HEIGHT => HEIGHT)
+    port map (
+      pipe_in      => pipe(1),          -- [in]
+      pipe_out     => pipe(2),
+      stall_in     => stall(2),
+      stall_out    => stall(1),
+      rgb565_2d_out => rgb565_2d
+      );                                -- [inout]
+
+  dut2 : entity work.census
+    generic map (
+      ID     => 9,
+      KERNEL => 9)
+    port map (
+      pipe_in     => pipe(2),           -- [in]
+      pipe_out    => pipe(3),
+      stall_in    => stall(3),
+      stall_out   => stall(2),
+      rgb565_2d_in => rgb565_2d,
+      mono_2d_l => mono_2d_l,
+      mono_2d_r => mono_2d_r      
+      );                                -- [inout]
+  
+  dut3 : entity work.disparity
+    generic map (
+      ID     => 10,
+      KERNEL => 9,
+      MAX_DISPARITY => 24)
+    port map (
+      pipe_in     => pipe(3),           -- [in]
+      pipe_out    => pipe(4),
+      stall_in    => stall(4),
+      stall_out   => stall(3),
+      mono_2d_l => mono_2d_l,
+      mono_2d_r => mono_2d_r      
+      );                                -- [inout]
+
+  dut4 : entity work.win_gray8
+    generic map (
+      ID     => 11,
+      KERNEL => 5,
+      WIDTH  => WIDTH,
+      HEIGHT => HEIGHT)
+    port map (
+      pipe_in      => pipe(4),          -- [in]
+      pipe_out     => pipe(5),
+      stall_in     => stall(5),
+      stall_out    => stall(4),
+      gray8_2d_out => gray8_2d
+      );                                -- [inout]
+
+  dut5 : entity work.kernel_gray8
+    generic map (
+      ID     => 15,
+      KERNEL => 5)
+    port map (
+      pipe_in      => pipe(5),          -- [in]
+      pipe_out     => pipe(6),
+      stall_in     => stall(6),
+      stall_out    => stall(5),
+      gray8_2d_in => gray8_2d
+      );                                -- [inout]
+
   
 -------------------------------------------------------------------------------
 -- ---
@@ -1620,10 +1698,10 @@ begin
       ID   => 3,
       MODE => 2)      
     port map (
-      pipe_in   => pipe(1),             -- [in]
+      pipe_in   => pipe(6),             -- [in]
       pipe_out  => pipe(10),
       stall_in  => stall(10),
-      stall_out => stall(1));           -- [inout]
+      stall_out => stall(6));           -- [inout]
 
   my_fifo_sink : entity work.fifo_sink
     generic map (
