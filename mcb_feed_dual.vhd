@@ -101,8 +101,8 @@ begin
     
     stage_next.data_1   <= (others => '0');
     stage_next.data_8   <= std_logic_vector(brightness);
---    stage_next.data_565 <= std_logic_vector(brightness_a) & std_logic_vector(brightness_b);
-    stage_next.data_565 <= selected_word;
+    stage_next.data_565 <= std_logic_vector(brightness_a) & std_logic_vector(brightness_b);
+--    stage_next.data_565 <= selected_word;
     stage_next.data_888 <= selected_word(15 downto 11) & "000" &
                            selected_word(10 downto 5) & "00" &
                            selected_word(4 downto 0) & "000";
