@@ -12,6 +12,7 @@ entity distort is
   generic (
     ID     : integer range 0 to 63   := 0;
     KERNEL : natural                 := 5;
+    LEFT   : natural                 := 1;
     WIDTH  : natural range 0 to 2048 := 2048;
     HEIGHT : natural range 0 to 2048 := 2048);
   port (
@@ -132,6 +133,7 @@ begin  -- myrtl
   bitest : entity work.bi
     generic map (
       ID     => (ID+4),
+      LEFT   => LEFT,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (

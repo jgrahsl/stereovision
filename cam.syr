@@ -5,14 +5,14 @@ Parameter TMPDIR set to /tmp/
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.05 secs
+Total CPU time to Xst completion: 0.06 secs
  
 --> 
 Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.05 secs
+Total CPU time to Xst completion: 0.06 secs
  
 --> 
 WARNING:Xst:1583 - You are using an internal switch '-use_new_parser'.
@@ -209,9 +209,12 @@ Parsing architecture <impl> of entity <color_mux>.
 Parsing VHDL file "/home/julian/stereovision/skinfilter.vhd" into library work
 Parsing entity <skinfilter>.
 Parsing architecture <impl> of entity <skinfilter>.
-Parsing VHDL file "/home/julian/stereovision/romdata.vhd" into library work
-Parsing entity <romdata>.
-Parsing architecture <rtl> of entity <romdata>.
+Parsing VHDL file "/home/julian/stereovision/romdata_l.vhd" into library work
+Parsing entity <romdata_l>.
+Parsing architecture <rtl> of entity <romdata_l>.
+Parsing VHDL file "/home/julian/stereovision/romdata_r.vhd" into library work
+Parsing entity <romdata_r>.
+Parsing architecture <rtl> of entity <romdata_r>.
 Parsing VHDL file "/home/julian/stereovision/rom.vhd" into library work
 Parsing entity <rom>.
 Parsing architecture <rtl> of entity <rom>.
@@ -432,7 +435,7 @@ WARNING:HDLCompiler:92 - "/home/julian/stereovision/mcb_feed_dual.vhd" Line 104:
 WARNING:HDLCompiler:92 - "/home/julian/stereovision/mcb_feed_dual.vhd" Line 106: word_b should be on the sensitivity list of the process
 WARNING:HDLCompiler:92 - "/home/julian/stereovision/mcb_feed_dual.vhd" Line 107: word_b should be on the sensitivity list of the process
 WARNING:HDLCompiler:92 - "/home/julian/stereovision/mcb_feed_dual.vhd" Line 108: word_b should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/julian/stereovision/mcb_feed_dual.vhd" Line 149: stage_next should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/julian/stereovision/mcb_feed_dual.vhd" Line 150: stage_next should be on the sensitivity list of the process
 
 Elaborating entity <distort> (architecture <myrtl>) with generics from library <work>.
 
@@ -454,7 +457,7 @@ Elaborating entity <bi> (architecture <impl>) with generics from library <work>.
 
 Elaborating entity <rom> (architecture <rtl>) with generics from library <work>.
 
-Elaborating entity <romdata> (architecture <rtl>) with generics from library <work>.
+Elaborating entity <romdata_l> (architecture <rtl>) with generics from library <work>.
 
 Elaborating entity <bi2> (architecture <impl>) with generics from library <work>.
 
@@ -475,6 +478,10 @@ Elaborating entity <window_gray8> (architecture <impl>) with generics from libra
 Elaborating entity <translate_win_gray8> (architecture <impl>) with generics from library <work>.
 
 Elaborating entity <bi> (architecture <impl>) with generics from library <work>.
+
+Elaborating entity <rom> (architecture <rtl>) with generics from library <work>.
+
+Elaborating entity <romdata_r> (architecture <rtl>) with generics from library <work>.
 
 Elaborating entity <bi2> (architecture <impl>) with generics from library <work>.
 
@@ -885,190 +892,190 @@ INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 703: Output port <p3_
 INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 703: Output port <p3_cmd_full> of the instance <mcb_ddr2> is unconnected or connected to loadless signal.
 INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 703: Output port <selfrefresh_mode> of the instance <mcb_ddr2> is unconnected or connected to loadless signal.
 INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1373: Output port <full> of the instance <pr_fifo_comp_b> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_stage_aux> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_stage_data_1> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_stage_data_8> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_stage_data_565> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_stage_data_888> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<0>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<0>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<0>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<0>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<0>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<0>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<1>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<1>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<1>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<1>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<1>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<1>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<2>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<2>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<2>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<2>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<2>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<2>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<3>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<3>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<3>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<3>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<3>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<3>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<4>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<4>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<4>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<4>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<4>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<4>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<5>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<5>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<5>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<5>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<5>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<5>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<6>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<6>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<6>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<6>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<6>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<6>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<7>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<7>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<7>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<7>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<7>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<7>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<8>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<8>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<8>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<8>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<8>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<8>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<9>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<9>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<9>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<9>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<9>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<9>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<10>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<10>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<10>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<10>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<10>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<10>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<11>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<11>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<11>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<11>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<11>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<11>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<12>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<12>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<12>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<12>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<12>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<12>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<13>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<13>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<13>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<13>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<13>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<13>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<14>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<14>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<14>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<14>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<14>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<14>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<15>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<15>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<15>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<15>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<15>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<15>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<16>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<16>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<16>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<16>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<16>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<16>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<17>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<17>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<17>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<17>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<17>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<17>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<18>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<18>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<18>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<18>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<18>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<18>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<19>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<19>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<19>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<19>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<19>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<19>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<20>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<20>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<20>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<20>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<20>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<20>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<21>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<21>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<21>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<21>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<21>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg<21>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_stage_valid> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[0]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[0]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[1]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[1]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[2]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[2]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[3]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[3]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[4]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[4]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[5]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[5]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[6]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[6]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[7]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[7]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[8]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[8]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[9]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[9]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[10]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[10]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[11]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[11]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[12]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[12]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[13]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[13]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[14]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[14]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[15]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[15]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[16]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[16]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[17]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[17]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[18]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[18]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[19]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[19]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[20]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[20]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[21]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_cfg[21]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_ctrl_clk> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1748: Output port <pipe_out_ctrl_rst> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_stage_aux> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_stage_data_1> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_stage_data_8> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_stage_data_565> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_stage_data_888> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<0>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<0>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<0>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<0>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<0>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<0>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<1>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<1>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<1>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<1>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<1>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<1>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<2>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<2>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<2>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<2>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<2>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<2>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<3>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<3>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<3>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<3>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<3>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<3>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<4>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<4>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<4>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<4>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<4>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<4>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<5>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<5>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<5>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<5>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<5>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<5>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<6>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<6>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<6>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<6>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<6>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<6>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<7>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<7>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<7>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<7>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<7>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<7>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<8>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<8>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<8>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<8>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<8>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<8>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<9>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<9>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<9>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<9>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<9>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<9>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<10>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<10>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<10>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<10>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<10>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<10>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<11>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<11>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<11>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<11>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<11>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<11>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<12>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<12>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<12>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<12>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<12>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<12>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<13>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<13>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<13>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<13>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<13>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<13>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<14>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<14>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<14>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<14>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<14>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<14>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<15>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<15>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<15>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<15>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<15>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<15>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<16>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<16>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<16>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<16>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<16>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<16>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<17>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<17>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<17>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<17>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<17>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<17>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<18>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<18>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<18>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<18>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<18>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<18>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<19>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<19>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<19>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<19>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<19>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<19>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<20>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<20>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<20>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<20>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<20>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<20>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<21>_p<0>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<21>_p<1>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<21>_p<2>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<21>_p<3>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<21>_p<4>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg<21>_p<5>> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_stage_valid> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[0]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[0]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[1]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[1]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[2]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[2]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[3]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[3]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[4]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[4]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[5]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[5]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[6]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[6]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[7]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[7]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[8]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[8]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[9]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[9]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[10]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[10]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[11]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[11]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[12]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[12]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[13]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[13]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[14]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[14]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[15]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[15]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[16]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[16]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[17]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[17]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[18]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[18]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[19]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[19]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[20]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[20]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[21]_enable> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_cfg[21]_identify> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_ctrl_clk> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/julian/stereovision/FBCtl.vhd" line 1750: Output port <pipe_out_ctrl_rst> of the instance <my_mcb_sink> is unconnected or connected to loadless signal.
 WARNING:Xst:2563 - Inout <usb_fifo_data<15:8>> is never assigned. Tied to value Z.
 WARNING:Xst:2563 - Inout <usb_fifo_count<9:8>> is never assigned. Tied to value Z.
 WARNING:Xst:653 - Signal <d_off2> is used but never assigned. This sourceless signal will be automatically connected to value GND.
@@ -2339,6 +2346,7 @@ Synthesizing Unit <distort_1>.
     Related source file is "/home/julian/stereovision/distort.vhd".
         ID = 5
         KERNEL = 9
+        LEFT = 1
         WIDTH = 320
         HEIGHT = 240
     Set property "KEEP_HIERARCHY = YES" for instance <inst_bi2_c>.
@@ -2565,6 +2573,7 @@ Unit <translate_win_gray8_1> synthesized.
 Synthesizing Unit <bi_1>.
     Related source file is "/home/julian/stereovision/bi.vhd".
         ID = 9
+        LEFT = 1
         WIDTH = 320
         HEIGHT = 240
     Found 32-bit register for signal <pipe_out_stage_aux>.
@@ -2576,25 +2585,26 @@ Synthesizing Unit <bi_1>.
     Found 9-bit register for signal <r_cols>.
     Found 8-bit register for signal <r_rows>.
     Found 1-bit register for signal <pipe_out_stage_valid>.
-    Found 8-bit adder for signal <r_rows[7]_GND_1028_o_add_4_OUT> created at line 102.
-    Found 9-bit adder for signal <r_cols[8]_GND_1028_o_add_6_OUT> created at line 105.
+    Found 8-bit adder for signal <r_rows[7]_GND_1028_o_add_4_OUT> created at line 104.
+    Found 9-bit adder for signal <r_cols[8]_GND_1028_o_add_6_OUT> created at line 107.
     Summary:
 	inferred   2 Adder/Subtractor(s).
 	inferred 107 D-type flip-flop(s).
 Unit <bi_1> synthesized.
 
-Synthesizing Unit <rom>.
+Synthesizing Unit <rom_1>.
     Related source file is "/home/julian/stereovision/rom.vhd".
+        LEFT = 1
         GRIDX_BITS = 6
         GRIDY_BITS = 6
     Found 6-bit adder for signal <a<1><5:0>> created at line 1241.
     Found 6-bit adder for signal <a<2><11:6>> created at line 1241.
     Summary:
 	inferred   2 Adder/Subtractor(s).
-Unit <rom> synthesized.
+Unit <rom_1> synthesized.
 
-Synthesizing Unit <romdata>.
-    Related source file is "/home/julian/stereovision/romdata.vhd".
+Synthesizing Unit <romdata_l>.
+    Related source file is "/home/julian/stereovision/romdata_l.vhd".
         ADR_BITS = 12
         DATA_BITS = 20
     Set property "ram_extract = yes" for signal <q>.
@@ -2604,7 +2614,7 @@ Synthesizing Unit <romdata>.
     Summary:
 	inferred   1 RAM(s).
 	inferred  12 D-type flip-flop(s).
-Unit <romdata> synthesized.
+Unit <romdata_l> synthesized.
 
 Synthesizing Unit <bi2_1>.
     Related source file is "/home/julian/stereovision/bi2.vhd".
@@ -2897,6 +2907,7 @@ Synthesizing Unit <distort_2>.
     Related source file is "/home/julian/stereovision/distort.vhd".
         ID = 13
         KERNEL = 9
+        LEFT = 0
         WIDTH = 320
         HEIGHT = 240
     Set property "KEEP_HIERARCHY = YES" for instance <inst_bi2_c>.
@@ -3100,6 +3111,7 @@ Unit <translate_win_gray8_2> synthesized.
 Synthesizing Unit <bi_2>.
     Related source file is "/home/julian/stereovision/bi.vhd".
         ID = 17
+        LEFT = 0
         WIDTH = 320
         HEIGHT = 240
     Found 32-bit register for signal <pipe_out_stage_aux>.
@@ -3111,12 +3123,36 @@ Synthesizing Unit <bi_2>.
     Found 9-bit register for signal <r_cols>.
     Found 8-bit register for signal <r_rows>.
     Found 1-bit register for signal <pipe_out_stage_valid>.
-    Found 8-bit adder for signal <r_rows[7]_GND_1047_o_add_4_OUT> created at line 102.
-    Found 9-bit adder for signal <r_cols[8]_GND_1047_o_add_6_OUT> created at line 105.
+    Found 8-bit adder for signal <r_rows[7]_GND_1047_o_add_4_OUT> created at line 104.
+    Found 9-bit adder for signal <r_cols[8]_GND_1047_o_add_6_OUT> created at line 107.
     Summary:
 	inferred   2 Adder/Subtractor(s).
 	inferred 107 D-type flip-flop(s).
 Unit <bi_2> synthesized.
+
+Synthesizing Unit <rom_2>.
+    Related source file is "/home/julian/stereovision/rom.vhd".
+        LEFT = 0
+        GRIDX_BITS = 6
+        GRIDY_BITS = 6
+    Found 6-bit adder for signal <a<1><5:0>> created at line 1241.
+    Found 6-bit adder for signal <a<2><11:6>> created at line 1241.
+    Summary:
+	inferred   2 Adder/Subtractor(s).
+Unit <rom_2> synthesized.
+
+Synthesizing Unit <romdata_r>.
+    Related source file is "/home/julian/stereovision/romdata_r.vhd".
+        ADR_BITS = 12
+        DATA_BITS = 20
+    Set property "ram_extract = yes" for signal <q>.
+    Set property "ram_style = block" for signal <q>.
+    Found 12-bit register for signal <areg>.
+    Found 4096x20-bit Read Only RAM for signal <q>
+    Summary:
+	inferred   1 RAM(s).
+	inferred  12 D-type flip-flop(s).
+Unit <romdata_r> synthesized.
 
 Synthesizing Unit <bi2_2>.
     Related source file is "/home/julian/stereovision/bi2.vhd".
@@ -3324,20 +3360,20 @@ WARNING:Xst:647 - Input <pipe_in_2_ctrl_rst> is never used. This port will be pr
     Found 1-bit register for signal <pipe_out_stage_valid>.
     Found 12-bit adder for signal <n0499[11:0]> created at line 116.
     Found 12-bit adder for signal <n0500[11:0]> created at line 1241.
-    Found 6-bit adder for signal <y_pixel[5]_GND_1048_o_add_22_OUT> created at line 1241.
+    Found 6-bit adder for signal <y_pixel[5]_GND_1050_o_add_22_OUT> created at line 1241.
     Found 12-bit adder for signal <n0502[11:0]> created at line 123.
     Found 12-bit adder for signal <n0506[11:0]> created at line 1241.
-    Found 8-bit adder for signal <r_rows[7]_GND_1048_o_add_40_OUT> created at line 143.
-    Found 9-bit adder for signal <r_cols[8]_GND_1048_o_add_42_OUT> created at line 146.
-    Found 6x4-bit multiplier for signal <y_pixel[5]_PWR_164_o_MuLt_6_OUT> created at line 1399.
-    Found 6x4-bit multiplier for signal <y_pixel[5]_PWR_164_o_MuLt_23_OUT> created at line 1399.
+    Found 8-bit adder for signal <r_rows[7]_GND_1050_o_add_40_OUT> created at line 143.
+    Found 9-bit adder for signal <r_cols[8]_GND_1050_o_add_42_OUT> created at line 146.
+    Found 6x4-bit multiplier for signal <y_pixel[5]_PWR_166_o_MuLt_6_OUT> created at line 1399.
+    Found 6x4-bit multiplier for signal <y_pixel[5]_PWR_166_o_MuLt_23_OUT> created at line 1399.
     Found 9-bit 86-to-1 multiplexer for signal <n0544> created at line 164.
     Found 9-bit 86-to-1 multiplexer for signal <n0539> created at line 117.
     Found 9-bit 86-to-1 multiplexer for signal <n0542> created at line 122.
     Found 9-bit 86-to-1 multiplexer for signal <n0543> created at line 127.
-    Found 12-bit comparator lessequal for signal <GND_1048_o_GND_1048_o_LessThan_13_o> created at line 117
-    Found 12-bit comparator lessequal for signal <GND_1048_o_GND_1048_o_LessThan_22_o> created at line 122
-    Found 12-bit comparator lessequal for signal <GND_1048_o_GND_1048_o_LessThan_32_o> created at line 127
+    Found 12-bit comparator lessequal for signal <GND_1050_o_GND_1050_o_LessThan_13_o> created at line 117
+    Found 12-bit comparator lessequal for signal <GND_1050_o_GND_1050_o_LessThan_22_o> created at line 122
+    Found 12-bit comparator lessequal for signal <GND_1050_o_GND_1050_o_LessThan_32_o> created at line 127
     Summary:
 	inferred   2 Multiplier(s).
 	inferred   7 Adder/Subtractor(s).
@@ -3579,8 +3615,8 @@ WARNING:Xst:2563 - Inout <p0_fifo_count> is never assigned. Tied to value Z.
     Found 1-bit register for signal <r_dummy>.
     Found 1-bit register for signal <r_enable>.
     Found 1-bit register for signal <pipe_out_stage_valid>.
-    Found 8-bit adder for signal <r_rows[7]_GND_1051_o_add_3_OUT> created at line 92.
-    Found 9-bit adder for signal <r_cols[8]_GND_1051_o_add_5_OUT> created at line 95.
+    Found 8-bit adder for signal <r_rows[7]_GND_1053_o_add_3_OUT> created at line 92.
+    Found 9-bit adder for signal <r_cols[8]_GND_1053_o_add_5_OUT> created at line 95.
     Found 10-bit tristate buffer for signal <p0_fifo_count> created at line 18
     Summary:
 	inferred   2 Adder/Subtractor(s).
@@ -3647,7 +3683,7 @@ WARNING:Xst:647 - Input <RST_I> is never used. This port will be preserved and l
     Found 5-bit adder for signal <n0219> created at line 59.
     Found 5-bit adder for signal <n0222> created at line 59.
     Found 5-bit adder for signal <n0225> created at line 59.
-    Found 5-bit adder for signal <GND_1057_o_GND_1057_o_add_7_OUT> created at line 59.
+    Found 5-bit adder for signal <GND_1059_o_GND_1059_o_add_7_OUT> created at line 59.
     Found 5-bit adder for signal <n0232> created at line 87.
     Found 5-bit adder for signal <n0235> created at line 87.
     Found 5-bit adder for signal <n0238> created at line 87.
@@ -3658,16 +3694,16 @@ WARNING:Xst:647 - Input <RST_I> is never used. This port will be preserved and l
     Found 5-bit adder for signal <n0253> created at line 122.
     Found 5-bit adder for signal <cnt_t_1[4]_dc_bias[4]_add_41_OUT> created at line 122.
     Found 5-bit adder for signal <cnt_t_1[4]_dc_bias[4]_add_45_OUT> created at line 120.
-    Found 5-bit subtractor for signal <GND_1057_o_int_n1_q_m[4]_sub_22_OUT<4:0>> created at line 92.
+    Found 5-bit subtractor for signal <GND_1059_o_int_n1_q_m[4]_sub_22_OUT<4:0>> created at line 92.
     Found 5-bit subtractor for signal <dc_bias> created at line 45.
-    Found 5-bit subtractor for signal <cnt_t_1[4]_GND_1057_o_sub_39_OUT<4:0>> created at line 123.
+    Found 5-bit subtractor for signal <cnt_t_1[4]_GND_1059_o_sub_39_OUT<4:0>> created at line 123.
     Found 5-bit subtractor for signal <cnt_t_1[4]_dc_bias[4]_sub_40_OUT<4:0>> created at line 123.
     Found 5-bit subtractor for signal <cnt_t_1[4]_dc_bias[4]_sub_44_OUT<4:0>> created at line 121.
-    Found 5-bit comparator greater for signal <n1_d[4]_GND_1057_o_LessThan_11_o> created at line 81
+    Found 5-bit comparator greater for signal <n1_d[4]_GND_1059_o_LessThan_11_o> created at line 81
     Found 5-bit comparator equal for signal <n1_q_m[4]_n0_q_m[4]_equal_27_o> created at line 100
-    Found 5-bit comparator greater for signal <cnt_t_1[4]_GND_1057_o_LessThan_28_o> created at line 102
+    Found 5-bit comparator greater for signal <cnt_t_1[4]_GND_1059_o_LessThan_28_o> created at line 102
     Found 5-bit comparator greater for signal <n1_q_m[4]_n0_q_m[4]_LessThan_29_o> created at line 102
-    Found 5-bit comparator greater for signal <GND_1057_o_cnt_t_1[4]_LessThan_30_o> created at line 103
+    Found 5-bit comparator greater for signal <GND_1059_o_cnt_t_1[4]_LessThan_30_o> created at line 103
     Found 5-bit comparator greater for signal <n0_q_m[4]_n1_q_m[4]_LessThan_31_o> created at line 103
     Summary:
 	inferred  22 Adder/Subtractor(s).
@@ -3698,8 +3734,8 @@ Synthesizing Unit <CamCtl>.
     Found 1-bit register for signal <cam_data_sel>.
     Found 16-bit register for signal <D_O>.
     Found 1-bit register for signal <RST_O>.
-    Found 23-bit adder for signal <rstCnt[22]_GND_1096_o_add_5_OUT> created at line 131.
-    Found 23-bit comparator greater for signal <rstCnt[22]_PWR_189_o_LessThan_5_o> created at line 129
+    Found 23-bit adder for signal <rstCnt[22]_GND_1098_o_add_5_OUT> created at line 131.
+    Found 23-bit comparator greater for signal <rstCnt[22]_PWR_191_o_LessThan_5_o> created at line 129
     Summary:
 	inferred   1 Adder/Subtractor(s).
 	inferred  45 D-type flip-flop(s).
@@ -3736,8 +3772,8 @@ INFO:Xst:1799 - State stdone is never reached in FSM <state>.
     | Encoding           | auto                                           |
     | Implementation     | LUT                                            |
     -----------------------------------------------------------------------
-    Found 3-bit adder for signal <octets[2]_GND_1100_o_add_28_OUT> created at line 156.
-    Found 17-bit subtractor for signal <GND_1100_o_GND_1100_o_sub_1_OUT<16:0>> created at line 110.
+    Found 3-bit adder for signal <octets[2]_GND_1102_o_add_28_OUT> created at line 156.
+    Found 17-bit subtractor for signal <GND_1102_o_GND_1102_o_sub_1_OUT<16:0>> created at line 110.
     Found 8-bit comparator equal for signal <reg[3][7]_reg1[7]_equal_56_o> created at line 230
     Found 8-bit comparator equal for signal <reg[4][7]_reg2[7]_equal_57_o> created at line 230
     Summary:
@@ -3783,10 +3819,10 @@ INFO:Xst:1799 - State ststoperror is never reached in FSM <state>.
     | Encoding           | gray                                           |
     | Implementation     | LUT                                            |
     -----------------------------------------------------------------------
-    Found 2-bit adder for signal <subState[1]_GND_1102_o_add_36_OUT> created at line 298.
-    Found 8-bit subtractor for signal <GND_1102_o_GND_1102_o_sub_6_OUT<7:0>> created at line 184.
-    Found 8-bit subtractor for signal <GND_1102_o_GND_1102_o_sub_13_OUT<7:0>> created at line 224.
-    Found 3-bit subtractor for signal <GND_1102_o_GND_1102_o_sub_24_OUT<2:0>> created at line 262.
+    Found 2-bit adder for signal <subState[1]_GND_1104_o_add_36_OUT> created at line 298.
+    Found 8-bit subtractor for signal <GND_1104_o_GND_1104_o_sub_6_OUT<7:0>> created at line 184.
+    Found 8-bit subtractor for signal <GND_1104_o_GND_1104_o_sub_13_OUT<7:0>> created at line 224.
+    Found 3-bit subtractor for signal <GND_1104_o_GND_1104_o_sub_24_OUT<2:0>> created at line 262.
     Found 1-bit tristate buffer for signal <SDA> created at line 565
     Found 1-bit tristate buffer for signal <SCL> created at line 567
     Found 8-bit comparator not equal for signal <n0133> created at line 505
@@ -3826,7 +3862,7 @@ Synthesizing Unit <comm_fpga_fx2>.
     | Encoding           | auto                                           |
     | Implementation     | LUT                                            |
     -----------------------------------------------------------------------
-    Found 32-bit subtractor for signal <GND_1108_o_GND_1108_o_sub_18_OUT<31:0>> created at line 1308.
+    Found 32-bit subtractor for signal <GND_1110_o_GND_1110_o_sub_18_OUT<31:0>> created at line 1308.
     Found 1-bit tristate buffer for signal <fx2Data_io<7>> created at line 235
     Found 1-bit tristate buffer for signal <fx2Data_io<6>> created at line 235
     Found 1-bit tristate buffer for signal <fx2Data_io<5>> created at line 235
@@ -3987,10 +4023,10 @@ INFO:Xst:2261 - The FF/Latch <stage_identity_2> in Unit <my_mcb_feed_dual> is eq
 INFO:Xst:2261 - The FF/Latch <stage_identity_3> in Unit <my_mcb_feed_dual> is equivalent to the following FF/Latch, which will be removed : <stage_2_identity_3> 
 INFO:Xst:2261 - The FF/Latch <stage_identity_4> in Unit <my_mcb_feed_dual> is equivalent to the following FF/Latch, which will be removed : <stage_2_identity_4> 
 INFO:Xst:2261 - The FF/Latch <stage_identity_5> in Unit <my_mcb_feed_dual> is equivalent to the following FF/Latch, which will be removed : <stage_2_identity_5> 
-WARNING:Xst:1710 - FF/Latch <areg_11> (without init value) has a constant value of 0 in block <roms[0].romdata_1>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <areg_11> (without init value) has a constant value of 0 in block <roms[1].romdata_1>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <areg_11> (without init value) has a constant value of 0 in block <roms[0].romdata_1>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <areg_11> (without init value) has a constant value of 0 in block <roms[1].romdata_1>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <areg_11> (without init value) has a constant value of 0 in block <if_left.roms[0].romdata_1>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <areg_11> (without init value) has a constant value of 0 in block <if_left.roms[1].romdata_1>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <areg_11> (without init value) has a constant value of 0 in block <if_right.roms[0].romdata_1>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <areg_11> (without init value) has a constant value of 0 in block <if_right.roms[1].romdata_1>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1293 - FF/Latch <prevRes_1> has a constant value of 0 in block <inst_syscon>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1710 - FF/Latch <c1_d> (without init value) has a constant value of 0 in block <Inst_TMDSEncoder_red>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1710 - FF/Latch <d_d_0> (without init value) has a constant value of 0 in block <Inst_TMDSEncoder_red>. This FF/Latch will be trimmed during the optimization process.
@@ -4156,8 +4192,8 @@ Synthesizing (advanced) Unit <TMDSEncoder>.
 The following registers are absorbed into accumulator <cnt_t_1>: 1 register on signal <cnt_t_1>.
 	The following adders/subtractors are grouped into adder tree <Madd_int_n1_q_m_Madd1> :
  	<Madd_n0238_Madd> in block <TMDSEncoder>, 	<Madd_n0244_Madd> in block <TMDSEncoder>, 	<Madd_int_n1_q_m_Madd> in block <TMDSEncoder>.
-	The following adders/subtractors are grouped into adder tree <Madd_GND_1057_o_GND_1057_o_add_7_OUT_Madd1> :
- 	<Madd_n0216_Madd> in block <TMDSEncoder>, 	<Madd_n0222_Madd> in block <TMDSEncoder>, 	<Madd_GND_1057_o_GND_1057_o_add_7_OUT_Madd> in block <TMDSEncoder>.
+	The following adders/subtractors are grouped into adder tree <Madd_GND_1059_o_GND_1059_o_add_7_OUT_Madd1> :
+ 	<Madd_n0216_Madd> in block <TMDSEncoder>, 	<Madd_n0222_Madd> in block <TMDSEncoder>, 	<Madd_GND_1059_o_GND_1059_o_add_7_OUT_Madd> in block <TMDSEncoder>.
 Unit <TMDSEncoder> synthesized (advanced).
 
 Synthesizing (advanced) Unit <TWICtl>.
@@ -4182,8 +4218,8 @@ Unit <bi2_1> synthesized (advanced).
 Synthesizing (advanced) Unit <bi2_2>.
 The following registers are absorbed into counter <r_cols>: 1 register on signal <r_cols>.
 The following registers are absorbed into counter <r_rows>: 1 register on signal <r_rows>.
-	Multiplier <Mmult_y_pixel[5]_PWR_164_o_MuLt_23_OUT> in block <bi2_2> and adder/subtractor <Madd_n0502[11:0]> in block <bi2_2> are combined into a MAC<Maddsub_y_pixel[5]_PWR_164_o_MuLt_23_OUT>.
-	Multiplier <Mmult_y_pixel[5]_PWR_164_o_MuLt_6_OUT> in block <bi2_2> and adder/subtractor <Madd_n0499[11:0]> in block <bi2_2> are combined into a MAC<Maddsub_y_pixel[5]_PWR_164_o_MuLt_6_OUT>.
+	Multiplier <Mmult_y_pixel[5]_PWR_166_o_MuLt_23_OUT> in block <bi2_2> and adder/subtractor <Madd_n0502[11:0]> in block <bi2_2> are combined into a MAC<Maddsub_y_pixel[5]_PWR_166_o_MuLt_23_OUT>.
+	Multiplier <Mmult_y_pixel[5]_PWR_166_o_MuLt_6_OUT> in block <bi2_2> and adder/subtractor <Madd_n0499[11:0]> in block <bi2_2> are combined into a MAC<Maddsub_y_pixel[5]_PWR_166_o_MuLt_6_OUT>.
 Unit <bi2_2> synthesized (advanced).
 
 Synthesizing (advanced) Unit <bi_1>.
@@ -4250,7 +4286,7 @@ The following registers are absorbed into counter <counter_inc>: 1 register on s
 The following registers are absorbed into counter <counter_dec>: 1 register on signal <counter_dec>.
 Unit <mcb_soft_calibration> synthesized (advanced).
 
-Synthesizing (advanced) Unit <romdata>.
+Synthesizing (advanced) Unit <romdata_l>.
 INFO:Xst:3226 - The RAM <Mram_q> will be implemented as a BLOCK RAM, absorbing the following register(s): <areg>
     -----------------------------------------------------------------------
     | ram_type           | Block                               |          |
@@ -4266,7 +4302,25 @@ INFO:Xst:3226 - The RAM <Mram_q> will be implemented as a BLOCK RAM, absorbing t
     -----------------------------------------------------------------------
     | optimization       | speed                               |          |
     -----------------------------------------------------------------------
-Unit <romdata> synthesized (advanced).
+Unit <romdata_l> synthesized (advanced).
+
+Synthesizing (advanced) Unit <romdata_r>.
+INFO:Xst:3226 - The RAM <Mram_q> will be implemented as a BLOCK RAM, absorbing the following register(s): <areg>
+    -----------------------------------------------------------------------
+    | ram_type           | Block                               |          |
+    -----------------------------------------------------------------------
+    | Port A                                                              |
+    |     aspect ratio   | 4096-word x 20-bit                  |          |
+    |     mode           | write-first                         |          |
+    |     clkA           | connected to signal <clk>           | rise     |
+    |     weA            | connected to signal <GND>           | high     |
+    |     addrA          | connected to signal <a>             |          |
+    |     diA            | connected to signal <GND>           |          |
+    |     doA            | connected to signal <q>             |          |
+    -----------------------------------------------------------------------
+    | optimization       | speed                               |          |
+    -----------------------------------------------------------------------
+Unit <romdata_r> synthesized (advanced).
 
 Synthesizing (advanced) Unit <shiftreg>.
 INFO:Xst:3226 - The RAM <Mram_RAM> will be implemented as a BLOCK RAM, absorbing the following register(s): <doutb>
@@ -7296,7 +7350,7 @@ Delay:               7.561ns (Levels of Logic = 6)
      FD:C->Q              17   0.447   1.132  inst_dvitransmitter/Inst_TMDSEncoder_green/n0_q_m_1 (inst_dvitransmitter/Inst_TMDSEncoder_green/n0_q_m_1)
      LUT2:I0->O            5   0.203   1.059  inst_dvitransmitter/Inst_TMDSEncoder_green/Msub_dc_bias_lut<1>11 (inst_dvitransmitter/Inst_TMDSEncoder_green/Msub_dc_bias_lut<1>)
      LUT6:I1->O           14   0.203   1.062  inst_dvitransmitter/Inst_TMDSEncoder_green/cond_balanced (inst_dvitransmitter/Inst_TMDSEncoder_green/cond_balanced)
-     LUT2:I0->O            3   0.203   1.015  inst_dvitransmitter/Inst_TMDSEncoder_green/cond_balanced_q_m_d[8]_AND_889_o1 (inst_dvitransmitter/Inst_TMDSEncoder_green/cond_balanced_q_m_d[8]_AND_889_o)
+     LUT2:I0->O            3   0.203   1.015  inst_dvitransmitter/Inst_TMDSEncoder_green/cond_balanced_q_m_d[8]_AND_890_o1 (inst_dvitransmitter/Inst_TMDSEncoder_green/cond_balanced_q_m_d[8]_AND_890_o)
      LUT6:I0->O            1   0.203   0.580  inst_dvitransmitter/Inst_TMDSEncoder_green/Maccum_cnt_t_1_lut<4>2 (inst_dvitransmitter/Inst_TMDSEncoder_green/Maccum_cnt_t_1_lut<4>2)
      LUT6:I5->O            1   0.205   0.944  inst_dvitransmitter/Inst_TMDSEncoder_green/Maccum_cnt_t_1_lut<4>3 (inst_dvitransmitter/Inst_TMDSEncoder_green/Maccum_cnt_t_1_lut<4>)
      LUT6:I0->O            1   0.203   0.000  inst_dvitransmitter/Inst_TMDSEncoder_green/Maccum_cnt_t_1_xor<4>11 (inst_dvitransmitter/Inst_TMDSEncoder_green/Result<4>)
@@ -7311,16 +7365,16 @@ Timing constraint: Default period analysis for Clock 'inst_syscon/Inst_dcm_fixed
   Total number of paths / destination ports: 706902062261 / 9524
 -------------------------------------------------------------------------
 Delay:               27.969ns (Levels of Logic = 11)
-  Source:            inst_fbctl/my_distort/bitest_my_rom/roms[0].romdata_1/Mram_q5 (RAM)
+  Source:            inst_fbctl/my_distort/bitest_my_rom/if_left.roms[0].romdata_1/Mram_q5 (RAM)
   Destination:       inst_fbctl/my_distort/inst_bi2_c/abcd2_d_0 (FF)
   Source Clock:      inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT2 rising
   Destination Clock: inst_syscon/Inst_dcm_fixed/pll_base_inst/CLKOUT2 rising
 
-  Data Path: inst_fbctl/my_distort/bitest_my_rom/roms[0].romdata_1/Mram_q5 to inst_fbctl/my_distort/inst_bi2_c/abcd2_d_0
+  Data Path: inst_fbctl/my_distort/bitest_my_rom/if_left.roms[0].romdata_1/Mram_q5 to inst_fbctl/my_distort/inst_bi2_c/abcd2_d_0
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     RAMB16BWER:CLKA->DOA3   58   1.850   1.600  inst_fbctl/my_distort/bitest_my_rom/roms[0].romdata_1/Mram_q5 (inst_fbctl/my_distort/abcd_1_ay<9>)
+     RAMB16BWER:CLKA->DOA3   58   1.850   1.600  inst_fbctl/my_distort/bitest_my_rom/if_left.roms[0].romdata_1/Mram_q5 (inst_fbctl/my_distort/abcd_1_ay<9>)
      begin scope: 'inst_fbctl/my_distort/inst_bi2_c:abcd_ay<9>'
      DSP48A1:B9->PCOUT47    1   6.270   0.000  bilinear_2/Maddsub_s11 (bilinear_2/Maddsub_s11_PCOUT_to_Maddsub_s21_PCIN_47)
      DSP48A1:PCIN47->PCOUT47    1   2.265   0.000  bilinear_2/Maddsub_s21 (bilinear_2/Maddsub_s21_PCOUT_to_ADDER_FOR_MULTADD_Madd21_PCIN_47)
@@ -7353,11 +7407,11 @@ Delay:               9.053ns (Levels of Logic = 8)
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
      FDRE:C->Q             4   0.447   1.028  rstCnt_17 (rstCnt_17)
-     LUT5:I0->O            1   0.203   0.580  GND_1096_o_rstCnt[22]_equal_1_o<22>1_SW0 (N01)
-     LUT6:I5->O            2   0.205   0.845  GND_1096_o_rstCnt[22]_equal_1_o<22>1 (GND_1096_o_rstCnt[22]_equal_1_o<22>1)
-     LUT3:I0->O            1   0.205   0.808  GND_1096_o_rstCnt[22]_equal_1_o<22>2_SW0 (N4)
-     LUT6:I3->O            2   0.205   0.961  GND_1096_o_rstCnt[22]_equal_1_o<22>2 (GND_1096_o_rstCnt[22]_equal_1_o<22>2)
-     LUT6:I1->O            2   0.203   0.845  GND_1096_o_rstCnt[22]_equal_1_o<22> (GND_1096_o_rstCnt[22]_equal_1_o)
+     LUT5:I0->O            1   0.203   0.580  GND_1098_o_rstCnt[22]_equal_1_o<22>1_SW0 (N01)
+     LUT6:I5->O            2   0.205   0.845  GND_1098_o_rstCnt[22]_equal_1_o<22>1 (GND_1098_o_rstCnt[22]_equal_1_o<22>1)
+     LUT3:I0->O            1   0.205   0.808  GND_1098_o_rstCnt[22]_equal_1_o<22>2_SW0 (N4)
+     LUT6:I3->O            2   0.205   0.961  GND_1098_o_rstCnt[22]_equal_1_o<22>2 (GND_1098_o_rstCnt[22]_equal_1_o<22>2)
+     LUT6:I1->O            2   0.203   0.845  GND_1098_o_rstCnt[22]_equal_1_o<22> (GND_1098_o_rstCnt[22]_equal_1_o)
      LUT4:I1->O            1   0.205   0.808  _n005911_SW0 (N6)
      LUT6:I3->O            3   0.205   0.995  _n005911 (_n005911)
      LUT5:I0->O            1   0.203   0.000  RST_O_glue_set (RST_O_glue_set)
@@ -7957,15 +8011,15 @@ inst_syscon/Inst_pll_mcb/CLKOUT2|    8.073|         |         |         |
 =========================================================================
 
 
-Total REAL time to Xst completion: 88.00 secs
-Total CPU time to Xst completion: 82.71 secs
+Total REAL time to Xst completion: 90.00 secs
+Total CPU time to Xst completion: 83.68 secs
  
 --> 
 
 
-Total memory usage is 263904 kilobytes
+Total memory usage is 264800 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings : 3307 (   0 filtered)
-Number of infos    :  482 (   0 filtered)
+Number of infos    :  483 (   0 filtered)
 

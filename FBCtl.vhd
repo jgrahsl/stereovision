@@ -1695,6 +1695,7 @@ begin
     generic map (
       ID     => 5,
       KERNEL => KERNEL,
+      LEFT   => 1,      
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (
@@ -1707,6 +1708,7 @@ begin
     generic map (
       ID     => 13,
       KERNEL => KERNEL,
+      LEFT   => 0,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (

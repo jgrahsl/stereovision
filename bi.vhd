@@ -8,6 +8,7 @@ use work.cam_pkg.all;
 entity bi is
   generic (
     ID     : integer range 0 to 63   := 0;
+    LEFT   : natural range 0 to 1    := 0;
     WIDTH  : natural range 0 to 2048 := 2048;
     HEIGHT : natural range 0 to 2048 := 2048);
   port (
@@ -53,6 +54,7 @@ begin
 
   my_rom : entity work.rom
     generic map (
+      LEFT => LEFT,
       GRIDX_BITS => GRIDX_BITS,
       GRIDY_BITS => GRIDY_BITS)
     port map (

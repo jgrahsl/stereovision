@@ -146,6 +146,7 @@ begin
     end if;    
     r_next <= v;
 
+    -- FORK
     stage_2_next <= stage_next;
     stage_2_next.data_8 <= std_logic_vector(brightness_b);
   end process;

@@ -45,16 +45,16 @@ use ieee.std_logic_1164.all;
 library work;
 use work.cam_pkg.all;
 
-entity romdata is
+entity romdata_l is
   generic (ADR_BITS  : integer;
            DATA_BITS : integer);             -- for compatibility
   port (
     clk : in  std_logic;
     a   : in  std_logic_vector(ADR_BITS-1 downto 0);
     q   : out std_logic_vector(DATA_BITS-1 downto 0));
-end romdata;
+end romdata_l;
 
-architecture rtl of romdata is
+architecture rtl of romdata_l is
     ATTRIBUTE ram_extract: string;
     ATTRIBUTE ram_extract OF q: SIGNAL IS "yes";
     ATTRIBUTE ram_style: string;
