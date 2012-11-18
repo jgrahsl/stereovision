@@ -693,7 +693,7 @@ architecture Behavioral of FBCtl is
   signal src_b : natural range 0 to 2400;
   signal src_c : natural range 0 to 2400;
 
-  constant KERNEL : natural := 29;
+  constant KERNEL : natural := 9;
 
   signal out_fifo : pixel_fifo_t;  
 begin
@@ -1675,11 +1675,14 @@ begin
   stallo <= stall(0);
   my_mcb_feed_dual : entity work.mcb_feed_dual
     generic map (
-      ID => 1)
+      ID => 1,
+      FORK => 0)
     port map (
       pipe_in   => pipe(0),             -- [in]
       pipe_out  => pipe(1),             -- [out]
+      pipe_out_2  => pipe(2),             -- [out]      
       stall_in  => stall(1),
+      stall_in_2  => stall(2),      
       stall_out => stall(0),
       pa_fifo   => pra_fifo,            -- [inout]
       pb_fifo   => prb_fifo,            -- [inout]      
@@ -1690,7 +1693,7 @@ begin
 -------------------------------------------------------------------------------
   my_distort: entity work.distort
     generic map (
-      ID     => 10,
+      ID     => 5,
       KERNEL => KERNEL,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
@@ -1699,6 +1702,18 @@ begin
       pipe_out  => pipe(9),            -- [out]
       stall_in  => stall(9),            -- [in]
       stall_out => stall(1));          -- [out]
+
+  --my_distort2: entity work.distort
+  --  generic map (
+  --    ID     => 13,
+  --    KERNEL => KERNEL,
+  --    WIDTH  => WIDTH,
+  --    HEIGHT => HEIGHT)
+  --  port map (
+  --    pipe_in   => pipe(2),             -- [in]
+  --    pipe_out  => pipe(10),            -- [out]
+  --    stall_in  => stall(10),            -- [in]
+  --    stall_out => stall(2));          -- [out]
   
 -------------------------------------------------------------------------------
 -- ---
@@ -1707,12 +1722,15 @@ begin
   colmux : entity work.color_mux
     generic map (
       ID   => 3,
+      JOIN => 0,
       MODE => 2)      
     port map (
       pipe_in   => pipe(9),             -- [in]
-      pipe_out  => pipe(10),
-      stall_in  => stall(10),
-      stall_out => stall(9));           -- [inout]
+      pipe_in_2   => pipe(10),             -- [in]      
+      pipe_out  => pipe(11),
+      stall_in  => stall(11),
+      stall_out => stall(9),
+      stall_out_2 => stall(10));           -- [inout]
 
   my_fifo_sink : entity work.fifo_sink
     generic map (
@@ -1721,24 +1739,24 @@ begin
       HEIGHT => HEIGHT
       )
     port map (
-      pipe_in   => pipe(10),             -- [in]
-      pipe_out  => pipe(11),             -- [out]
-      stall_in  => stall(11),
-      stall_out => stall(10),
+      pipe_in   => pipe(11),             -- [in]
+      pipe_out  => pipe(12),             -- [out]
+      stall_in  => stall(12),
+      stall_out => stall(11),
       p0_fifo   => out_fifo);           -- [inout]
 
   my_mcb_sink : entity work.mcb_sink
     generic map (
       ID => 2)
     port map (
-      pipe_in   => pipe(11),             -- [in]
-      pipe_out  => pipe(12),            -- [out]
+      pipe_in   => pipe(12),             -- [in]
+      pipe_out  => pipe(13),            -- [out]
       stall_in  => '0',
-      stall_out => stall(11),
+      stall_out => stall(12),
       p0_fifo   => pw_fifo,             -- [inout]
       p1_fifo   => auxw_fifo);          -- [inout]
 
-  inspect.identity <= pipe(12).stage.identity;
+  inspect.identity <= pipe(13).stage.identity;
 
   my_pixel_fifo : entity work.pixel_fifo
     port map (
@@ -1773,5 +1791,5 @@ begin
   d.fe(7) <= auxw_full;
 
 
-  d.off <= stall(1) & stall(0) & stall(7) & stall(8) & "0000";
+  d.off <= (others => '0');--stall(1) & stall(0) & stall(7) & stall(8) & "0000";
 end Behavioral;

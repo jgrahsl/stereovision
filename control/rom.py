@@ -3,7 +3,7 @@ import sys
 
 comma = 4
 deci = 6
-kernel = 29
+kernel = 9
 gridx = 3
 gridy = 3
 
