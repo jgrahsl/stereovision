@@ -29,7 +29,7 @@ def set_enable(adr,en):
     set_reg(adr,0x61,en)
 
 def set_reg(adr,reg,en):
-#    print "Set pipe " + str(adr) + " reg " + str(reg) + " to " + str(en)
+    print "Set pipe " + str(adr) + " reg " + str(reg) + " to " + str(en)
     set_pipe(adr)
     send_byte(reg,en)
 

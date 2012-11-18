@@ -160,7 +160,7 @@ def on():
     while i < 32: 
         set_reg(i,PEN,3)
         v = flrd(0x62,1)
-        if v != 0:
+        if v != 0 and v != 0x0b:
             set_reg(i,PEN,1)
             print str(i) + ": on"
 
