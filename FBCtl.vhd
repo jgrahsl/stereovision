@@ -695,7 +695,9 @@ architecture Behavioral of FBCtl is
 
   constant KERNEL : natural := 9;
 
-  signal out_fifo : pixel_fifo_t;  
+  signal out_fifo : pixel_fifo_t;
+
+  signal rgb565_2d : rgb565_2d_t;
 begin
 ----------------------------------------------------------------------------------
 -- mcb instantiation
@@ -1676,18 +1678,48 @@ begin
   my_mcb_feed_dual : entity work.mcb_feed_dual
     generic map (
       ID => 1,
-      FORK => 1)
+      MERGE => 1,
+      FORK => 0)
     port map (
       pipe_in   => pipe(0),             -- [in]
       pipe_out  => pipe(1),             -- [out]
-      pipe_out_2  => pipe(2),             -- [out]      
+--      pipe_out_2  => pipe(2),             -- [out]      
       stall_in  => stall(1),
-      stall_in_2  => stall(2),      
+--      stall_in_2  => stall(2),      
       stall_out => stall(0),
       pa_fifo   => pra_fifo,            -- [inout]
       pb_fifo   => prb_fifo,            -- [inout]      
       p1_fifo   => auxr_fifo);          -- [inout]
 
+  dut : entity work.win_rgb565
+    generic map (
+      ID     => 21,
+      KERNEL => 3,
+      WIDTH  => WIDTH,
+      HEIGHT => HEIGHT)
+    port map (
+      pipe_in       => pipe(1),         -- [in]
+      pipe_out      => pipe(2),
+      stall_in      => stall(2),
+      stall_out     => stall(1),
+      rgb565_2d_out => rgb565_2d
+      );                                -- [inout]
+
+  dut5 : entity work.kernel_rgb565
+    generic map (
+      ID     => 25,
+      FORK   => 1,
+      KERNEL => 3)
+    port map (
+      pipe_in      => pipe(2),          -- [in]
+      pipe_out     => pipe(3),
+      pipe_out_2  => pipe(4),             -- [out]            
+      stall_in     => stall(3),
+      stall_in_2  => stall(4),            
+      stall_out    => stall(2),
+      rgb565_2d_in => rgb565_2d
+      );                                -- [inout]
+  
 -------------------------------------------------------------------------------
 --
 -------------------------------------------------------------------------------
@@ -1699,10 +1731,10 @@ begin
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (
-      pipe_in   => pipe(1),             -- [in]
-      pipe_out  => pipe(9),            -- [out]
-      stall_in  => stall(9),            -- [in]
-      stall_out => stall(1));          -- [out]
+      pipe_in   => pipe(3),             -- [in]
+      pipe_out  => pipe(5),            -- [out]
+      stall_in  => stall(5),            -- [in]
+      stall_out => stall(3));          -- [out]
 
   my_distort2: entity work.distort
     generic map (
@@ -1712,10 +1744,10 @@ begin
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
     port map (
-      pipe_in   => pipe(2),             -- [in]
-      pipe_out  => pipe(10),            -- [out]
-      stall_in  => stall(10),            -- [in]
-      stall_out => stall(2));          -- [out]
+      pipe_in   => pipe(4),             -- [in]
+      pipe_out  => pipe(6),            -- [out]
+      stall_in  => stall(6),            -- [in]
+      stall_out => stall(4));          -- [out]
   
 -------------------------------------------------------------------------------
 -- ---
@@ -1727,12 +1759,12 @@ begin
       JOIN => 1,
       MODE => 2)      
     port map (
-      pipe_in   => pipe(9),             -- [in]
-      pipe_in_2   => pipe(10),             -- [in]      
+      pipe_in   => pipe(5),             -- [in]
+      pipe_in_2   => pipe(6),             -- [in]      
       pipe_out  => pipe(11),
       stall_in  => stall(11),
-      stall_out => stall(9),
-      stall_out_2 => stall(10));           -- [inout]
+      stall_out => stall(5),
+      stall_out_2 => stall(6));           -- [inout]
 
   my_fifo_sink : entity work.fifo_sink
     generic map (

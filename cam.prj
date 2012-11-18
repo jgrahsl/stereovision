@@ -73,7 +73,9 @@ vhdl work "win_test_rgb565.vhd"
 
 vhdl work "window_mono.vhd"
 #vhdl work "window_gray8.vhd"
-#vhdl work "window_rgb565.vhd"
+vhdl work "window_rgb565.vhd"
+vhdl work "kernel_rgb565.vhd"
+
 
 vhdl work "morph_kernel.vhd"
 vhdl work "morph_new.vhd"
