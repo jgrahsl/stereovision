@@ -55,31 +55,31 @@ begin
     -------------------------------------------------------------------------------
     -- Octagon
     -------------------------------------------------------------------------------
-    sum        := to_integer(unsigned(win(0*5+1))) +
-                  to_integer(unsigned(win(0*5+2))) +
-                  to_integer(unsigned(win(0*5+3))) +
+    sum        := to_integer(unsigned(win(0*KERNEL+1))) +
+                  to_integer(unsigned(win(0*KERNEL+2))) +
+                  to_integer(unsigned(win(0*KERNEL+3))) +
 
-                  to_integer(unsigned(win(1*5+0))) +
-                  to_integer(unsigned(win(1*5+1))) +
-                  to_integer(unsigned(win(1*5+2))) +                  
-                  to_integer(unsigned(win(1*5+3))) +
-                  to_integer(unsigned(win(1*5+4))) +
+                  to_integer(unsigned(win(1*KERNEL+0))) +
+                  to_integer(unsigned(win(1*KERNEL+1))) +
+                  to_integer(unsigned(win(1*KERNEL+2))) +                  
+                  to_integer(unsigned(win(1*KERNEL+3))) +
+                  to_integer(unsigned(win(1*KERNEL+4))) +
 
-                  to_integer(unsigned(win(2*5+0))) +
-                  to_integer(unsigned(win(2*5+1))) +
-                  to_integer(unsigned(win(2*5+2))) +                  
-                  to_integer(unsigned(win(2*5+3))) +
-                  to_integer(unsigned(win(2*5+4))) +
+                  to_integer(unsigned(win(2*KERNEL+0))) +
+                  to_integer(unsigned(win(2*KERNEL+1))) +
+                  to_integer(unsigned(win(2*KERNEL+2))) +                  
+                  to_integer(unsigned(win(2*KERNEL+3))) +
+                  to_integer(unsigned(win(2*KERNEL+4))) +
 
-                  to_integer(unsigned(win(3*5+0))) +
-                  to_integer(unsigned(win(3*5+1))) +
-                  to_integer(unsigned(win(3*5+2))) +                  
-                  to_integer(unsigned(win(3*5+3))) +
-                  to_integer(unsigned(win(3*5+4))) +
+                  to_integer(unsigned(win(3*KERNEL+0))) +
+                  to_integer(unsigned(win(3*KERNEL+1))) +
+                  to_integer(unsigned(win(3*KERNEL+2))) +                  
+                  to_integer(unsigned(win(3*KERNEL+3))) +
+                  to_integer(unsigned(win(3*KERNEL+4))) +
 
-                  to_integer(unsigned(win(4*5+1))) +
-                  to_integer(unsigned(win(4*5+2))) +                  
-                  to_integer(unsigned(win(4*5+3)));
+                  to_integer(unsigned(win(4*KERNEL+1))) +
+                  to_integer(unsigned(win(4*KERNEL+2))) +                  
+                  to_integer(unsigned(win(4*KERNEL+3)));
 -------------------------------------------------------------------------------
 -- Output
 -------------------------------------------------------------------------------    

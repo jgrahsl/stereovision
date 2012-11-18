@@ -999,7 +999,7 @@ begin
     case (staterd) is
       when strdidle =>
         d.dvistate(0) <= '1';
-        if (p3_rd_count < 16) then
+        if (p3_rd_count < RD_BATCH) then
           nstaterd <= strdcmd;
         end if;
       when strdcmd =>
@@ -1010,7 +1010,7 @@ begin
         d.dvistate(2) <= '1';
         if (p3_rd_error = '1') then
           nstaterd <= strderr;             --the read fifo got empty
-        elsif not (p3_rd_count < 16) then  -- data is present in the fifo
+        elsif not (p3_rd_count < RD_BATCH) then  -- data is present in the fifo
           nstaterd <= strdidle;
         end if;
       when strderr =>
@@ -1164,7 +1164,7 @@ begin
   p2_cmd_instr     <= mcb_cmd_wr;
   p2_cmd_byte_addr <= std_logic_vector(to_unsigned(snk_a*(wr_batch*4)+(CAMA_OFFSET), 30)) when snk_sel = 0 else
                       std_logic_vector(to_unsigned(snk_b*(wr_batch*4)+(CAMB_OFFSET), 30)) when snk_sel = 1 else
-                      --std_logic_vector(to_unsigned(snk_c*(wr_batch*4)+(DVI_OFFSET), 30))  when snk_sel = 2 else
+                      std_logic_vector(to_unsigned(snk_c*(wr_batch*4)+(AUX_OFFSET), 30))  when snk_sel = 2 else
                       (others => '0');
   p2_cmd_bl        <= std_logic_vector(to_unsigned(pa_wr_cnt-1, 6)) when pa_int_rst = '1' else
                       std_logic_vector(to_unsigned(wr_batch-1, 6));
@@ -1592,7 +1592,8 @@ begin
   stallo <= stall(0);
   my_mcb_feed_dual : entity work.mcb_feed_dual
     generic map (
-      ID => 1)
+      ID => 1,
+      MERGE => 1)
     port map (
       pipe_in   => pipe(0),             -- [in]
       pipe_out  => pipe(1),             -- [out]
@@ -1613,8 +1614,8 @@ begin
   --    HEIGHT => HEIGHT)
   --  port map (
   --    pipe_in   => pipe(1),             -- [in]
-  --    pipe_out  => pipe(9),            -- [out]
-  --    stall_in  => stall(9),            -- [in]
+  --    pipe_out  => pipe(4),            -- [out]
+  --    stall_in  => stall(4),            -- [in]
   --    stall_out => stall(1));          -- [out]
 -------------------------------------------------------------------------------
 -- Disparity
@@ -1664,7 +1665,7 @@ begin
 
   dut4 : entity work.win_gray8
     generic map (
-      ID     => 11,
+      ID     => 18,
       KERNEL => 5,
       WIDTH  => WIDTH,
       HEIGHT => HEIGHT)
@@ -1678,7 +1679,7 @@ begin
 
   dut5 : entity work.kernel_gray8
     generic map (
-      ID     => 15,
+      ID     => 19,
       KERNEL => 5)
     port map (
       pipe_in      => pipe(5),          -- [in]
@@ -1687,8 +1688,6 @@ begin
       stall_out    => stall(5),
       gray8_2d_in => gray8_2d
       );                                -- [inout]
-
-  
 -------------------------------------------------------------------------------
 -- ---
 -------------------------------------------------------------------------------

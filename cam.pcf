@@ -1,5 +1,5 @@
 //! **************************************************************************
-// Written by: Map P.28xd on Sat Nov 17 12:20:19 2012
+// Written by: Map P.28xd on Sat Nov 17 20:45:23 2012
 //! **************************************************************************
 
 SCHEMATIC START;
@@ -113,114 +113,138 @@ PIN
 TIMEGRP fx2clk_in = BEL "f2hdata_0" BEL "f2hdata_1" BEL "f2hdata_2" BEL
         "f2hdata_3" BEL "f2hdata_4" BEL "f2hdata_5" BEL "f2hdata_6" BEL
         "f2hdata_7" BEL "adr_0" BEL "adr_1" BEL "adr_2" BEL "adr_3" BEL
-        "adr_4" BEL "cfg<0>_p_0_0" BEL "cfg<0>_p_0_1" BEL "cfg<0>_p_0_2" BEL
-        "cfg<0>_p_0_3" BEL "cfg<0>_p_0_4" BEL "cfg<0>_p_0_5" BEL
-        "cfg<0>_p_0_6" BEL "cfg<0>_p_0_7" BEL "cfg[0]_enable" BEL
-        "cfg[0]_identify" BEL "cfg<0>_p_1_0" BEL "cfg<0>_p_1_1" BEL
+        "adr_4" BEL "cfg[0]_enable" BEL "cfg[0]_identify" BEL "cfg<0>_p_0_0"
+        BEL "cfg<0>_p_0_1" BEL "cfg<0>_p_0_2" BEL "cfg<0>_p_0_3" BEL
+        "cfg<0>_p_0_4" BEL "cfg<0>_p_0_5" BEL "cfg<0>_p_0_6" BEL
+        "cfg<0>_p_0_7" BEL "cfg<0>_p_1_0" BEL "cfg<0>_p_1_1" BEL
         "cfg<0>_p_1_2" BEL "cfg<0>_p_1_3" BEL "cfg<0>_p_1_4" BEL
         "cfg<0>_p_1_5" BEL "cfg<0>_p_1_6" BEL "cfg<0>_p_1_7" BEL
         "cfg[1]_enable" BEL "cfg[1]_identify" BEL "cfg<1>_p_0_0" BEL
         "cfg<1>_p_0_1" BEL "cfg<1>_p_0_2" BEL "cfg<1>_p_0_3" BEL
         "cfg<1>_p_0_4" BEL "cfg<1>_p_0_5" BEL "cfg<1>_p_0_6" BEL
-        "cfg<1>_p_0_7" BEL "cfg[2]_identify" BEL "cfg<1>_p_1_0" BEL
-        "cfg<1>_p_1_1" BEL "cfg<1>_p_1_2" BEL "cfg<1>_p_1_3" BEL
-        "cfg<1>_p_1_4" BEL "cfg<1>_p_1_5" BEL "cfg<1>_p_1_6" BEL
-        "cfg<1>_p_1_7" BEL "cfg[2]_enable" BEL "cfg<2>_p_0_0" BEL
+        "cfg<1>_p_0_7" BEL "cfg<1>_p_1_0" BEL "cfg<1>_p_1_1" BEL
+        "cfg<1>_p_1_2" BEL "cfg<1>_p_1_3" BEL "cfg<1>_p_1_4" BEL
+        "cfg<1>_p_1_5" BEL "cfg<1>_p_1_6" BEL "cfg<1>_p_1_7" BEL
+        "cfg[2]_enable" BEL "cfg[2]_identify" BEL "cfg<2>_p_0_0" BEL
         "cfg<2>_p_0_1" BEL "cfg<2>_p_0_2" BEL "cfg<2>_p_0_3" BEL
         "cfg<2>_p_0_4" BEL "cfg<2>_p_0_5" BEL "cfg<2>_p_0_6" BEL
         "cfg<2>_p_0_7" BEL "cfg<2>_p_1_0" BEL "cfg<2>_p_1_1" BEL
         "cfg<2>_p_1_2" BEL "cfg<2>_p_1_3" BEL "cfg<2>_p_1_4" BEL
         "cfg<2>_p_1_5" BEL "cfg<2>_p_1_6" BEL "cfg<2>_p_1_7" BEL
-        "cfg[3]_enable" BEL "cfg[3]_identify" BEL "cfg[4]_enable" BEL
-        "cfg<3>_p_0_0" BEL "cfg<3>_p_0_1" BEL "cfg<3>_p_0_2" BEL
-        "cfg<3>_p_0_3" BEL "cfg<3>_p_0_4" BEL "cfg<3>_p_0_5" BEL
-        "cfg<3>_p_0_6" BEL "cfg<3>_p_0_7" BEL "cfg<3>_p_1_0" BEL
-        "cfg<3>_p_1_1" BEL "cfg<3>_p_1_2" BEL "cfg<3>_p_1_3" BEL
-        "cfg<3>_p_1_4" BEL "cfg<3>_p_1_5" BEL "cfg<3>_p_1_6" BEL
-        "cfg<3>_p_1_7" BEL "cfg<4>_p_1_0" BEL "cfg<4>_p_1_1" BEL
+        "cfg[3]_enable" BEL "cfg[3]_identify" BEL "cfg<3>_p_0_0" BEL
+        "cfg<3>_p_0_1" BEL "cfg<3>_p_0_2" BEL "cfg<3>_p_0_3" BEL
+        "cfg<3>_p_0_4" BEL "cfg<3>_p_0_5" BEL "cfg<3>_p_0_6" BEL
+        "cfg<3>_p_0_7" BEL "cfg<3>_p_1_0" BEL "cfg<3>_p_1_1" BEL
+        "cfg<3>_p_1_2" BEL "cfg<3>_p_1_3" BEL "cfg<3>_p_1_4" BEL
+        "cfg<3>_p_1_5" BEL "cfg<3>_p_1_6" BEL "cfg<3>_p_1_7" BEL
+        "cfg[4]_enable" BEL "cfg[4]_identify" BEL "cfg<4>_p_0_0" BEL
+        "cfg<4>_p_0_1" BEL "cfg<4>_p_0_2" BEL "cfg<4>_p_0_3" BEL
+        "cfg<4>_p_0_4" BEL "cfg<4>_p_0_5" BEL "cfg<4>_p_0_6" BEL
+        "cfg<4>_p_0_7" BEL "cfg<4>_p_1_0" BEL "cfg<4>_p_1_1" BEL
         "cfg<4>_p_1_2" BEL "cfg<4>_p_1_3" BEL "cfg<4>_p_1_4" BEL
         "cfg<4>_p_1_5" BEL "cfg<4>_p_1_6" BEL "cfg<4>_p_1_7" BEL
-        "cfg[4]_identify" BEL "cfg<4>_p_0_0" BEL "cfg<4>_p_0_1" BEL
-        "cfg<4>_p_0_2" BEL "cfg<4>_p_0_3" BEL "cfg<4>_p_0_4" BEL
-        "cfg<4>_p_0_5" BEL "cfg<4>_p_0_6" BEL "cfg<4>_p_0_7" BEL
-        "cfg<5>_p_0_0" BEL "cfg<5>_p_0_1" BEL "cfg<5>_p_0_2" BEL
-        "cfg<5>_p_0_3" BEL "cfg<5>_p_0_4" BEL "cfg<5>_p_0_5" BEL
-        "cfg<5>_p_0_6" BEL "cfg<5>_p_0_7" BEL "cfg[5]_enable" BEL
-        "cfg[5]_identify" BEL "cfg<5>_p_1_0" BEL "cfg<5>_p_1_1" BEL
+        "cfg[5]_enable" BEL "cfg[5]_identify" BEL "cfg<5>_p_0_0" BEL
+        "cfg<5>_p_0_1" BEL "cfg<5>_p_0_2" BEL "cfg<5>_p_0_3" BEL
+        "cfg<5>_p_0_4" BEL "cfg<5>_p_0_5" BEL "cfg<5>_p_0_6" BEL
+        "cfg<5>_p_0_7" BEL "cfg<5>_p_1_0" BEL "cfg<5>_p_1_1" BEL
         "cfg<5>_p_1_2" BEL "cfg<5>_p_1_3" BEL "cfg<5>_p_1_4" BEL
         "cfg<5>_p_1_5" BEL "cfg<5>_p_1_6" BEL "cfg<5>_p_1_7" BEL
         "cfg[6]_enable" BEL "cfg[6]_identify" BEL "cfg<6>_p_0_0" BEL
         "cfg<6>_p_0_1" BEL "cfg<6>_p_0_2" BEL "cfg<6>_p_0_3" BEL
         "cfg<6>_p_0_4" BEL "cfg<6>_p_0_5" BEL "cfg<6>_p_0_6" BEL
-        "cfg<6>_p_0_7" BEL "cfg[7]_identify" BEL "cfg<6>_p_1_0" BEL
-        "cfg<6>_p_1_1" BEL "cfg<6>_p_1_2" BEL "cfg<6>_p_1_3" BEL
-        "cfg<6>_p_1_4" BEL "cfg<6>_p_1_5" BEL "cfg<6>_p_1_6" BEL
-        "cfg<6>_p_1_7" BEL "cfg[7]_enable" BEL "cfg<7>_p_0_0" BEL
-        "cfg<7>_p_0_1" BEL "cfg<7>_p_0_2" BEL "cfg<7>_p_0_3" BEL
-        "cfg<7>_p_0_4" BEL "cfg<7>_p_0_5" BEL "cfg<7>_p_0_6" BEL
-        "cfg<7>_p_0_7" BEL "cfg<7>_p_1_0" BEL "cfg<7>_p_1_1" BEL
+        "cfg<6>_p_0_7" BEL "cfg<6>_p_1_0" BEL "cfg<6>_p_1_1" BEL
+        "cfg<6>_p_1_2" BEL "cfg<6>_p_1_3" BEL "cfg<6>_p_1_4" BEL
+        "cfg<6>_p_1_5" BEL "cfg<6>_p_1_6" BEL "cfg<6>_p_1_7" BEL
+        "cfg<7>_p_0_0" BEL "cfg<7>_p_0_1" BEL "cfg<7>_p_0_2" BEL
+        "cfg<7>_p_0_3" BEL "cfg<7>_p_0_4" BEL "cfg<7>_p_0_5" BEL
+        "cfg<7>_p_0_6" BEL "cfg<7>_p_0_7" BEL "cfg[7]_enable" BEL
+        "cfg[7]_identify" BEL "cfg<7>_p_1_0" BEL "cfg<7>_p_1_1" BEL
         "cfg<7>_p_1_2" BEL "cfg<7>_p_1_3" BEL "cfg<7>_p_1_4" BEL
         "cfg<7>_p_1_5" BEL "cfg<7>_p_1_6" BEL "cfg<7>_p_1_7" BEL
-        "cfg[8]_enable" BEL "cfg[8]_identify" BEL "cfg[9]_enable" BEL
-        "cfg<8>_p_0_0" BEL "cfg<8>_p_0_1" BEL "cfg<8>_p_0_2" BEL
-        "cfg<8>_p_0_3" BEL "cfg<8>_p_0_4" BEL "cfg<8>_p_0_5" BEL
-        "cfg<8>_p_0_6" BEL "cfg<8>_p_0_7" BEL "cfg<8>_p_1_0" BEL
-        "cfg<8>_p_1_1" BEL "cfg<8>_p_1_2" BEL "cfg<8>_p_1_3" BEL
-        "cfg<8>_p_1_4" BEL "cfg<8>_p_1_5" BEL "cfg<8>_p_1_6" BEL
-        "cfg<8>_p_1_7" BEL "cfg[9]_identify" BEL "cfg<9>_p_0_0" BEL
+        "cfg[8]_enable" BEL "cfg[8]_identify" BEL "cfg<8>_p_0_0" BEL
+        "cfg<8>_p_0_1" BEL "cfg<8>_p_0_2" BEL "cfg<8>_p_0_3" BEL
+        "cfg<8>_p_0_4" BEL "cfg<8>_p_0_5" BEL "cfg<8>_p_0_6" BEL
+        "cfg<8>_p_0_7" BEL "cfg<8>_p_1_0" BEL "cfg<8>_p_1_1" BEL
+        "cfg<8>_p_1_2" BEL "cfg<8>_p_1_3" BEL "cfg<8>_p_1_4" BEL
+        "cfg<8>_p_1_5" BEL "cfg<8>_p_1_6" BEL "cfg<8>_p_1_7" BEL
+        "cfg[9]_enable" BEL "cfg[9]_identify" BEL "cfg<9>_p_0_0" BEL
         "cfg<9>_p_0_1" BEL "cfg<9>_p_0_2" BEL "cfg<9>_p_0_3" BEL
         "cfg<9>_p_0_4" BEL "cfg<9>_p_0_5" BEL "cfg<9>_p_0_6" BEL
         "cfg<9>_p_0_7" BEL "cfg<9>_p_1_0" BEL "cfg<9>_p_1_1" BEL
         "cfg<9>_p_1_2" BEL "cfg<9>_p_1_3" BEL "cfg<9>_p_1_4" BEL
         "cfg<9>_p_1_5" BEL "cfg<9>_p_1_6" BEL "cfg<9>_p_1_7" BEL
-        "cfg[10]_enable" BEL "cfg<10>_p_1_0" BEL "cfg<10>_p_1_1" BEL
+        "cfg[10]_enable" BEL "cfg[10]_identify" BEL "cfg<10>_p_0_0" BEL
+        "cfg<10>_p_0_1" BEL "cfg<10>_p_0_2" BEL "cfg<10>_p_0_3" BEL
+        "cfg<10>_p_0_4" BEL "cfg<10>_p_0_5" BEL "cfg<10>_p_0_6" BEL
+        "cfg<10>_p_0_7" BEL "cfg<10>_p_1_0" BEL "cfg<10>_p_1_1" BEL
         "cfg<10>_p_1_2" BEL "cfg<10>_p_1_3" BEL "cfg<10>_p_1_4" BEL
         "cfg<10>_p_1_5" BEL "cfg<10>_p_1_6" BEL "cfg<10>_p_1_7" BEL
-        "cfg[10]_identify" BEL "cfg<10>_p_0_0" BEL "cfg<10>_p_0_1" BEL
-        "cfg<10>_p_0_2" BEL "cfg<10>_p_0_3" BEL "cfg<10>_p_0_4" BEL
-        "cfg<10>_p_0_5" BEL "cfg<10>_p_0_6" BEL "cfg<10>_p_0_7" BEL
-        "cfg<11>_p_0_0" BEL "cfg<11>_p_0_1" BEL "cfg<11>_p_0_2" BEL
-        "cfg<11>_p_0_3" BEL "cfg<11>_p_0_4" BEL "cfg<11>_p_0_5" BEL
-        "cfg<11>_p_0_6" BEL "cfg<11>_p_0_7" BEL "cfg[11]_enable" BEL
-        "cfg[11]_identify" BEL "cfg[12]_identify" BEL "cfg<11>_p_1_0" BEL
-        "cfg<11>_p_1_1" BEL "cfg<11>_p_1_2" BEL "cfg<11>_p_1_3" BEL
-        "cfg<11>_p_1_4" BEL "cfg<11>_p_1_5" BEL "cfg<11>_p_1_6" BEL
-        "cfg<11>_p_1_7" BEL "cfg[12]_enable" BEL "cfg<12>_p_0_0" BEL
+        "cfg[11]_enable" BEL "cfg[11]_identify" BEL "cfg<11>_p_0_0" BEL
+        "cfg<11>_p_0_1" BEL "cfg<11>_p_0_2" BEL "cfg<11>_p_0_3" BEL
+        "cfg<11>_p_0_4" BEL "cfg<11>_p_0_5" BEL "cfg<11>_p_0_6" BEL
+        "cfg<11>_p_0_7" BEL "cfg<11>_p_1_0" BEL "cfg<11>_p_1_1" BEL
+        "cfg<11>_p_1_2" BEL "cfg<11>_p_1_3" BEL "cfg<11>_p_1_4" BEL
+        "cfg<11>_p_1_5" BEL "cfg<11>_p_1_6" BEL "cfg<11>_p_1_7" BEL
+        "cfg[12]_enable" BEL "cfg[12]_identify" BEL "cfg<12>_p_0_0" BEL
         "cfg<12>_p_0_1" BEL "cfg<12>_p_0_2" BEL "cfg<12>_p_0_3" BEL
         "cfg<12>_p_0_4" BEL "cfg<12>_p_0_5" BEL "cfg<12>_p_0_6" BEL
         "cfg<12>_p_0_7" BEL "cfg<12>_p_1_0" BEL "cfg<12>_p_1_1" BEL
         "cfg<12>_p_1_2" BEL "cfg<12>_p_1_3" BEL "cfg<12>_p_1_4" BEL
         "cfg<12>_p_1_5" BEL "cfg<12>_p_1_6" BEL "cfg<12>_p_1_7" BEL
-        "cfg[13]_enable" BEL "cfg[13]_identify" BEL "cfg[14]_enable" BEL
-        "cfg<13>_p_0_0" BEL "cfg<13>_p_0_1" BEL "cfg<13>_p_0_2" BEL
-        "cfg<13>_p_0_3" BEL "cfg<13>_p_0_4" BEL "cfg<13>_p_0_5" BEL
-        "cfg<13>_p_0_6" BEL "cfg<13>_p_0_7" BEL "cfg<13>_p_1_0" BEL
-        "cfg<13>_p_1_1" BEL "cfg<13>_p_1_2" BEL "cfg<13>_p_1_3" BEL
-        "cfg<13>_p_1_4" BEL "cfg<13>_p_1_5" BEL "cfg<13>_p_1_6" BEL
-        "cfg<13>_p_1_7" BEL "cfg[14]_identify" BEL "cfg<14>_p_0_0" BEL
+        "cfg[13]_enable" BEL "cfg[13]_identify" BEL "cfg<13>_p_0_0" BEL
+        "cfg<13>_p_0_1" BEL "cfg<13>_p_0_2" BEL "cfg<13>_p_0_3" BEL
+        "cfg<13>_p_0_4" BEL "cfg<13>_p_0_5" BEL "cfg<13>_p_0_6" BEL
+        "cfg<13>_p_0_7" BEL "cfg<13>_p_1_0" BEL "cfg<13>_p_1_1" BEL
+        "cfg<13>_p_1_2" BEL "cfg<13>_p_1_3" BEL "cfg<13>_p_1_4" BEL
+        "cfg<13>_p_1_5" BEL "cfg<13>_p_1_6" BEL "cfg<13>_p_1_7" BEL
+        "cfg[14]_enable" BEL "cfg[14]_identify" BEL "cfg<14>_p_0_0" BEL
         "cfg<14>_p_0_1" BEL "cfg<14>_p_0_2" BEL "cfg<14>_p_0_3" BEL
         "cfg<14>_p_0_4" BEL "cfg<14>_p_0_5" BEL "cfg<14>_p_0_6" BEL
-        "cfg<14>_p_0_7" BEL "cfg<14>_p_1_0" BEL "cfg<14>_p_1_1" BEL
-        "cfg<14>_p_1_2" BEL "cfg<14>_p_1_3" BEL "cfg<14>_p_1_4" BEL
-        "cfg<14>_p_1_5" BEL "cfg<14>_p_1_6" BEL "cfg<14>_p_1_7" BEL
-        "cfg[15]_enable" BEL "cfg<15>_p_1_0" BEL "cfg<15>_p_1_1" BEL
+        "cfg<14>_p_0_7" BEL "cfg[15]_identify" BEL "cfg<14>_p_1_0" BEL
+        "cfg<14>_p_1_1" BEL "cfg<14>_p_1_2" BEL "cfg<14>_p_1_3" BEL
+        "cfg<14>_p_1_4" BEL "cfg<14>_p_1_5" BEL "cfg<14>_p_1_6" BEL
+        "cfg<14>_p_1_7" BEL "cfg[15]_enable" BEL "cfg<15>_p_0_0" BEL
+        "cfg<15>_p_0_1" BEL "cfg<15>_p_0_2" BEL "cfg<15>_p_0_3" BEL
+        "cfg<15>_p_0_4" BEL "cfg<15>_p_0_5" BEL "cfg<15>_p_0_6" BEL
+        "cfg<15>_p_0_7" BEL "cfg<15>_p_1_0" BEL "cfg<15>_p_1_1" BEL
         "cfg<15>_p_1_2" BEL "cfg<15>_p_1_3" BEL "cfg<15>_p_1_4" BEL
         "cfg<15>_p_1_5" BEL "cfg<15>_p_1_6" BEL "cfg<15>_p_1_7" BEL
-        "cfg[15]_identify" BEL "cfg<15>_p_0_0" BEL "cfg<15>_p_0_1" BEL
-        "cfg<15>_p_0_2" BEL "cfg<15>_p_0_3" BEL "cfg<15>_p_0_4" BEL
-        "cfg<15>_p_0_5" BEL "cfg<15>_p_0_6" BEL "cfg<15>_p_0_7" BEL
         "cfg[16]_enable" BEL "cfg[16]_identify" BEL "cfg<16>_p_0_0" BEL
         "cfg<16>_p_0_1" BEL "cfg<16>_p_0_2" BEL "cfg<16>_p_0_3" BEL
         "cfg<16>_p_0_4" BEL "cfg<16>_p_0_5" BEL "cfg<16>_p_0_6" BEL
         "cfg<16>_p_0_7" BEL "cfg<16>_p_1_0" BEL "cfg<16>_p_1_1" BEL
         "cfg<16>_p_1_2" BEL "cfg<16>_p_1_3" BEL "cfg<16>_p_1_4" BEL
         "cfg<16>_p_1_5" BEL "cfg<16>_p_1_6" BEL "cfg<16>_p_1_7" BEL
-        "cfg<17>_p_0_0" BEL "cfg<17>_p_0_1" BEL "cfg<17>_p_0_2" BEL
-        "cfg<17>_p_0_3" BEL "cfg<17>_p_0_4" BEL "cfg<17>_p_0_5" BEL
-        "cfg<17>_p_0_6" BEL "cfg<17>_p_0_7" BEL "cfg[17]_enable" BEL
-        "cfg[17]_identify" BEL "cfg<17>_p_1_0" BEL "cfg<17>_p_1_1" BEL
+        "cfg[17]_enable" BEL "cfg[17]_identify" BEL "cfg<17>_p_0_0" BEL
+        "cfg<17>_p_0_1" BEL "cfg<17>_p_0_2" BEL "cfg<17>_p_0_3" BEL
+        "cfg<17>_p_0_4" BEL "cfg<17>_p_0_5" BEL "cfg<17>_p_0_6" BEL
+        "cfg<17>_p_0_7" BEL "cfg<17>_p_1_0" BEL "cfg<17>_p_1_1" BEL
         "cfg<17>_p_1_2" BEL "cfg<17>_p_1_3" BEL "cfg<17>_p_1_4" BEL
         "cfg<17>_p_1_5" BEL "cfg<17>_p_1_6" BEL "cfg<17>_p_1_7" BEL
+        "cfg[18]_enable" BEL "cfg[18]_identify" BEL "cfg<18>_p_0_0" BEL
+        "cfg<18>_p_0_1" BEL "cfg<18>_p_0_2" BEL "cfg<18>_p_0_3" BEL
+        "cfg<18>_p_0_4" BEL "cfg<18>_p_0_5" BEL "cfg<18>_p_0_6" BEL
+        "cfg<18>_p_0_7" BEL "cfg<18>_p_1_0" BEL "cfg<18>_p_1_1" BEL
+        "cfg<18>_p_1_2" BEL "cfg<18>_p_1_3" BEL "cfg<18>_p_1_4" BEL
+        "cfg<18>_p_1_5" BEL "cfg<18>_p_1_6" BEL "cfg<18>_p_1_7" BEL
+        "cfg[19]_enable" BEL "cfg[19]_identify" BEL "cfg<19>_p_0_0" BEL
+        "cfg<19>_p_0_1" BEL "cfg<19>_p_0_2" BEL "cfg<19>_p_0_3" BEL
+        "cfg<19>_p_0_4" BEL "cfg<19>_p_0_5" BEL "cfg<19>_p_0_6" BEL
+        "cfg<19>_p_0_7" BEL "cfg<19>_p_1_0" BEL "cfg<19>_p_1_1" BEL
+        "cfg<19>_p_1_2" BEL "cfg<19>_p_1_3" BEL "cfg<19>_p_1_4" BEL
+        "cfg<19>_p_1_5" BEL "cfg<19>_p_1_6" BEL "cfg<19>_p_1_7" BEL
+        "cfg[20]_enable" BEL "cfg[20]_identify" BEL "cfg<20>_p_0_0" BEL
+        "cfg<20>_p_0_1" BEL "cfg<20>_p_0_2" BEL "cfg<20>_p_0_3" BEL
+        "cfg<20>_p_0_4" BEL "cfg<20>_p_0_5" BEL "cfg<20>_p_0_6" BEL
+        "cfg<20>_p_0_7" BEL "cfg<20>_p_1_0" BEL "cfg<20>_p_1_1" BEL
+        "cfg<20>_p_1_2" BEL "cfg<20>_p_1_3" BEL "cfg<20>_p_1_4" BEL
+        "cfg<20>_p_1_5" BEL "cfg<20>_p_1_6" BEL "cfg<20>_p_1_7" BEL
+        "cfg[21]_enable" BEL "cfg[21]_identify" BEL "cfg<21>_p_0_0" BEL
+        "cfg<21>_p_0_1" BEL "cfg<21>_p_0_2" BEL "cfg<21>_p_0_3" BEL
+        "cfg<21>_p_0_4" BEL "cfg<21>_p_0_5" BEL "cfg<21>_p_0_6" BEL
+        "cfg<21>_p_0_7" BEL "cfg<21>_p_1_0" BEL "cfg<21>_p_1_1" BEL
+        "cfg<21>_p_1_2" BEL "cfg<21>_p_1_3" BEL "cfg<21>_p_1_4" BEL
+        "cfg<21>_p_1_5" BEL "cfg<21>_p_1_6" BEL "cfg<21>_p_1_7" BEL
         "comm.comm_fpga_fx2/state_FSM_FFd2" BEL
         "comm.comm_fpga_fx2/state_FSM_FFd3" BEL
         "comm.comm_fpga_fx2/state_FSM_FFd1" BEL
@@ -389,28 +413,28 @@ PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<402> = BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0" PINNAME
         P3CMDCLK;
 TIMEGRP inst_syscon_pllout_x1 = BEL "inst_fbctl/x_0" BEL "inst_fbctl/y_0" BEL
-        "inst_fbctl/x_4" BEL "inst_fbctl/x_3" BEL "inst_fbctl/x_1" BEL
-        "inst_fbctl/x_2" BEL "inst_fbctl/src_c_11" BEL "inst_fbctl/src_c_10"
-        BEL "inst_fbctl/src_c_8" BEL "inst_fbctl/src_c_7" BEL
-        "inst_fbctl/src_c_9" BEL "inst_fbctl/src_c_6" BEL "inst_fbctl/src_c_5"
-        BEL "inst_fbctl/src_c_3" BEL "inst_fbctl/src_c_2" BEL
-        "inst_fbctl/src_c_4" BEL "inst_fbctl/src_c_0" BEL
-        "inst_fbctl/src_b_11" BEL "inst_fbctl/src_c_1" BEL
-        "inst_fbctl/src_b_9" BEL "inst_fbctl/src_b_8" BEL
-        "inst_fbctl/src_b_10" BEL "inst_fbctl/src_b_7" BEL
-        "inst_fbctl/src_b_6" BEL "inst_fbctl/src_b_4" BEL "inst_fbctl/src_b_3"
-        BEL "inst_fbctl/src_b_5" BEL "inst_fbctl/src_b_1" BEL
-        "inst_fbctl/src_b_0" BEL "inst_fbctl/src_b_2" BEL
-        "inst_fbctl/src_a_10" BEL "inst_fbctl/src_a_9" BEL
-        "inst_fbctl/src_a_11" BEL "inst_fbctl/src_a_8" BEL
-        "inst_fbctl/src_a_7" BEL "inst_fbctl/src_a_5" BEL "inst_fbctl/src_a_4"
-        BEL "inst_fbctl/src_a_6" BEL "inst_fbctl/src_a_2" BEL
-        "inst_fbctl/src_a_1" BEL "inst_fbctl/src_a_3" BEL "inst_fbctl/src_a_0"
-        BEL "inst_fbctl/stateRd_FSM_FFd1" BEL "inst_fbctl/stateRd_FSM_FFd3"
-        BEL "inst_fbctl/stateRd_FSM_FFd4" BEL "inst_fbctl/stateRd_FSM_FFd2"
-        BEL "inst_fbctl/y_8" BEL "inst_fbctl/y_7" BEL "inst_fbctl/y_6" BEL
-        "inst_fbctl/y_4" BEL "inst_fbctl/y_3" BEL "inst_fbctl/y_5" BEL
-        "inst_fbctl/y_1" BEL "inst_fbctl/y_2" BEL
+        "inst_fbctl/x_3" BEL "inst_fbctl/x_2" BEL "inst_fbctl/x_4" BEL
+        "inst_fbctl/x_1" BEL "inst_fbctl/src_c_10" BEL "inst_fbctl/src_c_9"
+        BEL "inst_fbctl/src_c_11" BEL "inst_fbctl/src_c_7" BEL
+        "inst_fbctl/src_c_6" BEL "inst_fbctl/src_c_8" BEL "inst_fbctl/src_c_5"
+        BEL "inst_fbctl/src_c_4" BEL "inst_fbctl/src_c_2" BEL
+        "inst_fbctl/src_c_1" BEL "inst_fbctl/src_c_3" BEL
+        "inst_fbctl/src_b_11" BEL "inst_fbctl/src_b_10" BEL
+        "inst_fbctl/src_c_0" BEL "inst_fbctl/src_b_8" BEL "inst_fbctl/src_b_7"
+        BEL "inst_fbctl/src_b_9" BEL "inst_fbctl/src_b_6" BEL
+        "inst_fbctl/src_b_5" BEL "inst_fbctl/src_b_3" BEL "inst_fbctl/src_b_2"
+        BEL "inst_fbctl/src_b_4" BEL "inst_fbctl/src_b_0" BEL
+        "inst_fbctl/src_a_11" BEL "inst_fbctl/src_b_1" BEL
+        "inst_fbctl/src_a_9" BEL "inst_fbctl/src_a_8" BEL
+        "inst_fbctl/src_a_10" BEL "inst_fbctl/src_a_7" BEL
+        "inst_fbctl/src_a_6" BEL "inst_fbctl/src_a_4" BEL "inst_fbctl/src_a_3"
+        BEL "inst_fbctl/src_a_5" BEL "inst_fbctl/src_a_1" BEL
+        "inst_fbctl/src_a_0" BEL "inst_fbctl/src_a_2" BEL
+        "inst_fbctl/stateRd_FSM_FFd1" BEL "inst_fbctl/stateRd_FSM_FFd2" BEL
+        "inst_fbctl/stateRd_FSM_FFd4" BEL "inst_fbctl/stateRd_FSM_FFd3" BEL
+        "inst_fbctl/y_8" BEL "inst_fbctl/y_7" BEL "inst_fbctl/y_5" BEL
+        "inst_fbctl/y_4" BEL "inst_fbctl/y_6" BEL "inst_fbctl/y_2" BEL
+        "inst_fbctl/y_1" BEL "inst_fbctl/y_3" BEL
         "inst_fbctl/inst_localrstc/RstQ_1" BEL
         "inst_fbctl/inst_localrstc/RstQ_2" BEL
         "inst_fbctl/inst_localrstc/RstQ_3" BEL
@@ -726,24 +750,24 @@ PIN
         "inst_fbctl/auxw_fifo_comp/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram"
         PINNAME CLKBRDCLK;
 TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
-        "inst_fbctl/move_state_FSM_FFd1" BEL "inst_fbctl/move_state_FSM_FFd3"
+        "inst_fbctl/move_state_FSM_FFd1" BEL "inst_fbctl/move_state_FSM_FFd2"
         BEL "inst_fbctl/move_state_FSM_FFd4" BEL
-        "inst_fbctl/move_state_FSM_FFd2" BEL "inst_fbctl/move_state_FSM_FFd6"
+        "inst_fbctl/move_state_FSM_FFd5" BEL "inst_fbctl/move_state_FSM_FFd3"
         BEL "inst_fbctl/move_state_FSM_FFd7" BEL
-        "inst_fbctl/move_state_FSM_FFd5" BEL "inst_fbctl/move_state_FSM_FFd9"
+        "inst_fbctl/move_state_FSM_FFd8" BEL "inst_fbctl/move_state_FSM_FFd6"
         BEL "inst_fbctl/move_state_FSM_FFd10" BEL
-        "inst_fbctl/move_state_FSM_FFd8" BEL "inst_fbctl/move_state_FSM_FFd11"
+        "inst_fbctl/move_state_FSM_FFd11" BEL "inst_fbctl/move_state_FSM_FFd9"
         BEL "inst_fbctl/move_state_FSM_FFd12" BEL
-        "inst_fbctl/move_state_FSM_FFd14" BEL
-        "inst_fbctl/move_state_FSM_FFd15" BEL
         "inst_fbctl/move_state_FSM_FFd13" BEL
-        "inst_fbctl/move_state_FSM_FFd17" BEL
-        "inst_fbctl/move_state_FSM_FFd18" BEL
+        "inst_fbctl/move_state_FSM_FFd15" BEL
         "inst_fbctl/move_state_FSM_FFd16" BEL
-        "inst_fbctl/move_state_FSM_FFd20" BEL
-        "inst_fbctl/move_state_FSM_FFd21" BEL
+        "inst_fbctl/move_state_FSM_FFd14" BEL
+        "inst_fbctl/move_state_FSM_FFd18" BEL
         "inst_fbctl/move_state_FSM_FFd19" BEL
+        "inst_fbctl/move_state_FSM_FFd17" BEL
+        "inst_fbctl/move_state_FSM_FFd21" BEL
         "inst_fbctl/move_state_FSM_FFd22" BEL
+        "inst_fbctl/move_state_FSM_FFd20" BEL
         "inst_fbctl/inst_localrstalg/RstQ_1" BEL
         "inst_fbctl/inst_localrstalg/RstQ_2" BEL
         "inst_fbctl/inst_localrstalg/RstQ_3" BEL
@@ -6735,11 +6759,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut/my_translate/stage_valid" BEL
         "inst_fbctl/dut4/my_translate/stage_valid" BEL
         "inst_fbctl/dut2/mono_2d_l<15>_0_1" BEL
-        "inst_fbctl/dut2/mono_2d_l<17>_0_1" BEL
-        "inst_fbctl/dut2/mono_2d_l<10>_0_1" BEL
         "inst_fbctl/dut2/mono_2d_l<13>_0_1" BEL
-        "inst_fbctl/dut2/mono_2d_l<16>_0_1" BEL
-        "inst_fbctl/dut2/mono_2d_l<9>_0_1" BEL
         "inst_fbctl/dut2/mono_2d_l<3>_0_1" BEL
         "inst_fbctl/dut2/mono_2d_l<14>_0_1" BEL
         "inst_fbctl/dut2/mono_2d_l<8>_0_1" BEL
@@ -6749,64 +6769,83 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut2/mono_2d_l<4>_0_1" BEL
         "inst_fbctl/dut2/mono_2d_l<5>_0_1" BEL
         "inst_fbctl/dut2/mono_2d_l<6>_0_1" BEL
+        "inst_fbctl/dut2/mono_2d_l<17>_0_1" BEL
         "inst_fbctl/dut2/mono_2d_l<19>_0_1" BEL
         "inst_fbctl/dut2/mono_2d_l<15>_0_2" BEL
+        "inst_fbctl/dut2/mono_2d_l<10>_0_1" BEL
         "inst_fbctl/dut2/mono_2d_l<13>_0_2" BEL
+        "inst_fbctl/dut2/mono_2d_l<16>_0_1" BEL
         "inst_fbctl/dut2/mono_2d_l<3>_0_2" BEL
-        "inst_fbctl/dut2/mono_2d_l<16>_0_2" BEL
-        "inst_fbctl/dut2/mono_2d_l<17>_0_2" BEL
-        "inst_fbctl/dut2/mono_2d_l<10>_0_2" BEL
-        "inst_fbctl/dut2/mono_2d_l<9>_0_2" BEL
-        "inst_fbctl/dut2/mono_2d_l<18>_0_1" BEL
+        "inst_fbctl/dut2/mono_2d_l<9>_0_1" BEL
         "inst_fbctl/dut2/mono_2d_l<14>_0_2" BEL
+        "inst_fbctl/dut2/mono_2d_l<18>_0_1" BEL
         "inst_fbctl/dut2/mono_2d_l<8>_0_2" BEL
-        "inst_fbctl/dut2/mono_2d_l<0>_0_2" BEL
         "inst_fbctl/dut2/mono_2d_l<2>_0_2" BEL
         "inst_fbctl/dut2/mono_2d_l<1>_0_2" BEL
+        "inst_fbctl/dut2/mono_2d_l<0>_0_2" BEL
         "inst_fbctl/dut2/mono_2d_l<4>_0_2" BEL
         "inst_fbctl/dut2/mono_2d_l<5>_0_2" BEL
         "inst_fbctl/dut2/mono_2d_l<6>_0_2" BEL
-        "inst_fbctl/dut2/mono_2d_l<15>_0_3" BEL
-        "inst_fbctl/dut2/mono_2d_l<12>_0_1" BEL
-        "inst_fbctl/dut2/mono_2d_l<7>_0_1" BEL
         "inst_fbctl/dut2/mono_2d_l<11>_0_1" BEL
         "inst_fbctl/dut2/mono_2d_l<13>_0_3" BEL
+        "inst_fbctl/dut2/mono_2d_l<15>_0_3" BEL
+        "inst_fbctl/dut2/mono_2d_l<17>_0_2" BEL
+        "inst_fbctl/dut2/mono_2d_l<12>_0_1" BEL
+        "inst_fbctl/dut2/mono_2d_l<10>_0_2" BEL
+        "inst_fbctl/dut2/mono_2d_l<7>_0_1" BEL
+        "inst_fbctl/dut2/mono_2d_l<9>_0_2" BEL
+        "inst_fbctl/dut2/mono_2d_l<16>_0_2" BEL
         "inst_fbctl/dut2/mono_2d_l<3>_0_3" BEL
-        "inst_fbctl/dut2/mono_2d_l<10>_0_3" BEL
-        "inst_fbctl/dut2/mono_2d_l<9>_0_3" BEL
-        "inst_fbctl/dut2/mono_2d_l<18>_0_2" BEL
         "inst_fbctl/dut2/mono_2d_l<14>_0_3" BEL
+        "inst_fbctl/dut2/mono_2d_l<18>_0_2" BEL
         "inst_fbctl/dut2/mono_2d_l<8>_0_3" BEL
-        "inst_fbctl/dut2/mono_2d_l<0>_0_3" BEL
         "inst_fbctl/dut2/mono_2d_l<2>_0_3" BEL
+        "inst_fbctl/dut2/mono_2d_l<0>_0_3" BEL
         "inst_fbctl/dut2/mono_2d_l<1>_0_3" BEL
         "inst_fbctl/dut2/mono_2d_l<4>_0_3" BEL
         "inst_fbctl/dut2/mono_2d_l<5>_0_3" BEL
         "inst_fbctl/dut2/mono_2d_l<6>_0_3" BEL
-        "inst_fbctl/dut2/mono_2d_l<13>_0_4" BEL
-        "inst_fbctl/dut2/mono_2d_l<11>_0_2" BEL
+        "inst_fbctl/dut2/mono_2d_l<21>_0_1" BEL
+        "inst_fbctl/dut2/mono_2d_l<15>_0_4" BEL
         "inst_fbctl/dut2/mono_2d_l<12>_0_2" BEL
+        "inst_fbctl/dut2/mono_2d_l<17>_0_3" BEL
         "inst_fbctl/dut2/mono_2d_l<7>_0_2" BEL
-        "inst_fbctl/dut2/mono_2d_l<10>_0_4" BEL
+        "inst_fbctl/dut2/mono_2d_l<16>_0_3" BEL
+        "inst_fbctl/dut2/mono_2d_l<13>_0_4" BEL
+        "inst_fbctl/dut2/mono_2d_l<20>_0_1" BEL
+        "inst_fbctl/dut2/mono_2d_l<10>_0_3" BEL
+        "inst_fbctl/dut2/mono_2d_l<9>_0_3" BEL
+        "inst_fbctl/dut2/mono_2d_l<11>_0_2" BEL
         "inst_fbctl/dut2/mono_2d_l<3>_0_4" BEL
-        "inst_fbctl/dut2/mono_2d_l<9>_0_4" BEL
+        "inst_fbctl/dut2/mono_2d_l<22>_0_1" BEL
+        "inst_fbctl/dut2/mono_2d_l<14>_0_4" BEL
         "inst_fbctl/dut2/mono_2d_l<8>_0_4" BEL
-        "inst_fbctl/dut2/mono_2d_l<0>_0_4" BEL
         "inst_fbctl/dut2/mono_2d_l<2>_0_4" BEL
+        "inst_fbctl/dut2/mono_2d_l<0>_0_4" BEL
         "inst_fbctl/dut2/mono_2d_l<1>_0_4" BEL
+        "inst_fbctl/dut2/mono_2d_l<4>_0_4" BEL
         "inst_fbctl/dut2/mono_2d_l<5>_0_4" BEL
         "inst_fbctl/dut2/mono_2d_l<6>_0_4" BEL
         "inst_fbctl/dut2/mono_2d_l<7>_0_3" BEL
-        "inst_fbctl/dut2/mono_2d_l<13>_0_5" BEL
-        "inst_fbctl/dut2/mono_2d_l<12>_0_3" BEL
-        "inst_fbctl/dut2/mono_2d_l<11>_0_3" BEL
+        "inst_fbctl/dut2/mono_2d_l<10>_0_4" BEL
         "inst_fbctl/dut2/mono_2d_l<3>_0_5" BEL
-        "inst_fbctl/dut2/mono_2d_l<9>_0_5" BEL
+        "inst_fbctl/dut2/mono_2d_l<12>_0_3" BEL
+        "inst_fbctl/dut2/mono_2d_l<9>_0_4" BEL
+        "inst_fbctl/dut2/mono_2d_l<13>_0_5" BEL
+        "inst_fbctl/dut2/mono_2d_l<11>_0_3" BEL
+        "inst_fbctl/dut2/mono_2d_l<14>_0_5" BEL
+        "inst_fbctl/dut2/mono_2d_l<8>_0_5" BEL
+        "inst_fbctl/dut2/mono_2d_l<2>_0_5" BEL
         "inst_fbctl/dut2/mono_2d_l<0>_0_5" BEL
-        "inst_fbctl/dut2/mono_2d_l<13>_0_6" BEL
-        "inst_fbctl/dut2/mono_2d_l<12>_0_4" BEL
+        "inst_fbctl/dut2/mono_2d_l<1>_0_5" BEL
+        "inst_fbctl/dut2/mono_2d_l<4>_0_5" BEL
+        "inst_fbctl/dut2/mono_2d_l<5>_0_5" BEL
+        "inst_fbctl/dut2/mono_2d_l<7>_0_4" BEL
         "inst_fbctl/dut2/mono_2d_l<11>_0_4" BEL
-        "inst_fbctl/dut2/mono_2d_l<7>_0_4" PIN
+        "inst_fbctl/dut2/mono_2d_l<12>_0_4" BEL
+        "inst_fbctl/dut2/mono_2d_l<10>_0_5" BEL
+        "inst_fbctl/dut2/mono_2d_l<9>_0_5" BEL
+        "inst_fbctl/dut2/mono_2d_l<8>_0_6" PIN
         "inst_fbctl/dut/my_filter0_buffer/rams[7].my_shiftreg/my_shiftreg/Mram_RAM_pins<20>"
         PIN
         "inst_fbctl/dut/my_filter0_buffer/rams[7].my_shiftreg/my_shiftreg/Mram_RAM_pins<21>"
@@ -6854,74 +6893,70 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut4/my_filter0_buffer/rams[0].my_shiftreg/my_shiftreg/Mram_RAM_pins<20>"
         PIN
         "inst_fbctl/dut4/my_filter0_buffer/rams[0].my_shiftreg/my_shiftreg/Mram_RAM_pins<21>"
-        BEL "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[14]_identify" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[14]_identify" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[15]_identify" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[15]_identify" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[15]_enable" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[15]_enable" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[13]_enable" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[13]_enable" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[14]_enable" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[14]_enable" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[13]_identify" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[13]_identify" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[11]_enable" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[11]_enable" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[12]_identify" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[12]_identify" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[12]_enable" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[12]_enable" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[10]_enable" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[10]_enable" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[11]_identify" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[11]_identify" BEL
+        BEL "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[20]_identify" BEL
+        "inst_fbctl/my_cfg_sync/cfg_2[20]_identify" BEL
+        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[21]_identify" BEL
+        "inst_fbctl/my_cfg_sync/cfg_2[21]_identify" BEL
+        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[21]_enable" BEL
+        "inst_fbctl/my_cfg_sync/cfg_2[21]_enable" BEL
+        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[19]_enable" BEL
+        "inst_fbctl/my_cfg_sync/cfg_2[19]_enable" BEL
+        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[20]_enable" BEL
+        "inst_fbctl/my_cfg_sync/cfg_2[20]_enable" BEL
+        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[19]_identify" BEL
+        "inst_fbctl/my_cfg_sync/cfg_2[19]_identify" BEL
         "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[10]_identify" BEL
         "inst_fbctl/my_cfg_sync/cfg_2[10]_identify" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[8]_identify" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[8]_identify" BEL
+        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[18]_identify" BEL
+        "inst_fbctl/my_cfg_sync/cfg_2[18]_identify" BEL
+        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[18]_enable" BEL
+        "inst_fbctl/my_cfg_sync/cfg_2[18]_enable" BEL
+        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[10]_enable" BEL
+        "inst_fbctl/my_cfg_sync/cfg_2[10]_enable" BEL
         "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[9]_identify" BEL
         "inst_fbctl/my_cfg_sync/cfg_2[9]_identify" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[9]_enable" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[9]_enable" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[7]_enable" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[7]_enable" BEL
         "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[8]_enable" BEL
         "inst_fbctl/my_cfg_sync/cfg_2[8]_enable" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[7]_identify" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[7]_identify" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[5]_identify" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[5]_identify" BEL
+        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[9]_enable" BEL
+        "inst_fbctl/my_cfg_sync/cfg_2[9]_enable" BEL
+        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[8]_identify" BEL
+        "inst_fbctl/my_cfg_sync/cfg_2[8]_identify" BEL
         "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[6]_enable" BEL
         "inst_fbctl/my_cfg_sync/cfg_2[6]_enable" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[6]_identify" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[6]_identify" BEL
+        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[7]_identify" BEL
+        "inst_fbctl/my_cfg_sync/cfg_2[7]_identify" BEL
+        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[7]_enable" BEL
+        "inst_fbctl/my_cfg_sync/cfg_2[7]_enable" BEL
         "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[5]_enable" BEL
         "inst_fbctl/my_cfg_sync/cfg_2[5]_enable" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[4]_identify" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[4]_identify" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[3]_identify" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[3]_identify" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[4]_enable" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[4]_enable" BEL
+        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[6]_identify" BEL
+        "inst_fbctl/my_cfg_sync/cfg_2[6]_identify" BEL
+        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[5]_identify" BEL
+        "inst_fbctl/my_cfg_sync/cfg_2[5]_identify" BEL
         "inst_fbctl/my_cfg_sync/Mshreg_cfg_2_4" BEL
         "inst_fbctl/my_cfg_sync/cfg_2_4" BEL
+        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[4]_identify" BEL
+        "inst_fbctl/my_cfg_sync/cfg_2[4]_identify" BEL
         "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[3]_enable" BEL
         "inst_fbctl/my_cfg_sync/cfg_2[3]_enable" BEL
+        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[4]_enable" BEL
+        "inst_fbctl/my_cfg_sync/cfg_2[4]_enable" BEL
+        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[3]_identify" BEL
+        "inst_fbctl/my_cfg_sync/cfg_2[3]_identify" BEL
+        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[2]_identify" BEL
+        "inst_fbctl/my_cfg_sync/cfg_2[2]_identify" BEL
         "inst_fbctl/inst_inputsync_fva/Mshreg_n0003_0" BEL
         "inst_fbctl/inst_inputsync_fva/n0003_0" BEL
         "inst_fbctl/my_cfg_sync/Mshreg_cfg_2_2" BEL
         "inst_fbctl/my_cfg_sync/cfg_2_2" BEL
         "inst_fbctl/my_cfg_sync/Mshreg_cfg_2_1" BEL
         "inst_fbctl/my_cfg_sync/cfg_2_1" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[2]_identify" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[2]_identify" BEL
         "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[2]_enable" BEL
         "inst_fbctl/my_cfg_sync/cfg_2[2]_enable" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[1]_identify" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[1]_identify" BEL
         "inst_fbctl/my_cfg_sync/Mshreg_cfg_2_11" BEL
         "inst_fbctl/my_cfg_sync/cfg_2_11" BEL
+        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[1]_identify" BEL
+        "inst_fbctl/my_cfg_sync/cfg_2[1]_identify" BEL
         "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[1]_enable" BEL
         "inst_fbctl/my_cfg_sync/cfg_2[1]_enable" BEL
         "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i"

@@ -82,14 +82,15 @@ begin  -- myrtl
   my_filter0_buffer : entity work.line_buffer_gray8
     generic map (
       ID        => (ID+1),
+      FORK      => 1,
       NUM_LINES => KERNEL,
       HEIGHT    => HEIGHT+T_H,
       WIDTH     => WIDTH+T_W)
     port map (
       pipe_in      => pipe(2),
-      pipe_out_1   => pipe(3),
+      pipe_out   => pipe(3),
       pipe_out_2   => pipe(6),
-      stall_in_1   => stall(3),
+      stall_in   => stall(3),
       stall_in_2   => stall(6),
       stall_out    => stall(2),
       gray8_1d_out => gray8_1d

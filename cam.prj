@@ -92,7 +92,7 @@ vhdl work "morph_set.vhd"
 #vhdl work "motion.vhd"
 
 vhdl work "kernel_gray8.vhd"
-#vhdl work "distort.vhd"
+vhdl work "distort.vhd"
 vhdl work "disparity.vhd"
 vhdl work "census.vhd"
 

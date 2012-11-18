@@ -7,7 +7,8 @@ use work.cam_pkg.all;
 
 entity mcb_feed_dual is
   generic (
-    ID : integer range 0 to 63 := 0);
+    ID : integer range 0 to 63 := 0;
+    MERGE : integer range 0 to 1 := 0);
   port (
     pipe_in   : in pipe_t;
     pipe_out  : out pipe_t;
@@ -101,8 +102,13 @@ begin
     
     stage_next.data_1   <= (others => '0');
     stage_next.data_8   <= std_logic_vector(brightness);
-    stage_next.data_565 <= std_logic_vector(brightness_a) & std_logic_vector(brightness_b);
---    stage_next.data_565 <= selected_word;
+
+    if (MERGE = 1) then
+      stage_next.data_565 <= std_logic_vector(brightness_a) & std_logic_vector(brightness_b);
+    else
+      stage_next.data_565 <= selected_word;      
+    end if;
+    
     stage_next.data_888 <= selected_word(15 downto 11) & "000" &
                            selected_word(10 downto 5) & "00" &
                            selected_word(4 downto 0) & "000";

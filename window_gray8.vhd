@@ -63,6 +63,7 @@ begin  -- myrtl
   my_filter0_buffer : entity work.line_buffer_gray8
     generic map (
       ID        => (ID+1),
+      FORK      => 0,
       NUM_LINES => KERNEL,
       HEIGHT    => HEIGHT+T_H,
       WIDTH     => WIDTH+T_W)
