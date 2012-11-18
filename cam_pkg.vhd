@@ -8,7 +8,7 @@ package cam_pkg is
 -- vin_data(0)(1) 1 row delay
   constant MAX_PIPE     : natural := 22;
   constant MAX_PARAM    : natural := 6;
-  constant MAX_KERNEL   : natural := 29;
+  constant MAX_KERNEL   : natural := 9;
   -----------------------------------------------------------------------------
   -- Bilinear
   -----------------------------------------------------------------------------
@@ -81,7 +81,7 @@ package cam_pkg is
 
   type stage_t is record
     valid    : std_logic;
-    init     : std_logic;
+--    init     : std_logic;
     aux      : std_logic_vector(31 downto 0);
     data_1   : mono_t;
     data_8   : gray8_t;
@@ -89,7 +89,6 @@ package cam_pkg is
     data_888 : rgb888_t;
     identity : std_logic_vector(7 downto 0);
   end record;
-  constant NULL_STAGE : stage_t := ('0', '0', (others => '0'), (others => '0'), (others => '0'), (others => '0'), (others => '0'), (others => '0'));
 
   type inspect_t is record
     identity : std_logic_vector(7 downto 0);
@@ -104,8 +103,8 @@ package cam_pkg is
   type ctrl_t is record
     clk   : std_logic;
     rst   : std_logic;
-    issue : std_logic;
-    stall : std_logic;
+--    issue : std_logic;
+--    stall : std_logic;
   end record;
 
   type cfg_set_t is array (0 to MAX_PIPE-1) of cfg_t;
@@ -117,6 +116,12 @@ package cam_pkg is
 --    stall : std_logic;
   end record;
 
+  constant NULL_STAGE : stage_t := ('0', (others => '0'), (others => '0'), (others => '0'), (others => '0'), (others => '0'), (others => '0'));
+  constant NULL_CFG : cfg_t := ('0', '0', (others => (others => '0')));
+  constant NULL_CFG_SET : cfg_set_t := (others => NULL_CFG);
+  constant NULL_CTRL : ctrl_t := (others => '0');
+  constant NULL_PIPE : pipe_t := (NULL_STAGE, NULL_CFG_SET, NULL_CTRL);  
+  
   type pipe_set_t is array (0 to MAX_PIPE-1) of pipe_t;
 
   type mcb_fifo_t is record
@@ -222,6 +227,7 @@ package cam_pkg is
     signal stall_in_2 : in  std_logic;
     signal stall_out  : out std_logic;
     signal stage      : in  stage_t;
+    signal stage_2      : in  stage_t;    
     signal src_valid  : out std_logic;
     signal issue      : in  std_logic;
     signal stall      : out std_logic);
@@ -295,6 +301,7 @@ package body cam_pkg is
     signal stall_in_2 : in  std_logic;
     signal stall_out  : out std_logic;
     signal stage      : in  stage_t;
+    signal stage_2      : in  stage_t;    
     signal src_valid  : out std_logic;
     signal issue      : in  std_logic;
     signal stall      : out std_logic)
@@ -309,12 +316,12 @@ package body cam_pkg is
 
     pipe_out_2.ctrl  <= pipe_in.ctrl;
     pipe_out_2.cfg   <= pipe_in.cfg;
-    pipe_out_2.stage <= stage;
-    
-    stall_out <= (stall_in_1) or issue;
-    stall     <= stall_in_1;
+    pipe_out_2.stage <= stage_2;
 
-    src_valid <= pipe_in.stage.valid and not (stall_in_1 or issue);
+    stall_out <= (stall_in_1) or issue;
+    stall     <= stall_in_1;    
+
+    src_valid <= pipe_in.stage.valid and not (stall_in_1 or issue);    
   end procedure connect_pipe_fork;
   
   

@@ -65,7 +65,7 @@ begin
   end generate fork_gen;
 
   fork_gen_else: if FORK = 1 generate
-    connect_pipe_fork(clk, rst, pipe_in, pipe_out, pipe_out_2, stall_in, stall_in_2 , stall_out, stage, src_valid, issue, stall);
+    connect_pipe_fork(clk, rst, pipe_in, pipe_out, pipe_out_2, stall_in, stall_in_2 , stall_out, stage, stage, src_valid, issue, stall);
   end generate fork_gen_else;
 
   rams : for i in 0 to (NUM_LINES-2) generate
