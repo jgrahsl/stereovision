@@ -320,11 +320,8 @@ package body cam_pkg is
 
     stall_out <= (stall_in_1) or issue;
     stall     <= stall_in_1;    
---    stall_out <= (stall_in_1 or stall_in_2) or issue;
---    stall     <= stall_in_1 or stall_in_2;
 
     src_valid <= pipe_in.stage.valid and not (stall_in_1 or issue);    
---    src_valid <= pipe_in.stage.valid and not (stall_in_1 or stall_in_2 or issue);
   end procedure connect_pipe_fork;
   
   

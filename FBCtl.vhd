@@ -1676,7 +1676,7 @@ begin
   my_mcb_feed_dual : entity work.mcb_feed_dual
     generic map (
       ID => 1,
-      FORK => 0)
+      FORK => 1)
     port map (
       pipe_in   => pipe(0),             -- [in]
       pipe_out  => pipe(1),             -- [out]
@@ -1703,17 +1703,17 @@ begin
       stall_in  => stall(9),            -- [in]
       stall_out => stall(1));          -- [out]
 
-  --my_distort2: entity work.distort
-  --  generic map (
-  --    ID     => 13,
-  --    KERNEL => KERNEL,
-  --    WIDTH  => WIDTH,
-  --    HEIGHT => HEIGHT)
-  --  port map (
-  --    pipe_in   => pipe(2),             -- [in]
-  --    pipe_out  => pipe(10),            -- [out]
-  --    stall_in  => stall(10),            -- [in]
-  --    stall_out => stall(2));          -- [out]
+  my_distort2: entity work.distort
+    generic map (
+      ID     => 13,
+      KERNEL => KERNEL,
+      WIDTH  => WIDTH,
+      HEIGHT => HEIGHT)
+    port map (
+      pipe_in   => pipe(2),             -- [in]
+      pipe_out  => pipe(10),            -- [out]
+      stall_in  => stall(10),            -- [in]
+      stall_out => stall(2));          -- [out]
   
 -------------------------------------------------------------------------------
 -- ---
@@ -1722,7 +1722,7 @@ begin
   colmux : entity work.color_mux
     generic map (
       ID   => 3,
-      JOIN => 0,
+      JOIN => 1,
       MODE => 2)      
     port map (
       pipe_in   => pipe(9),             -- [in]
