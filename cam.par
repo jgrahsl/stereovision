@@ -1,7 +1,7 @@
 Release 14.2 par P.28xd (lin)
 Copyright (c) 1995-2012 Xilinx, Inc.  All rights reserved.
 
-newt::  Sun Nov 18 22:09:15 2012
+newt::  Sun Nov 18 23:02:51 2012
 
 par -w -intstyle ise -ol high -mt 2 cam_map.ncd cam.ncd cam.pcf 
 
@@ -129,23 +129,23 @@ WARNING:Par:288 - The signal tmds_tx_scl_IBUF has no load.  PAR will not attempt
 Starting Multi-threaded Router
 
 
-Phase  1  : 40913 unrouted;      REAL time: 17 secs 
+Phase  1  : 40913 unrouted;      REAL time: 21 secs 
 
-Phase  2  : 33547 unrouted;      REAL time: 21 secs 
+Phase  2  : 33547 unrouted;      REAL time: 26 secs 
 
-Phase  3  : 18350 unrouted;      REAL time: 45 secs 
+Phase  3  : 18350 unrouted;      REAL time: 58 secs 
 
-Phase  4  : 18367 unrouted; (Setup:0, Hold:317973, Component Switching Limit:0)     REAL time: 50 secs 
+Phase  4  : 18367 unrouted; (Setup:0, Hold:317973, Component Switching Limit:0)     REAL time: 1 mins 4 secs 
 
 Updating file: cam.ncd with current fully routed design.
 
-Phase  5  : 0 unrouted; (Setup:0, Hold:277693, Component Switching Limit:0)     REAL time: 1 mins 38 secs 
+Phase  5  : 0 unrouted; (Setup:0, Hold:277693, Component Switching Limit:0)     REAL time: 2 mins 9 secs 
 
-Phase  6  : 0 unrouted; (Setup:0, Hold:277693, Component Switching Limit:0)     REAL time: 1 mins 38 secs 
+Phase  6  : 0 unrouted; (Setup:0, Hold:277693, Component Switching Limit:0)     REAL time: 2 mins 9 secs 
 
-Phase  7  : 0 unrouted; (Setup:0, Hold:277693, Component Switching Limit:0)     REAL time: 1 mins 38 secs 
+Phase  7  : 0 unrouted; (Setup:0, Hold:277693, Component Switching Limit:0)     REAL time: 2 mins 9 secs 
 
-Phase  8  : 0 unrouted; (Setup:0, Hold:277693, Component Switching Limit:0)     REAL time: 1 mins 38 secs 
+Phase  8  : 0 unrouted; (Setup:0, Hold:277693, Component Switching Limit:0)     REAL time: 2 mins 9 secs 
 WARNING:Route:466 - Unusually high hold time violation detected among 51 connections. The top 20 such instances are printed below. The
    router will continue and try to fix it
 	comm.comm_fpga_fx2/state_FSM_FFd3:AQ -> comm.comm_fpga_fx2/count<15>:A2 -3086
@@ -170,11 +170,11 @@ WARNING:Route:466 - Unusually high hold time violation detected among 51 connect
 	comm.comm_fpga_fx2/state_FSM_FFd2:CQ -> comm.comm_fpga_fx2/count<10>:A3 -2682
 
 
-Phase  9  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 2 mins 1 secs 
+Phase  9  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 2 mins 37 secs 
 
-Phase 10  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 2 mins 6 secs 
-Total REAL time to Router completion: 2 mins 6 secs 
-Total CPU time to Router completion (all processors): 2 mins 37 secs 
+Phase 10  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 2 mins 42 secs 
+Total REAL time to Router completion: 2 mins 42 secs 
+Total CPU time to Router completion (all processors): 3 mins 24 secs 
 
 Generating "PAR" statistics.
 
@@ -377,10 +377,10 @@ All signals are completely routed.
 
 WARNING:Par:283 - There are 5 loadless signals in this design. This design will cause Bitgen to issue DRC warnings.
 
-Total REAL time to PAR completion: 2 mins 12 secs 
-Total CPU time to PAR completion (all processors): 2 mins 44 secs 
+Total REAL time to PAR completion: 2 mins 50 secs 
+Total CPU time to PAR completion (all processors): 3 mins 32 secs 
 
-Peak Memory Usage:  372 MB
+Peak Memory Usage:  370 MB
 
 Placer: Placement generated during map.
 Routing: Completed - No errors found.
