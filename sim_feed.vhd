@@ -59,7 +59,6 @@ begin
 -- Logic
 -------------------------------------------------------------------------------    
     stage_next.valid <= avail;  -- reg does not need to be blocked by stall
-    stage_next.init  <= '0';
     stage_next.aux   <= (others => '0');
 
     stage_next.data_1   <= p0_fifo.data(0 downto 0);

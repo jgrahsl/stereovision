@@ -1,5 +1,5 @@
 //! **************************************************************************
-// Written by: Map P.28xd on Sun Nov 18 23:13:36 2012
+// Written by: Map P.28xd on Wed Dec 05 14:50:23 2012
 //! **************************************************************************
 
 SCHEMATIC START;
@@ -270,18 +270,7 @@ TIMEGRP fx2clk_in = BEL "f2hdata_0" BEL "f2hdata_1" BEL "f2hdata_2" BEL
         "comm.comm_fpga_fx2/chanAddr_3" BEL "comm.comm_fpga_fx2/chanAddr_2"
         BEL "comm.comm_fpga_fx2/chanAddr_1" BEL
         "comm.comm_fpga_fx2/chanAddr_0" BEL "comm.comm_fpga_fx2/isAligned" BEL
-        "f2hvalid" BEL "my_inspect_sync/Mshreg_inspect_2_identity_5" BEL
-        "my_inspect_sync/inspect_2_identity_5" BEL
-        "my_inspect_sync/Mshreg_inspect_2_identity_2" BEL
-        "my_inspect_sync/inspect_2_identity_2" BEL
-        "my_inspect_sync/Mshreg_inspect_2_identity_4" BEL
-        "my_inspect_sync/inspect_2_identity_4" BEL
-        "my_inspect_sync/Mshreg_inspect_2_identity_3" BEL
-        "my_inspect_sync/inspect_2_identity_3" BEL
-        "my_inspect_sync/Mshreg_inspect_2_identity_1" BEL
-        "my_inspect_sync/inspect_2_identity_1" BEL
-        "my_inspect_sync/Mshreg_inspect_2_identity_0" BEL
-        "my_inspect_sync/inspect_2_identity_0" BEL
+        "f2hvalid" BEL
         "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gras.rsts/ram_empty_fb_i"
         BEL
         "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/rd_rst_asreg"
@@ -289,8 +278,6 @@ TIMEGRP fx2clk_in = BEL "f2hdata_0" BEL "f2hdata_1" BEL "f2hdata_2" BEL
         "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/rd_rst_asreg_d2"
         BEL
         "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_1"
         BEL
         "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0"
         BEL
@@ -349,62 +336,6 @@ TIMEGRP fx2clk_in = BEL "f2hdata_0" BEL "f2hdata_1" BEL "f2hdata_2" BEL
         "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i"
         BEL
         "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_0"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_1"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_2"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_3"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_4"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_5"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_6"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_0"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_1"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_2"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_3"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_4"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_5"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_6"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_6"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_5"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_4"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_3"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_2"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_1"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_0"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_7"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_6"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_5"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_4"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_3"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_2"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_1"
         PIN
         "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM9.ram_pins<27>";
 PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<380> = BEL
@@ -432,9 +363,9 @@ TIMEGRP inst_syscon_pllout_x1 = BEL "inst_fbctl/x_0" BEL "inst_fbctl/y_0" BEL
         "inst_fbctl/src_a_0" BEL "inst_fbctl/src_a_2" BEL
         "inst_fbctl/stateRd_FSM_FFd1" BEL "inst_fbctl/stateRd_FSM_FFd2" BEL
         "inst_fbctl/stateRd_FSM_FFd4" BEL "inst_fbctl/stateRd_FSM_FFd3" BEL
-        "inst_fbctl/y_8" BEL "inst_fbctl/y_7" BEL "inst_fbctl/y_5" BEL
-        "inst_fbctl/y_4" BEL "inst_fbctl/y_6" BEL "inst_fbctl/y_2" BEL
-        "inst_fbctl/y_1" BEL "inst_fbctl/y_3" BEL
+        "inst_fbctl/y_8" BEL "inst_fbctl/y_7" BEL "inst_fbctl/y_6" BEL
+        "inst_fbctl/y_5" BEL "inst_fbctl/y_3" BEL "inst_fbctl/y_2" BEL
+        "inst_fbctl/y_4" BEL "inst_fbctl/y_1" BEL
         "inst_fbctl/inst_localrstc/RstQ_1" BEL
         "inst_fbctl/inst_localrstc/RstQ_2" BEL
         "inst_fbctl/inst_localrstc/RstQ_3" BEL
@@ -710,16 +641,6 @@ PIN
         "inst_fbctl/pr_fifo_comp_a/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram"
         PINNAME CLKBRDCLK;
 PIN
-        inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<26>
-        = BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram"
-        PINNAME CLKAWRCLK;
-PIN
-        inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<27>
-        = BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram"
-        PINNAME CLKBRDCLK;
-PIN
         inst_fbctl/pw_fifo_comp/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<26>
         = BEL
         "inst_fbctl/pw_fifo_comp/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram"
@@ -801,24 +722,6 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         BEL "inst_fbctl/my_pixel_wr_addr_9" BEL
         "inst_fbctl/my_pixel_wr_addr_8" BEL "inst_fbctl/my_pixel_wr_addr_7"
         BEL "inst_fbctl/my_pixel_wr_addr_6" BEL
-        "inst_fbctl/my_pixel_b_rd_addr_23" BEL
-        "inst_fbctl/my_pixel_b_rd_addr_22" BEL
-        "inst_fbctl/my_pixel_b_rd_addr_21" BEL
-        "inst_fbctl/my_pixel_b_rd_addr_20" BEL
-        "inst_fbctl/my_pixel_b_rd_addr_19" BEL
-        "inst_fbctl/my_pixel_b_rd_addr_18" BEL
-        "inst_fbctl/my_pixel_b_rd_addr_17" BEL
-        "inst_fbctl/my_pixel_b_rd_addr_16" BEL
-        "inst_fbctl/my_pixel_b_rd_addr_15" BEL
-        "inst_fbctl/my_pixel_b_rd_addr_14" BEL
-        "inst_fbctl/my_pixel_b_rd_addr_13" BEL
-        "inst_fbctl/my_pixel_b_rd_addr_12" BEL
-        "inst_fbctl/my_pixel_b_rd_addr_11" BEL
-        "inst_fbctl/my_pixel_b_rd_addr_10" BEL
-        "inst_fbctl/my_pixel_b_rd_addr_9" BEL
-        "inst_fbctl/my_pixel_b_rd_addr_8" BEL
-        "inst_fbctl/my_pixel_b_rd_addr_7" BEL
-        "inst_fbctl/my_pixel_b_rd_addr_6" BEL
         "inst_fbctl/my_pixel_a_rd_addr_23" BEL
         "inst_fbctl/my_pixel_a_rd_addr_22" BEL
         "inst_fbctl/my_pixel_a_rd_addr_21" BEL
@@ -836,7 +739,25 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/my_pixel_a_rd_addr_9" BEL
         "inst_fbctl/my_pixel_a_rd_addr_8" BEL
         "inst_fbctl/my_pixel_a_rd_addr_7" BEL
-        "inst_fbctl/my_pixel_a_rd_addr_6" PIN
+        "inst_fbctl/my_pixel_a_rd_addr_6" BEL
+        "inst_fbctl/my_pixel_b_rd_addr_23" BEL
+        "inst_fbctl/my_pixel_b_rd_addr_22" BEL
+        "inst_fbctl/my_pixel_b_rd_addr_21" BEL
+        "inst_fbctl/my_pixel_b_rd_addr_20" BEL
+        "inst_fbctl/my_pixel_b_rd_addr_19" BEL
+        "inst_fbctl/my_pixel_b_rd_addr_18" BEL
+        "inst_fbctl/my_pixel_b_rd_addr_17" BEL
+        "inst_fbctl/my_pixel_b_rd_addr_16" BEL
+        "inst_fbctl/my_pixel_b_rd_addr_15" BEL
+        "inst_fbctl/my_pixel_b_rd_addr_14" BEL
+        "inst_fbctl/my_pixel_b_rd_addr_13" BEL
+        "inst_fbctl/my_pixel_b_rd_addr_12" BEL
+        "inst_fbctl/my_pixel_b_rd_addr_11" BEL
+        "inst_fbctl/my_pixel_b_rd_addr_10" BEL
+        "inst_fbctl/my_pixel_b_rd_addr_9" BEL
+        "inst_fbctl/my_pixel_b_rd_addr_8" BEL
+        "inst_fbctl/my_pixel_b_rd_addr_7" BEL
+        "inst_fbctl/my_pixel_b_rd_addr_6" PIN
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<109>" PIN
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<130>" PIN
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<172>" PIN
@@ -846,48 +767,13 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<109>" PIN
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<130>" PIN
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<172>" BEL
-        "inst_fbctl/my_fifo_sink/r_rows_7" BEL
-        "inst_fbctl/my_fifo_sink/r_rows_6" BEL
-        "inst_fbctl/my_fifo_sink/r_rows_4" BEL
-        "inst_fbctl/my_fifo_sink/r_rows_3" BEL
-        "inst_fbctl/my_fifo_sink/r_rows_5" BEL
-        "inst_fbctl/my_fifo_sink/r_rows_2" BEL
-        "inst_fbctl/my_fifo_sink/r_rows_1" BEL
-        "inst_fbctl/my_fifo_sink/r_cols_8" BEL
-        "inst_fbctl/my_fifo_sink/r_rows_0" BEL
-        "inst_fbctl/my_fifo_sink/r_cols_7" BEL
-        "inst_fbctl/my_fifo_sink/r_cols_6" BEL
-        "inst_fbctl/my_fifo_sink/r_cols_4" BEL
-        "inst_fbctl/my_fifo_sink/r_cols_3" BEL
-        "inst_fbctl/my_fifo_sink/r_cols_5" BEL
-        "inst_fbctl/my_fifo_sink/r_cols_2" BEL
-        "inst_fbctl/my_fifo_sink/r_cols_1" BEL
-        "inst_fbctl/my_fifo_sink/r_cols_0" BEL
-        "inst_fbctl/my_fifo_sink/r_enable" BEL
-        "inst_fbctl/my_fifo_sink/r_dummy" BEL
-        "inst_fbctl/my_fifo_sink/stage_identity_5" BEL
-        "inst_fbctl/my_fifo_sink/stage_identity_4" BEL
-        "inst_fbctl/my_fifo_sink/stage_identity_3" BEL
-        "inst_fbctl/my_fifo_sink/stage_identity_2" BEL
-        "inst_fbctl/my_fifo_sink/stage_identity_1" BEL
-        "inst_fbctl/my_fifo_sink/stage_identity_0" BEL
         "inst_fbctl/my_fifo_sink/stage_valid" BEL
         "inst_fbctl/my_fifo_sink/stage_data_565_15" BEL
         "inst_fbctl/my_fifo_sink/stage_data_565_14" BEL
         "inst_fbctl/my_fifo_sink/stage_data_565_13" BEL
         "inst_fbctl/my_fifo_sink/stage_data_565_12" BEL
         "inst_fbctl/my_fifo_sink/stage_data_565_11" BEL
-        "inst_fbctl/my_fifo_sink/stage_data_565_10" BEL
-        "inst_fbctl/my_fifo_sink/stage_data_565_9" BEL
-        "inst_fbctl/my_fifo_sink/stage_data_565_8" BEL
-        "inst_fbctl/my_fifo_sink/stage_data_565_7" BEL
-        "inst_fbctl/my_fifo_sink/stage_data_565_6" BEL
         "inst_fbctl/my_fifo_sink/stage_data_565_5" BEL
-        "inst_fbctl/my_fifo_sink/stage_data_565_4" BEL
-        "inst_fbctl/my_fifo_sink/stage_data_565_3" BEL
-        "inst_fbctl/my_fifo_sink/stage_data_565_2" BEL
-        "inst_fbctl/my_fifo_sink/stage_data_565_1" BEL
-        "inst_fbctl/my_fifo_sink/stage_data_565_0" BEL
         "inst_fbctl/my_fifo_sink/stage_aux_31" BEL
         "inst_fbctl/my_fifo_sink/stage_aux_30" BEL
         "inst_fbctl/my_fifo_sink/stage_aux_29" BEL
@@ -920,13 +806,6 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/my_fifo_sink/stage_aux_2" BEL
         "inst_fbctl/my_fifo_sink/stage_aux_1" BEL
         "inst_fbctl/my_fifo_sink/stage_aux_0" BEL
-        "inst_fbctl/my_mcb_feed_dual/stage_data_8_7" BEL
-        "inst_fbctl/my_mcb_feed_dual/stage_data_8_6" BEL
-        "inst_fbctl/my_mcb_feed_dual/stage_data_8_5" BEL
-        "inst_fbctl/my_mcb_feed_dual/stage_data_8_4" BEL
-        "inst_fbctl/my_mcb_feed_dual/stage_data_8_3" BEL
-        "inst_fbctl/my_mcb_feed_dual/stage_data_8_2" BEL
-        "inst_fbctl/my_mcb_feed_dual/stage_data_8_1" BEL
         "inst_fbctl/my_mcb_feed_dual/stage_data_565_15" BEL
         "inst_fbctl/my_mcb_feed_dual/stage_data_565_14" BEL
         "inst_fbctl/my_mcb_feed_dual/stage_data_565_13" BEL
@@ -977,75 +856,42 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/my_mcb_feed_dual/stage_aux_2" BEL
         "inst_fbctl/my_mcb_feed_dual/stage_aux_1" BEL
         "inst_fbctl/my_mcb_feed_dual/stage_aux_0" BEL
-        "inst_fbctl/my_mcb_feed_dual/stage_identity_0" BEL
         "inst_fbctl/my_mcb_sink/p0_fifo_data_0" BEL
         "inst_fbctl/my_mcb_sink/p0_fifo_data_1" BEL
         "inst_fbctl/my_mcb_sink/p0_fifo_data_3" BEL
         "inst_fbctl/my_mcb_sink/p0_fifo_data_4" BEL
         "inst_fbctl/my_mcb_sink/p0_fifo_data_2" BEL
-        "inst_fbctl/my_mcb_sink/p0_fifo_data_6" BEL
-        "inst_fbctl/my_mcb_sink/p0_fifo_data_7" BEL
         "inst_fbctl/my_mcb_sink/p0_fifo_data_5" BEL
-        "inst_fbctl/my_mcb_sink/p0_fifo_data_9" BEL
-        "inst_fbctl/my_mcb_sink/p0_fifo_data_10" BEL
-        "inst_fbctl/my_mcb_sink/p0_fifo_data_8" BEL
-        "inst_fbctl/my_mcb_sink/p0_fifo_data_12" BEL
-        "inst_fbctl/my_mcb_sink/p0_fifo_data_13" BEL
-        "inst_fbctl/my_mcb_sink/p0_fifo_data_11" BEL
-        "inst_fbctl/my_mcb_sink/p0_fifo_data_15" BEL
-        "inst_fbctl/my_mcb_sink/p0_fifo_data_14" BEL
         "inst_fbctl/my_mcb_sink/r_sel_is_high" BEL
-        "inst_fbctl/my_mcb_sink/stage_identity_5" BEL
-        "inst_fbctl/my_mcb_sink/stage_identity_4" BEL
-        "inst_fbctl/my_mcb_sink/stage_identity_3" BEL
-        "inst_fbctl/my_mcb_sink/stage_identity_2" BEL
-        "inst_fbctl/my_mcb_sink/stage_identity_1" BEL
-        "inst_fbctl/my_mcb_sink/stage_identity_0" BEL
         "inst_fbctl/colmux/stage_data_565_15" BEL
         "inst_fbctl/colmux/stage_data_565_14" BEL
         "inst_fbctl/colmux/stage_data_565_13" BEL
         "inst_fbctl/colmux/stage_data_565_12" BEL
         "inst_fbctl/colmux/stage_data_565_11" BEL
-        "inst_fbctl/colmux/stage_data_565_10" BEL
-        "inst_fbctl/colmux/stage_data_565_9" BEL
-        "inst_fbctl/colmux/stage_data_565_8" BEL
-        "inst_fbctl/colmux/stage_data_565_7" BEL
-        "inst_fbctl/colmux/stage_data_565_6" BEL
         "inst_fbctl/colmux/stage_data_565_5" BEL
-        "inst_fbctl/colmux/stage_data_565_4" BEL
-        "inst_fbctl/colmux/stage_data_565_3" BEL
-        "inst_fbctl/colmux/stage_data_565_2" BEL
-        "inst_fbctl/colmux/stage_data_565_1" BEL
-        "inst_fbctl/colmux/stage_data_565_0" BEL
-        "inst_fbctl/colmux/stage_valid" BEL
-        "inst_fbctl/colmux/stage_identity_5" BEL
-        "inst_fbctl/colmux/stage_identity_4" BEL
-        "inst_fbctl/colmux/stage_identity_3" BEL
-        "inst_fbctl/colmux/stage_identity_2" BEL
-        "inst_fbctl/colmux/stage_identity_1" BEL
-        "inst_fbctl/colmux/stage_identity_0" BEL
-        "inst_fbctl/colmux/stage_aux_31" BEL "inst_fbctl/colmux/stage_aux_30"
-        BEL "inst_fbctl/colmux/stage_aux_29" BEL
-        "inst_fbctl/colmux/stage_aux_28" BEL "inst_fbctl/colmux/stage_aux_27"
-        BEL "inst_fbctl/colmux/stage_aux_26" BEL
-        "inst_fbctl/colmux/stage_aux_25" BEL "inst_fbctl/colmux/stage_aux_24"
-        BEL "inst_fbctl/colmux/stage_aux_23" BEL
-        "inst_fbctl/colmux/stage_aux_22" BEL "inst_fbctl/colmux/stage_aux_21"
-        BEL "inst_fbctl/colmux/stage_aux_20" BEL
-        "inst_fbctl/colmux/stage_aux_19" BEL "inst_fbctl/colmux/stage_aux_18"
-        BEL "inst_fbctl/colmux/stage_aux_17" BEL
-        "inst_fbctl/colmux/stage_aux_16" BEL "inst_fbctl/colmux/stage_aux_15"
-        BEL "inst_fbctl/colmux/stage_aux_14" BEL
-        "inst_fbctl/colmux/stage_aux_13" BEL "inst_fbctl/colmux/stage_aux_12"
-        BEL "inst_fbctl/colmux/stage_aux_11" BEL
-        "inst_fbctl/colmux/stage_aux_10" BEL "inst_fbctl/colmux/stage_aux_9"
-        BEL "inst_fbctl/colmux/stage_aux_8" BEL
-        "inst_fbctl/colmux/stage_aux_7" BEL "inst_fbctl/colmux/stage_aux_6"
-        BEL "inst_fbctl/colmux/stage_aux_5" BEL
-        "inst_fbctl/colmux/stage_aux_4" BEL "inst_fbctl/colmux/stage_aux_3"
-        BEL "inst_fbctl/colmux/stage_aux_2" BEL
-        "inst_fbctl/colmux/stage_aux_1" BEL "inst_fbctl/colmux/stage_aux_0"
-        BEL "inst_fbctl/dut/my_translate/r_cols_0" BEL
+        "inst_fbctl/colmux/stage_valid" BEL "inst_fbctl/colmux/stage_aux_31"
+        BEL "inst_fbctl/colmux/stage_aux_30" BEL
+        "inst_fbctl/colmux/stage_aux_29" BEL "inst_fbctl/colmux/stage_aux_28"
+        BEL "inst_fbctl/colmux/stage_aux_27" BEL
+        "inst_fbctl/colmux/stage_aux_26" BEL "inst_fbctl/colmux/stage_aux_25"
+        BEL "inst_fbctl/colmux/stage_aux_24" BEL
+        "inst_fbctl/colmux/stage_aux_23" BEL "inst_fbctl/colmux/stage_aux_22"
+        BEL "inst_fbctl/colmux/stage_aux_21" BEL
+        "inst_fbctl/colmux/stage_aux_20" BEL "inst_fbctl/colmux/stage_aux_19"
+        BEL "inst_fbctl/colmux/stage_aux_18" BEL
+        "inst_fbctl/colmux/stage_aux_17" BEL "inst_fbctl/colmux/stage_aux_16"
+        BEL "inst_fbctl/colmux/stage_aux_15" BEL
+        "inst_fbctl/colmux/stage_aux_14" BEL "inst_fbctl/colmux/stage_aux_13"
+        BEL "inst_fbctl/colmux/stage_aux_12" BEL
+        "inst_fbctl/colmux/stage_aux_11" BEL "inst_fbctl/colmux/stage_aux_10"
+        BEL "inst_fbctl/colmux/stage_aux_9" BEL
+        "inst_fbctl/colmux/stage_aux_8" BEL "inst_fbctl/colmux/stage_aux_7"
+        BEL "inst_fbctl/colmux/stage_aux_6" BEL
+        "inst_fbctl/colmux/stage_aux_5" BEL "inst_fbctl/colmux/stage_aux_4"
+        BEL "inst_fbctl/colmux/stage_aux_3" BEL
+        "inst_fbctl/colmux/stage_aux_2" BEL "inst_fbctl/colmux/stage_aux_1"
+        BEL "inst_fbctl/colmux/stage_aux_0" BEL
+        "inst_fbctl/dut/my_translate/r_cols_0" BEL
         "inst_fbctl/dut/my_translate/r_rows_0" BEL
         "inst_fbctl/dut/my_translate/r_cols_9" BEL
         "inst_fbctl/dut/my_translate/r_cols_8" BEL
@@ -1080,47 +926,6 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut/my_translate/stage_data_565_2" BEL
         "inst_fbctl/dut/my_translate/stage_data_565_1" BEL
         "inst_fbctl/dut/my_translate/stage_data_565_0" BEL
-        "inst_fbctl/dut/my_translate/stage_data_8_7" BEL
-        "inst_fbctl/dut/my_translate/stage_data_8_6" BEL
-        "inst_fbctl/dut/my_translate/stage_data_8_5" BEL
-        "inst_fbctl/dut/my_translate/stage_data_8_4" BEL
-        "inst_fbctl/dut/my_translate/stage_data_8_3" BEL
-        "inst_fbctl/dut/my_translate/stage_data_8_2" BEL
-        "inst_fbctl/dut/my_translate/stage_data_8_1" BEL
-        "inst_fbctl/dut/my_translate/stage_identity_4" BEL
-        "inst_fbctl/dut/my_translate/stage_identity_0" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_31" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_30" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_29" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_28" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_27" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_26" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_25" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_24" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_23" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_22" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_21" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_20" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_19" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_18" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_17" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_16" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_15" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_14" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_13" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_12" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_11" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_10" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_9" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_8" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_7" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_6" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_5" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_4" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_3" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_2" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_1" BEL
-        "inst_fbctl/dut/my_translate/stage_aux_0" BEL
         "inst_fbctl/dut/my_translatea/r_rows_8" BEL
         "inst_fbctl/dut/my_translatea/r_rows_7" BEL
         "inst_fbctl/dut/my_translatea/r_rows_6" BEL
@@ -1141,10 +946,6 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut/my_translatea/r_cols_1" BEL
         "inst_fbctl/dut/my_translatea/r_cols_0" BEL
         "inst_fbctl/dut/my_translatea/stage_valid" BEL
-        "inst_fbctl/dut/my_translatea/stage_identity_4" BEL
-        "inst_fbctl/dut/my_translatea/stage_identity_2" BEL
-        "inst_fbctl/dut/my_translatea/stage_identity_1" BEL
-        "inst_fbctl/dut/my_translatea/stage_identity_0" BEL
         "inst_fbctl/dut/my_translatea/r_rgb565_2d_80_15" BEL
         "inst_fbctl/dut/my_translatea/r_rgb565_2d_80_14" BEL
         "inst_fbctl/dut/my_translatea/r_rgb565_2d_80_13" BEL
@@ -2441,61 +2242,6 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut/my_translatea/r_rgb565_2d_1_2" BEL
         "inst_fbctl/dut/my_translatea/r_rgb565_2d_1_1" BEL
         "inst_fbctl/dut/my_translatea/r_rgb565_2d_1_0" BEL
-        "inst_fbctl/dut/my_translatea/stage_data_565_15" BEL
-        "inst_fbctl/dut/my_translatea/stage_data_565_14" BEL
-        "inst_fbctl/dut/my_translatea/stage_data_565_13" BEL
-        "inst_fbctl/dut/my_translatea/stage_data_565_12" BEL
-        "inst_fbctl/dut/my_translatea/stage_data_565_11" BEL
-        "inst_fbctl/dut/my_translatea/stage_data_565_10" BEL
-        "inst_fbctl/dut/my_translatea/stage_data_565_9" BEL
-        "inst_fbctl/dut/my_translatea/stage_data_565_8" BEL
-        "inst_fbctl/dut/my_translatea/stage_data_565_7" BEL
-        "inst_fbctl/dut/my_translatea/stage_data_565_6" BEL
-        "inst_fbctl/dut/my_translatea/stage_data_565_5" BEL
-        "inst_fbctl/dut/my_translatea/stage_data_565_4" BEL
-        "inst_fbctl/dut/my_translatea/stage_data_565_3" BEL
-        "inst_fbctl/dut/my_translatea/stage_data_565_2" BEL
-        "inst_fbctl/dut/my_translatea/stage_data_565_1" BEL
-        "inst_fbctl/dut/my_translatea/stage_data_565_0" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_31" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_30" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_29" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_28" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_27" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_26" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_25" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_24" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_23" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_22" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_21" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_20" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_19" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_18" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_17" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_16" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_15" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_14" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_13" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_12" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_11" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_10" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_9" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_8" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_7" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_6" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_5" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_4" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_3" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_2" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_1" BEL
-        "inst_fbctl/dut/my_translatea/stage_aux_0" BEL
-        "inst_fbctl/dut/my_translatea/stage_data_8_7" BEL
-        "inst_fbctl/dut/my_translatea/stage_data_8_6" BEL
-        "inst_fbctl/dut/my_translatea/stage_data_8_5" BEL
-        "inst_fbctl/dut/my_translatea/stage_data_8_4" BEL
-        "inst_fbctl/dut/my_translatea/stage_data_8_3" BEL
-        "inst_fbctl/dut/my_translatea/stage_data_8_2" BEL
-        "inst_fbctl/dut/my_translatea/stage_data_8_1" BEL
         "inst_fbctl/dut/my_filter0_buffer/r_rows_0" BEL
         "inst_fbctl/dut/my_filter0_buffer/rams[0].my_shiftreg/a_8" BEL
         "inst_fbctl/dut/my_filter0_buffer/rams[0].my_shiftreg/a_7" BEL
@@ -2652,25 +2398,6 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut/my_filter0_buffer/rgb565_1d_out_1_1" BEL
         "inst_fbctl/dut/my_filter0_buffer/rgb565_1d_out_1_0" BEL
         "inst_fbctl/dut/my_filter0_buffer/stage_valid" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_identity_4" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_identity_1" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_identity_0" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_data_565_15" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_data_565_14" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_data_565_13" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_data_565_12" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_data_565_11" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_data_565_10" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_data_565_9" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_data_565_8" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_data_565_7" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_data_565_6" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_data_565_5" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_data_565_4" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_data_565_3" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_data_565_2" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_data_565_1" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_data_565_0" BEL
         "inst_fbctl/dut/my_filter0_buffer/rgb565_1d_out_0_15" BEL
         "inst_fbctl/dut/my_filter0_buffer/rgb565_1d_out_0_14" BEL
         "inst_fbctl/dut/my_filter0_buffer/rgb565_1d_out_0_13" BEL
@@ -2687,45 +2414,6 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut/my_filter0_buffer/rgb565_1d_out_0_2" BEL
         "inst_fbctl/dut/my_filter0_buffer/rgb565_1d_out_0_1" BEL
         "inst_fbctl/dut/my_filter0_buffer/rgb565_1d_out_0_0" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_31" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_30" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_29" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_28" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_27" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_26" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_25" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_24" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_23" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_22" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_21" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_20" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_19" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_18" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_17" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_16" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_15" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_14" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_13" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_12" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_11" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_10" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_9" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_8" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_7" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_6" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_5" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_4" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_3" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_2" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_1" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_aux_0" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_data_8_7" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_data_8_6" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_data_8_5" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_data_8_4" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_data_8_3" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_data_8_2" BEL
-        "inst_fbctl/dut/my_filter0_buffer/stage_data_8_1" BEL
         "inst_fbctl/dut/my_filter0_window/q_80_15" BEL
         "inst_fbctl/dut/my_filter0_window/q_80_14" BEL
         "inst_fbctl/dut/my_filter0_window/q_80_13" BEL
@@ -4023,107 +3711,27 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut/my_filter0_window/q_18_2" BEL
         "inst_fbctl/dut/my_filter0_window/q_18_1" BEL
         "inst_fbctl/dut/my_filter0_window/q_18_0" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_data_565_15" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_data_565_14" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_data_565_13" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_data_565_12" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_data_565_11" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_data_565_10" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_data_565_9" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_data_565_8" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_data_565_7" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_data_565_6" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_data_565_5" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_data_565_4" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_data_565_3" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_data_565_2" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_data_565_1" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_data_565_0" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_identity_4" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_identity_2" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_identity_1" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_identity_0" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_31" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_30" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_29" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_28" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_27" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_26" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_25" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_24" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_23" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_22" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_21" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_20" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_19" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_18" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_17" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_16" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_15" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_14" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_13" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_12" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_11" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_10" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_9" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_8" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_7" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_6" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_5" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_4" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_3" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_2" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_1" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_aux_0" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_data_8_7" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_data_8_6" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_data_8_5" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_data_8_4" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_data_8_3" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_data_8_2" BEL
-        "inst_fbctl/dut/my_filter0_window/stage_data_8_1" BEL
         "inst_fbctl/dut5/stage_data_8_7" BEL "inst_fbctl/dut5/stage_data_8_6"
         BEL "inst_fbctl/dut5/stage_data_8_5" BEL
         "inst_fbctl/dut5/stage_data_8_4" BEL "inst_fbctl/dut5/stage_data_8_3"
         BEL "inst_fbctl/dut5/stage_data_8_2" BEL "inst_fbctl/dut5/stage_valid"
-        BEL "inst_fbctl/dut5/stage_data_565_15" BEL
-        "inst_fbctl/dut5/stage_data_565_14" BEL
-        "inst_fbctl/dut5/stage_data_565_13" BEL
-        "inst_fbctl/dut5/stage_data_565_12" BEL
-        "inst_fbctl/dut5/stage_data_565_11" BEL
-        "inst_fbctl/dut5/stage_data_565_10" BEL
-        "inst_fbctl/dut5/stage_data_565_9" BEL
-        "inst_fbctl/dut5/stage_data_565_8" BEL
-        "inst_fbctl/dut5/stage_data_565_7" BEL
-        "inst_fbctl/dut5/stage_data_565_6" BEL
-        "inst_fbctl/dut5/stage_data_565_5" BEL
-        "inst_fbctl/dut5/stage_data_565_4" BEL
-        "inst_fbctl/dut5/stage_data_565_3" BEL
-        "inst_fbctl/dut5/stage_data_565_2" BEL
-        "inst_fbctl/dut5/stage_data_565_1" BEL
-        "inst_fbctl/dut5/stage_data_565_0" BEL
-        "inst_fbctl/dut5/stage_identity_5" BEL
-        "inst_fbctl/dut5/stage_identity_4" BEL
-        "inst_fbctl/dut5/stage_identity_2" BEL
-        "inst_fbctl/dut5/stage_identity_1" BEL
-        "inst_fbctl/dut5/stage_identity_0" BEL "inst_fbctl/dut5/stage_aux_31"
-        BEL "inst_fbctl/dut5/stage_aux_30" BEL "inst_fbctl/dut5/stage_aux_29"
-        BEL "inst_fbctl/dut5/stage_aux_28" BEL "inst_fbctl/dut5/stage_aux_27"
-        BEL "inst_fbctl/dut5/stage_aux_26" BEL "inst_fbctl/dut5/stage_aux_25"
-        BEL "inst_fbctl/dut5/stage_aux_24" BEL "inst_fbctl/dut5/stage_aux_23"
-        BEL "inst_fbctl/dut5/stage_aux_22" BEL "inst_fbctl/dut5/stage_aux_21"
-        BEL "inst_fbctl/dut5/stage_aux_20" BEL "inst_fbctl/dut5/stage_aux_19"
-        BEL "inst_fbctl/dut5/stage_aux_18" BEL "inst_fbctl/dut5/stage_aux_17"
-        BEL "inst_fbctl/dut5/stage_aux_16" BEL "inst_fbctl/dut5/stage_aux_15"
-        BEL "inst_fbctl/dut5/stage_aux_14" BEL "inst_fbctl/dut5/stage_aux_13"
-        BEL "inst_fbctl/dut5/stage_aux_12" BEL "inst_fbctl/dut5/stage_aux_11"
-        BEL "inst_fbctl/dut5/stage_aux_10" BEL "inst_fbctl/dut5/stage_aux_9"
-        BEL "inst_fbctl/dut5/stage_aux_8" BEL "inst_fbctl/dut5/stage_aux_7"
-        BEL "inst_fbctl/dut5/stage_aux_6" BEL "inst_fbctl/dut5/stage_aux_5"
-        BEL "inst_fbctl/dut5/stage_aux_4" BEL "inst_fbctl/dut5/stage_aux_3"
-        BEL "inst_fbctl/dut5/stage_aux_2" BEL "inst_fbctl/dut5/stage_aux_1"
-        BEL "inst_fbctl/dut5/stage_aux_0" BEL
-        "inst_fbctl/dut2/mono_2d_r<79>_0" BEL
+        BEL "inst_fbctl/dut5/stage_aux_31" BEL "inst_fbctl/dut5/stage_aux_30"
+        BEL "inst_fbctl/dut5/stage_aux_29" BEL "inst_fbctl/dut5/stage_aux_28"
+        BEL "inst_fbctl/dut5/stage_aux_27" BEL "inst_fbctl/dut5/stage_aux_26"
+        BEL "inst_fbctl/dut5/stage_aux_25" BEL "inst_fbctl/dut5/stage_aux_24"
+        BEL "inst_fbctl/dut5/stage_aux_23" BEL "inst_fbctl/dut5/stage_aux_22"
+        BEL "inst_fbctl/dut5/stage_aux_21" BEL "inst_fbctl/dut5/stage_aux_20"
+        BEL "inst_fbctl/dut5/stage_aux_19" BEL "inst_fbctl/dut5/stage_aux_18"
+        BEL "inst_fbctl/dut5/stage_aux_17" BEL "inst_fbctl/dut5/stage_aux_16"
+        BEL "inst_fbctl/dut5/stage_aux_15" BEL "inst_fbctl/dut5/stage_aux_14"
+        BEL "inst_fbctl/dut5/stage_aux_13" BEL "inst_fbctl/dut5/stage_aux_12"
+        BEL "inst_fbctl/dut5/stage_aux_11" BEL "inst_fbctl/dut5/stage_aux_10"
+        BEL "inst_fbctl/dut5/stage_aux_9" BEL "inst_fbctl/dut5/stage_aux_8"
+        BEL "inst_fbctl/dut5/stage_aux_7" BEL "inst_fbctl/dut5/stage_aux_6"
+        BEL "inst_fbctl/dut5/stage_aux_5" BEL "inst_fbctl/dut5/stage_aux_4"
+        BEL "inst_fbctl/dut5/stage_aux_3" BEL "inst_fbctl/dut5/stage_aux_2"
+        BEL "inst_fbctl/dut5/stage_aux_1" BEL "inst_fbctl/dut5/stage_aux_0"
+        BEL "inst_fbctl/dut2/mono_2d_r<79>_0" BEL
         "inst_fbctl/dut2/mono_2d_r<78>_0" BEL
         "inst_fbctl/dut2/mono_2d_r<80>_0" BEL
         "inst_fbctl/dut2/mono_2d_r<77>_0" BEL
@@ -4274,47 +3882,6 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         BEL "inst_fbctl/dut2/mono_2d_l<3>_0" BEL
         "inst_fbctl/dut2/mono_2d_l<2>_0" BEL "inst_fbctl/dut2/mono_2d_l<0>_0"
         BEL "inst_fbctl/dut2/mono_2d_l<1>_0" BEL "inst_fbctl/dut2/stage_valid"
-        BEL "inst_fbctl/dut2/stage_data_565_15" BEL
-        "inst_fbctl/dut2/stage_data_565_14" BEL
-        "inst_fbctl/dut2/stage_data_565_13" BEL
-        "inst_fbctl/dut2/stage_data_565_12" BEL
-        "inst_fbctl/dut2/stage_data_565_11" BEL
-        "inst_fbctl/dut2/stage_data_565_10" BEL
-        "inst_fbctl/dut2/stage_data_565_9" BEL
-        "inst_fbctl/dut2/stage_data_565_8" BEL
-        "inst_fbctl/dut2/stage_data_565_7" BEL
-        "inst_fbctl/dut2/stage_data_565_6" BEL
-        "inst_fbctl/dut2/stage_data_565_5" BEL
-        "inst_fbctl/dut2/stage_data_565_4" BEL
-        "inst_fbctl/dut2/stage_data_565_3" BEL
-        "inst_fbctl/dut2/stage_data_565_2" BEL
-        "inst_fbctl/dut2/stage_data_565_1" BEL
-        "inst_fbctl/dut2/stage_data_565_0" BEL
-        "inst_fbctl/dut2/stage_identity_5" BEL
-        "inst_fbctl/dut2/stage_identity_4" BEL
-        "inst_fbctl/dut2/stage_identity_2" BEL
-        "inst_fbctl/dut2/stage_identity_1" BEL
-        "inst_fbctl/dut2/stage_identity_0" BEL "inst_fbctl/dut2/stage_aux_31"
-        BEL "inst_fbctl/dut2/stage_aux_30" BEL "inst_fbctl/dut2/stage_aux_29"
-        BEL "inst_fbctl/dut2/stage_aux_28" BEL "inst_fbctl/dut2/stage_aux_27"
-        BEL "inst_fbctl/dut2/stage_aux_26" BEL "inst_fbctl/dut2/stage_aux_25"
-        BEL "inst_fbctl/dut2/stage_aux_24" BEL "inst_fbctl/dut2/stage_aux_23"
-        BEL "inst_fbctl/dut2/stage_aux_22" BEL "inst_fbctl/dut2/stage_aux_21"
-        BEL "inst_fbctl/dut2/stage_aux_20" BEL "inst_fbctl/dut2/stage_aux_19"
-        BEL "inst_fbctl/dut2/stage_aux_18" BEL "inst_fbctl/dut2/stage_aux_17"
-        BEL "inst_fbctl/dut2/stage_aux_16" BEL "inst_fbctl/dut2/stage_aux_15"
-        BEL "inst_fbctl/dut2/stage_aux_14" BEL "inst_fbctl/dut2/stage_aux_13"
-        BEL "inst_fbctl/dut2/stage_aux_12" BEL "inst_fbctl/dut2/stage_aux_11"
-        BEL "inst_fbctl/dut2/stage_aux_10" BEL "inst_fbctl/dut2/stage_aux_9"
-        BEL "inst_fbctl/dut2/stage_aux_8" BEL "inst_fbctl/dut2/stage_aux_7"
-        BEL "inst_fbctl/dut2/stage_aux_6" BEL "inst_fbctl/dut2/stage_aux_5"
-        BEL "inst_fbctl/dut2/stage_aux_4" BEL "inst_fbctl/dut2/stage_aux_3"
-        BEL "inst_fbctl/dut2/stage_aux_2" BEL "inst_fbctl/dut2/stage_aux_1"
-        BEL "inst_fbctl/dut2/stage_aux_0" BEL "inst_fbctl/dut2/stage_data_8_7"
-        BEL "inst_fbctl/dut2/stage_data_8_6" BEL
-        "inst_fbctl/dut2/stage_data_8_5" BEL "inst_fbctl/dut2/stage_data_8_4"
-        BEL "inst_fbctl/dut2/stage_data_8_3" BEL
-        "inst_fbctl/dut2/stage_data_8_2" BEL "inst_fbctl/dut2/stage_data_8_1"
         BEL "inst_fbctl/dut4/my_translate/r_cols_0" BEL
         "inst_fbctl/dut4/my_translate/r_rows_0" BEL
         "inst_fbctl/dut4/my_translate/r_cols_9" BEL
@@ -4334,35 +3901,11 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut4/my_translate/r_rows_2" BEL
         "inst_fbctl/dut4/my_translate/r_rows_1" BEL
         "inst_fbctl/dut4/my_translate/r_rows_3" BEL
-        "inst_fbctl/dut4/my_translate/stage_data_565_15" BEL
-        "inst_fbctl/dut4/my_translate/stage_data_565_14" BEL
-        "inst_fbctl/dut4/my_translate/stage_data_565_13" BEL
-        "inst_fbctl/dut4/my_translate/stage_data_565_12" BEL
-        "inst_fbctl/dut4/my_translate/stage_data_565_11" BEL
-        "inst_fbctl/dut4/my_translate/stage_data_565_10" BEL
-        "inst_fbctl/dut4/my_translate/stage_data_565_9" BEL
-        "inst_fbctl/dut4/my_translate/stage_data_565_8" BEL
-        "inst_fbctl/dut4/my_translate/stage_data_565_7" BEL
-        "inst_fbctl/dut4/my_translate/stage_data_565_6" BEL
-        "inst_fbctl/dut4/my_translate/stage_data_565_5" BEL
-        "inst_fbctl/dut4/my_translate/stage_data_565_4" BEL
-        "inst_fbctl/dut4/my_translate/stage_data_565_3" BEL
-        "inst_fbctl/dut4/my_translate/stage_data_565_2" BEL
-        "inst_fbctl/dut4/my_translate/stage_data_565_1" BEL
-        "inst_fbctl/dut4/my_translate/stage_data_565_0" BEL
         "inst_fbctl/dut4/my_translate/stage_data_8_7" BEL
         "inst_fbctl/dut4/my_translate/stage_data_8_6" BEL
         "inst_fbctl/dut4/my_translate/stage_data_8_5" BEL
         "inst_fbctl/dut4/my_translate/stage_data_8_4" BEL
         "inst_fbctl/dut4/my_translate/stage_data_8_3" BEL
-        "inst_fbctl/dut4/my_translate/stage_data_8_2" BEL
-        "inst_fbctl/dut4/my_translate/stage_data_8_1" BEL
-        "inst_fbctl/dut4/my_translate/stage_data_8_0" BEL
-        "inst_fbctl/dut4/my_translate/stage_identity_5" BEL
-        "inst_fbctl/dut4/my_translate/stage_identity_4" BEL
-        "inst_fbctl/dut4/my_translate/stage_identity_2" BEL
-        "inst_fbctl/dut4/my_translate/stage_identity_1" BEL
-        "inst_fbctl/dut4/my_translate/stage_identity_0" BEL
         "inst_fbctl/dut4/my_translate/stage_aux_31" BEL
         "inst_fbctl/dut4/my_translate/stage_aux_30" BEL
         "inst_fbctl/dut4/my_translate/stage_aux_29" BEL
@@ -4474,41 +4017,11 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut4/my_filter0_buffer/gray8_1d_out_1_1" BEL
         "inst_fbctl/dut4/my_filter0_buffer/gray8_1d_out_1_0" BEL
         "inst_fbctl/dut4/my_filter0_buffer/stage_valid" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/stage_identity_5" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/stage_identity_4" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/stage_identity_2" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/stage_identity_1" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/stage_identity_0" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/stage_data_565_15" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/stage_data_565_14" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/stage_data_565_13" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/stage_data_565_12" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/stage_data_565_11" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/stage_data_565_10" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/stage_data_565_9" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/stage_data_565_8" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/stage_data_565_7" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/stage_data_565_6" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/stage_data_565_5" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/stage_data_565_4" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/stage_data_565_3" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/stage_data_565_2" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/stage_data_565_1" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/stage_data_565_0" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/stage_data_8_7" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/stage_data_8_6" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/stage_data_8_5" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/stage_data_8_4" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/stage_data_8_3" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/stage_data_8_2" BEL
         "inst_fbctl/dut4/my_filter0_buffer/gray8_1d_out_0_7" BEL
         "inst_fbctl/dut4/my_filter0_buffer/gray8_1d_out_0_6" BEL
         "inst_fbctl/dut4/my_filter0_buffer/gray8_1d_out_0_5" BEL
         "inst_fbctl/dut4/my_filter0_buffer/gray8_1d_out_0_4" BEL
         "inst_fbctl/dut4/my_filter0_buffer/gray8_1d_out_0_3" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/gray8_1d_out_0_2" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/gray8_1d_out_0_1" BEL
-        "inst_fbctl/dut4/my_filter0_buffer/gray8_1d_out_0_0" BEL
         "inst_fbctl/dut4/my_filter0_buffer/stage_aux_31" BEL
         "inst_fbctl/dut4/my_filter0_buffer/stage_aux_30" BEL
         "inst_fbctl/dut4/my_filter0_buffer/stage_aux_29" BEL
@@ -4602,9 +4115,6 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut4/my_filter0_window/q_3_5" BEL
         "inst_fbctl/dut4/my_filter0_window/q_3_4" BEL
         "inst_fbctl/dut4/my_filter0_window/q_3_3" BEL
-        "inst_fbctl/dut4/my_filter0_window/q_3_2" BEL
-        "inst_fbctl/dut4/my_filter0_window/q_3_1" BEL
-        "inst_fbctl/dut4/my_filter0_window/q_3_0" BEL
         "inst_fbctl/dut4/my_filter0_window/q_22_7" BEL
         "inst_fbctl/dut4/my_filter0_window/q_22_6" BEL
         "inst_fbctl/dut4/my_filter0_window/q_22_5" BEL
@@ -4642,9 +4152,6 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut4/my_filter0_window/q_2_5" BEL
         "inst_fbctl/dut4/my_filter0_window/q_2_4" BEL
         "inst_fbctl/dut4/my_filter0_window/q_2_3" BEL
-        "inst_fbctl/dut4/my_filter0_window/q_2_2" BEL
-        "inst_fbctl/dut4/my_filter0_window/q_2_1" BEL
-        "inst_fbctl/dut4/my_filter0_window/q_2_0" BEL
         "inst_fbctl/dut4/my_filter0_window/q_21_7" BEL
         "inst_fbctl/dut4/my_filter0_window/q_21_6" BEL
         "inst_fbctl/dut4/my_filter0_window/q_21_5" BEL
@@ -4682,9 +4189,6 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut4/my_filter0_window/q_1_5" BEL
         "inst_fbctl/dut4/my_filter0_window/q_1_4" BEL
         "inst_fbctl/dut4/my_filter0_window/q_1_3" BEL
-        "inst_fbctl/dut4/my_filter0_window/q_1_2" BEL
-        "inst_fbctl/dut4/my_filter0_window/q_1_1" BEL
-        "inst_fbctl/dut4/my_filter0_window/q_1_0" BEL
         "inst_fbctl/dut4/my_filter0_window/stage_valid" BEL
         "inst_fbctl/dut4/my_filter0_window/q_20_7" BEL
         "inst_fbctl/dut4/my_filter0_window/q_20_6" BEL
@@ -4715,9 +4219,6 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut4/my_filter0_window/q_0_5" BEL
         "inst_fbctl/dut4/my_filter0_window/q_0_4" BEL
         "inst_fbctl/dut4/my_filter0_window/q_0_3" BEL
-        "inst_fbctl/dut4/my_filter0_window/q_0_2" BEL
-        "inst_fbctl/dut4/my_filter0_window/q_0_1" BEL
-        "inst_fbctl/dut4/my_filter0_window/q_0_0" BEL
         "inst_fbctl/dut4/my_filter0_window/q_10_7" BEL
         "inst_fbctl/dut4/my_filter0_window/q_10_6" BEL
         "inst_fbctl/dut4/my_filter0_window/q_10_5" BEL
@@ -4726,27 +4227,6 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut4/my_filter0_window/q_10_2" BEL
         "inst_fbctl/dut4/my_filter0_window/q_10_1" BEL
         "inst_fbctl/dut4/my_filter0_window/q_10_0" BEL
-        "inst_fbctl/dut4/my_filter0_window/stage_data_565_15" BEL
-        "inst_fbctl/dut4/my_filter0_window/stage_data_565_14" BEL
-        "inst_fbctl/dut4/my_filter0_window/stage_data_565_13" BEL
-        "inst_fbctl/dut4/my_filter0_window/stage_data_565_12" BEL
-        "inst_fbctl/dut4/my_filter0_window/stage_data_565_11" BEL
-        "inst_fbctl/dut4/my_filter0_window/stage_data_565_10" BEL
-        "inst_fbctl/dut4/my_filter0_window/stage_data_565_9" BEL
-        "inst_fbctl/dut4/my_filter0_window/stage_data_565_8" BEL
-        "inst_fbctl/dut4/my_filter0_window/stage_data_565_7" BEL
-        "inst_fbctl/dut4/my_filter0_window/stage_data_565_6" BEL
-        "inst_fbctl/dut4/my_filter0_window/stage_data_565_5" BEL
-        "inst_fbctl/dut4/my_filter0_window/stage_data_565_4" BEL
-        "inst_fbctl/dut4/my_filter0_window/stage_data_565_3" BEL
-        "inst_fbctl/dut4/my_filter0_window/stage_data_565_2" BEL
-        "inst_fbctl/dut4/my_filter0_window/stage_data_565_1" BEL
-        "inst_fbctl/dut4/my_filter0_window/stage_data_565_0" BEL
-        "inst_fbctl/dut4/my_filter0_window/stage_identity_5" BEL
-        "inst_fbctl/dut4/my_filter0_window/stage_identity_4" BEL
-        "inst_fbctl/dut4/my_filter0_window/stage_identity_2" BEL
-        "inst_fbctl/dut4/my_filter0_window/stage_identity_1" BEL
-        "inst_fbctl/dut4/my_filter0_window/stage_identity_0" BEL
         "inst_fbctl/dut4/my_filter0_window/stage_aux_31" BEL
         "inst_fbctl/dut4/my_filter0_window/stage_aux_30" BEL
         "inst_fbctl/dut4/my_filter0_window/stage_aux_29" BEL
@@ -4779,17 +4259,9 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut4/my_filter0_window/stage_aux_2" BEL
         "inst_fbctl/dut4/my_filter0_window/stage_aux_1" BEL
         "inst_fbctl/dut4/my_filter0_window/stage_aux_0" BEL
-        "inst_fbctl/dut4/my_filter0_window/stage_data_8_7" BEL
-        "inst_fbctl/dut4/my_filter0_window/stage_data_8_6" BEL
-        "inst_fbctl/dut4/my_filter0_window/stage_data_8_5" BEL
-        "inst_fbctl/dut4/my_filter0_window/stage_data_8_4" BEL
-        "inst_fbctl/dut4/my_filter0_window/stage_data_8_3" BEL
-        "inst_fbctl/dut4/my_filter0_window/stage_data_8_2" BEL
         "inst_fbctl/dut3/stage_data_8_7" BEL "inst_fbctl/dut3/stage_data_8_6"
         BEL "inst_fbctl/dut3/stage_data_8_5" BEL
         "inst_fbctl/dut3/stage_data_8_4" BEL "inst_fbctl/dut3/stage_data_8_3"
-        BEL "inst_fbctl/dut3/stage_data_8_2" BEL
-        "inst_fbctl/dut3/stage_data_8_1" BEL "inst_fbctl/dut3/stage_data_8_0"
         BEL "inst_fbctl/dut3/r_delay<23><80>_0" BEL
         "inst_fbctl/dut3/r_delay<23><79>_0" BEL
         "inst_fbctl/dut3/r_delay<23><78>_0" BEL
@@ -4830,6 +4302,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut3/r_delay<23><43>_0" BEL
         "inst_fbctl/dut3/r_delay<23><42>_0" BEL
         "inst_fbctl/dut3/r_delay<23><41>_0" BEL
+        "inst_fbctl/dut3/r_delay<23><40>_0" BEL
         "inst_fbctl/dut3/r_delay<23><39>_0" BEL
         "inst_fbctl/dut3/r_delay<23><38>_0" BEL
         "inst_fbctl/dut3/r_delay<23><37>_0" BEL
@@ -4910,6 +4383,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut3/r_delay<22><43>_0" BEL
         "inst_fbctl/dut3/r_delay<22><42>_0" BEL
         "inst_fbctl/dut3/r_delay<22><41>_0" BEL
+        "inst_fbctl/dut3/r_delay<22><40>_0" BEL
         "inst_fbctl/dut3/r_delay<22><39>_0" BEL
         "inst_fbctl/dut3/r_delay<22><38>_0" BEL
         "inst_fbctl/dut3/r_delay<22><37>_0" BEL
@@ -4992,6 +4466,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut3/r_delay<21><41>_0" BEL
         "inst_fbctl/dut3/r_delay<21><39>_0" BEL
         "inst_fbctl/dut3/r_delay<21><38>_0" BEL
+        "inst_fbctl/dut3/r_delay<21><40>_0" BEL
         "inst_fbctl/dut3/r_delay<21><37>_0" BEL
         "inst_fbctl/dut3/r_delay<21><36>_0" BEL
         "inst_fbctl/dut3/r_delay<21><35>_0" BEL
@@ -5070,6 +4545,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut3/r_delay<20><43>_0" BEL
         "inst_fbctl/dut3/r_delay<20><42>_0" BEL
         "inst_fbctl/dut3/r_delay<20><41>_0" BEL
+        "inst_fbctl/dut3/r_delay<20><40>_0" BEL
         "inst_fbctl/dut3/r_delay<20><39>_0" BEL
         "inst_fbctl/dut3/r_delay<20><38>_0" BEL
         "inst_fbctl/dut3/r_delay<20><37>_0" BEL
@@ -5150,6 +4626,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut3/r_delay<19><43>_0" BEL
         "inst_fbctl/dut3/r_delay<19><42>_0" BEL
         "inst_fbctl/dut3/r_delay<19><41>_0" BEL
+        "inst_fbctl/dut3/r_delay<19><40>_0" BEL
         "inst_fbctl/dut3/r_delay<19><39>_0" BEL
         "inst_fbctl/dut3/r_delay<19><38>_0" BEL
         "inst_fbctl/dut3/r_delay<19><37>_0" BEL
@@ -5230,6 +4707,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut3/r_delay<18><43>_0" BEL
         "inst_fbctl/dut3/r_delay<18><42>_0" BEL
         "inst_fbctl/dut3/r_delay<18><41>_0" BEL
+        "inst_fbctl/dut3/r_delay<18><40>_0" BEL
         "inst_fbctl/dut3/r_delay<18><39>_0" BEL
         "inst_fbctl/dut3/r_delay<18><38>_0" BEL
         "inst_fbctl/dut3/r_delay<18><37>_0" BEL
@@ -5310,6 +4788,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut3/r_delay<17><43>_0" BEL
         "inst_fbctl/dut3/r_delay<17><42>_0" BEL
         "inst_fbctl/dut3/r_delay<17><41>_0" BEL
+        "inst_fbctl/dut3/r_delay<17><40>_0" BEL
         "inst_fbctl/dut3/r_delay<17><39>_0" BEL
         "inst_fbctl/dut3/r_delay<17><38>_0" BEL
         "inst_fbctl/dut3/r_delay<17><37>_0" BEL
@@ -5390,6 +4869,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut3/r_delay<16><43>_0" BEL
         "inst_fbctl/dut3/r_delay<16><42>_0" BEL
         "inst_fbctl/dut3/r_delay<16><41>_0" BEL
+        "inst_fbctl/dut3/r_delay<16><40>_0" BEL
         "inst_fbctl/dut3/r_delay<16><39>_0" BEL
         "inst_fbctl/dut3/r_delay<16><38>_0" BEL
         "inst_fbctl/dut3/r_delay<16><37>_0" BEL
@@ -5470,6 +4950,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut3/r_delay<15><43>_0" BEL
         "inst_fbctl/dut3/r_delay<15><42>_0" BEL
         "inst_fbctl/dut3/r_delay<15><41>_0" BEL
+        "inst_fbctl/dut3/r_delay<15><40>_0" BEL
         "inst_fbctl/dut3/r_delay<15><39>_0" BEL
         "inst_fbctl/dut3/r_delay<15><38>_0" BEL
         "inst_fbctl/dut3/r_delay<15><37>_0" BEL
@@ -5549,6 +5030,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut3/r_delay<14><44>_0" BEL
         "inst_fbctl/dut3/r_delay<14><43>_0" BEL
         "inst_fbctl/dut3/r_delay<14><42>_0" BEL
+        "inst_fbctl/dut3/r_delay<14><40>_0" BEL
         "inst_fbctl/dut3/r_delay<14><39>_0" BEL
         "inst_fbctl/dut3/r_delay<14><41>_0" BEL
         "inst_fbctl/dut3/r_delay<14><38>_0" BEL
@@ -5630,6 +5112,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut3/r_delay<13><43>_0" BEL
         "inst_fbctl/dut3/r_delay<13><42>_0" BEL
         "inst_fbctl/dut3/r_delay<13><41>_0" BEL
+        "inst_fbctl/dut3/r_delay<13><40>_0" BEL
         "inst_fbctl/dut3/r_delay<13><39>_0" BEL
         "inst_fbctl/dut3/r_delay<13><38>_0" BEL
         "inst_fbctl/dut3/r_delay<13><37>_0" BEL
@@ -5710,6 +5193,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut3/r_delay<12><43>_0" BEL
         "inst_fbctl/dut3/r_delay<12><42>_0" BEL
         "inst_fbctl/dut3/r_delay<12><41>_0" BEL
+        "inst_fbctl/dut3/r_delay<12><40>_0" BEL
         "inst_fbctl/dut3/r_delay<12><39>_0" BEL
         "inst_fbctl/dut3/r_delay<12><38>_0" BEL
         "inst_fbctl/dut3/r_delay<12><37>_0" BEL
@@ -5790,6 +5274,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut3/r_delay<11><43>_0" BEL
         "inst_fbctl/dut3/r_delay<11><42>_0" BEL
         "inst_fbctl/dut3/r_delay<11><41>_0" BEL
+        "inst_fbctl/dut3/r_delay<11><40>_0" BEL
         "inst_fbctl/dut3/r_delay<11><39>_0" BEL
         "inst_fbctl/dut3/r_delay<11><38>_0" BEL
         "inst_fbctl/dut3/r_delay<11><37>_0" BEL
@@ -5870,6 +5355,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut3/r_delay<10><43>_0" BEL
         "inst_fbctl/dut3/r_delay<10><42>_0" BEL
         "inst_fbctl/dut3/r_delay<10><41>_0" BEL
+        "inst_fbctl/dut3/r_delay<10><40>_0" BEL
         "inst_fbctl/dut3/r_delay<10><39>_0" BEL
         "inst_fbctl/dut3/r_delay<10><38>_0" BEL
         "inst_fbctl/dut3/r_delay<10><37>_0" BEL
@@ -5950,6 +5436,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut3/r_delay<9><43>_0" BEL
         "inst_fbctl/dut3/r_delay<9><42>_0" BEL
         "inst_fbctl/dut3/r_delay<9><41>_0" BEL
+        "inst_fbctl/dut3/r_delay<9><40>_0" BEL
         "inst_fbctl/dut3/r_delay<9><39>_0" BEL
         "inst_fbctl/dut3/r_delay<9><38>_0" BEL
         "inst_fbctl/dut3/r_delay<9><37>_0" BEL
@@ -6030,6 +5517,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut3/r_delay<8><43>_0" BEL
         "inst_fbctl/dut3/r_delay<8><42>_0" BEL
         "inst_fbctl/dut3/r_delay<8><41>_0" BEL
+        "inst_fbctl/dut3/r_delay<8><40>_0" BEL
         "inst_fbctl/dut3/r_delay<8><39>_0" BEL
         "inst_fbctl/dut3/r_delay<8><38>_0" BEL
         "inst_fbctl/dut3/r_delay<8><37>_0" BEL
@@ -6109,6 +5597,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut3/r_delay<7><44>_0" BEL
         "inst_fbctl/dut3/r_delay<7><43>_0" BEL
         "inst_fbctl/dut3/r_delay<7><41>_0" BEL
+        "inst_fbctl/dut3/r_delay<7><40>_0" BEL
         "inst_fbctl/dut3/r_delay<7><42>_0" BEL
         "inst_fbctl/dut3/r_delay<7><39>_0" BEL
         "inst_fbctl/dut3/r_delay<7><38>_0" BEL
@@ -6190,6 +5679,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut3/r_delay<6><43>_0" BEL
         "inst_fbctl/dut3/r_delay<6><42>_0" BEL
         "inst_fbctl/dut3/r_delay<6><41>_0" BEL
+        "inst_fbctl/dut3/r_delay<6><40>_0" BEL
         "inst_fbctl/dut3/r_delay<6><39>_0" BEL
         "inst_fbctl/dut3/r_delay<6><38>_0" BEL
         "inst_fbctl/dut3/r_delay<6><37>_0" BEL
@@ -6270,6 +5760,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut3/r_delay<5><43>_0" BEL
         "inst_fbctl/dut3/r_delay<5><42>_0" BEL
         "inst_fbctl/dut3/r_delay<5><41>_0" BEL
+        "inst_fbctl/dut3/r_delay<5><40>_0" BEL
         "inst_fbctl/dut3/r_delay<5><39>_0" BEL
         "inst_fbctl/dut3/r_delay<5><38>_0" BEL
         "inst_fbctl/dut3/r_delay<5><37>_0" BEL
@@ -6350,6 +5841,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut3/r_delay<4><43>_0" BEL
         "inst_fbctl/dut3/r_delay<4><42>_0" BEL
         "inst_fbctl/dut3/r_delay<4><41>_0" BEL
+        "inst_fbctl/dut3/r_delay<4><40>_0" BEL
         "inst_fbctl/dut3/r_delay<4><39>_0" BEL
         "inst_fbctl/dut3/r_delay<4><38>_0" BEL
         "inst_fbctl/dut3/r_delay<4><37>_0" BEL
@@ -6430,6 +5922,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut3/r_delay<3><43>_0" BEL
         "inst_fbctl/dut3/r_delay<3><42>_0" BEL
         "inst_fbctl/dut3/r_delay<3><41>_0" BEL
+        "inst_fbctl/dut3/r_delay<3><40>_0" BEL
         "inst_fbctl/dut3/r_delay<3><39>_0" BEL
         "inst_fbctl/dut3/r_delay<3><38>_0" BEL
         "inst_fbctl/dut3/r_delay<3><37>_0" BEL
@@ -6510,6 +6003,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut3/r_delay<2><43>_0" BEL
         "inst_fbctl/dut3/r_delay<2><42>_0" BEL
         "inst_fbctl/dut3/r_delay<2><41>_0" BEL
+        "inst_fbctl/dut3/r_delay<2><40>_0" BEL
         "inst_fbctl/dut3/r_delay<2><39>_0" BEL
         "inst_fbctl/dut3/r_delay<2><38>_0" BEL
         "inst_fbctl/dut3/r_delay<2><37>_0" BEL
@@ -6590,6 +6084,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut3/r_delay<1><43>_0" BEL
         "inst_fbctl/dut3/r_delay<1><42>_0" BEL
         "inst_fbctl/dut3/r_delay<1><41>_0" BEL
+        "inst_fbctl/dut3/r_delay<1><40>_0" BEL
         "inst_fbctl/dut3/r_delay<1><39>_0" BEL
         "inst_fbctl/dut3/r_delay<1><38>_0" BEL
         "inst_fbctl/dut3/r_delay<1><37>_0" BEL
@@ -6670,6 +6165,7 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut3/r_delay<0><42>_0" BEL
         "inst_fbctl/dut3/r_delay<0><44>_0" BEL
         "inst_fbctl/dut3/r_delay<0><41>_0" BEL
+        "inst_fbctl/dut3/r_delay<0><40>_0" BEL
         "inst_fbctl/dut3/r_delay<0><39>_0" BEL
         "inst_fbctl/dut3/r_delay<0><38>_0" BEL
         "inst_fbctl/dut3/r_delay<0><37>_0" BEL
@@ -6710,43 +6206,6 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut3/r_delay<0><2>_0" BEL
         "inst_fbctl/dut3/r_delay<0><1>_0" BEL
         "inst_fbctl/dut3/r_delay<0><0>_0" BEL
-        "inst_fbctl/dut3/stage_identity_5" BEL
-        "inst_fbctl/dut3/stage_identity_4" BEL
-        "inst_fbctl/dut3/stage_identity_2" BEL
-        "inst_fbctl/dut3/stage_identity_1" BEL
-        "inst_fbctl/dut3/stage_identity_0" BEL
-        "inst_fbctl/dut3/stage_data_565_15" BEL
-        "inst_fbctl/dut3/stage_data_565_14" BEL
-        "inst_fbctl/dut3/stage_data_565_13" BEL
-        "inst_fbctl/dut3/stage_data_565_12" BEL
-        "inst_fbctl/dut3/stage_data_565_11" BEL
-        "inst_fbctl/dut3/stage_data_565_10" BEL
-        "inst_fbctl/dut3/stage_data_565_9" BEL
-        "inst_fbctl/dut3/stage_data_565_8" BEL
-        "inst_fbctl/dut3/stage_data_565_7" BEL
-        "inst_fbctl/dut3/stage_data_565_6" BEL
-        "inst_fbctl/dut3/stage_data_565_5" BEL
-        "inst_fbctl/dut3/stage_data_565_4" BEL
-        "inst_fbctl/dut3/stage_data_565_3" BEL
-        "inst_fbctl/dut3/stage_data_565_2" BEL
-        "inst_fbctl/dut3/stage_data_565_1" BEL
-        "inst_fbctl/dut3/stage_data_565_0" BEL "inst_fbctl/dut3/stage_aux_31"
-        BEL "inst_fbctl/dut3/stage_aux_30" BEL "inst_fbctl/dut3/stage_aux_29"
-        BEL "inst_fbctl/dut3/stage_aux_28" BEL "inst_fbctl/dut3/stage_aux_27"
-        BEL "inst_fbctl/dut3/stage_aux_26" BEL "inst_fbctl/dut3/stage_aux_25"
-        BEL "inst_fbctl/dut3/stage_aux_24" BEL "inst_fbctl/dut3/stage_aux_23"
-        BEL "inst_fbctl/dut3/stage_aux_22" BEL "inst_fbctl/dut3/stage_aux_21"
-        BEL "inst_fbctl/dut3/stage_aux_20" BEL "inst_fbctl/dut3/stage_aux_19"
-        BEL "inst_fbctl/dut3/stage_aux_18" BEL "inst_fbctl/dut3/stage_aux_17"
-        BEL "inst_fbctl/dut3/stage_aux_16" BEL "inst_fbctl/dut3/stage_aux_15"
-        BEL "inst_fbctl/dut3/stage_aux_14" BEL "inst_fbctl/dut3/stage_aux_13"
-        BEL "inst_fbctl/dut3/stage_aux_12" BEL "inst_fbctl/dut3/stage_aux_11"
-        BEL "inst_fbctl/dut3/stage_aux_10" BEL "inst_fbctl/dut3/stage_aux_9"
-        BEL "inst_fbctl/dut3/stage_aux_8" BEL "inst_fbctl/dut3/stage_aux_7"
-        BEL "inst_fbctl/dut3/stage_aux_6" BEL "inst_fbctl/dut3/stage_aux_5"
-        BEL "inst_fbctl/dut3/stage_aux_4" BEL "inst_fbctl/dut3/stage_aux_3"
-        BEL "inst_fbctl/dut3/stage_aux_2" BEL "inst_fbctl/dut3/stage_aux_1"
-        BEL "inst_fbctl/dut3/stage_aux_0" BEL
         "inst_syscon/Inst_dcm_fixed/clkout3_buf" BEL
         "inst_fbctl/dut/my_translate/stage_valid" BEL
         "inst_fbctl/dut4/my_translate/stage_valid" BEL
@@ -6761,88 +6220,59 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut2/mono_2d_l<1>_0_1" BEL
         "inst_fbctl/dut2/mono_2d_l<2>_0_1" BEL
         "inst_fbctl/dut2/mono_2d_l<4>_0_1" BEL
-        "inst_fbctl/dut2/mono_2d_l<5>_0_1" BEL
         "inst_fbctl/dut2/mono_2d_l<6>_0_1" BEL
+        "inst_fbctl/dut2/mono_2d_l<5>_0_1" BEL
         "inst_fbctl/dut2/mono_2d_l<17>_0_1" BEL
-        "inst_fbctl/dut2/mono_2d_l<19>_0_1" BEL
-        "inst_fbctl/dut2/mono_2d_l<15>_0_2" BEL
-        "inst_fbctl/dut2/mono_2d_l<10>_0_2" BEL
+        "inst_fbctl/dut2/mono_2d_l<7>_0_1" BEL
         "inst_fbctl/dut2/mono_2d_l<13>_0_2" BEL
-        "inst_fbctl/dut2/mono_2d_l<16>_0_1" BEL
+        "inst_fbctl/dut2/mono_2d_l<12>_0_1" BEL
+        "inst_fbctl/dut2/mono_2d_l<15>_0_2" BEL
         "inst_fbctl/dut2/mono_2d_l<3>_0_2" BEL
-        "inst_fbctl/dut2/mono_2d_l<9>_0_2" BEL
+        "inst_fbctl/dut2/mono_2d_l<16>_0_1" BEL
         "inst_fbctl/dut2/mono_2d_l<14>_0_2" BEL
         "inst_fbctl/dut2/mono_2d_l<18>_0_1" BEL
-        "inst_fbctl/dut2/mono_2d_l<8>_0_2" BEL
-        "inst_fbctl/dut2/mono_2d_l<2>_0_2" BEL
         "inst_fbctl/dut2/mono_2d_l<1>_0_2" BEL
         "inst_fbctl/dut2/mono_2d_l<0>_0_2" BEL
+        "inst_fbctl/dut2/mono_2d_l<8>_0_2" BEL
+        "inst_fbctl/dut2/mono_2d_l<2>_0_2" BEL
         "inst_fbctl/dut2/mono_2d_l<4>_0_2" BEL
         "inst_fbctl/dut2/mono_2d_l<5>_0_2" BEL
         "inst_fbctl/dut2/mono_2d_l<6>_0_2" BEL
         "inst_fbctl/dut2/mono_2d_l<11>_0_1" BEL
-        "inst_fbctl/dut2/mono_2d_l<15>_0_3" BEL
-        "inst_fbctl/dut2/mono_2d_l<12>_0_1" BEL
         "inst_fbctl/dut2/mono_2d_l<17>_0_2" BEL
-        "inst_fbctl/dut2/mono_2d_l<7>_0_1" BEL
-        "inst_fbctl/dut2/mono_2d_l<10>_0_3" BEL
-        "inst_fbctl/dut2/mono_2d_l<9>_0_3" BEL
-        "inst_fbctl/dut2/mono_2d_l<16>_0_2" BEL
         "inst_fbctl/dut2/mono_2d_l<13>_0_3" BEL
+        "inst_fbctl/dut2/mono_2d_l<12>_0_2" BEL
+        "inst_fbctl/dut2/mono_2d_l<7>_0_2" BEL
         "inst_fbctl/dut2/mono_2d_l<3>_0_3" BEL
-        "inst_fbctl/dut2/mono_2d_l<14>_0_3" BEL
-        "inst_fbctl/dut2/mono_2d_l<18>_0_2" BEL
         "inst_fbctl/dut2/mono_2d_l<8>_0_3" BEL
         "inst_fbctl/dut2/mono_2d_l<2>_0_3" BEL
         "inst_fbctl/dut2/mono_2d_l<0>_0_3" BEL
         "inst_fbctl/dut2/mono_2d_l<1>_0_3" BEL
         "inst_fbctl/dut2/mono_2d_l<4>_0_3" BEL
-        "inst_fbctl/dut2/mono_2d_l<5>_0_3" BEL
         "inst_fbctl/dut2/mono_2d_l<6>_0_3" BEL
-        "inst_fbctl/dut2/mono_2d_l<15>_0_4" BEL
-        "inst_fbctl/dut2/mono_2d_l<21>_0_1" BEL
-        "inst_fbctl/dut2/mono_2d_l<7>_0_2" BEL
-        "inst_fbctl/dut2/mono_2d_l<10>_0_4" BEL
-        "inst_fbctl/dut2/mono_2d_l<20>_0_1" BEL
-        "inst_fbctl/dut2/mono_2d_l<16>_0_3" BEL
-        "inst_fbctl/dut2/mono_2d_l<12>_0_2" BEL
-        "inst_fbctl/dut2/mono_2d_l<3>_0_4" BEL
-        "inst_fbctl/dut2/mono_2d_l<13>_0_4" BEL
-        "inst_fbctl/dut2/mono_2d_l<9>_0_4" BEL
-        "inst_fbctl/dut2/mono_2d_l<22>_0_1" BEL
-        "inst_fbctl/dut2/mono_2d_l<14>_0_4" BEL
+        "inst_fbctl/dut2/mono_2d_l<5>_0_3" BEL
+        "inst_fbctl/dut2/mono_2d_l<19>_0_1" BEL
+        "inst_fbctl/dut2/mono_2d_l<7>_0_3" BEL
+        "inst_fbctl/dut2/mono_2d_l<12>_0_3" BEL
+        "inst_fbctl/dut2/mono_2d_l<10>_0_2" BEL
         "inst_fbctl/dut2/mono_2d_l<11>_0_2" BEL
+        "inst_fbctl/dut2/mono_2d_l<9>_0_2" BEL
+        "inst_fbctl/dut2/mono_2d_l<3>_0_4" BEL
         "inst_fbctl/dut2/mono_2d_l<8>_0_4" BEL
         "inst_fbctl/dut2/mono_2d_l<2>_0_4" BEL
-        "inst_fbctl/dut2/mono_2d_l<0>_0_4" BEL
         "inst_fbctl/dut2/mono_2d_l<1>_0_4" BEL
+        "inst_fbctl/dut2/mono_2d_l<0>_0_4" BEL
         "inst_fbctl/dut2/mono_2d_l<4>_0_4" BEL
-        "inst_fbctl/dut2/mono_2d_l<5>_0_4" BEL
         "inst_fbctl/dut2/mono_2d_l<6>_0_4" BEL
-        "inst_fbctl/dut2/mono_2d_l<19>_0_2" BEL
-        "inst_fbctl/dut2/mono_2d_l<7>_0_3" BEL
-        "inst_fbctl/dut2/mono_2d_l<17>_0_3" BEL
-        "inst_fbctl/dut2/mono_2d_l<12>_0_3" BEL
-        "inst_fbctl/dut2/mono_2d_l<3>_0_5" BEL
-        "inst_fbctl/dut2/mono_2d_l<10>_0_5" BEL
         "inst_fbctl/dut2/mono_2d_l<11>_0_3" BEL
-        "inst_fbctl/dut2/mono_2d_l<9>_0_5" BEL
-        "inst_fbctl/dut2/mono_2d_l<14>_0_5" BEL
-        "inst_fbctl/dut2/mono_2d_l<8>_0_5" BEL
-        "inst_fbctl/dut2/mono_2d_l<2>_0_5" BEL
-        "inst_fbctl/dut2/mono_2d_l<0>_0_5" BEL
-        "inst_fbctl/dut2/mono_2d_l<1>_0_5" BEL
-        "inst_fbctl/dut2/mono_2d_l<4>_0_5" BEL
-        "inst_fbctl/dut2/mono_2d_l<5>_0_5" BEL
-        "inst_fbctl/dut2/mono_2d_l<11>_0_4" BEL
         "inst_fbctl/dut2/mono_2d_l<7>_0_4" BEL
-        "inst_fbctl/dut2/mono_2d_l<12>_0_4" BEL
-        "inst_fbctl/dut2/mono_2d_l<10>_0_6" BEL
-        "inst_fbctl/dut2/mono_2d_l<3>_0_6" BEL
-        "inst_fbctl/dut2/mono_2d_l<9>_0_6" BEL
-        "inst_fbctl/dut2/mono_2d_l<14>_0_6" BEL
-        "inst_fbctl/dut2/mono_2d_l<8>_0_6" BEL
-        "inst_fbctl/dut2/mono_2d_l<7>_0_5" PIN
+        "inst_fbctl/dut2/mono_2d_l<10>_0_3" BEL
+        "inst_fbctl/dut2/mono_2d_l<9>_0_3" BEL
+        "inst_fbctl/dut2/mono_2d_l<3>_0_5" BEL
+        "inst_fbctl/dut2/mono_2d_l<4>_0_5" BEL
+        "inst_fbctl/dut2/mono_2d_l<7>_0_5" BEL
+        "inst_fbctl/dut2/mono_2d_l<10>_0_4" BEL
+        "inst_fbctl/dut2/mono_2d_l<9>_0_4" PIN
         "inst_fbctl/dut/my_filter0_buffer/rams[7].my_shiftreg/my_shiftreg/Mram_RAM_pins<20>"
         PIN
         "inst_fbctl/dut/my_filter0_buffer/rams[7].my_shiftreg/my_shiftreg/Mram_RAM_pins<21>"
@@ -6890,185 +6320,62 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/dut4/my_filter0_buffer/rams[0].my_shiftreg/my_shiftreg/Mram_RAM_pins<20>"
         PIN
         "inst_fbctl/dut4/my_filter0_buffer/rams[0].my_shiftreg/my_shiftreg/Mram_RAM_pins<21>"
-        BEL "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[20]_identify" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[20]_identify" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[21]_identify" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[21]_identify" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[21]_enable" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[21]_enable" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[19]_enable" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[19]_enable" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[20]_enable" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[20]_enable" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[19]_identify" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[19]_identify" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[10]_identify" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[10]_identify" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[18]_identify" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[18]_identify" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[18]_enable" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[18]_enable" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[10]_enable" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[10]_enable" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[9]_identify" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[9]_identify" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[8]_enable" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[8]_enable" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[9]_enable" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[9]_enable" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[8]_identify" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[8]_identify" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[6]_enable" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[6]_enable" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[7]_identify" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[7]_identify" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[7]_enable" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[7]_enable" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[5]_enable" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[5]_enable" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[6]_identify" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[6]_identify" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[5]_identify" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[5]_identify" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2_4" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2_4" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[4]_identify" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[4]_identify" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[3]_enable" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[3]_enable" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[4]_enable" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[4]_enable" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[3]_identify" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[3]_identify" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[2]_identify" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[2]_identify" BEL
-        "inst_fbctl/inst_inputsync_fva/Mshreg_n0003_0" BEL
-        "inst_fbctl/inst_inputsync_fva/n0003_0" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2_2" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2_2" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2_1" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2_1" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[2]_enable" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[2]_enable" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2_11" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2_11" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[1]_identify" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[1]_identify" BEL
-        "inst_fbctl/my_cfg_sync/Mshreg_cfg_2[1]_enable" BEL
-        "inst_fbctl/my_cfg_sync/cfg_2[1]_enable" BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/RST_FULL_GEN"
-        BEL
+        BEL "inst_fbctl/dut3/Mshreg_stage_aux_30" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_31" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_29" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_28" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_25" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_27" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_26" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_24" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_23" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_20" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_22" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_21" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_19" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_18" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_17" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_16" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_15" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_14" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_11" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_13" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_12" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_10" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_9" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_8" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_7" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_6" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_5" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_2" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_4" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_3" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_1" BEL
+        "inst_fbctl/dut3/Mshreg_stage_aux_0" BEL
+        "inst_fbctl/inst_localrstalg/RstQ_4_shift1" BEL
+        "inst_fbctl/inst_localrstalg/RstQ_4_shift2" BEL
+        "inst_fbctl/inst_localrstalg/RstQ_4_shift3" BEL
+        "inst_fbctl/inst_localrstalg/RstQ_4_shift4" BEL
+        "inst_fbctl/inst_localrstalg/RstQ_4_shift5" BEL
+        "inst_fbctl/dut3/stage_aux_0" BEL "inst_fbctl/dut3/stage_aux_10" BEL
+        "inst_fbctl/dut3/stage_aux_111" BEL "inst_fbctl/dut3/stage_aux_1" BEL
+        "inst_fbctl/dut3/stage_aux_12" BEL "inst_fbctl/dut3/stage_aux_13" BEL
+        "inst_fbctl/dut3/stage_aux_14" BEL "inst_fbctl/dut3/stage_aux_15" BEL
+        "inst_fbctl/dut3/stage_aux_16" BEL "inst_fbctl/dut3/stage_aux_17" BEL
+        "inst_fbctl/dut3/stage_aux_18" BEL "inst_fbctl/dut3/stage_aux_19" BEL
+        "inst_fbctl/dut3/stage_aux_20" BEL "inst_fbctl/dut3/stage_aux_211" BEL
+        "inst_fbctl/dut3/stage_aux_2" BEL "inst_fbctl/dut3/stage_aux_22" BEL
+        "inst_fbctl/dut3/stage_aux_23" BEL "inst_fbctl/dut3/stage_aux_24" BEL
+        "inst_fbctl/dut3/stage_aux_25" BEL "inst_fbctl/dut3/stage_aux_26" BEL
+        "inst_fbctl/dut3/stage_aux_27" BEL "inst_fbctl/dut3/stage_aux_28" BEL
+        "inst_fbctl/dut3/stage_aux_29" BEL "inst_fbctl/dut3/stage_aux_30" BEL
+        "inst_fbctl/dut3/stage_aux_311" BEL "inst_fbctl/dut3/stage_aux_3" BEL
+        "inst_fbctl/dut3/stage_aux_4" BEL "inst_fbctl/dut3/stage_aux_5" BEL
+        "inst_fbctl/dut3/stage_aux_6" BEL "inst_fbctl/dut3/stage_aux_7" BEL
+        "inst_fbctl/dut3/stage_aux_8" BEL "inst_fbctl/dut3/stage_aux_9" BEL
         "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/wr_rst_asreg"
         BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/grstd1.grst_full.rst_d3"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/wr_rst_asreg_d2"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/grstd1.grst_full.rst_d2"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_1"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_0"
-        BEL
         "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/wr_rst_asreg_d1"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/grstd1.grst_full.rst_d1"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc0.count_d2_6"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc0.count_d2_5"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc0.count_d2_4"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc0.count_d2_3"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc0.count_d2_2"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc0.count_d1_6"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc0.count_d1_5"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc0.count_d1_4"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc0.count_d1_3"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc0.count_d1_2"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc0.count_d1_1"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc0.count_d1_0"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc0.count_6"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc0.count_5"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc0.count_4"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc0.count_3"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc0.count_2"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc0.count_1"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin_7"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin_6"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin_5"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin_4"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin_3"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin_2"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin_1"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_6"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_5"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_4"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_3"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_2"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_1"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_0"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_7"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_6"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_5"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_4"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_3"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_2"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_1"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/Q_7"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/Q_6"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/Q_5"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/Q_4"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/Q_3"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/Q_2"
-        BEL
-        "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/Q_1"
         PIN
         "inst_fbctl/my_pixel_fifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM9.ram_pins<26>"
         BEL
@@ -7270,8 +6577,6 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         BEL
         "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2"
         BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0"
-        BEL
         "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/rd_rst_asreg_d1"
         BEL
         "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_1"
@@ -7279,74 +6584,6 @@ TIMEGRP inst_syscon_Inst_dcm_fixed_clkout2 = BEL
         "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/wr_rst_asreg_d1"
         BEL
         "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/grstd1.grst_full.rst_d1"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_31"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_30"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_29"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_28"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_27"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_26"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_25"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_24"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_23"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_22"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_21"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_20"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_19"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_18"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_17"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_16"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_15"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_14"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_13"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_12"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_11"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_10"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_9"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_8"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_7"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_6"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_5"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_4"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_3"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_2"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_1"
-        BEL
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_0"
-        PIN
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<26>"
-        PIN
-        "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<27>"
         BEL
         "inst_fbctl/pr_fifo_comp_b/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_5"
         BEL
@@ -7914,7 +7151,12 @@ TIMEGRP RSTQ_SOURCE = BEL "inst_fbctl/inst_localrstc/RstQ_1" BEL
 TIMEGRP RESET_SINK = BEL "inst_fbctl/inst_localrstalg/RstQ_1" BEL
         "inst_fbctl/inst_localrstalg/RstQ_2" BEL
         "inst_fbctl/inst_localrstalg/RstQ_3" BEL
-        "inst_fbctl/inst_localrstalg/RstQ_4";
+        "inst_fbctl/inst_localrstalg/RstQ_4" BEL
+        "inst_fbctl/inst_localrstalg/RstQ_4_shift1" BEL
+        "inst_fbctl/inst_localrstalg/RstQ_4_shift2" BEL
+        "inst_fbctl/inst_localrstalg/RstQ_4_shift3" BEL
+        "inst_fbctl/inst_localrstalg/RstQ_4_shift4" BEL
+        "inst_fbctl/inst_localrstalg/RstQ_4_shift5";
 PIN inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0_pins<679> = BEL
         "inst_fbctl/mcb_ddr2/memc3_mcb_raw_wrapper_inst/samc_0" PINNAME UICLK;
 TIMEGRP inst_syscon_mcb_drp_clk_bfg = BEL

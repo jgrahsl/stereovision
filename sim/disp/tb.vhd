@@ -97,7 +97,7 @@ begin  -- impl
     generic map (
       ID     => 9,
       KERNEL => KERNEL,
-      MAX_DISPARITY => MAX_DISPARITY)
+      MAX_DISPARITY => 24)
     port map (
       pipe_in     => pipe(3),           -- [in]
       pipe_out    => pipe(4),
