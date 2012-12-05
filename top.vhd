@@ -231,9 +231,9 @@ architecture behavioral of top is
   signal dout       : std_logic_vector(7 downto 0);
 
 
-  attribute keep_hierarchy                 : string;
-  attribute keep_hierarchy of inst_camctla : label is "yes";
-  attribute keep_hierarchy of inst_camctlb : label is "yes";
+--  attribute keep_hierarchy                 : string;
+--  attribute keep_hierarchy of inst_camctla : label is "yes";
+--  attribute keep_hierarchy of inst_camctlb : label is "yes";
 --  attribute keep_hierarchy of my_i2c_a: label is "yes";
 --  attribute keep_hierarchy of my_i2c_b: label is "yes";  
 --  attribute keep_hierarchy of inst_bi2_c: label is "yes";    
@@ -400,14 +400,21 @@ begin
       rst_i   => cam_rst,
       clk     => camclk,
       clk_180 => camclk_180,
+
+      sda => cama_sda,
+      scl => cama_scl,
+
       d_i     => cama_d_i,
       pclk_i  => int_cama_pclk_i,
       mclk_o  => cama_mclk_o,
       lv_i    => cama_lv_i,
+
+      fv_i    => cama_fv_i,
+      
       rst_o   => cama_rst_o,
       pwdn_o  => cama_pwdn_o,
-      vdden_o => camavdden,
-      i2c_en  => i2c_en_a
+      vdden_o => camavdden
+--      i2c_en  => i2c_en_a
       );
   camx_vdden_o <= cambvdden;
 ----------------------------------------------------------------------------------
@@ -421,38 +428,45 @@ begin
       rst_i   => cam_rst,
       clk     => camclk,
       clk_180 => camclk_180,
+
+      sda => camb_sda,
+      scl => camb_scl,
+      
       d_i     => camb_d_i,
       pclk_i  => int_camb_pclk_i,
       mclk_o  => camb_mclk_o,
       lv_i    => camb_lv_i,
+
+      fv_i    => camb_fv_i,
+      
       rst_o   => camb_rst_o,
       pwdn_o  => camb_pwdn_o,
-      vdden_o => cambvdden,
-      i2c_en  => i2c_en_b
+      vdden_o => cambvdden
+--      i2c_en  => i2c_en_b
       );
 
 
-  my_i2c_a : entity work.i2c
-    port map (
-      RST_I   => not i2c_en_a,                    -- [in]
-      CLK     => camclk,                      -- [in]
-      SDA     => cama_sda,                        -- [inout]
-      SCL     => cama_scl,                        -- [inout]
-      wr_clk  => fx2clk_int,                      -- [in]
-      wr_data => h2fdata,                         -- [in]
-      wr_en   => wr_en_a,                         -- [in]
-      wr_full => wr_full_a);  -- [out]
+  --my_i2c_a : entity work.i2c
+  --  port map (
+  --    RST_I   => not i2c_en_a,                    -- [in]
+  --    CLK     => camclk,                      -- [in]
+  --    SDA     => cama_sda,                        -- [inout]
+  --    SCL     => cama_scl,                        -- [inout]
+  --    wr_clk  => fx2clk_int,                      -- [in]
+  --    wr_data => h2fdata,                         -- [in]
+  --    wr_en   => wr_en_a,                         -- [in]
+  --    wr_full => wr_full_a);  -- [out]
 
-  my_i2c_b : entity work.i2c
-    port map (
-      RST_I   => not i2c_en_b,                      -- [in]
-      CLK     => camclk,                        -- [in]
-      SDA     => camb_sda,                          -- [inout]
-      SCL     => camb_scl,                          -- [inout]
-      wr_clk  => fx2clk_int,                        -- [in]
-      wr_data => h2fdata,                           -- [in]
-      wr_en   => wr_en_b,                           -- [in]
-      wr_full => wr_full_b);  -- [out]
+  --my_i2c_b : entity work.i2c
+  --  port map (
+  --    RST_I   => not i2c_en_b,                      -- [in]
+  --    CLK     => camclk,                        -- [in]
+  --    SDA     => camb_sda,                          -- [inout]
+  --    SCL     => camb_scl,                          -- [inout]
+  --    wr_clk  => fx2clk_int,                        -- [in]
+  --    wr_data => h2fdata,                           -- [in]
+  --    wr_en   => wr_en_b,                           -- [in]
+  --    wr_full => wr_full_b);  -- [out]
 
   cam_rst <= async_rst or sup_rst;
 ----------------------------------------------------------------------------------

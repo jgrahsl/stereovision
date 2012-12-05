@@ -662,6 +662,7 @@ architecture Behavioral of FBCtl is
   signal my_aux_wr_addr   : natural range 0 to 2**24-1 := 0;
 
   signal cfg      : cfg_set_t;
+  signal usb_cfg      : cfg_set_t;  
   signal pipe     : pipe_set_t; 
   signal stall : std_logic_vector(MAX_PIPE-1 downto 0);
 
@@ -1658,8 +1659,22 @@ begin
     port map (
       clk  => clkalg,                   -- [in]
       din  => cfg_unsync,               -- [in]
-      dout => cfg);                     -- [out] 
+      dout => usb_cfg);                     -- [out] 
 
+  cfg_for: for i in 0 to MAX_PIPE-1 generate
+    fifo_sink_if: if i /= 4 generate
+      cfg(i).enable <= '1';      
+    end generate fifo_sink_if;   
+    mcb_if: if i = 1 generate
+      cfg(i).p(0)(0) <= '1';
+    end generate mcb_if;
+    mcb_if2: if i = 2 generate
+      cfg(i).p(0)(0) <= '1';
+      cfg(i).p(1)(0) <= '1';                
+    end generate mcb_if2;
+  end generate cfg_for;
+  
+  
   led_o <= (others => '0');
 -------------------------------------------------------------------------------
 -- PIPE
