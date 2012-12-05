@@ -1690,50 +1690,68 @@ begin
       pipe_out => pipe(0));             -- [out]
 
   stallo <= stall(0);
+
+
+--  my_mcb_feed_dual : entity work.mcb_feed_dual
+--    generic map (
+--      ID => 1,
+--      MERGE => 1,
+--      FORK => 0)
+--    port map (
+--      pipe_in   => pipe(0),             -- [in]
+--      pipe_out  => pipe(1),             -- [out]
+----      pipe_out_2  => pipe(2),             -- [out]      
+--      stall_in  => stall(1),
+----      stall_in_2  => stall(2),      
+--      stall_out => stall(0),
+--      pa_fifo   => pra_fifo,            -- [inout]
+--      pb_fifo   => prb_fifo,            -- [inout]      
+--      p1_fifo   => auxr_fifo);          -- [inout]
+
+  --dut : entity work.win_rgb565
+  --  generic map (
+  --    ID     => 21,
+  --    KERNEL => 3,
+  --    WIDTH  => WIDTH,
+  --    HEIGHT => HEIGHT)
+  --  port map (
+  --    pipe_in       => pipe(1),         -- [in]
+  --    pipe_out      => pipe(2),
+  --    stall_in      => stall(2),
+  --    stall_out     => stall(1),
+  --    rgb565_2d_out => rgb565_2d
+  --    );                                -- [inout]
+
+  --dut5 : entity work.kernel_rgb565
+  --  generic map (
+  --    ID     => 25,
+  --    FORK   => 1,
+  --    KERNEL => 3)
+  --  port map (
+  --    pipe_in      => pipe(2),          -- [in]
+  --    pipe_out     => pipe(3),
+  --    pipe_out_2  => pipe(4),             -- [out]            
+  --    stall_in     => stall(3),
+  --    stall_in_2  => stall(4),            
+  --    stall_out    => stall(2),
+  --    rgb565_2d_in => rgb565_2d
+  --    );                                -- [inout]
+
   my_mcb_feed_dual : entity work.mcb_feed_dual
     generic map (
       ID => 1,
       MERGE => 1,
-      FORK => 0)
+      FORK => 1)
     port map (
       pipe_in   => pipe(0),             -- [in]
-      pipe_out  => pipe(1),             -- [out]
---      pipe_out_2  => pipe(2),             -- [out]      
-      stall_in  => stall(1),
---      stall_in_2  => stall(2),      
+      pipe_out  => pipe(3),             -- [out]
+      pipe_out_2  => pipe(4),             -- [out]      
+      stall_in  => stall(3),
+      stall_in_2  => stall(4),      
       stall_out => stall(0),
       pa_fifo   => pra_fifo,            -- [inout]
       pb_fifo   => prb_fifo,            -- [inout]      
       p1_fifo   => auxr_fifo);          -- [inout]
-
-  dut : entity work.win_rgb565
-    generic map (
-      ID     => 21,
-      KERNEL => 3,
-      WIDTH  => WIDTH,
-      HEIGHT => HEIGHT)
-    port map (
-      pipe_in       => pipe(1),         -- [in]
-      pipe_out      => pipe(2),
-      stall_in      => stall(2),
-      stall_out     => stall(1),
-      rgb565_2d_out => rgb565_2d
-      );                                -- [inout]
-
-  dut5 : entity work.kernel_rgb565
-    generic map (
-      ID     => 25,
-      FORK   => 1,
-      KERNEL => 3)
-    port map (
-      pipe_in      => pipe(2),          -- [in]
-      pipe_out     => pipe(3),
-      pipe_out_2  => pipe(4),             -- [out]            
-      stall_in     => stall(3),
-      stall_in_2  => stall(4),            
-      stall_out    => stall(2),
-      rgb565_2d_in => rgb565_2d
-      );                                -- [inout]
   
 -------------------------------------------------------------------------------
 --
